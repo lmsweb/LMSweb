@@ -1,0 +1,61 @@
+﻿@model IEnumerable<LMSweb.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+
+<div class="article">
+    <h5>
+        課程列表
+    </h5>
+    <div>
+        <p>
+        @Html.ActionLink("新增課程", "Create", "Course", new { @class = "btn btn-primary" })
+        </p>
+    </div>
+
+    <div>
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Teacher.TName)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Teacher.TName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("進入課程", "Details", new { cid = item.CID }) |
+                        @Html.ActionLink("編輯", "Edit", new { cid = item.CID }) |
+                        @Html.ActionLink("刪除", "Delete", new { cid = item.CID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

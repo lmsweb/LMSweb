@@ -1,0 +1,61 @@
+﻿@model LMSweb.ViewModel.MissionViewModel
+
+
+@{ 
+    Layout = "~/Views/Shared/_CoursesLayout.cshtml";
+}
+<div class="article">
+    <h5>任務列表</h5>
+    <p>
+        @*@Html.ActionLink("新增任務", "Create", new { CID = Model.CID, CName = Model.CName })*@
+        <input type="button" class="btn btn-primary" value="新增任務" onclick="location.href='@Url.Action("Create", "Missions", new { CID = Model.CID, CName = Model.CName })'" />
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.missions.First().Course.CName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.missions.First().Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.missions.First().End)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.missions.First().MName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.missions.First().MDetail)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.missions)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.CName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.End)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MDetail)
+                </td>
+                <td>
+                    @Html.ActionLink("進入任務", "Details", new { id = item.MID }) |
+                    @Html.ActionLink("編輯", "Edit", new { id = item.MID }) |
+                    @Html.ActionLink("刪除", "Delete", new { id = item.MID })
+                 </td>
+            </tr>
+        }
+
+    </table>
+
+</div>

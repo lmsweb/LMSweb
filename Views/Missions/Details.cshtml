@@ -1,0 +1,104 @@
+﻿@model LMSweb.ViewModel.MissionViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_CoursesLayout.cshtml";
+}
+<style>
+    table {
+        border-collapse: collapse;
+        width: 80%;
+        margin: 10px auto;
+    }
+        table tr {
+            border-bottom: solid 2px #F0F0F2;
+        }
+    th {
+        background-color: #3E4D59;
+        color: #F0F0F2 ;
+        text-align: center;
+        padding: 10px 0;
+    }
+    td {
+        padding: 10px 10px;
+    }
+</style>
+<div class="article">
+    <div>
+        <h5>任務內容</h5>
+        <hr />
+        <table>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.mis.Course.CName)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.mis.Course.CName)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.mis.Start)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.mis.Start)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.mis.End)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.mis.End)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.mis.MName)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.mis.MName)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.mis.MDetail)
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.mis.MDetail)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.mis.KnowledgePoints)
+                </th>
+                <td>
+                    @foreach (var kp in Model.mis.KnowledgePoints)
+                    {
+                        @Html.DisplayFor(KContent => kp.KContent)
+                        <br>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.mis.Prompts)
+                </th>
+                <td>
+                    @foreach (var p in Model.mis.Prompts)
+                    {
+                        @Html.DisplayFor(PContent => p.PContent)
+                        <br>
+                    }
+                </td>
+            </tr>
+        </table>
+            
+    </div>
+    <p>
+    @Html.ActionLink("編輯", "Edit", new { id = Model.mis.MID }) |
+    @Html.ActionLink("返回任務", "Index", new { cid = Model.CID })
+    </p>
+</div>
+
+

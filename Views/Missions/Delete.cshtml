@@ -1,0 +1,68 @@
+﻿@model LMSweb.ViewModel.MissionViewModel
+
+@{
+    ViewBag.Title = "Delete";
+   
+    Layout = "~/Views/Shared/_CoursesLayout.cshtml";
+    
+}
+<div class="article">
+    <div>
+        <h5>確認要刪除此任務?</h5>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.mis.Course.CName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.mis.Course.CName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.mis.Start)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.mis.Start)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.mis.End)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.mis.End)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.mis.MName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.mis.MName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.mis.MDetail)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.mis.MDetail)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-primary" /> |
+                @Html.ActionLink("返回任務", "Index", new { cid = Model.CID })
+            </div>
+        }
+    </div>
+
+</div>
+
