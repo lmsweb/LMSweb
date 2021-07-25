@@ -12,9 +12,6 @@ namespace LMSweb.Models
         public Group()
         {
             Students = new HashSet<Student>();
-            SelfAssessments = new HashSet<SelfAssessment>();
-            PeerAssessments = new HashSet<PeerAssessment>();
-            LearnB = new HashSet<LearningBehavior>();
             TeacherA = new HashSet<TeacherAssessment>();
         }
 
@@ -31,16 +28,13 @@ namespace LMSweb.Models
 
         [Display(Name = "任務編號")]
         public string MID { get; set; }
-        public virtual Mission Mission { get; set; }
+        public virtual Mission mission { get; set; }
 
         //[Display(Name = "學生編號")]
         //public string SID { get; set; }
         //public virtual Student Student { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
-        public virtual ICollection<SelfAssessment> SelfAssessments { get; set; }
-        public virtual ICollection<PeerAssessment> PeerAssessments { get; set; }
-        public virtual ICollection<LearningBehavior> LearnB { get; set; }
         public virtual ICollection<TeacherAssessment> TeacherA { get; set; }
     }
 }

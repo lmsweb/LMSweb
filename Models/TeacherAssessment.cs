@@ -23,18 +23,18 @@ namespace LMSweb.Models
         [Display(Name = "小組成果級別")]
         public int GroupAchievementLevel { get; set; }
 
-        //[Key]
-        //[Column(Order = 1)]
-        [Display(Name = "任務編號")]
-        public string MID { get; set; }
+        ////[Key]
+        ////[Column(Order = 1)]
+        //[Display(Name = "任務編號")]
+        //public string MID { get; set; }
 
         //[Key]
         //[Column(Order = 2)]
         [Display(Name = "組別編號")]
         public string GID { get; set; }
 
-        public virtual Mission Mission { get; set; }
+        //public virtual Mission Mission { get; set; }
 
-        public virtual Group Group { get; set; }
+        public virtual Group group { get; set; }
     }
 }

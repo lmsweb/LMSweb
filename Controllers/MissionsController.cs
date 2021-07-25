@@ -20,11 +20,11 @@ namespace LMSweb.Models
             MissionViewModel model = new MissionViewModel();
             if (cid == null)
             {
-                model.missions = db.Missions.Include(m => m.Course);
+                model.missions = db.Missions.Include(m => m.course);
                 return View(model);
             }
             var course = db.Courses.Where(c => c.CID == cid).Single();
-            model.missions = db.Missions.Where(m => m.CID == cid).Include(m => m.Course);
+            model.missions = db.Missions.Where(m => m.CID == cid).Include(m => m.course);
             model.CID = course.CID;
             model.CName = course.CName;
             return View(model);
@@ -43,8 +43,8 @@ namespace LMSweb.Models
                 return HttpNotFound();
             }
             var model = new MissionViewModel();
-            model.CID = mission.Course.CID;
-            model.CName = mission.Course.CName;
+            model.CID = mission.course.CID;
+            model.CName = mission.course.CName;
             model.mis = mission;
 
             return View(model);
@@ -142,7 +142,7 @@ namespace LMSweb.Models
             vmodel.KnowledgeList = GetKnowledge(mission.KnowledgePoints.Select(kp => kp.KID));
             //vmodel.PromptList = GetPrompt(mission.Prompts.Select(p => p.PID));
             vmodel.CID = mission.CID;
-            vmodel.CName = mission.Course.CName;
+            vmodel.CName = mission.course.CName;
 
             return View(vmodel);
         }
@@ -176,8 +176,8 @@ namespace LMSweb.Models
             }
 
             model.KnowledgeList = GetKnowledge(model.SelectKnowledgeList);
-            model.CID = mission.Course.CID;
-            model.CName = mission.Course.CName;
+            model.CID = mission.course.CID;
+            model.CName = mission.course.CName;
             //model.PromptList = GetPrompt(model.SelectPromptList);
             return View(model);
         }
@@ -195,8 +195,8 @@ namespace LMSweb.Models
                 return HttpNotFound();
             }
             var model = new MissionViewModel();
-            model.CID = mission.Course.CID;
-            model.CName = mission.Course.CName;
+            model.CID = mission.course.CID;
+            model.CName = mission.course.CName;
             model.mis = mission;
 
             return View(model);

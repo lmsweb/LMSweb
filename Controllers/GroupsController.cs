@@ -17,7 +17,7 @@ namespace LMSweb.Controllers
         // GET: Groups
         public ActionResult Index()
         {
-            var groups = db.Groups.Include(g => g.Mission);
+            var groups = db.Groups.Include(g => g.mission);
             return View(groups.ToList());
         }
 

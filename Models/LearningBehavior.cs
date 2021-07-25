@@ -28,23 +28,22 @@ namespace LMSweb.Models
 
         public string Time { get; set; }
 
-        //[Key]
-        //[Column(Order = 1)]
-        public string MID { get; set; }
+        ////[Key]
+        ////[Column(Order = 1)]
+        //public string MID { get; set; }
 
-        //[Key]
-        //[Column(Order = 2)]
-        public string SID { get; set; }
+        ////[Key]
+        ////[Column(Order = 2)]
+        //public string SID { get; set; }
 
-        //[Key]
-        //[Column(Order = 3)]
-        public string GID { get; set; }
+        ////[Key]
+        ////[Column(Order = 3)]
+        //public string GID { get; set; }
 
 
-        public virtual Mission Mission { get; set; }
+        //public virtual Mission Mission { get; set; }
 
-        public virtual Student Student { get; set; }
-
-        public virtual Group Group { get; set; }
+        //public virtual Student Student { get; set; }
+        public virtual StudentMission StudentMissions { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace LMSweb.Controllers
         // GET: Prompts
         public ActionResult Index()
         {
-            var prompts = db.Prompts.Include(p => p.Mission);
+            var prompts = db.Prompts.Include(p => p.mission);
             return View(prompts.ToList());
         }
 

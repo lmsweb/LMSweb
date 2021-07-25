@@ -22,6 +22,6 @@ namespace LMSweb.Models
 
         [Display(Name = "任務編號")]
         public string MID { get; set; }
-        public virtual Mission Mission { get; set; }
+        public virtual Mission mission { get; set; }
     }
 }

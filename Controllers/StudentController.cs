@@ -72,7 +72,7 @@ namespace LMSweb.Controllers
             var sid = claimData[0].Value; //取值(因為只有一筆)
             //var mission = ViewModel.MissionCreateViewModel.Missions.Where(m => m.SID == sid);
             //return View(mission);
-            //return View(db.Students.ToList());
+            return View(db.Students.ToList());
         }
 
  

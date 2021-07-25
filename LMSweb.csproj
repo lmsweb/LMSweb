@@ -182,21 +182,9 @@
     </Compile>
     <Compile Include="Infrastructure\Helpers\CheckResult.cs" />
     <Compile Include="Infrastructure\Helpers\ImportDataHelper.cs" />
-    <Compile Include="Migrations\202106080100462_Inital.cs" />
-    <Compile Include="Migrations\202106080100462_Inital.Designer.cs">
-      <DependentUpon>202106080100462_Inital.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106080117342_StudentKey.cs" />
-    <Compile Include="Migrations\202106080117342_StudentKey.Designer.cs">
-      <DependentUpon>202106080117342_StudentKey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106281440053_GROUP.cs" />
-    <Compile Include="Migrations\202106281440053_GROUP.Designer.cs">
-      <DependentUpon>202106281440053_GROUP.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106281538127_3.cs" />
-    <Compile Include="Migrations\202106281538127_3.Designer.cs">
-      <DependentUpon>202106281538127_3.cs</DependentUpon>
+    <Compile Include="Migrations\202107251957257_1.cs" />
+    <Compile Include="Migrations\202107251957257_1.Designer.cs">
+      <DependentUpon>202107251957257_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -211,7 +199,7 @@
     <Compile Include="Models\Prompt.cs" />
     <Compile Include="Models\SelfAssessment.cs" />
     <Compile Include="Models\Student.cs" />
-    <Compile Include="Models\StudentGroup.cs" />
+    <Compile Include="Models\StudentMission.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeacherAssessment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -691,17 +679,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202106080100462_Inital.resx">
-      <DependentUpon>202106080100462_Inital.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106080117342_StudentKey.resx">
-      <DependentUpon>202106080117342_StudentKey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106281440053_GROUP.resx">
-      <DependentUpon>202106281440053_GROUP.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106281538127_3.resx">
-      <DependentUpon>202106281538127_3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202107251957257_1.resx">
+      <DependentUpon>202107251957257_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

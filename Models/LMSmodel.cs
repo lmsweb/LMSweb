@@ -27,7 +27,7 @@ namespace LMSweb.Models
         public DbSet<Prompt> Prompts { get; set; }
         public DbSet<SelfAssessment> SelfA { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<StudentGroup> StudentG { get; set; }
+        public DbSet<StudentMission> StudentMissions { get; set; }
         public DbSet<TeacherAssessment> TeacherA { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
