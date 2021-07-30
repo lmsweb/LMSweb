@@ -30,7 +30,7 @@
                     @Html.DisplayNameFor(model => model.CName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Teacher.TName)
+                    @Html.DisplayNameFor(model => model.teacher.TName)
                 </th>
                 <th></th>
             </tr>
@@ -45,7 +45,7 @@
                         @Html.DisplayFor(modelItem => item.CName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Teacher.TName)
+                        @Html.DisplayFor(modelItem => item.teacher.TName)
                     </td>
                     <td>
                         @Html.ActionLink("進入課程", "Details", new { cid = item.CID }) |

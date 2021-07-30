@@ -4,6 +4,8 @@ namespace LMSweb.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using LMSweb.Models;
+    using System.Security.Cryptography;
 
     internal sealed class Configuration : DbMigrationsConfiguration<LMSweb.Models.LMSmodel>
     {
@@ -26,6 +28,17 @@ namespace LMSweb.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            Teacher teacher = new Teacher()
+            {
+                TID = "T001",
+                TName = "Lee",
+                TPassword = "T001",
+                Email = "T001@chu.edu.tw"
+                
+            };
+
+            context.Teachers.AddOrUpdate(teacher);
         }
     }
 }
