@@ -1,0 +1,34 @@
+﻿@model LMSweb.Models.Prompt
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Prompt</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Mission.Start)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mission.Start)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PContent)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

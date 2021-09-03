@@ -1,0 +1,23 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <li class="nav-item">
+        <span class="nav-link">@User.Identity.Name</span>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Logout",User.Identity.AuthenticationType)">登出</a>
+    </li>
+}
+else
+{
+    <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            登入
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="@Url.Action("Login","Student")">學生</a>
+            <a class="dropdown-item" href="@Url.Action("Login","Teacher")">教師</a>
+        </div>
+    </li>
+}
+

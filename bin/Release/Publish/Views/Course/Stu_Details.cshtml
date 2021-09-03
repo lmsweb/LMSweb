@@ -1,0 +1,68 @@
+﻿@model LMSweb.Models.Student
+
+@{
+    ViewBag.Title = "Details";
+
+}
+<div class="article">
+    <h2>
+        詳細資料
+    </h2>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.SName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.SPassword)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SPassword)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Sex)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Sex)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Stage)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Stage)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Grade)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Grade)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Score)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Score)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("編輯", "Edit", new { sid = Model.SID }) |
+        @Html.ActionLink("返回學生名單", "Stu_Index")
+    </p>
+
+</div>

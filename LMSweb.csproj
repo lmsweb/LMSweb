@@ -182,9 +182,9 @@
     </Compile>
     <Compile Include="Infrastructure\Helpers\CheckResult.cs" />
     <Compile Include="Infrastructure\Helpers\ImportDataHelper.cs" />
-    <Compile Include="Migrations\202107251957257_1.cs" />
-    <Compile Include="Migrations\202107251957257_1.Designer.cs">
-      <DependentUpon>202107251957257_1.cs</DependentUpon>
+    <Compile Include="Migrations\202109011000205_1.cs" />
+    <Compile Include="Migrations\202109011000205_1.Designer.cs">
+      <DependentUpon>202109011000205_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -463,6 +463,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -679,8 +680,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202107251957257_1.resx">
-      <DependentUpon>202107251957257_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202109011000205_1.resx">
+      <DependentUpon>202109011000205_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

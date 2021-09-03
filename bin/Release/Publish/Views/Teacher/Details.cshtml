@@ -1,0 +1,35 @@
+﻿@model LMSweb.Models.Course
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_CoursesLayout.cshtml";
+}
+
+<h2>課程內容</h2>
+
+<div>
+    <h4>課程</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Teacher.TName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Teacher.TName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("編輯", "Edit", new { cid = Model.CID, tid = Model.TID }) |
+    @Html.ActionLink("回課程首頁", "Index")
+</p>

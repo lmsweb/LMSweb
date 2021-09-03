@@ -1,0 +1,123 @@
+﻿@model   LMSweb.ViewModel.CourseLayoutViewModelbase
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結合後設認知策略與運算思維框架的互動式程式設計合作學習環境</title>
+    <style>
+        .article {
+            position: relative;
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 1500px;
+            margin: 20px auto 20px;
+            padding: 30px 40px 50px;
+            border-radius: 15px;
+            background: #F0F0F2;
+            box-shadow: 0 2px 2px;
+        }
+
+        .body {
+            background-color: #BFC5D9
+        }
+    </style>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    @*<link href="~/Content/jasny-bootstrap.min.css" rel="stylesheet" />*@
+    <link href="~/Content/bootstrap-fileinput/css/fileinput.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" />
+
+
+</head>
+
+<body class="body">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            @*<a class="navbar-brand font-weight-bold " href="#">
+                    結合後設認知策略與運算思維框架的互動式程式設計合作學習環境
+                </a>*@
+            <h3>
+                結合後設認知策略與運算思維框架的互動式程式設計合作學習環境
+            </h3>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    @Html.Partial("_LoginPartial")
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="navbar navbar-expand-sm navbar-light bg-dark">
+            <!--<div class="navbar-header">-->
+            @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>*@
+
+            <!--@Html.ActionLink(Model.CName, "Details", "Course", new { cid = Model.CID }, new { @class = "navbar-brand text-light font-weight-bold" })
+
+            </div>-->
+            <br />
+            <div class="navbar-collapse collapse">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link text-light " href="@Url.Action("Index","Course")">首頁</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-light " href="@Url.Action("Stu_Index", "Course", new { CID = Model.CID})">學生名單</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-light " href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務管理</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-light " href="@Url.Action("","")">總成績</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-light " href="@Url.Action("","")">學習歷程</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="container">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 應用程式</p>
+        </footer>
+    </div>
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    @*<script src="~/Scripts/popper.min.js"></script>*@
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
+    @*<script src="~/Scripts/jasny-bootstrap.min.js"></script>*@
+
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
+    @*<script src="~/Scripts/bootstrap-datepicker.min.js"></script>*@
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js" integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    var waitForEl = function (selector, callback) {
+        if (jQuery(selector).length) {
+            callback();
+        } else {
+            setTimeout(function () {
+                waitForEl(selector, callback);
+            }, 100);
+        }
+    };
+    </script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
+
+
