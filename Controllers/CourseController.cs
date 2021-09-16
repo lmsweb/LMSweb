@@ -25,7 +25,7 @@ namespace LMSweb.Controllers
 
         // GET: Course
         
-        [Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher, Student")]
         public ActionResult Index()
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
@@ -399,6 +399,63 @@ namespace LMSweb.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        private List<SelectListItem> GetStudent(IEnumerable<int> SelectStudentList = null)
+        {
+            return new MultiSelectList(db.Students, "SID", "SName", SelectStudentList).ToList();
+        }
+
+        [HttpGet]
+        public ActionResult StudentGroup(string CID)
+        {
+            
+            var vmodel = new GroupCreateViewModel();
+            vmodel.StudentList = GetStudent();
+            vmodel.students = db.Students.ToList();
+            vmodel.CID = CID;
+            vmodel.groups = db.Groups.ToList();
+           
+
+
+            return View(vmodel);
+        }
+
+        [HttpPost]
+        public ActionResult StudentGroup(string GName, List<string> StudentList, string CID)
+        {
+            if (ModelState.IsValid)
+            {
+                Group group = new Group();
+                group.GName = GName;
+
+                group.Students = (ICollection <Student>)db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
+                db.Groups.Add(group);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { cid = CID });
+            }
+            var vmodel = new GroupCreateViewModel();
+            vmodel.StudentList = GetStudent();
+
+            return View(vmodel);
+        }
+        
+
+        public ActionResult StudentManagement(string cid)
+        {
+
+            if (cid == null)
+            {
+                return RedirectToAction("StudentGroup");
+            }
+            CourseViewModel model = new CourseViewModel();
+            var course = db.Courses.Where(c => c.CID == cid).Single();
+            model.CID = course.CID;
+            model.CName = course.CName;
+            model.students = course.Students;
+            ViewBag.CID = cid;
+            
+
+            return View(model);
         }
     }
 }

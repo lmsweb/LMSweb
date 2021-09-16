@@ -107,10 +107,12 @@ D:\LMSweb\bin\zh-Hant\System.Web.Razor.resources.dll
 D:\LMSweb\bin\zh-Hant\System.Web.WebPages.resources.dll
 D:\LMSweb\bin\zh-Hant\System.Web.WebPages.Deployment.resources.dll
 D:\LMSweb\bin\zh-Hant\System.Web.WebPages.Razor.resources.dll
+D:\LMSweb\obj\Debug\LMSweb.Migrations._1.resources
+D:\LMSweb\obj\Debug\LMSweb.csproj.GenerateResource.cache
 D:\LMSweb\obj\Debug\LMSweb.csproj.CoreCompileInputs.cache
 D:\LMSweb\obj\Debug\LMSweb.csproj.CopyComplete
 D:\LMSweb\obj\Debug\LMSweb.dll
 D:\LMSweb\obj\Debug\LMSweb.pdb
 D:\LMSweb\obj\Debug\LMSweb.csprojAssemblyReference.cache
-D:\LMSweb\obj\Debug\LMSweb.Migrations._1.resources
-D:\LMSweb\obj\Debug\LMSweb.csproj.GenerateResource.cache
+D:\LMSweb\obj\Debug\LMSweb.Migrations.studentGroup.resources
+D:\LMSweb\obj\Debug\LMSweb.Migrations.delsg.resources

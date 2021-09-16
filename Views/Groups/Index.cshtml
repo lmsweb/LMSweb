@@ -12,13 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Mission.Start)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.GName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Position)
+            @Html.DisplayNameFor(model => model.Students)
         </th>
         <th></th>
     </tr>
@@ -26,13 +23,15 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Mission.Start)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.GName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Position)
+            @foreach (var stu in Model)
+            {
+                @Html.DisplayFor(sid => stu.Students)
+                <br>
+            }
+            
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.GID }) |

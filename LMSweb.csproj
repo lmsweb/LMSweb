@@ -182,9 +182,17 @@
     </Compile>
     <Compile Include="Infrastructure\Helpers\CheckResult.cs" />
     <Compile Include="Infrastructure\Helpers\ImportDataHelper.cs" />
-    <Compile Include="Migrations\202109011000205_1.cs" />
-    <Compile Include="Migrations\202109011000205_1.Designer.cs">
-      <DependentUpon>202109011000205_1.cs</DependentUpon>
+    <Compile Include="Migrations\202109120934301_1.cs" />
+    <Compile Include="Migrations\202109120934301_1.Designer.cs">
+      <DependentUpon>202109120934301_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109151855279_studentGroup.cs" />
+    <Compile Include="Migrations\202109151855279_studentGroup.Designer.cs">
+      <DependentUpon>202109151855279_studentGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109151900551_del sg.cs" />
+    <Compile Include="Migrations\202109151900551_del sg.Designer.cs">
+      <DependentUpon>202109151900551_del sg.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -205,6 +213,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
+    <Compile Include="ViewModel\GroupCreateViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
   </ItemGroup>
@@ -660,6 +669,8 @@
     <Content Include="Views\KnowledgePoints\Edit.cshtml" />
     <Content Include="Views\KnowledgePoints\Index.cshtml" />
     <Content Include="Views\Course\_UploadFile.cshtml" />
+    <Content Include="Views\Course\StudentManagement.cshtml" />
+    <Content Include="Views\Course\StudentGroup.cshtml" />
     <Content Include="Views\Groups\Create.cshtml" />
     <Content Include="Views\Groups\Delete.cshtml" />
     <Content Include="Views\Groups\Details.cshtml" />
@@ -680,8 +691,14 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202109011000205_1.resx">
-      <DependentUpon>202109011000205_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202109120934301_1.resx">
+      <DependentUpon>202109120934301_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109151855279_studentGroup.resx">
+      <DependentUpon>202109151855279_studentGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109151900551_del sg.resx">
+      <DependentUpon>202109151900551_del sg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -17,8 +17,8 @@ namespace LMSweb.Controllers
         // GET: Groups
         public ActionResult Index()
         {
-            var groups = db.Groups.Include(g => g.mission);
-            return View(groups.ToList());
+            
+            return View(db.Groups.ToList());
         }
 
         // GET: Groups/Details/5
@@ -39,16 +39,15 @@ namespace LMSweb.Controllers
         // GET: Groups/Create
         public ActionResult Create()
         {
-            ViewBag.MID = new SelectList(db.Missions, "MID", "Start");
             return View();
         }
 
         // POST: Groups/Create
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
+        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GID,GName,Position,MID")] Group group)
+        public ActionResult Create([Bind(Include = "GName")] Group group)
         {
             if (ModelState.IsValid)
             {
@@ -57,7 +56,6 @@ namespace LMSweb.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.MID = new SelectList(db.Missions, "MID", "Start", group.MID);
             return View(group);
         }
 
@@ -73,16 +71,15 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MID = new SelectList(db.Missions, "MID", "Start", group.MID);
             return View(group);
         }
 
         // POST: Groups/Edit/5
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
+        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GID,GName,Position,MID")] Group group)
+        public ActionResult Edit([Bind(Include = "GID,GName,Position")] Group group)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +87,6 @@ namespace LMSweb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MID = new SelectList(db.Missions, "MID", "Start", group.MID);
             return View(group);
         }
 

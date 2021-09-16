@@ -30,6 +30,7 @@ namespace LMSweb.Models
         public DbSet<StudentMission> StudentMissions { get; set; }
         public DbSet<TeacherAssessment> TeacherA { get; set; }
 
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

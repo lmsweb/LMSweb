@@ -26,9 +26,9 @@ namespace LMSweb.Models
         [Display(Name = "職位")]
         public string Position { get; set; }
 
-        [Display(Name = "任務編號")]
-        public string MID { get; set; }
-        public virtual Mission mission { get; set; }
+        //[Display(Name = "任務編號")]
+        //public string MID { get; set; }
+        //public virtual Mission mission { get; set; }
 
         //[Display(Name = "學生編號")]
         //public string SID { get; set; }

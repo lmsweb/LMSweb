@@ -34,4 +34,5 @@ namespace LMSweb.ViewModel
         public LMSweb.Models.Mission mis { get; set; }
         public LMSweb.Models.Prompt prompt { get; set; }
     }
+   
 }

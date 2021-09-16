@@ -92,11 +92,8 @@ namespace LMSweb.Migrations
                         GID = c.Int(nullable: false, identity: true),
                         GName = c.String(nullable: false),
                         Position = c.String(),
-                        MID = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.GID)
-                .ForeignKey("dbo.Missions", t => t.MID)
-                .Index(t => t.MID);
+                .PrimaryKey(t => t.GID);
             
             CreateTable(
                 "dbo.TeacherAssessments",
@@ -215,7 +212,6 @@ namespace LMSweb.Migrations
             DropForeignKey("dbo.StudentMission1", new[] { "Student_SID", "Student_CID" }, "dbo.Students");
             DropForeignKey("dbo.TeacherAssessments", "group_GID", "dbo.Groups");
             DropForeignKey("dbo.Students", "group_GID", "dbo.Groups");
-            DropForeignKey("dbo.Groups", "MID", "dbo.Missions");
             DropForeignKey("dbo.Students", "CID", "dbo.Courses");
             DropForeignKey("dbo.Prompts", "MID", "dbo.Missions");
             DropForeignKey("dbo.KnowledgePointMissions", "Mission_MID", "dbo.Missions");
@@ -229,7 +225,6 @@ namespace LMSweb.Migrations
             DropIndex("dbo.StudentMissions", new[] { "selfAssessment_SEID" });
             DropIndex("dbo.LearningBehaviors", new[] { "StudentMissions_SID", "StudentMissions_MID" });
             DropIndex("dbo.TeacherAssessments", new[] { "group_GID" });
-            DropIndex("dbo.Groups", new[] { "MID" });
             DropIndex("dbo.Students", new[] { "group_GID" });
             DropIndex("dbo.Students", new[] { "CID" });
             DropIndex("dbo.Prompts", new[] { "MID" });
