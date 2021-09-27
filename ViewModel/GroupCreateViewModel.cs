@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace LMSweb.ViewModel
 {
+    
     public class GroupCreateViewModel : CourseLayoutViewModelbase
     {
         public List<SelectListItem> StudentList { get; set; }

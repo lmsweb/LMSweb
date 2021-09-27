@@ -18,7 +18,7 @@
         </ul>
         <br />
         @*onclick="myFunction()*@
-
+       
         <div class="row">
             <div class="col-sm-6">
                 <div class="card">
@@ -27,30 +27,30 @@
                     </div>
                     <div class="card-body">
                         <div class="form-check">
-                            
+
                             <div class="custom-control custom-checkbox container">
-                                 
-                                    @for (int i = 0; i < Model.StudentList.Count(); i++)
+
+                                @for (int i = 0; i < Model.StudentList.Count(); i++)
+                                {
+                                    if (i % 2 == 0)
                                     {
-                                        if (i % 2 == 0)
-                                        {
-                                            @:<div class="row">
-                                            }
-                                            <input class="col-sm-2 check_student" style="margin-top:5px;" type="checkbox" id="@Model.StudentList[i].Text" name="all_student" value="@Model.StudentList[i].Value">
-                                            <label class="w-25 h-auto">@Model.StudentList[i].Text</label>
-                                            if (i % 2 == 1 || i == Model.StudentList.Count() - 1)
-                                            {
-                                            @:</div>
+                                        @:<div class="row">
                                         }
+                                        <input class="col-sm-2 check_student" style="margin-top:5px;" type="checkbox" id="@Model.StudentList[i].Text" name="all_student" value="@Model.StudentList[i].Value">
+                                        <label class="w-25 h-auto">@Model.StudentList[i].Text</label>
+                                        if (i % 2 == 1 || i == Model.students.Count() - 1)
+                                        {
+                                        @:</div>
                                     }
-                                
+                                }
+
 
 
                                 @*@Html.ListBoxFor(model => model.SelectStudentList, Model.StudentList, htmlAttributes: new { @class = "form-control", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })*@
 
 
                             </div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                                         <form>
                                             <div class="form-group">
                                                 <label for="group_name" class="col-form-label">已選組員</label>
-                                                <br/>
+                                                <br />
                                                 <label id="selected_students">
 
                                                 </label>
@@ -98,17 +98,54 @@
                                 </div>
                             </div>
                         </div>
-                        @*<div class="card-body">
-                            <p id="gname"></p>
-                            <p id="text"></p><p id="stu"><br /></p>
-                        </div>*@
+                        <div class="card-body">
+                            @*<table class="table">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.group.GName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.students)
+                                    </th>
+                                    <th></th>
+                                </tr>
+
+                                @foreach (var item in Model.students)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(model => item.group.GName)
+                                        </td>
+                                        <td>
+                                           @foreach (var stu in Model.students)
+                                            {
+                                                @Html.DisplayFor(sid => stu.SName)
+                                                <br>
+                                            }
+                                            @foreach (var stu in Model.students)
+                                            {
+                                                @Html.DisplayFor(modelItem => stu.SName)
+                                                <br>
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.GID }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.GID }) |
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.GID })
+                                        </td>
+                                    </tr>
+                                }
+
+                            </table>*@
+                        </div>
 
 
                     </div>
+                </div>
             </div>
         </div>
-    </div>
-    
+
         @*<table class="table">
             <tr>
                 <th>
@@ -132,7 +169,7 @@
                             @(stu.SName)
                             <br>
                         }
-                        
+
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.GID }) |
@@ -143,7 +180,7 @@
             }
 
         </table>*@
- </div>   
+    </div>   
 </body>
 
 <script type="text/javascript" src="../jquery/jquery.js"></script>

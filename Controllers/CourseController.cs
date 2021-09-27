@@ -25,7 +25,7 @@ namespace LMSweb.Controllers
 
         // GET: Course
         
-        [Authorize(Roles ="Teacher, Student")]
+        [Authorize(Roles ="Teacher")]
         public ActionResult Index()
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
@@ -402,7 +402,7 @@ namespace LMSweb.Controllers
         }
         private List<SelectListItem> GetStudent(IEnumerable<int> SelectStudentList = null)
         {
-            return new MultiSelectList(db.Students, "SID", "SName", SelectStudentList).ToList();
+            return new MultiSelectList(db.Students.Where(x => x.@group == null), "SID", "SName", SelectStudentList).ToList();
         }
 
         [HttpGet]
@@ -411,10 +411,15 @@ namespace LMSweb.Controllers
             
             var vmodel = new GroupCreateViewModel();
             vmodel.StudentList = GetStudent();
-            vmodel.students = db.Students.ToList();
+            vmodel.students = db.Students.Where(x => x.@group != null ).ToList();
             vmodel.CID = CID;
             vmodel.groups = db.Groups.ToList();
-           
+
+            var result = from g in db.Groups
+                         from s in db.Students
+                         where g.GID == s.@group.GID
+                         select new { s.SName, s.@group.GName };
+            
 
 
             return View(vmodel);
