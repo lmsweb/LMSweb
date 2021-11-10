@@ -3,124 +3,172 @@
 @{
     Layout = "~/Views/Shared/_CoursesLayout.cshtml";
 }
-
-
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper@1.7.0/dist/css/bs-stepper.min.css">
+</head>
 <div class="article">
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h5>新增任務</h5>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.MID, htmlAttributes: new { @class = "control-label col-md-2"  })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mission.MID, new { htmlAttributes = new { @class = "form-control", @Value = "M" + DateTime.Now.ToString("yyMMddHHmmss") } })
-                @Html.ValidationMessageFor(model => model.mission.MID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control " } })
-                @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="input-group date" id="datetimepicker_start" data-target-input="nearest">
-                    @*<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker9" />*@
-                    @*@Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker9" } })*@
-                    @Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker_start" } })
-                    @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
-                    <div class="input-group-append" data-target="#datetimepicker_start" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        <div class="form-horizontal">
+            <h5>新增任務</h5>
+            <hr />
+            <div class="bs-stepper">
+                <div class="bs-stepper-header" role="tablist">
+                    <div class="step" data-target="#step1">
+                        <button type="button" class="step-trigger" role="tab">
+                            <span class="bs-stepper-circle">1</span>
+                            <span class="bs-stepper-label">任務資訊</span>
+                        </button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="step" data-target="#step2">
+                        <button type="button" class="step-trigger" role="tab">
+                            <span class="bs-stepper-circle">2</span>
+                            <span class="bs-stepper-label">任務期限</span>
+                        </button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="step" data-target="#step3">
+                        <button type="button" class="step-trigger" role="tab">
+                            <span class="bs-stepper-circle">3</span>
+                            <span class="bs-stepper-label">新增知識點及提示</span>
+                        </button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="step" data-target="#step4">
+                        <button type="button" class="step-trigger" role="tab">
+                            <span class="bs-stepper-circle">4</span>
+                            <span class="bs-stepper-label">完成!</span>
+                        </button>
                     </div>
                 </div>
-            </div>
-        </div>
+
+                <div class="bs-stepper-content">
+                    <div id="step1" class="content" role="tabpanel">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.mission.MID, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.mission.MID, new { htmlAttributes = new { @class = "form-control", @Value = "M" + DateTime.Now.ToString("yyMMddHHmmss") } })
+                                @Html.ValidationMessageFor(model => model.mission.MID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.mission.MName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.mission.MName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.mission.MName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.mission.MDetail, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                               @Html.LabelFor(model => model.mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
+                               <div class="col-md-10">
+                                   @Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control " } })
+                                   @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
+                               </div>
+                            </div>*@
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.End, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="input-group date" id="datetimepicker_end" data-target-input="nearest">
-                    @Html.EditorFor(model => model.mission.End, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker_end" } })
-                    @Html.ValidationMessageFor(model => model.mission.End, "", new { @class = "text-danger" })
-                    <div class="input-group-append" data-target="#datetimepicker_end" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        <input type="button" class="btn btn-primary" value="下一步" onclick="stepper.next()" />
+                    </div>
+                    <div id="step2" class="content" role="tabpanel">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="input-group date" id="datetimepicker_start" data-target-input="nearest">
+                                    @*<input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker9" />*@
+                                    @*@Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker9" } })*@
+                                    @Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker_start" } })
+                                    @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
+                                    <div class="input-group-append" data-target="#datetimepicker_start" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.mission.End, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="input-group date" id="datetimepicker_end" data-target-input="nearest">
+                                    @Html.EditorFor(model => model.mission.End, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker_end" } })
+                                    @Html.ValidationMessageFor(model => model.mission.End, "", new { @class = "text-danger" })
+                                    <div class="input-group-append" data-target="#datetimepicker_end" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                               @Html.LabelFor(model => model.mission.CID, "CID", htmlAttributes: new { @class = "control-label col-md-2" })
+                               <div class="col-md-10">
+                                   @Html.DropDownListFor(model => model.mission.CID, (SelectList)ViewBag.CID, htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true", title = "請選擇課程..." })
+                                   @Html.ValidationMessageFor(model => model.mission.CID, "", new { @class = "text-danger" })
+                               </div>
+                            </div>*@
+                        <div>
+                            <input type="button" class="btn btn-primary" value="上一步" onclick="stepper.previous()" />
+                            <input type="button" class="btn btn-primary" value="下一步" onclick="stepper.next()" />
+                        </div>
+                    </div>
+                    <div id="step3" class="content" role="tabpanel">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.mission.KnowledgePoints, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.prompt.PContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.prompt.PContent, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.prompt.PContent, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
+                        @Html.HiddenFor(model => model.CName, htmlAttributes: new { @value = Model.CName })
+                        <div>
+                            <input type="button" class="btn btn-primary" value="上一步" onclick="stepper.previous()" />
+                            <input type="button" class="btn btn-primary" value="確認" onclick="simulateSubmit()" />
+                        </div>
+                    </div>
+                    <div id="step4" class="content" role="tabpanel">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+
+                @*<div class="input_fields_wrap">
+                        <button class="add_field_button">Add More Fields</button>
+                        <div><input type="text" name="mytext[]"></div>
+                    </div>*@
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.MName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mission.MName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mission.MName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mission.MDetail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.mission.CID, "CID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.mission.CID, (SelectList)ViewBag.CID, htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true", title = "請選擇課程..." })
-                @Html.ValidationMessageFor(model => model.mission.CID, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.KnowledgePoints, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.prompt.PContent, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.prompt.PContent, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.prompt.PContent, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
-        @Html.HiddenFor(model => model.CName, htmlAttributes: new { @value = Model.CName })
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </div>
-
-        @*<div class="input_fields_wrap">
-            <button class="add_field_button">Add More Fields</button>
-            <div><input type="text" name="mytext[]"></div>
-        </div>*@
-    </div>
     }
-
     <div>
         @Html.ActionLink("返回任務", "Index", new { cid = Model.CID })
     </div>
-
-
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bs-stepper@1.7.0/dist/js/bs-stepper.min.js"></script>
 <script type="text/javascript">
     var check_start_Exist = setInterval(function () {
         if ($('#datetimepicker_start').length) {
@@ -135,7 +183,7 @@
             });
             clearInterval(check_start_Exist);
         }
-    }, 100); // check every 100ms           
+    }, 100); // check every 100ms
 
     var check_end_Exist = setInterval(function () {
         if ($('#datetimepicker_end').length) {
@@ -150,7 +198,7 @@
             });
             clearInterval(check_end_Exist);
         }
-    }, 100); // check every 100ms  
+    }, 100); // check every 100ms
 
     //$(document).ready(function () {
     //    var max_fields = 10; //maximum input boxes allowed
@@ -170,5 +218,34 @@
     //        e.preventDefault(); $(this).parent('div').remove(); x--;
     //    })
     //});
+    var stepperElem = document.querySelector('.bs-stepper');
+    var stepper = new Stepper(stepperElem);
+    var done = false;
+    var currStep = 1;
+    history.pushState(currStep, '');
+    //切換到步驟前觸發，呼叫e.preventDefault()可阻止切換
+    stepperElem.addEventListener("show.bs-stepper", function (e) {
+        if (done) { //若程序完成，不再切換
+            e.preventDefault();
+            return;
+        }
+    });
+    //切換到步驟後觸發，e.detail.indexStep為目前步驟序號(從0開始)
+    stepperElem.addEventListener("shown.bs-stepper", function (e) {
+        var idx = e.detail.indexStep + 1;
+        currStep = idx;
+        //pushState()記下歷程以支援瀏覽器回上頁功能
+        history.pushState(idx, '');
+    })
+    //瀏覽器上一頁下一頁觸發
+    window.onpopstate = function (e) {
+        if (e.state && e.state != currStep)
+            stepper.to(e.state);
+    };
+    //模擬送出表單，註記已完成，不再允許切換步驟
+    function simulateSubmit() {
+        stepper.next();
+        done = true;
+    }
 </script>
 
