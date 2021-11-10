@@ -23,6 +23,8 @@ namespace LMSweb.ViewModel
     public class CourseViewModel : CourseLayoutViewModelbase
     {
         public IEnumerable<LMSweb.Models.Student> students { get; set; }
+        public IEnumerable<LMSweb.Models.KnowledgePoint> kps { get; set; }
+        public LMSweb.Models.KnowledgePoint knowledgePoint { get; set; }
         //public LMSweb.Models.Student s { get; set; }
     }
 
@@ -34,5 +36,8 @@ namespace LMSweb.ViewModel
         public LMSweb.Models.Mission mis { get; set; }
         public LMSweb.Models.Prompt prompt { get; set; }
     }
+
    
+
+
 }

@@ -1,16 +1,12 @@
-﻿@model LMSweb.ViewModel.MissionViewModel
-
-
-@{ 
+﻿@model  LMSweb.ViewModel.MissionViewModel
+@{
+    ViewBag.Title = "SelectMission";
     Layout = "~/Views/Shared/_CoursesLayout.cshtml";
 }
+
+
 <div class="article">
-    <h5>任務列表</h5>
-    <p>
-        @*@Html.ActionLink("新增任務", "Create", new { CID = Model.CID, CName = Model.CName })*@
-        <input type="button" class="btn btn-primary" value="新增任務" onclick="location.href='@Url.Action("Create", "Missions", new { CID = Model.CID, CName = Model.CName })'" />
-        <input type="button" class="btn btn-primary" value="選擇任務" onclick="location.href='@Url.Action("SelectMissions", "Missions", new { CID = Model.CID, CName = Model.CName })'" />
-    </p>
+    <h5>選擇任務</h5>
     <table class="table">
         <tr>
             <th>
@@ -50,10 +46,9 @@
                     @Html.DisplayFor(modelItem => item.MDetail)
                 </td>
                 <td>
-                    @Html.ActionLink("進入任務", "Details", new { mid = item.MID }) |
-                    @Html.ActionLink("編輯", "Edit", new { mid = item.MID }) |
-                    @Html.ActionLink("刪除", "Delete", new { mid = item.MID })
-                 </td>
+                    @Html.ActionLink("加入", "AddMissions", new { mid = item.MID, cid= Model.CID }) |
+                   
+                </td>
             </tr>
         }
 

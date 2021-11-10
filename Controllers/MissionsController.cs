@@ -31,13 +31,13 @@ namespace LMSweb.Models
         }
 
         // GET: Missions/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string mid)
         {
-            if (id == null)
+            if (mid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Mission mission = db.Missions.Find(id);
+            Mission mission = db.Missions.Find(mid);
             if (mission == null)
             {
                 return HttpNotFound();
@@ -123,13 +123,13 @@ namespace LMSweb.Models
         }
 
         // GET: Missions/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string mid)
         {
-            if (id == null)
+            if (mid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Mission mission = db.Missions.Find(id);
+            Mission mission = db.Missions.Find(mid);
             if (mission == null)
             {
                 return HttpNotFound();
@@ -155,6 +155,7 @@ namespace LMSweb.Models
         public ActionResult Edit(MissionCreateViewModel model)
         {
             var mission = model.mission;
+            var prompt = model.prompt;
             if (ModelState.IsValid)
             {
                 db.Entry(mission).State = EntityState.Modified;
@@ -166,6 +167,8 @@ namespace LMSweb.Models
 
                 mission.KnowledgePoints = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
                 mission.CID = model.CID;
+
+                db.Entry(prompt).State = EntityState.Modified;
 
                 //mission = db.Missions.Include(p => p.Prompts).Single(m => m.MID == mission.MID);
 
@@ -183,13 +186,13 @@ namespace LMSweb.Models
         }
 
         // GET: Missions/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string mid)
         {
-            if (id == null)
+            if (mid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Mission mission = db.Missions.Find(id);
+            Mission mission = db.Missions.Find(mid);
             if (mission == null)
             {
                 return HttpNotFound();
@@ -205,10 +208,12 @@ namespace LMSweb.Models
         // POST: Missions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(string mid)
         {
-            Mission mission = db.Missions.Find(id);
+
+            Mission mission = db.Missions.Find(mid);
             var cid = mission.CID;
+              
             db.Missions.Remove(mission);
             db.SaveChanges();
             return RedirectToAction("Index", new { cid = cid });
@@ -221,6 +226,42 @@ namespace LMSweb.Models
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public ActionResult SelectMissions(string cid)
+        {
+            MissionViewModel model = new MissionViewModel();
+            
+            model.missions = db.Missions.ToList();
+            model.CID = cid;
+            
+            return View(model);
+        }
+
+        public ActionResult AddMissions(string mid, string cid)
+        {
+            Mission mission = db.Missions.Find(mid);  //old
+            //Mission m = new Mission();
+            var model = new MissionCreateViewModel();   //new
+
+            model.mission = new Mission();
+            
+
+            model.mission.MID = mission.MID + "_Copy_" + mission.CID;
+            model.mission.Start = mission.Start;
+            model.mission.End = mission.End;
+            model.mission.MName = mission.MName;
+            db.Missions.Add(model.mission);
+            model.mission.MDetail = mission.MDetail;
+            model.mission.KnowledgePoints  = mission.KnowledgePoints;
+            model.mission.Prompts = mission.Prompts;
+            model.mission.CID = cid;
+            model.mission.course = db.Courses.Find(cid);
+
+            
+            
+            db.SaveChanges();
+
+            return RedirectToAction("Index", new { cid = cid });
         }
     }
 }

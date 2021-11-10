@@ -1,19 +1,19 @@
-﻿@model IEnumerable<LMSweb.Models.Course>
+﻿@model IEnumerable<LMSweb.Models.Student>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
 </head>
 
 <div class="article">
     <h5>
         課程列表
     </h5>
-    
 
     <div>
 
@@ -23,10 +23,10 @@
                     @Html.DisplayNameFor(model => model.CID)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CName)
+                    @Html.DisplayNameFor(model => model.course.CName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.teacher.TName)
+                    @Html.DisplayNameFor(model => model.course.teacher)
                 </th>
                 <th></th>
             </tr>
@@ -38,15 +38,13 @@
                         @Html.DisplayFor(modelItem => item.CID)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CName)
+                        @Html.DisplayFor(modelItem => item.course.CName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.teacher.TName)
+                        @Html.DisplayFor(modelItem => item.course.teacher.TName)
                     </td>
                     <td>
-                        @Html.ActionLink("進入課程", "Details", new { cid = item.CID }) |
-                        @Html.ActionLink("編輯", "Edit", new { cid = item.CID }) |
-                        @Html.ActionLink("刪除", "Delete", new { cid = item.CID })
+                        @Html.ActionLink("進入課程", "StudentCourse", new { cid = item.CID })
                     </td>
                 </tr>
             }
@@ -54,4 +52,3 @@
         </table>
     </div>
 </div>
-

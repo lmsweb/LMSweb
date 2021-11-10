@@ -116,3 +116,5 @@ D:\LMSweb\obj\Debug\LMSweb.pdb
 D:\LMSweb\obj\Debug\LMSweb.csprojAssemblyReference.cache
 D:\LMSweb\obj\Debug\LMSweb.Migrations.studentGroup.resources
 D:\LMSweb\obj\Debug\LMSweb.Migrations.delsg.resources
+D:\LMSweb\obj\Debug\LMSweb.Migrations.delmissionkey.resources
+D:\LMSweb\obj\Debug\LMSweb.Migrations.courseSid.resources

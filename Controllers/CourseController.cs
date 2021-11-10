@@ -26,7 +26,7 @@ namespace LMSweb.Controllers
         // GET: Course
         
         [Authorize(Roles ="Teacher")]
-        public ActionResult Index()
+        public ActionResult TeacherHomePage()
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
@@ -314,13 +314,7 @@ namespace LMSweb.Controllers
             return Content(result, "application/json");
         }
 
-        /// <summary>
-        /// Files the upload handler.
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">file;上傳失敗：沒有檔案！</exception>
-        /// <exception cref="System.InvalidOperationException">上傳失敗：檔案沒有內容！</exception>
+       
         private string FileUploadHandler(HttpPostedFileBase file)
         {
             string result;
@@ -462,5 +456,104 @@ namespace LMSweb.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult GroupN(int n)
+        {
+            
+            var stus = GetRandomElements(db.Students.Where(x => x.@group == null).ToList());
+            List<Group> groups = new List<Group>();
+            var left_s = stus.Count % n;
+            for(int i = 1; i <= n; i++)
+            {
+                var g = new Group();
+                g.GName = "第" + i.ToString() + "組"+"_"+ g.GID;
+                groups.Add(g);
+            }
+            int g_idx = 0;
+            for(int i = 0; i < stus.Count; i++)
+            {
+                groups[g_idx].Students.Add(stus[i]);
+                g_idx++;
+                g_idx = g_idx % n;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                db.Groups.Add(groups[i]);
+            }
+            db.SaveChanges();
+            return RedirectToAction("StudentGroup");
+
+        }
+
+        public static List<t> GetRandomElements<t>(IEnumerable<t> list)
+        {
+            return list.OrderBy(x => Guid.NewGuid()).ToList();
+        }
+
+        public ActionResult GroupDelete(int groupId)
+        {
+
+            Group group = db.Groups.Find(groupId);
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+
+            group.Students.Clear();
+            db.Groups.Remove(group);
+
+            db.SaveChanges();
+
+            return RedirectToAction("StudentGroup");
+        }
+
+        public ActionResult GroupStudentDelete(string groupStuId, string CID)
+        {
+            Student student = db.Students.Find(groupStuId, CID);
+
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            Group group = student.group;
+            group.Students.Remove(student);
+            student.group = null;
+
+
+            db.SaveChanges();
+
+            return RedirectToAction("StudentGroup");
+        }
+        public ActionResult AddStuToOtherGroup(int gid, List<string> StudentList, string CID)
+        {
+            if (ModelState.IsValid)
+            {
+                //Group group = db.Groups.Find(gid);
+                foreach(var sid in StudentList)
+                {
+                    Student student = db.Students.Find(sid, CID);
+                    
+                    Group group = db.Groups.Find(gid);
+                    //student.group = group;
+                    group.Students.Add(student);
+ 
+                }
+                
+
+                //group.Students = (ICollection<Student>)db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
+                //db.Groups.Add(group);
+
+                
+                db.SaveChanges();
+                return RedirectToAction("Index", new { cid = CID });
+            }
+            var vmodel = new GroupCreateViewModel();
+            vmodel.StudentList = GetStudent();
+
+            return View(vmodel);                                                                                                                                                                                                         
+
+        }
+
     }
 }

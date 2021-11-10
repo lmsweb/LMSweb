@@ -21,6 +21,7 @@ namespace LMSweb.Models
         }
 
         [Key]
+       
         [Display(Name = "任務編號")]
         public string MID { get; set; }
 

@@ -9,27 +9,31 @@
 
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" href="https://localhost:44301/Course/StudentManagement?CID=C001">修課名單</a>
+                <a class="nav-link" href="https://localhost:44301/Course/StudentManagement?CID=@Model.CID">修課名單</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="https://localhost:44301/Course/StudentGroup?CID=C001">分組名單</a>
+                <a class="nav-link active" aria-current="page" href="https://localhost:44301/Course/StudentGroup?CID=@Model.CID">分組名單</a>
             </li>
 
         </ul>
         <br />
         @*onclick="myFunction()*@
-       
+        <label>
+            分組數量 : 
+            <input type="number" min="1" max="" placeholder="需要分成多少組" v-model="groupNum" id="groupN"/>
+        </label>
+        <button class="btn btn-primary" id="groupclick" >隨機分組</button>
+
         <div class="row">
             <div class="col-sm-6">
+
                 <div class="card">
                     <div class="card-header">
                         未分組名單
                     </div>
                     <div class="card-body">
                         <div class="form-check">
-
                             <div class="custom-control custom-checkbox container">
-
                                 @for (int i = 0; i < Model.StudentList.Count(); i++)
                                 {
                                     if (i % 2 == 0)
@@ -38,17 +42,11 @@
                                         }
                                         <input class="col-sm-2 check_student" style="margin-top:5px;" type="checkbox" id="@Model.StudentList[i].Text" name="all_student" value="@Model.StudentList[i].Value">
                                         <label class="w-25 h-auto">@Model.StudentList[i].Text</label>
-                                        if (i % 2 == 1 || i == Model.students.Count() - 1)
+                                        if (i % 2 == 1 || i == Model.StudentList.Count() - 1)
                                         {
                                         @:</div>
                                     }
                                 }
-
-
-
-                                @*@Html.ListBoxFor(model => model.SelectStudentList, Model.StudentList, htmlAttributes: new { @class = "form-control", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })*@
-
-
                             </div>
                         </div>
                     </div>
@@ -63,12 +61,14 @@
                     <div class="card-body">
                         @*<button class="btn btn-primary" id="btn">新增組別</button>*@
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">新增組別</button>
+                        
+                        <br />
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">新增組別</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="close groupclose" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -98,88 +98,52 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            @*<table class="table">
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.group.GName)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.students)
-                                    </th>
-                                    <th></th>
-                                </tr>
 
-                                @foreach (var item in Model.students)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(model => item.group.GName)
-                                        </td>
-                                        <td>
-                                           @foreach (var stu in Model.students)
-                                            {
-                                                @Html.DisplayFor(sid => stu.SName)
-                                                <br>
-                                            }
-                                            @foreach (var stu in Model.students)
-                                            {
-                                                @Html.DisplayFor(modelItem => stu.SName)
-                                                <br>
-                                            }
+                        @foreach (var item in Model.groups)
+                        {
 
-                                        </td>
-                                        <td>
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.GID }) |
-                                            @Html.ActionLink("Details", "Details", new { id = item.GID }) |
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.GID })
-                                        </td>
-                                    </tr>
-                                }
+                            <div class="card">
 
-                            </table>*@
-                        </div>
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-sm-7">
+                                            <p id="existedGroup_name">@Html.DisplayFor(modelItem => item.GName)</p>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="row justify-content-md-end">
+                                                <div>
+                                                    <button type="button" class="btn btn-primary  btn-sm addGbtn"  id="@item.GID">
+                                                        加入組別
+                                                    </button>
+                                                </div>
+                                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                    <button type="button" class="close groupclose" aria-label="Close" id="@item.GID">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="card-body">
+                                    @foreach (var stu in item.Students)
+                                    { 
+                                        <button type="button" class="close stuclose" aria-label="Close" id="@stu.SID">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <p>@Html.DisplayFor(sid => stu.SName) &ensp;</p>
+                                    }
+                                </div>
 
+                                </div>
+                            <br />
+                        }
                     </div>
                 </div>
             </div>
         </div>
-
-        @*<table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.group.GName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SList)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model.students)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.group.GName)
-                    </td>
-                    <td>
-                        @foreach (var stu in Model.SList)
-                        {
-                            @(stu.SName)
-                            <br>
-                        }
-
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.GID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.GID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.GID })
-                    </td>
-                </tr>
-            }
-
-        </table>*@
     </div>   
 </body>
 
@@ -188,24 +152,8 @@
 @section scripts {
     <script type="text/javascript"></script>
     <script>
-        //document.getElementById('btn').onclick = function () {
-        //    var markedCheckbox = document.getElementsByName('stuName');
-        //    for (var checkbox of markedCheckbox) {
-        //        if (checkbox.checked) {
-        //            document.getElementById("stu").append(checkbox.value + ' ');
-        //        }
-        //    }
-        //    var x = document.createElement("INPUT");
-        //    x.setAttribute("type", "text");
-        //    x.setAttribute("value", "請輸入組別名稱");
-        //    document.getElementById("gname").appendChild(x);
-        //    var str = '小組成員 : ';
-        //    document.getElementById("text").innerHTML = str;
-            
-        //    //var h = document.createElement("HR");
-        //    //document.body.appendChild(h);
-        //}
-        $('#exampleModal').on('show.bs.modal', function (event) {
+        
+        $('#exampleModal').on('show.bs.modal', function (event) {     //將選取的學生顯示在Modal上
             var button = $(event.relatedTarget) // Button that triggered the modal
             //var recipient = button.data('whatever') // Extract info from data-* attributes
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
@@ -229,10 +177,34 @@
             //modal.find('.modal-body input').val(recipient)
             //modal.find('.modal-body input').val(recipient)
         });
-
-
         
-        $('#alert').click(function () {
+        $('.addGbtn').click(function () {   //將已分好組別裡的某位學生加入其他組別
+            var otherGroupStudent = [];
+            var gid = this.id;
+            $("input[name='all_student']").each(function () {
+                if ($(this).prop("checked")) {                
+                    otherGroupStudent.push($(this).val());
+                }
+            });
+            console.log(otherGroupStudent);
+            console.log(gid);
+            //alert(otherGroupStudent)
+            $.ajax({
+                url: "@Url.Action("AddStuToOtherGroup", "Course")",
+                method: "post",
+                contentType: 'application/json',
+                data: JSON.stringify({ gid: gid, StudentList : otherGroupStudent, CID : "@Model.CID" }),
+                success: function (response) {
+                    window.location.reload();
+                   
+                },
+                error: function (thrownError) {
+                    console.log(thrownError);
+                }
+            });
+        });
+        
+        $('#alert').click(function () {    //儲存Modal的資料
             console.log($('#group_name').val());
             var students = [];
             $("input[name='all_student']").each(function () {
@@ -250,17 +222,80 @@
                 method: "post",
                 contentType: 'application/json',
                 data: JSON.stringify({ GName: $('#group_name').val(), StudentList : students, CID : "@Model.CID" }),
-                //success: function (response) {
-                //    const charge = [];
-                //    charge.push(...response);
-                //    createDomElement(charge);
-                //},
-                //error: function (thrownError) {
-                //    console.log(thrownError);
-                //}
+                success: function (response) {
+                    window.location.reload();
+                    //const charge = [];
+                    //charge.push(...response);
+                    //createDomElement(charge);
+                },
+                error: function (thrownError) {
+                    console.log(thrownError);
+                }
             });
             
         });
+
+        $('#groupclick').click(function () {    //隨機分組
+            var students = [];
+            var gn = $("#groupN").val();
+            console.log(gn);
+            $.ajax({
+                url: "@Url.Action("GroupN", "Course")",
+                method: "post",
+                contentType: 'application/json',
+                data: JSON.stringify({ n: gn }),
+                success: function (response) {
+                    window.location.reload();
+                    
+                },
+                error: function (thrownError) {
+                    console.log(thrownError);
+                }
+            });
+            console.log(123);
+        })
+
+        $('.groupclose').click(function () {    //刪除已分好的組別
+            var gid = this.id;
+                //alert(gid);
+
+            $.ajax({
+                url: "@Url.Action("GroupDelete", "Course")",
+                method: "post",
+                contentType: 'application/json',
+                data: JSON.stringify({ groupId: gid }),
+                success: function (response) {
+                    window.location.reload();
+                    
+                },
+                error: function (thrownError) {
+                    console.log(thrownError);
+                }
+            });
+            console.log(123);
+        })
+
+        
+        $('.stuclose').click(function () {   //刪除已分好的組別裡面的某位學生
+            var sid = this.id;
+            //alert(sid);
+            
+            $.ajax({
+                url: "@Url.Action("GroupStudentDelete", "Course")",
+                method: "post",
+                contentType: 'application/json',
+                data: JSON.stringify({ groupStuId: sid , CID : "@Model.CID"}),
+                success: function (response) {
+                    window.location.reload();
+                    
+                },
+                error: function (thrownError) {
+                    console.log(thrownError);
+                }
+            });
+           
+        })
+
 
     </script>
 }

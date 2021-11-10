@@ -44,7 +44,7 @@ namespace LMSweb.Controllers
 
                 Request.GetOwinContext().Authentication.SignIn(identity); //授權(登入)
 
-                return RedirectToAction("Index", "Course");　
+                return RedirectToAction("TeacherHomePage", "Teacher");　
             }
             else
             {
@@ -58,16 +58,28 @@ namespace LMSweb.Controllers
             Request.GetOwinContext().Authentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
-        // GET: Teacher
-        public ActionResult Index()
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult TeacherHomePage()
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
             var tid = claimData[0].Value; //取值(因為只有一筆)
             var courses = db.Courses.Where(c => c.TID == tid);
+
+
             return View(courses);
-            //return View(db.Courses.ToList());
         }
+        // GET: Teacher
+        //public ActionResult Index()
+        //{
+        //    ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+        //    var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
+        //    var tid = claimData[0].Value; //取值(因為只有一筆)
+        //    var courses = db.Courses.Where(c => c.TID == tid);
+        //    return View(courses);
+        //    //return View(db.Courses.ToList());
+        //}
 
         // GET: Teacher/Details/5
         public ActionResult Details(string cid)
