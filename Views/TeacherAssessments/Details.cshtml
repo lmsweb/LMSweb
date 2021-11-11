@@ -1,0 +1,43 @@
+﻿@model LMSweb.Models.TeacherAssessment
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TeacherAssessment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TeacherA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeacherA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GroupAchievementLevel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GroupAchievementLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TEID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

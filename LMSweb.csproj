@@ -176,6 +176,7 @@
     <Compile Include="Controllers\KnowledgePointsController.cs" />
     <Compile Include="Controllers\PromptsController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\TeacherAssessmentsController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -628,8 +629,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Teacher\Create.cshtml" />
@@ -643,7 +642,7 @@
     <Content Include="Views\Course\Details.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Teacher\TeacherHomePage.cshtml" />
-    <Content Include="Views\Shared\_CoursesLayout.cshtml" />
+    <Content Include="Views\Shared\_TeacherLayout.cshtml" />
     <Content Include="Views\Course\Stu_Create.cshtml" />
     <Content Include="Views\Course\Stu_Delete.cshtml" />
     <Content Include="Views\Course\Stu_Details.cshtml" />
@@ -690,6 +689,13 @@
     <Content Include="Views\Student\StudentCourse.cshtml" />
     <Content Include="Views\Student\StudentMission.cshtml" />
     <Content Include="Views\Missions\test.cshtml" />
+    <Content Include="Views\Score\Score.cshtml" />
+    <Content Include="Views\TeacherAssessments\CheckMission.cshtml" />
+    <Content Include="Views\TeacherAssessments\Create.cshtml" />
+    <Content Include="Views\TeacherAssessments\Delete.cshtml" />
+    <Content Include="Views\TeacherAssessments\Details.cshtml" />
+    <Content Include="Views\TeacherAssessments\Edit.cshtml" />
+    <Content Include="Views\TeacherAssessments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
