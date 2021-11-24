@@ -118,3 +118,11 @@ D:\LMSweb\obj\Debug\LMSweb.Migrations.studentGroup.resources
 D:\LMSweb\obj\Debug\LMSweb.Migrations.delsg.resources
 D:\LMSweb\obj\Debug\LMSweb.Migrations.delmissionkey.resources
 D:\LMSweb\obj\Debug\LMSweb.Migrations.courseSid.resources
+D:\LMSweb\bin\ClosedXML.dll
+D:\LMSweb\bin\DocumentFormat.OpenXml.dll
+D:\LMSweb\bin\ExcelNumberFormat.dll
+D:\LMSweb\bin\System.IO.Packaging.dll
+D:\LMSweb\bin\ClosedXML.pdb
+D:\LMSweb\bin\ClosedXML.xml
+D:\LMSweb\bin\DocumentFormat.OpenXml.xml
+D:\LMSweb\bin\ExcelNumberFormat.xml

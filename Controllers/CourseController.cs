@@ -37,22 +37,22 @@ namespace LMSweb.Controllers
             return View(courses);
         }
 
-        public ActionResult Stu_Index(string cid)
-        {   
-            if(cid == null)
-            {
-                return RedirectToAction("Stu_Index");
-            }
-            CourseViewModel model = new CourseViewModel();
-            var course = db.Courses.Where(c => c.CID == cid).Single();
-            model.CID = course.CID;
-            model.CName = course.CName;
-            model.students = course.Students;
-            ViewBag.CID = cid;
-            //model.missions = db.Missions.Where(m => m.CID == cid);
+        //public ActionResult Stu_Index(string cid)
+        //{   
+        //    if(cid == null)
+        //    {
+        //        return RedirectToAction("Stu_Index");
+        //    }
+        //    CourseViewModel model = new CourseViewModel();
+        //    var course = db.Courses.Where(c => c.CID == cid).Single();
+        //    model.CID = course.CID;
+        //    model.CName = course.CName;
+        //    model.students = course.Students;
+        //    ViewBag.CID = cid;
+        //    //model.missions = db.Missions.Where(m => m.CID == cid);
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
         //public ActionResult Stu_Details()
         //{
         //    return View();
@@ -401,8 +401,7 @@ namespace LMSweb.Controllers
 
         [HttpGet]
         public ActionResult StudentGroup(string CID)
-        {
-            
+        {            
             var vmodel = new GroupCreateViewModel();
             vmodel.StudentList = GetStudent();
             vmodel.students = db.Students.Where(x => x.@group != null ).ToList();
@@ -413,8 +412,6 @@ namespace LMSweb.Controllers
                          from s in db.Students
                          where g.GID == s.@group.GID
                          select new { s.SName, s.@group.GName };
-            
-
 
             return View(vmodel);
         }

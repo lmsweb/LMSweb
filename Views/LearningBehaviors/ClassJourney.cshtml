@@ -1,0 +1,311 @@
+﻿@model LMSweb.ViewModel.LearnBViewModel
+@using System.Collections.Generic;
+
+@{
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+    var sN = Json.Encode(Model.student.Select(x => x.SName).ToList());
+    var sP = Json.Encode(Model.student.Select(p => p.Score).ToList());
+
+}
+<div class="article">
+    <div class="form-group form-inline">
+        <div class="col-md-1">
+            <input type="button" class="btn btn-secondary" value="個人歷程" onclick="location.href='@Url.Action("PersonalJourney", "LearningBehaviors")'" />
+        </div>
+        <div class="col-md-1">
+            <input type="button" class="btn btn-secondary" value="小組歷程" onclick="location.href='@Url.Action("GroupJourney", "LearningBehaviors")'" />
+        </div>
+        <div class="col-md-1">
+            <input type="button" class="btn btn-secondary" value="全班歷程" onclick="location.href='@Url.Action("ClassJourney", "LearningBehaviors")'" />
+        </div>
+    </div>
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>學生</th>
+                <th>動作類型</th>
+                <th>動作子項</th>
+                <th>動作內容</th>
+                <th>時間</th>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model.learningbehavior)
+        {
+            <tr>
+                <th>
+                    @item.StudentMissions.SID
+                </th>
+                <th>
+                    @item.ActionType
+                </th>
+                <th>
+                    @item.subAction
+                </th>
+                <th>
+                    @item.Detail
+                </th>
+                <th>
+                    @item.Time
+                </th>
+            </tr>
+        }
+    </table>
+    <form method="post">
+        <a class="btn btn-danger" href="@Url.Action("DownloadExcelDocument","LearningBehaviors")">Export To Excel</a>
+    </form>
+    <!-- One -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <script src="../Scripts/Chart.min.js"></script>
+                <canvas id="horizontalBar"></canvas>
+            </div>
+            <div class="col-md-6">
+                <script src="../Scripts/Chart.min.js"></script>
+                <canvas id="Combination Chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- horizontalBar -->
+<script>
+    //var jsMonth = @*@Html.Raw(ViewBag.JsonMonth)*@;
+    var ctx = document.getElementById("horizontalBar");
+    //var jsName = Model.Select(x => x.);//學生名稱
+    //var jsPoint = Model.Select(y => y.course);//學生積分
+
+    var jsName = @Html.Raw(sN);//學生名稱
+    var jsPoint = @Html.Raw(sP);//學生積分
+
+    var chart = new Chart(ctx, {
+        type: "horizontalBar",
+        data: {
+            labels: jsName, //['1', '2', '3', '4', '5', '6', '7', '8', '9', "10"],// '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26'],
+
+            datasets: [{
+                label: "學生積分",
+                //label: jsPoint[0].StudentName,
+                fill: false,
+                backgroundColor: 'rgba(255,165,0,0.3)',
+                borderColor: 'rgb(255,135,20)',
+                //pointStyle: "circle",
+                //pointBackgroundColor: 'rgb(0,222,0)',
+                //pointRadius: 5,
+                //pointHoverRadius: 10,
+                data: jsPoint//[13,10,20,25,45,36,24,16,9,4] //[13, 10, 13, 20, 25, 27, 31, 23, 36, 22, 26, 31, 29, 24, 19, 31, 44, 28, 31, 33, 10, 19, 13, 11, 12, 30]
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '全班長條圖'
+            },
+            tooltips: {
+                mode: 'point',
+                intersect: true,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '積分',
+                        fontSize: 15
+                    },
+                    ticks: {
+                        fontSize: 15,
+                        beginAtZero: true
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '學生',
+                        fontSize: 15
+                    },
+
+                    ticks: {
+                        fontSize: 15,
+                    }
+                }]
+            },
+            animation: {
+                duration: 2000
+            }
+        }
+    });
+
+    @*var chart = new Chart(ctx, {
+        type: "radar",
+        data: {
+            //labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+            labels: jsName,
+            datasets: [{
+                label: "學生積分",
+                //label: jsPoint[0].StudentName,
+                fill: false,
+                backgroundColor: 'rgba(255,165,0,0.3)',
+                borderColor: 'rgb(255,135,20)',
+                //pointStyle: "circle",
+                //pointBackgroundColor: 'rgb(0,222,0)',
+                //pointRadius: 5,
+                //pointHoverRadius: 10,
+                //data:
+                data: [3, 1, 13, 10]
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '學習歷程圖表'
+            },
+            tooltips: {
+                mode: 'point',
+                intersect: true,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '積分',
+                        fontSize: 15
+                    },
+                    ticks: {
+                        fontSize: 15,
+                        beginAtZero: true
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '學生',
+                        fontSize: 15
+                    },
+
+                    ticks: {
+                        fontSize: 15,
+                    }
+                }]
+            },
+            animation: {
+                duration: 2000
+            }
+        }
+    });*@
+</script>
+<!-- Combination Chart -->
+<script>
+    var ctx = document.getElementById("Combination Chart");
+    var data = {
+        labels: ['20以下', '20-30', '30-40', '40-50'],
+        datasets: [{
+            type: 'bar',
+            label: '積分',
+            yAxisID: 'A',
+            backgroundColor: 'rgba(255,165,0,0.3)',
+            borderColor: 'rgba(255,165,0,0.3)',
+            data: [5, 23, 17, 10],
+        },
+        {
+            type: 'line',
+            label: '繪製流程圖',
+            yAxisID: 'B',
+            backgroundColor: 'rgba(255,165,100)',
+            borderColor: 'rgba(255,165,100)',
+            fill: false,
+            data: [17, 15, 21, 35],
+        },
+        {
+            type: 'line',
+            label: '編輯程式碼',
+            yAxisID: 'B',
+            backgroundColor: 'rgba(255,165,100)',
+            borderColor: 'rgba(255,165,100)',
+            fill: false,
+            data: [7, 10, 31, 27],
+        },
+        {
+            type: 'line',
+            label: '發問',
+            yAxisID: 'B',
+            backgroundColor: 'rgba(255,165,100)',
+            borderColor: 'rgba(255,165,100)',
+            fill: false,
+            data: [11, 5, 25, 15],
+        },
+        {
+            type: 'line',
+            label: '回答',
+            yAxisID: 'B',
+            backgroundColor: 'rgba(255,165,100)',
+            borderColor: 'rgba(255,165,100)',
+            fill: false,
+            data: [13, 17, 11, 14],
+        }]
+    };
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '學生-學習行為'
+            },
+            scales: {
+                xAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: '積分',
+                        fontSize: 15
+                    },
+                }],
+                yAxes: [{
+                    id: 'A',
+                    position: 'left',
+                    scalePositionLeft: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '人數',
+                        fontSize: 15
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                },
+                {
+                    id: 'B',
+                    position: 'right',
+                    scalePositionLeft: false,
+                    scaleLabel: {
+                        display: true,
+                        labelString: '平均次數',
+                        fontSize: 15
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                    }
+                }]
+            },
+        },
+    })
+</script>
+
+

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using LMSweb.Models;
 
 namespace LMSweb.ViewModel
 {
@@ -36,11 +37,24 @@ namespace LMSweb.ViewModel
         public LMSweb.Models.Mission mis { get; set; }
         public LMSweb.Models.Prompt prompt { get; set; }
     }
-    public class TeacherAssessmentViewModel : CourseLayoutViewModelbase
+    //public class TeacherAssessmentViewModel : CourseLayoutViewModelbase
+    //{
+    //    public IEnumerable<LMSweb.Models.TeacherAssessment> teacherAssessments { get; set; }
+    //}
+
+    public class LearnBViewModel : CourseLayoutViewModelbase
     {
-        public IEnumerable<LMSweb.Models.TeacherAssessment> teacherAssessments { get; set; }
+        public List<Student> student { get; set; }
+
+        public List<Mission> missions { get; set; }
+
+        public List<StudentMission> studentmissions { get; set; }
+
+        public List<LearningBehavior> learningbehavior { get; set; }
+
+        public List<Group> group { get; set; }
+
     }
-   
 
 
 }
