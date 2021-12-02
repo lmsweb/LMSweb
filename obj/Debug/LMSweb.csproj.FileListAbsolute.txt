@@ -126,3 +126,5 @@ D:\LMSweb\bin\ClosedXML.pdb
 D:\LMSweb\bin\ClosedXML.xml
 D:\LMSweb\bin\DocumentFormat.OpenXml.xml
 D:\LMSweb\bin\ExcelNumberFormat.xml
+D:\LMSweb\obj\Debug\LMSweb.Migrations.LB_CID.resources
+D:\LMSweb\obj\Debug\LMSweb.Migrations.levelScore.resources

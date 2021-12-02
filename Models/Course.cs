@@ -35,5 +35,8 @@ namespace LMSweb.Models
 
         public string SID { get; set; }
         public virtual ICollection<Student> Students { get; set; }
+
+        public virtual ICollection<LearningBehavior> LearningBehaviors { get; set; }
+
     }
 }

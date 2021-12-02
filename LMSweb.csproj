@@ -222,16 +222,27 @@
     <Compile Include="Migrations\202111090105300_courseSid.Designer.cs">
       <DependentUpon>202111090105300_courseSid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111250815119_LB_CID.cs" />
+    <Compile Include="Migrations\202111250815119_LB_CID.Designer.cs">
+      <DependentUpon>202111250815119_LB_CID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112021345002_levelScore.cs" />
+    <Compile Include="Migrations\202112021345002_levelScore.Designer.cs">
+      <DependentUpon>202112021345002_levelScore.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\ColLevel.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\GroupAchLevel.cs" />
     <Compile Include="Models\KnowledgePoint.cs" />
     <Compile Include="Models\LearningBehavior.cs" />
     <Compile Include="Models\LMSmodel.cs" />
     <Compile Include="Models\Mission.cs" />
     <Compile Include="Controllers\MissionsController.cs" />
     <Compile Include="Models\PeerAssessment.cs" />
+    <Compile Include="Models\PerLevel.cs" />
     <Compile Include="Models\Prompt.cs" />
     <Compile Include="Models\TotalScore.cs" />
     <Compile Include="Models\SelfAssessment.cs" />
@@ -243,7 +254,6 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\GroupCreateViewModel.cs" />
-    <Compile Include="ViewModel\LearnBViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
   </ItemGroup>
@@ -752,6 +762,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111090105300_courseSid.resx">
       <DependentUpon>202111090105300_courseSid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111250815119_LB_CID.resx">
+      <DependentUpon>202111250815119_LB_CID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112021345002_levelScore.resx">
+      <DependentUpon>202112021345002_levelScore.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -42,8 +42,10 @@ namespace LMSweb.Models
 
 
         //public virtual Mission Mission { get; set; }
+        public string CID { get; set; }
+        public virtual Course course { get; set; }
 
-        //public virtual Student Student { get; set; }
+
         public virtual StudentMission StudentMissions { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace LMSweb.Models
         }
 
         [Key]
-       
+
         [Display(Name = "任務編號")]
         public string MID { get; set; }
 
@@ -44,8 +44,22 @@ namespace LMSweb.Models
         [Display(Name = "任務內容")]
         public string MDetail { get; set; }
 
-        //[Key]
-        //[Column(Order = 1)]
+
+        [Display(Name = "討論權重")]
+        public int discuss_k { get; set; }
+
+        [Display(Name = "規劃權重")]
+        public int chart_k { get; set; }
+
+        [Display(Name = "撰寫權重")]
+        public int code_k { get; set; }
+
+        [Display(Name = "互評分數權重")]
+        public int eva_k { get; set; }
+
+        [Display(Name = "個人分數權重")]
+        public int per_k {get;set;}
+
 
         [Display(Name = "課程編號")]
         public string CID { get; set; }

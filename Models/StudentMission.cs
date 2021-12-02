@@ -19,6 +19,8 @@ namespace LMSweb.Models
         [Display(Name = "任務編號")]
         public string MID { get; set; }
 
+        public int total_score { get; set; }
+
         public virtual SelfAssessment selfAssessment { get; set; }
         //public varchar SEID 
 
