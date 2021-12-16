@@ -44,6 +44,8 @@ namespace LMSweb.Models
         [Display(Name = "任務內容")]
         public string MDetail { get; set; }
 
+        [Display(Name = "是否加入後設認知")]
+        public bool AddMetacognition { get; set; }
 
         [Display(Name = "討論權重")]
         public int discuss_k { get; set; }

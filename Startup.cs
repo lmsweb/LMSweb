@@ -24,7 +24,7 @@ namespace LMSweb
             {
                 AuthenticationType = "Student",
                 LoginPath = new PathString("/Student/Login"),
-                ExpireTimeSpan = TimeSpan.FromMinutes(30)
+                ExpireTimeSpan = TimeSpan.FromMinutes(30)   //設置cookie保留的時間
             });
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions

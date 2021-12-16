@@ -230,6 +230,10 @@
     <Compile Include="Migrations\202112021345002_levelScore.Designer.cs">
       <DependentUpon>202112021345002_levelScore.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112030203354_missionAddMeg.cs" />
+    <Compile Include="Migrations\202112030203354_missionAddMeg.Designer.cs">
+      <DependentUpon>202112030203354_missionAddMeg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\ColLevel.cs" />
@@ -768,6 +772,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112021345002_levelScore.resx">
       <DependentUpon>202112021345002_levelScore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112030203354_missionAddMeg.resx">
+      <DependentUpon>202112030203354_missionAddMeg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

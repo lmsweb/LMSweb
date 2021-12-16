@@ -128,3 +128,4 @@ D:\LMSweb\bin\DocumentFormat.OpenXml.xml
 D:\LMSweb\bin\ExcelNumberFormat.xml
 D:\LMSweb\obj\Debug\LMSweb.Migrations.LB_CID.resources
 D:\LMSweb\obj\Debug\LMSweb.Migrations.levelScore.resources
+D:\LMSweb\obj\Debug\LMSweb.Migrations.missionAddMeg.resources

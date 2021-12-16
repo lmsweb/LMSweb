@@ -141,15 +141,15 @@ namespace LMSweb.Controllers
         }
 
         // POST: Student/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Stu_DeleteConfirmed(string sid, string cid)
-        {
-            Student student = db.Students.Find(sid, cid);
-            db.Students.Remove(student);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Stu_DeleteConfirmed(string sid, string cid)
+        //{
+        //    Student student = db.Students.Find(sid, cid);
+        //    db.Students.Remove(student);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
         // GET: Course/Details/5
         public ActionResult Details(string cid)
         {
@@ -189,7 +189,7 @@ namespace LMSweb.Controllers
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("TeacherHomePage", "Teacher", null);
             }
 
             ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
@@ -223,7 +223,7 @@ namespace LMSweb.Controllers
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("TeacherHomePage", "Teacher", null);
             }
             ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
             return View(course);
@@ -252,7 +252,7 @@ namespace LMSweb.Controllers
             Course course = db.Courses.Find(cid);
             db.Courses.Remove(course);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("TeacherHomePage", "Teacher", null);
         }
         private string fileSavedPath = WebConfigurationManager.AppSettings["UploadPath"];
 
