@@ -7,6 +7,6 @@ namespace LMSweb.Models
 {
     public class TotalScore
     {
-
+        int totalScore { get; set; }
     }
 }

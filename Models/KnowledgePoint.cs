@@ -11,7 +11,7 @@ namespace LMSweb.Models
     {
         public KnowledgePoint()
         {
-            Missions = new HashSet<Mission>();
+            Courses = new HashSet<Course>();
         }
 
         [Key]
@@ -29,6 +29,6 @@ namespace LMSweb.Models
         //public virtual Mission Mission { get; set; }
 
 
-        public virtual ICollection<Mission> Missions { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }

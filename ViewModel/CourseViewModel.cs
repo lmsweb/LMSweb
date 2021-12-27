@@ -51,6 +51,7 @@ namespace LMSweb.ViewModel
         public List<StudentMission> studentmissions { get; set; }
 
         public List<LearningBehavior> learningbehavior { get; set; }
+        public LMSweb.Models.LearningBehavior LearningBehavior { get; set; }
 
         public List<Group> group { get; set; }
 

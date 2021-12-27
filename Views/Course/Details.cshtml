@@ -14,26 +14,49 @@
 <body>
     <div class="article">
         <h4>@(Model.CName)</h4>
-        
+
         <hr />
 
-        @*<div>
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.kps)
-                </dt>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.knowledgePoint.KContent)
+                </th>
+                <th></th>
+            </tr>
 
-                <dd>
-                    @Html.DisplayFor(model => model.kps.)
-                </dd>
-            </dl>
-        </div>*@
+            @*@foreach (var item in Model.kps)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.KID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.KID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.KID })
+                    </td>
+                </tr>
+            }*@
+
+            @*<div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.knowledgePoint.KContent)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.knowledgePoint.KContent)
+                    </dd>
+                </dl>
+            </div>*@
 
 
-        <p>
-            @Html.ActionLink("編輯", "Edit", new { cid = Model.CID }) |
-            @Html.ActionLink("返回", "Index")
-        </p>
+            <p>
+                @Html.ActionLink("編輯", "Edit", new { cid = Model.CID }) |
+                @Html.ActionLink("返回", "Index")
+            </p>
+        </table>
     </div>
 </body>
 

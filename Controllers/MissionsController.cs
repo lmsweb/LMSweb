@@ -89,7 +89,7 @@ namespace LMSweb.Models
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MissionCreateViewModel model)
-        {
+            {
 
             //foreach (int kid in model.SelectKnowledgeList)
             //{
