@@ -13,6 +13,7 @@ namespace LMSweb.Models
         {
             Missions = new HashSet<Mission>();
             Students = new HashSet<Student>();
+            KnowledgePoints = new HashSet<KnowledgePoint>();
         }
 
         [Key]
@@ -37,6 +38,7 @@ namespace LMSweb.Models
         public virtual ICollection<Student> Students { get; set; }
 
         public virtual ICollection<LearningBehavior> LearningBehaviors { get; set; }
+        public virtual ICollection<KnowledgePoint> KnowledgePoints { get; set; }
 
     }
 }

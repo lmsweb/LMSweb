@@ -9,19 +9,7 @@ namespace LMSweb.Models
 {
     public class Mission
     {
-        public Mission()
-        {
-            //Groups = new HashSet<Group>();
-            KnowledgePoints = new HashSet<KnowledgePoint>();
-            Prompts = new HashSet<Prompt>();
-            //SelfAssessments = new HashSet<SelfAssessment>();
-            //PeerAssessments = new HashSet<PeerAssessment>();
-            //LearnB = new HashSet<LearningBehavior>();
-            //TeacherA = new HashSet<TeacherAssessment>();
-        }
-
         [Key]
-
         [Display(Name = "任務編號")]
         public string MID { get; set; }
 
@@ -39,6 +27,8 @@ namespace LMSweb.Models
         [Display(Name = "任務名稱")]
         public string MName { get; set; }
 
+        [Display(Name = "提示內容")]
+        public string Tip { get; set; }
 
         [Required]
         [Display(Name = "任務內容")]
@@ -67,18 +57,9 @@ namespace LMSweb.Models
         public string CID { get; set; }
         public virtual Course course { get; set; }
 
-
-        //public virtual ICollection<Group> Groups { get; set; }
         public virtual ICollection<Student> Students { get; set; }
 
-        [Display(Name = "知識點")]
-        public virtual ICollection<KnowledgePoint> KnowledgePoints { get; set; }
 
-        [Display(Name = "提示")]
-        public virtual ICollection<Prompt> Prompts { get; set; }
-        //public virtual ICollection<SelfAssessment> SelfAssessments { get; set; }
-        //public virtual ICollection<PeerAssessment> PeerAssessments { get; set; }
-        //public virtual ICollection<LearningBehavior> LearnB { get; set; }
-        //public virtual ICollection<TeacherAssessment> TeacherA { get; set; }
+
     }
 }

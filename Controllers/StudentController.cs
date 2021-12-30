@@ -105,10 +105,19 @@ namespace LMSweb.Controllers
             var course = db.Courses.Where(c => c.CID == cid).Single();
             model.missions = db.Missions.Where(m => m.CID == cid).Include(m => m.course);
             model.CID = course.CID;
-            model.CName = course.CName;
+            //model.CName = course.CName;
             return View(model);
         }
 
+        public ActionResult Chat(string cid, string mid)
+        {
+            MissionViewModel model = new MissionViewModel();
+            var mission = db.Missions.Where(m => m.MID == mid);
+            var course = db.Courses.Where(c => c.CID == cid).Single();
+
+            model.CID = course.CID;
+            return View(model);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

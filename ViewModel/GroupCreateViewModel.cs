@@ -7,9 +7,9 @@ using System.Web.Mvc;
 
 namespace LMSweb.ViewModel
 {
-    
-    public class GroupCreateViewModel : CourseLayoutViewModelbase
+    public class GroupCreateViewModel
     {
+        public string CID { get; set; }
         public List<SelectListItem> StudentList { get; set; }
         public IEnumerable<string> SelectStudentList { get; set; }
         public IEnumerable<Student> students { get; set; }

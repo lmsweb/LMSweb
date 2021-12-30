@@ -9,11 +9,6 @@ namespace LMSweb.Models
 {
     public class KnowledgePoint
     {
-        public KnowledgePoint()
-        {
-            Courses = new HashSet<Course>();
-        }
-
         [Key]
         //[Column(Order = 0)]
         [Display(Name = "編號")]
@@ -23,12 +18,7 @@ namespace LMSweb.Models
         [Display(Name = "知識點")]
         public string KContent { get; set; }
 
-        //[Key]
-        //[Column(Order = 1)]
-        //public string MID { get; set; }
-        //public virtual Mission Mission { get; set; }
 
-
-        public virtual ICollection<Course> Courses { get; set; }
+        public virtual Course Courses { get; set; }
     }
 }

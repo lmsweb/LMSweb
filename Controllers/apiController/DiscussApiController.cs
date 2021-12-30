@@ -1,48 +1,42 @@
-﻿using System;
+﻿using LMSweb.Models;
+using LMSweb.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Net.Http;
-using System.Web.Mvc;
 using System.Net;
-using System.Data.Entity.Validation;
-using LMSweb.Models;
-using LMSweb.ViewModel;
+using System.Net.Http;
+using System.Web.Http;
 
-namespace LMSweb.Controllers.ApiControllers
+namespace LMSweb.Controllers
 {
+    [RoutePrefix("api/test")]
     public class DiscussApiController : ApiController
     {
         private LMSmodel db = new LMSmodel();
 
-        [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("live")]
-        public IHttpActionResult AddDiscussApi(LearnBViewModel Discussapi)
+        [HttpPost]
+        [Route("live")]
+        public IHttpActionResult AddDiscussApi([FromBody]DiscussViewModel Discussapi)
         {
 
             try
             {
-                if (ModelState.IsValid) //如果輸入驗證通過
+                if (ModelState.IsValid)
                 {
-                    //將輸入的欄位一對一放進類別內
-                    LearningBehavior vm = new LearningBehavior();
+                    LearningBehavior lb = new LearningBehavior();
+                    StudentMission data = db.StudentMissions
+                    .Where(x => x.MID == Discussapi.MID && x.SID == Discussapi.SID)
+                    .FirstOrDefault();
 
-                    vm.ActionType = Discussapi.LearningBehavior.ActionType;
-                    vm.subAction = Discussapi.LearningBehavior.subAction;
-                    vm.Detail = Discussapi.LearningBehavior.Detail;
-                    vm.Time = Discussapi.LearningBehavior.Time;
-                    vm.StudentMissions.SID = Discussapi.LearningBehavior.StudentMissions.SID;
-                    vm.StudentMissions.MID = Discussapi.LearningBehavior.StudentMissions.MID;
+                    lb.ActionType = Discussapi.ActionType;
+                    lb.subAction = Discussapi.subAction;
+                    lb.Detail = Discussapi.Detail;
+                    lb.Time = Discussapi.Time;
+                    lb.StudentMissions = data;
 
-                    //加入到資料庫
-                    db.LearnB.Add(vm);
-
-                    //儲存
+                    db.LearnB.Add(lb);
                     db.SaveChanges();
-
-                    //回傳HTTP OK
                     return Ok(ModelState);
                 }
                 else //否則驗證失敗

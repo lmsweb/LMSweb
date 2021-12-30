@@ -7,27 +7,32 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMSweb.Models;
+using LMSweb.ViewModel;
+
 
 namespace LMSweb.Controllers
 {
     public class KnowledgePointsController : Controller
     {
         private LMSmodel db = new LMSmodel();
-
+        
         // GET: KnowledgePoints
-        public ActionResult Index()
+        public ActionResult Index(string CID)
         {
-            return View(db.KnowledgePoints.ToList());
+            KPViewModel kpmodel = new KPViewModel();
+            kpmodel.CID = CID;
+            kpmodel.knowledgePoints = db.KnowledgePoints.ToList();
+            return View(kpmodel);
         }
 
         // GET: KnowledgePoints/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(string cid)
         {
-            if (id == null)
+            if (cid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KnowledgePoint knowledgePoint = db.KnowledgePoints.Find(id);
+            KnowledgePoint knowledgePoint = db.KnowledgePoints.Find(cid);
             if (knowledgePoint == null)
             {
                 return HttpNotFound();
@@ -36,9 +41,12 @@ namespace LMSweb.Controllers
         }
 
         // GET: KnowledgePoints/Create
-        public ActionResult Create()
+        public ActionResult Create(string cid)
         {
-            return View();
+            var kpvm = new KPViewModel();
+            kpvm.CID = cid;
+
+            return View(kpvm);
         }
 
         // POST: KnowledgePoints/Create
@@ -46,16 +54,19 @@ namespace LMSweb.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "KID,KContent")] KnowledgePoint knowledgePoint)
+        public ActionResult Create(KPViewModel kpvm)
         {
             if (ModelState.IsValid)
             {
-                db.KnowledgePoints.Add(knowledgePoint);
+                var kp = db.KnowledgePoints.Add(kpvm.knowledgePoint);
+                kp.CID = kpvm.CID;
+              
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { cid = kpvm.CID });
             }
-
-            return View(knowledgePoint);
+            var vmodel = new KPViewModel();
+            vmodel.CID = kpvm.CID;
+            return View(vmodel);
         }
 
         // GET: KnowledgePoints/Edit/5

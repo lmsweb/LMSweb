@@ -204,7 +204,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KnowledgePointsController.cs" />
     <Compile Include="Controllers\LearningBehaviorsController.cs" />
-    <Compile Include="Controllers\PromptsController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherAssessmentsController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
@@ -249,6 +248,14 @@
     <Compile Include="Migrations\202112270538483_changeKPrelation.Designer.cs">
       <DependentUpon>202112270538483_changeKPrelation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112300730386_delPromtAddTip.cs" />
+    <Compile Include="Migrations\202112300730386_delPromtAddTip.Designer.cs">
+      <DependentUpon>202112300730386_delPromtAddTip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112300745200_ add.cs" />
+    <Compile Include="Migrations\202112300745200_ add.Designer.cs">
+      <DependentUpon>202112300745200_ add.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\ColLevel.cs" />
@@ -262,7 +269,6 @@
     <Compile Include="Controllers\MissionsController.cs" />
     <Compile Include="Models\PeerAssessment.cs" />
     <Compile Include="Models\PerLevel.cs" />
-    <Compile Include="Models\Prompt.cs" />
     <Compile Include="Models\TotalScore.cs" />
     <Compile Include="Models\SelfAssessment.cs" />
     <Compile Include="Models\Student.cs" />
@@ -272,9 +278,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
+    <Compile Include="ViewModel\DiscussViewModel.cs" />
     <Compile Include="ViewModel\GroupCreateViewModel.cs" />
+    <Compile Include="ViewModel\KPViewModel.cs" />
+    <Compile Include="ViewModel\LearnBViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
+    <Compile Include="ViewModel\MissionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-fileinput\css\fileinput-rtl.css" />
@@ -720,11 +730,6 @@
     <Content Include="Views\Missions\Edit.cshtml" />
     <Content Include="Views\Missions\Create.cshtml" />
     <Content Include="Views\Missions\index.cshtml" />
-    <Content Include="Views\Prompts\Create.cshtml" />
-    <Content Include="Views\Prompts\Delete.cshtml" />
-    <Content Include="Views\Prompts\Details.cshtml" />
-    <Content Include="Views\Prompts\Edit.cshtml" />
-    <Content Include="Views\Prompts\Index.cshtml" />
     <Content Include="Views\KnowledgePoints\Create.cshtml" />
     <Content Include="Views\KnowledgePoints\Delete.cshtml" />
     <Content Include="Views\KnowledgePoints\Details.cshtml" />
@@ -754,6 +759,7 @@
     <Content Include="Views\LearningBehaviors\ClassJourney.cshtml" />
     <Content Include="Views\LearningBehaviors\GroupJourney.cshtml" />
     <Content Include="Views\LearningBehaviors\PersonalJourney.cshtml" />
+    <Content Include="Views\Student\Chat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -795,6 +801,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112270538483_changeKPrelation.resx">
       <DependentUpon>202112270538483_changeKPrelation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112300730386_delPromtAddTip.resx">
+      <DependentUpon>202112300730386_delPromtAddTip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112300745200_ add.resx">
+      <DependentUpon>202112300745200_ add.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

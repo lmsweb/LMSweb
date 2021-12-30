@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LMSweb.Models.KnowledgePoint>
+﻿@model LMSweb.ViewModel.KPViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -7,17 +7,19 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <input type="button" class="btn btn-primary" value="新增知識點" onclick="location.href='@Url.Action("Create", "KnowledgePoint", new { CID = Model.CID})'" />
+   @* @Html.ActionLink("Create New", "Create", new { cid = Model.CID, CName = Model.CName })*@
 </p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.KContent)
+            @Html.DisplayNameFor(model => model.knowledgePoint)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.knowledgePoints) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.KContent)

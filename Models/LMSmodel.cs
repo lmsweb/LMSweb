@@ -24,7 +24,6 @@ namespace LMSweb.Models
         public DbSet<LearningBehavior> LearnB { get; set; }
         public DbSet<Mission> Missions { get; set; }
         public DbSet<PeerAssessment> PeerA { get; set; }
-        public DbSet<Prompt> Prompts { get; set; }
         public DbSet<SelfAssessment> SelfA { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<StudentMission> StudentMissions { get; set; }

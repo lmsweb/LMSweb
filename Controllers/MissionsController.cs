@@ -26,7 +26,7 @@ namespace LMSweb.Models
             var course = db.Courses.Where(c => c.CID == cid).Single();
             model.missions = db.Missions.Where(m => m.CID == cid).Include(m => m.course);
             model.CID = course.CID;
-            model.CName = course.CName;
+            //model.CName = course.CName;
             return View(model);
         }
 
@@ -44,7 +44,7 @@ namespace LMSweb.Models
             }
             var model = new MissionViewModel();
             model.CID = mission.course.CID;
-            model.CName = mission.course.CName;
+            //model.CName = mission.course.CName;
             model.mis = mission;
 
             return View(model);
@@ -56,12 +56,12 @@ namespace LMSweb.Models
 
         // GET: Missions/Create
         [HttpGet]
-        public ActionResult Create(string cid, string cname)
+        public ActionResult Create(string cid)
         {
             var model = new MissionCreateViewModel();
             model.KnowledgeList = GetKnowledge();
             model.CID = cid;
-            model.CName = cname;
+           
             
             return View(model);
         }
@@ -101,8 +101,7 @@ namespace LMSweb.Models
                 var mission = db.Missions.Add(model.mission);
                 mission.CID = model.CID;
                 mission.KnowledgePoints = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
-                var prompt = db.Prompts.Add(model.prompt);
-                prompt.MID = model.mission.MID;
+                
                 //var KPs = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID));
                 //foreach (var kp in KPs)
                 //{
@@ -116,7 +115,7 @@ namespace LMSweb.Models
             var vmodel = new MissionCreateViewModel();
             vmodel.KnowledgeList = GetKnowledge();
             vmodel.CID = model.CID;
-            vmodel.CName = model.CName;
+           
             vmodel.mission.MID = model.mission.MID;
             
             return View(vmodel);
@@ -142,7 +141,7 @@ namespace LMSweb.Models
             vmodel.KnowledgeList = GetKnowledge(mission.KnowledgePoints.Select(kp => kp.KID));
             //vmodel.PromptList = GetPrompt(mission.Prompts.Select(p => p.PID));
             vmodel.CID = mission.CID;
-            vmodel.CName = mission.course.CName;
+            //vmodel.CName = mission.course.CName;
 
             return View(vmodel);
         }
@@ -155,7 +154,7 @@ namespace LMSweb.Models
         public ActionResult Edit(MissionCreateViewModel model)
         {
             var mission = model.mission;
-            var prompt = model.prompt;
+            
             if (ModelState.IsValid)
             {
                 db.Entry(mission).State = EntityState.Modified;
@@ -168,19 +167,19 @@ namespace LMSweb.Models
                 mission.KnowledgePoints = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
                 mission.CID = model.CID;
 
-                db.Entry(prompt).State = EntityState.Modified;
+                
 
                 //mission = db.Missions.Include(p => p.Prompts).Single(m => m.MID == mission.MID);
 
                 //mission.Prompts = db.Prompts.Where(pt => model.SelectPromptList.ToList().Contains(pt.PID)).ToList();
                 db.SaveChanges();
 
-                return RedirectToAction("Index", new { cid = model.CID, cname = model.CName});
+                return RedirectToAction("Index", new { cid = model.CID});
             }
 
             model.KnowledgeList = GetKnowledge(model.SelectKnowledgeList);
             model.CID = mission.course.CID;
-            model.CName = mission.course.CName;
+           
             //model.PromptList = GetPrompt(model.SelectPromptList);
             return View(model);
         }
@@ -199,7 +198,7 @@ namespace LMSweb.Models
             }
             var model = new MissionViewModel();
             model.CID = mission.course.CID;
-            model.CName = mission.course.CName;
+            //model.CName = mission.course.CName;
             model.mis = mission;
 
             return View(model);
@@ -253,7 +252,7 @@ namespace LMSweb.Models
             db.Missions.Add(model.mission);
             model.mission.MDetail = mission.MDetail;
             model.mission.KnowledgePoints  = mission.KnowledgePoints;
-            model.mission.Prompts = mission.Prompts;
+           
             model.mission.CID = cid;
             model.mission.course = db.Courses.Find(cid);
 

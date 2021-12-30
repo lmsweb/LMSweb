@@ -33,6 +33,7 @@ namespace LMSweb
                 LoginPath = new PathString("/Teacher/Login"),
                 ExpireTimeSpan = TimeSpan.FromMinutes(30)
             });
+            app.MapSignalR();
         }
     }
 }

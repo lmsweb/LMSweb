@@ -8,8 +8,8 @@
     <h5>任務列表</h5>
     <p>
         @*@Html.ActionLink("新增任務", "Create", new { CID = Model.CID, CName = Model.CName })*@
-        <input type="button" class="btn btn-primary" value="新增任務" onclick="location.href='@Url.Action("Create", "Missions", new { CID = Model.CID, CName = Model.CName })'" />
-        <input type="button" class="btn btn-primary" value="選擇任務" onclick="location.href='@Url.Action("SelectMissions", "Missions", new { CID = Model.CID, CName = Model.CName })'" />
+        <input type="button" class="btn btn-primary" value="新增任務" onclick="location.href='@Url.Action("Create", "Missions", new { CID = Model.CID })'" />
+        <input type="button" class="btn btn-primary" value="選擇任務" onclick="location.href='@Url.Action("SelectMissions", "Missions", new { CID = Model.CID })'" />
     </p>
     <table class="table">
         <tr>

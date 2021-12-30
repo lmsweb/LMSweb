@@ -141,3 +141,6 @@ D:\LMSweb\bin\zh-Hant\System.Net.Http.Formatting.resources.dll
 D:\LMSweb\bin\zh-Hant\System.Web.Http.resources.dll
 D:\LMSweb\bin\zh-Hant\System.Web.Http.WebHost.resources.dll
 D:\LMSweb\obj\Debug\LMSweb.Migrations.changeKPrelation.resources
+D:\LMSweb\obj\Debug\LMSweb.Migrations.delPromtAddTip.resources
+D:\LMSweb\obj\Debug\LMSweb.Migrations.add.resources
+D:\LMSweb\obj\Debug\LMSweb.Migrations.editKP.resources
