@@ -59,7 +59,7 @@ namespace LMSweb.Controllers
             if (ModelState.IsValid)
             {
                 var kp = db.KnowledgePoints.Add(kpvm.knowledgePoint);
-                kp.CID = kpvm.CID;
+                //kp.CID = kpvm.CID;
               
                 db.SaveChanges();
                 return RedirectToAction("Index", new { cid = kpvm.CID });

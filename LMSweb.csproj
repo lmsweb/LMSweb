@@ -212,52 +212,11 @@
     </Compile>
     <Compile Include="Infrastructure\Helpers\CheckResult.cs" />
     <Compile Include="Infrastructure\Helpers\ImportDataHelper.cs" />
-    <Compile Include="Migrations\202109120934301_1.cs" />
-    <Compile Include="Migrations\202109120934301_1.Designer.cs">
-      <DependentUpon>202109120934301_1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109151855279_studentGroup.cs" />
-    <Compile Include="Migrations\202109151855279_studentGroup.Designer.cs">
-      <DependentUpon>202109151855279_studentGroup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202109151900551_del sg.cs" />
-    <Compile Include="Migrations\202109151900551_del sg.Designer.cs">
-      <DependentUpon>202109151900551_del sg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110050440169_delmissionkey.cs" />
-    <Compile Include="Migrations\202110050440169_delmissionkey.Designer.cs">
-      <DependentUpon>202110050440169_delmissionkey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111090105300_courseSid.cs" />
-    <Compile Include="Migrations\202111090105300_courseSid.Designer.cs">
-      <DependentUpon>202111090105300_courseSid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111250815119_LB_CID.cs" />
-    <Compile Include="Migrations\202111250815119_LB_CID.Designer.cs">
-      <DependentUpon>202111250815119_LB_CID.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112021345002_levelScore.cs" />
-    <Compile Include="Migrations\202112021345002_levelScore.Designer.cs">
-      <DependentUpon>202112021345002_levelScore.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112030203354_missionAddMeg.cs" />
-    <Compile Include="Migrations\202112030203354_missionAddMeg.Designer.cs">
-      <DependentUpon>202112030203354_missionAddMeg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112270538483_changeKPrelation.cs" />
-    <Compile Include="Migrations\202112270538483_changeKPrelation.Designer.cs">
-      <DependentUpon>202112270538483_changeKPrelation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112300730386_delPromtAddTip.cs" />
-    <Compile Include="Migrations\202112300730386_delPromtAddTip.Designer.cs">
-      <DependentUpon>202112300730386_delPromtAddTip.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112300745200_ add.cs" />
-    <Compile Include="Migrations\202112300745200_ add.Designer.cs">
-      <DependentUpon>202112300745200_ add.cs</DependentUpon>
+    <Compile Include="Migrations\202201050204305_resetModel.cs" />
+    <Compile Include="Migrations\202201050204305_resetModel.Designer.cs">
+      <DependentUpon>202201050204305_resetModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\ColLevel.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Group.cs" />
@@ -775,38 +734,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202109120934301_1.resx">
-      <DependentUpon>202109120934301_1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109151855279_studentGroup.resx">
-      <DependentUpon>202109151855279_studentGroup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202109151900551_del sg.resx">
-      <DependentUpon>202109151900551_del sg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110050440169_delmissionkey.resx">
-      <DependentUpon>202110050440169_delmissionkey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111090105300_courseSid.resx">
-      <DependentUpon>202111090105300_courseSid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111250815119_LB_CID.resx">
-      <DependentUpon>202111250815119_LB_CID.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112021345002_levelScore.resx">
-      <DependentUpon>202112021345002_levelScore.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112030203354_missionAddMeg.resx">
-      <DependentUpon>202112030203354_missionAddMeg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112270538483_changeKPrelation.resx">
-      <DependentUpon>202112270538483_changeKPrelation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112300730386_delPromtAddTip.resx">
-      <DependentUpon>202112300730386_delPromtAddTip.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112300745200_ add.resx">
-      <DependentUpon>202112300745200_ add.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201050204305_resetModel.resx">
+      <DependentUpon>202201050204305_resetModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

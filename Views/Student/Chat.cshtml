@@ -27,7 +27,7 @@
         $(function () {
             var chat = $.connection.charHub;
             var today = new Date(); var currentDateTime = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getHours() + ':' + today.getMinutes();
-            //let url = 'https://localhost:44301/api/test/live';
+            let url = 'https://localhost:44301/api/test/live';
             chat.client.addNewMessageToPage = function (name, message) {
                 $('#discussion').append('<li><strong>' + htmlEncode(name)
                     + '</strong>: ' + htmlEncode(message) + '</li>');

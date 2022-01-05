@@ -16,7 +16,6 @@ namespace LMSweb.Models
         {
         }
 
-        public DbSet<Admin> Admins { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Group> Groups { get; set; }
@@ -28,6 +27,7 @@ namespace LMSweb.Models
         public DbSet<Student> Students { get; set; }
         public DbSet<StudentMission> StudentMissions { get; set; }
         public DbSet<TeacherAssessment> TeacherA { get; set; }
+
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

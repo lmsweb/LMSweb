@@ -7,13 +7,13 @@ namespace LMSweb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class add : IMigrationMetadata
+    public sealed partial class resetModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(add));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(resetModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "202112300745200_ add"; }
+            get { return "202201050204305_resetModel"; }
         }
         
         string IMigrationMetadata.Source

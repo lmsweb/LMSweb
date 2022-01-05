@@ -79,7 +79,7 @@ namespace LMSweb.Controllers
         // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GID,GName,Position")] Group group)
+        public ActionResult Edit([Bind(Include = "GID,GName")] Group group)
         {
             if (ModelState.IsValid)
             {

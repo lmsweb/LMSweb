@@ -9,16 +9,10 @@ namespace LMSweb.Models
 {
     public class Student
     {
-        //public Student()
-        //{
-        //    Groups = new HashSet<Group>();
-        //}
-
         [Key]
-        [Column(Order = 0)]
+        [Required]
         [Display(Name = "學生編號")]
         public string SID { get; set; }
-
 
         [Required]
         [Display(Name = "學生姓名")]
@@ -34,32 +28,23 @@ namespace LMSweb.Models
         [Display(Name = "密碼")]
         public string SPassword { get; set; }
 
-
         [Required]
         [Display(Name = "性別")]
         public string Sex { get; set; }
-
 
         [Required]
         [Display(Name = "教育階段")]
         public string Stage { get; set; }
 
-
-
         [Display(Name = "積分")]
         public string Score { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
+        [Required]
         [Display(Name = "課程編號")]
-        public string CID { get; set; }
+        public string CID { get; set; }    
+        public string GID { get; set; }
+
+        public virtual Group group{ get; set; }
         public virtual Course course { get; set; }
-
-        [Display(Name = "組別編號")]
-        public virtual Group group { get; set; }
-        public virtual ICollection<Mission> Missions { get; set; }
-
-        //public virtual ICollection<Group> Groups { get; set; }
-
     }
 }

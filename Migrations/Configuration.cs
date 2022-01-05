@@ -26,8 +26,6 @@ namespace LMSweb.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            context.Students.AddOrUpdate(
-                );
         }
     }
 }

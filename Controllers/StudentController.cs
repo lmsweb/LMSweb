@@ -99,11 +99,11 @@ namespace LMSweb.Controllers
             MissionViewModel model = new MissionViewModel();
             if (cid == null)
             {
-                model.missions = db.Missions.Include(m => m.course);
+                model.missions = db.Missions.Include(m => m.CID);
                 return View(model);
             }
             var course = db.Courses.Where(c => c.CID == cid).Single();
-            model.missions = db.Missions.Where(m => m.CID == cid).Include(m => m.course);
+            model.missions = db.Missions.Where(m => m.CID == cid).Include(m => m.CID);
             model.CID = course.CID;
             //model.CName = course.CName;
             return View(model);

@@ -107,17 +107,11 @@ D:\LMSweb\bin\zh-Hant\System.Web.Razor.resources.dll
 D:\LMSweb\bin\zh-Hant\System.Web.WebPages.resources.dll
 D:\LMSweb\bin\zh-Hant\System.Web.WebPages.Deployment.resources.dll
 D:\LMSweb\bin\zh-Hant\System.Web.WebPages.Razor.resources.dll
-D:\LMSweb\obj\Debug\LMSweb.Migrations._1.resources
-D:\LMSweb\obj\Debug\LMSweb.csproj.GenerateResource.cache
 D:\LMSweb\obj\Debug\LMSweb.csproj.CoreCompileInputs.cache
 D:\LMSweb\obj\Debug\LMSweb.csproj.CopyComplete
 D:\LMSweb\obj\Debug\LMSweb.dll
 D:\LMSweb\obj\Debug\LMSweb.pdb
 D:\LMSweb\obj\Debug\LMSweb.csprojAssemblyReference.cache
-D:\LMSweb\obj\Debug\LMSweb.Migrations.studentGroup.resources
-D:\LMSweb\obj\Debug\LMSweb.Migrations.delsg.resources
-D:\LMSweb\obj\Debug\LMSweb.Migrations.delmissionkey.resources
-D:\LMSweb\obj\Debug\LMSweb.Migrations.courseSid.resources
 D:\LMSweb\bin\ClosedXML.dll
 D:\LMSweb\bin\DocumentFormat.OpenXml.dll
 D:\LMSweb\bin\ExcelNumberFormat.dll
@@ -126,9 +120,6 @@ D:\LMSweb\bin\ClosedXML.pdb
 D:\LMSweb\bin\ClosedXML.xml
 D:\LMSweb\bin\DocumentFormat.OpenXml.xml
 D:\LMSweb\bin\ExcelNumberFormat.xml
-D:\LMSweb\obj\Debug\LMSweb.Migrations.LB_CID.resources
-D:\LMSweb\obj\Debug\LMSweb.Migrations.levelScore.resources
-D:\LMSweb\obj\Debug\LMSweb.Migrations.missionAddMeg.resources
 D:\LMSweb\bin\Microsoft.AspNet.SignalR.Core.dll
 D:\LMSweb\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
 D:\LMSweb\bin\System.Web.Http.WebHost.dll
@@ -140,7 +131,5 @@ D:\LMSweb\bin\System.Web.Http.WebHost.xml
 D:\LMSweb\bin\zh-Hant\System.Net.Http.Formatting.resources.dll
 D:\LMSweb\bin\zh-Hant\System.Web.Http.resources.dll
 D:\LMSweb\bin\zh-Hant\System.Web.Http.WebHost.resources.dll
-D:\LMSweb\obj\Debug\LMSweb.Migrations.changeKPrelation.resources
-D:\LMSweb\obj\Debug\LMSweb.Migrations.delPromtAddTip.resources
-D:\LMSweb\obj\Debug\LMSweb.Migrations.add.resources
-D:\LMSweb\obj\Debug\LMSweb.Migrations.editKP.resources
+D:\LMSweb\obj\Debug\LMSweb.Migrations.resetModel.resources
+D:\LMSweb\obj\Debug\LMSweb.csproj.GenerateResource.cache

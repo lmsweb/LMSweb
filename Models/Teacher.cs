@@ -14,10 +14,9 @@ namespace LMSweb.Models
         }
 
         [Key]
-        [Required]  //不可為 null
+        [Required]
         [Display(Name = "教師編號")]
         public string TID { get; set; }
-
 
         [Required]
         [Display(Name = "教師姓名")]

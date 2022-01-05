@@ -55,11 +55,9 @@ namespace LMSweb.Models
 
         [Display(Name = "課程編號")]
         public string CID { get; set; }
+
         public virtual Course course { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
-
-
-
     }
 }
