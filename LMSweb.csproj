@@ -239,7 +239,6 @@
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\DiscussViewModel.cs" />
     <Compile Include="ViewModel\GroupCreateViewModel.cs" />
-    <Compile Include="ViewModel\KPViewModel.cs" />
     <Compile Include="ViewModel\LearnBViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
@@ -691,9 +690,7 @@
     <Content Include="Views\Missions\index.cshtml" />
     <Content Include="Views\KnowledgePoints\Create.cshtml" />
     <Content Include="Views\KnowledgePoints\Delete.cshtml" />
-    <Content Include="Views\KnowledgePoints\Details.cshtml" />
     <Content Include="Views\KnowledgePoints\Edit.cshtml" />
-    <Content Include="Views\KnowledgePoints\Index.cshtml" />
     <Content Include="Views\Course\_UploadFile.cshtml" />
     <Content Include="Views\Course\StudentManagement.cshtml" />
     <Content Include="Views\Course\StudentGroup.cshtml" />

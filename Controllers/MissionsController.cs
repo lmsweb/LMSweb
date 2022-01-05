@@ -100,7 +100,7 @@ namespace LMSweb.Models
             {
                 var mission = db.Missions.Add(model.mission);
                 mission.CID = model.CID;
-                //mission.KnowledgePoints = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
+                mission.course.KnowledgePoints = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
                 
                 //var KPs = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID));
                 //foreach (var kp in KPs)
@@ -108,7 +108,7 @@ namespace LMSweb.Models
                 //    mission.KnowledgePoints.Add(kp);
                 //    //kp.Missions.Add(mission);
                 //}
-                //mission.Prompts = db.Prompts.Where(p => model.SelectPromptList.ToList().Contains(p.PID)).ToList();
+               
                 db.SaveChanges();
                 return RedirectToAction("Index", new { cid = model.CID});   
             }

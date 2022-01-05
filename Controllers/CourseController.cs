@@ -165,6 +165,7 @@ namespace LMSweb.Controllers
             CourseViewModel model = new CourseViewModel();
             model.CID = course.CID;
             model.CName = course.CName;
+            model.kps = db.KnowledgePoints.ToList();
 
             return View(model);
         }

@@ -14,12 +14,35 @@
 <body>
     <div class="article">
         <h4>@(Model.CName)</h4>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.knowledgePoint)
+                </th>
+                
+                <th></th>
+            </tr>
 
+            @foreach (var item in Model.kps)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KContent)
+                    </td>
+                    
+                    <td>
+                        @Html.ActionLink("編輯", "Edit", "KnowledgePoints", new { kid = item.KID}, null) |
+                        @Html.ActionLink("詳細資料", "Details", "KnowledgePoints", new { kid = item.KID }, null) |
+                        @Html.ActionLink("刪除", "Delete", "KnowledgePoints", new { kid = item.KID }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
         <hr />
         @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
         <p>
-
-            @Html.ActionLink("新增知識點", "Create", "KnowledgePoints", null, new { cid = Model.CID }) |
+            @Html.ActionLink("新增知識點", "Create", "KnowledgePoints", new { cid = Model.CID }, null) |
             @Html.ActionLink("編輯", "Edit", new { cid = Model.CID }) |
             @Html.ActionLink("返回", "Index")
         </p>
