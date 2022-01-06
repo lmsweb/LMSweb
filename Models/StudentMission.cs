@@ -21,9 +21,10 @@ namespace LMSweb.Models
 
         public int total_score { get; set; }
 
-        public virtual SelfAssessment selfAssessment { get; set; }
-        //public varchar SEID 
+        public virtual Student Student { get; set; }
+        public virtual Mission Mission { get; set; }
 
+        public virtual SelfAssessment selfAssessment { get; set; }
         public virtual ICollection<PeerAssessment> PeerAssessments { get; set; }
         public virtual ICollection<LearningBehavior> LearnBs { get; set; }
 

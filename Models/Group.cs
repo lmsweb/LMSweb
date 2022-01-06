@@ -19,6 +19,6 @@ namespace LMSweb.Models
 
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<TeacherAssessment> TeacherA { get; set; }
-        public virtual ICollection<Mission> Missions { get; set; }
+
     }
 }

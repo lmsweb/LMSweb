@@ -11,7 +11,7 @@ namespace LMSweb.ViewModel
         public string CID { get; set; }
         public IEnumerable<SelectListItem> KnowledgeList { get; set; }
         public IEnumerable<int> SelectKnowledgeList { get; set; }
-
+        
         public LMSweb.Models.Mission mission { get; set; }
 
     }

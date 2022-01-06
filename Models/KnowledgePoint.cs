@@ -21,5 +21,7 @@ namespace LMSweb.Models
         public string KContent { get; set; }
 
         public virtual Course Courses { get; set; }
+
+
     }
 }

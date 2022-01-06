@@ -5,51 +5,56 @@
 }
 <div class="article">
     <h5>任務列表</h5>
-    
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.missions.First().course.CName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.missions.First().Start)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.missions.First().End)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.missions.First().MName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.missions.First().MDetail)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model.missions)
-        {
+    @if (Model.missions == null || Model.missions.Count() == 0)
+    {
+        <p>目前還沒有任務哦~</p>
+    }
+    else
+    {
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.course.CName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Start)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.End)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MDetail)
-                </td>
-                <td>
-                    @Html.ActionLink("進入任務", "Chat", new { mid = item.MID, cid = item.CID}) 
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.missions.First().course.CName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.missions.First().Start)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.missions.First().End)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.missions.First().MName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.missions.First().MDetail)
+                </th>
+                <th></th>
             </tr>
-        }
 
-    </table>
+            @foreach (var item in Model.missions)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.course.CName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Start)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.End)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MDetail)
+                    </td>
+                    <td>
+                        @Html.ActionLink("進入任務", "Chat", new { mid = item.MID, cid = item.CID })
+                    </td>
+                </tr>
+            }
 
+        </table>
+    }
 </div>

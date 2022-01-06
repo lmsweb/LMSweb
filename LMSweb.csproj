@@ -216,6 +216,26 @@
     <Compile Include="Migrations\202201050204305_resetModel.Designer.cs">
       <DependentUpon>202201050204305_resetModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201051706529_delGroupMission.cs" />
+    <Compile Include="Migrations\202201051706529_delGroupMission.Designer.cs">
+      <DependentUpon>202201051706529_delGroupMission.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201051713439_StudentMission.cs" />
+    <Compile Include="Migrations\202201051713439_StudentMission.Designer.cs">
+      <DependentUpon>202201051713439_StudentMission.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201051859548_MissionKP.cs" />
+    <Compile Include="Migrations\202201051859548_MissionKP.Designer.cs">
+      <DependentUpon>202201051859548_MissionKP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201060536086_delMKP.cs" />
+    <Compile Include="Migrations\202201060536086_delMKP.Designer.cs">
+      <DependentUpon>202201060536086_delMKP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201060541560_addrelatedKP.cs" />
+    <Compile Include="Migrations\202201060541560_addrelatedKP.Designer.cs">
+      <DependentUpon>202201060541560_addrelatedKP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ColLevel.cs" />
     <Compile Include="Models\Course.cs" />
@@ -733,6 +753,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202201050204305_resetModel.resx">
       <DependentUpon>202201050204305_resetModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201051706529_delGroupMission.resx">
+      <DependentUpon>202201051706529_delGroupMission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201051713439_StudentMission.resx">
+      <DependentUpon>202201051713439_StudentMission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201051859548_MissionKP.resx">
+      <DependentUpon>202201051859548_MissionKP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201060536086_delMKP.resx">
+      <DependentUpon>202201060536086_delMKP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201060541560_addrelatedKP.resx">
+      <DependentUpon>202201060541560_addrelatedKP.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

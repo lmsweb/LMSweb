@@ -52,12 +52,15 @@ namespace LMSweb.Models
         [Display(Name = "個人分數權重")]
         public int per_k {get;set;}
 
+        public string relatedKP { get; set; }
 
         [Display(Name = "課程編號")]
         public string CID { get; set; }
 
         public virtual Course course { get; set; }
 
-        public virtual ICollection<Student> Students { get; set; }
+        //public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<StudentMission> StudentMissions { get; set; }
+        
     }
 }

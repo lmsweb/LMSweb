@@ -20,11 +20,11 @@ namespace LMSweb.Models
             MissionViewModel model = new MissionViewModel();
             if (cid == null)
             {
-                model.missions = db.Missions.Include(m => m.CID);
+                model.missions = db.Missions.Where(m => m.CID == cid);
                 return View(model);
             }
             var course = db.Courses.Where(c => c.CID == cid).Single();
-            model.missions = db.Missions.Where(m => m.CID == cid).Include(m => m.CID);
+            model.missions = db.Missions.Where(m => m.CID == cid);
             model.CID = course.CID;
             //model.CName = course.CName;
             return View(model);
@@ -49,20 +49,18 @@ namespace LMSweb.Models
 
             return View(model);
         }
+
         private IEnumerable<SelectListItem> GetKnowledge(IEnumerable<int> SelectKnowledgeList=null)
         {
             return new MultiSelectList(db.KnowledgePoints, "KID", "KContent", SelectKnowledgeList);
         }
-
-        // GET: Missions/Create
         [HttpGet]
         public ActionResult Create(string cid)
         {
             var model = new MissionCreateViewModel();
             model.KnowledgeList = GetKnowledge();
             model.CID = cid;
-           
-            
+ 
             return View(model);
         }
 
@@ -89,35 +87,25 @@ namespace LMSweb.Models
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MissionCreateViewModel model)
-            {
-
-            //foreach (int kid in model.SelectKnowledgeList)
-            //{
-            //    System.Diagnostics.Debug.WriteLine(kid);
-            //}
+        {
 
             if (ModelState.IsValid)
             {
-                var mission = db.Missions.Add(model.mission);
+                Mission mission = new Mission();
                 mission.CID = model.CID;
-                mission.course.KnowledgePoints = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
                 
-                //var KPs = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID));
-                //foreach (var kp in KPs)
-                //{
-                //    mission.KnowledgePoints.Add(kp);
-                //    //kp.Missions.Add(mission);
-                //}
-               
+                //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
+
+                //mission.relatedKP = model.KnowledgeList.Select(x => x.Value);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { cid = model.CID});   
             }
             var vmodel = new MissionCreateViewModel();
             vmodel.KnowledgeList = GetKnowledge();
             vmodel.CID = model.CID;
-           
+
             vmodel.mission.MID = model.mission.MID;
-            
+
             return View(vmodel);
         }
 

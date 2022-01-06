@@ -253,7 +253,7 @@
                     </div>
                     <div id="step3" class="content" role="tabpanel">
                         <div class="form-group">
-                            @Html.LabelFor(model => model.mission.KnowledgePoints, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.mission.course.KnowledgePoints, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
                             </div>
@@ -294,7 +294,7 @@
                                             <p>Value: <span id="demo"></span></p>
                                             @Html.HiddenFor(model => model.mission.discuss_k, htmlAttributes: new { @value = '0' })
                                             @Html.ValidationMessageFor(model => model.mission.discuss_k, "", new { @class = "text-danger" })
-                                            @*@Html.EditorFor(model => model.mission.discuss_k, new { htmlAttributes = new { @class = "form-control" @hidden } })*@
+                                            @Html.EditorFor(model => model.mission.discuss_k, new { htmlAttributes = new { @class = "form-control" } })
                                         </div>
                                         @*@Html.EditorFor(model => model.mission.discuss_k, new { htmlAttributes = new { @class = "form-control" } })*@
                                         @*@Html.ValidationMessageFor(model => model.mission.discuss_k, "", new { @class = "text-danger" })*@
@@ -408,24 +408,6 @@
         }
     }, 100); // check every 100ms
 
-    //$(document).ready(function () {
-    //    var max_fields = 10; //maximum input boxes allowed
-    //    var wrapper = $(".input_fields_wrap"); //Fields wrapper
-    //    var add_button = $(".add_field_button"); //Add button ID
-
-    //    var x = 1; //initlal text box count
-    //    $(add_button).click(function (e) { //on add input button click
-    //        e.preventDefault();
-    //        if (x < max_fields) { //max input box allowed
-    //            x++; //text box increment
-    //            $(wrapper).append('<div><input type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
-    //        }
-    //    });
-
-    //    $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
-    //        e.preventDefault(); $(this).parent('div').remove(); x--;
-    //    })
-    //});
     var stepperElem = document.querySelector('.bs-stepper');
     var stepper = new Stepper(stepperElem);
     var done = false;
@@ -501,6 +483,13 @@
             el.oninput();
         });
     };
+    //var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    output.innerHTML = option.value;
+
+    option.oninput = function () {
+        output.innerHTML = this.value;
+    }
 
 </script>
 
