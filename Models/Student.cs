@@ -47,5 +47,6 @@ namespace LMSweb.Models
         public virtual Group group{ get; set; }
         public virtual Course course { get; set; }
         public virtual ICollection<StudentMission> StudentMissions { get; set; }
+        public virtual ICollection<LearningBehavior> LearningBehaviors { get; set; }
     }
 }

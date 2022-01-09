@@ -138,3 +138,4 @@ D:\LMSweb\obj\Debug\LMSweb.Migrations.StudentMission.resources
 D:\LMSweb\obj\Debug\LMSweb.Migrations.MissionKP.resources
 D:\LMSweb\obj\Debug\LMSweb.Migrations.delMKP.resources
 D:\LMSweb\obj\Debug\LMSweb.Migrations.addrelatedKP.resources
+D:\LMSweb\obj\Debug\LMSweb.Migrations.StudentLB.resources

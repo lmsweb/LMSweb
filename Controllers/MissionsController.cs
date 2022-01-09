@@ -88,15 +88,18 @@ namespace LMSweb.Models
         [ValidateAntiForgeryToken]
         public ActionResult Create(MissionCreateViewModel model)
         {
-
-            if (ModelState.IsValid)
-            {
                 Mission mission = new Mission();
                 mission.CID = model.CID;
-                
-                //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
+            var inputlist = model.SelectKnowledgeList.ToList();
+            foreach(int item in inputlist)
+            {
+                string itemName = db.KnowledgePoints.Find(item, model.CID).KContent;
+            }
 
-                //mission.relatedKP = model.KnowledgeList.Select(x => x.Value);
+            //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
+
+            //mission.relatedKP = model.SelectKnowledgeList;
+            if (ModelState.IsValid) {
                 db.SaveChanges();
                 return RedirectToAction("Index", new { cid = model.CID});   
             }
