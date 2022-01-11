@@ -49,7 +49,7 @@
                         @Html.DisplayFor(modelItem => item.teacher.TName)
                     </td>
                     <td>
-                        @Html.ActionLink("進入課程", "Details", "Course", new { cid = item.CID }, null) |
+                        @Html.ActionLink("進入課程", "Index", "Missions", new { cid = item.CID }, null) |
                         @Html.ActionLink("編輯", "Edit", "Course", new { cid = item.CID }, null) |
                         @Html.ActionLink("刪除", "Delete", "Course", new { cid = item.CID }, null)
                     </td>
