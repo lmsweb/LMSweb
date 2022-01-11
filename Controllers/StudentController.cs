@@ -104,18 +104,21 @@ namespace LMSweb.Controllers
             }
             var course = db.Courses.Where(c => c.CID == cid).Single();
             model.missions = db.Missions.Where(m => m.CID == cid);
-            model.CID = course.CID;
+            model.mis.CID = course.CID;
           
             return View(model);
         }
 
-        public ActionResult Chat(string cid, string mid)
+        public ActionResult Chat(string cid, string mid, string sid)
         {
             MissionViewModel model = new MissionViewModel();
-            var mission = db.Missions.Where(m => m.MID == mid);
-            var course = db.Courses.Where(c => c.CID == cid).Single();
+            var mission = db.Missions.Where(m => m.MID == mid).Single();
+            var course = db.Missions.Where(c => c.CID == cid).Single();
+            ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
 
-            model.CID = course.CID;
+            model.mis.CID = course.CID;
+            model.mis.MID = mission.MID;
+            
             return View(model);
         }
         protected override void Dispose(bool disposing)

@@ -7,8 +7,8 @@
 <div class="article">
     <p>
         @*@Html.ActionLink("新增任務", "Create", new { CID = Model.CID, CName = Model.CName })*@
-        <input type="button" class="btn btn-primary" value="新增任務" onclick="location.href='@Url.Action("Create", "Missions", new { CID = Model.CID })'" />
-        <input type="button" class="btn btn-primary" value="選擇任務" onclick="location.href='@Url.Action("SelectMissions", "Missions", new { CID = Model.CID })'" />
+        <input type="button" class="btn btn-primary" value="新增任務" onclick="location.href='@Url.Action("Create", "Missions", new { CID = Model.mis.CID })'" />
+        <input type="button" class="btn btn-primary" value="選擇任務" onclick="location.href='@Url.Action("SelectMissions", "Missions", new { CID = Model.mis.CID })'" />
     </p>
     @if (Model.missions == null || Model.missions.Count() == 0)
     {
@@ -59,7 +59,8 @@
                     <td>
                         @Html.ActionLink("進入任務", "Details", new { mid = item.MID }) |
                         @Html.ActionLink("編輯", "Edit", new { mid = item.MID }) |
-                        @Html.ActionLink("刪除", "Delete", new { mid = item.MID })
+                        @Html.ActionLink("刪除", "Delete", new { mid = item.MID }) |
+                        @Html.ActionLink("新增知識點關聯", "Create","KnowledgePoints", new { mid = item.MID })
                     </td>
                 </tr>
             }

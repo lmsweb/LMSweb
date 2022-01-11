@@ -6,7 +6,7 @@ using System.Web.Http;
 
 namespace LMSweb.App_Start
 {
-    public static class WebApiConfig
+    public class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
@@ -15,7 +15,7 @@ namespace LMSweb.App_Start
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{action}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",    
                 defaults: new { id = RouteParameter.Optional }
             );
             //允許CORS           

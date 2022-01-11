@@ -25,12 +25,11 @@ namespace LMSweb.Models
             }
             var course = db.Courses.Where(c => c.CID == cid).Single();
             model.missions = db.Missions.Where(m => m.CID == cid);
-            model.CID = course.CID;
-            //model.CName = course.CName;
+            model.mis.CID = course.CID;
+
             return View(model);
         }
 
-        // GET: Missions/Details/5
         public ActionResult Details(string mid)
         {
             if (mid == null)
@@ -43,7 +42,7 @@ namespace LMSweb.Models
                 return HttpNotFound();
             }
             var model = new MissionViewModel();
-            model.CID = mission.CID;
+            model.mis.CID = mission.CID;
             //model.CName = mission.course.CName;
             model.mis = mission;
 
@@ -182,7 +181,7 @@ namespace LMSweb.Models
                 return HttpNotFound();
             }
             var model = new MissionViewModel();
-            model.CID = mission.CID;
+            model.mis.CID = mission.CID;
             //model.CName = mission.course.CName;
             model.mis = mission;
 
@@ -216,7 +215,7 @@ namespace LMSweb.Models
             MissionViewModel model = new MissionViewModel();
             
             model.missions = db.Missions.ToList();
-            model.CID = cid;
+            model.mis.CID = cid;
             
             return View(model);
         }

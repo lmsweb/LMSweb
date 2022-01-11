@@ -50,7 +50,7 @@
                         @Html.DisplayFor(modelItem => item.MDetail)
                     </td>
                     <td>
-                        @Html.ActionLink("進入任務", "Chat", new { mid = item.MID, cid = item.CID })
+                        @Html.ActionLink("進入任務", "Chat", new { mid = item.MID, cid = item.CID , sid = item.StudentMissions})
                     </td>
                 </tr>
             }
