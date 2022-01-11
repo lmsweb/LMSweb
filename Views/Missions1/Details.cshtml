@@ -1,0 +1,123 @@
+﻿@model LMSweb.Models.Mission
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Mission</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.course.CName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.course.CName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Start)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Start)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.End)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.End)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MDetail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MDetail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AddMetacognition)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AddMetacognition)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.discuss_k)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.discuss_k)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.chart_k)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.chart_k)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.code_k)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.code_k)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eva_k)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eva_k)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.per_k)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.per_k)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.relatedKP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.relatedKP)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
