@@ -9,6 +9,7 @@
             padding: 20px;
             text-align: left;
         }
+
         .article {
             position: relative;
             display: block;
@@ -25,14 +26,13 @@
         .body {
             background-color: #BFC5D9
         }
-       
     </style>
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
     <link href="~/Content/jasny-bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
-
+    
 </head>
 <body class="body">
     <div class="container">
@@ -47,12 +47,16 @@
                 </h3>
             </div>
 
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <div class="collapse navbar-collapse" id="collapseExample">
 
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     @Html.Partial("_LoginPartial")
                 </ul>
             </div>
+
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                @Html.Partial("_LoginPartial")
+            </button>
         </nav>
     </div>
 
