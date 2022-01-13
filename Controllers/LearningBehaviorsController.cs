@@ -49,6 +49,11 @@ namespace LMSweb.Controllers
             vm.learningbehavior = db.LearnB.Where(s => s.StudentMissions.SID == "S001").ToList();
             return View(vm);
         }
+        public ActionResult Chat()
+        {
+           
+            return View();
+        }
 
         public ActionResult DownloadExcelDocument()
         {
