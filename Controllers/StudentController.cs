@@ -104,7 +104,7 @@ namespace LMSweb.Controllers
             }
             var course = db.Courses.Where(c => c.CID == cid).Single();
             model.missions = db.Missions.Where(m => m.CID == cid);
-            model.mis.CID = course.CID;
+            model.CID = course.CID;
           
             return View(model);
         }

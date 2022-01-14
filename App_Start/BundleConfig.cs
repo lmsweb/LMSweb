@@ -17,7 +17,7 @@ namespace LMSweb
             bundles.Add(new ScriptBundle("~/bundles/datetimepicker").Include(
                         "~/Scripts/moment.js",
                         "~/Scripts/moment-with-locales.js",
-                        "~/Scripts/tempusdominus-bootstrap-4.js"));
+                        "~/Scripts/tempusdominus-bootstrap-5.js"));
 
 
             // 使用開發版本的 Modernizr 進行開發並學習。然後，當您
