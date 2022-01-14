@@ -32,9 +32,7 @@
     <link href="~/Content/bootstrap-fileinput/css/fileinput.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
-   @* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" />*@
 </head>
-
 <body class="body">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,7 +41,7 @@
                     結合後設認知策略與運算思維框架的互動式程式設計合作學習環境
                 </h3>
             </div>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     @Html.Partial("_LoginPartial")
                 </ul>
@@ -52,16 +50,6 @@
     </div>
     <div class="container">
         <div class="navbar navbar-expand-sm navbar-light bg-dark">
-            <!--<div class="navbar-header">-->
-            @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>*@
-
-            @*@Html.ActionLink(Model.CName, "Details", "Course", new { cid = Model.CID }, new { @class = "navbar-brand text-light font-weight-bold" })*@
-
-        @*</div>*@
             <br />
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -82,15 +70,14 @@
                     </li>
                 </ul>
             </div>
-        
-           </div>
+        </div>
     </div>
     <div class="container">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year</p>
-        </footer>
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year</p>
+    </footer>
     </div>
     <script src="~/Scripts/jquery-3.6.0.min.js"></script>
     @*<script src="~/Scripts/popper.min.js"></script>*@

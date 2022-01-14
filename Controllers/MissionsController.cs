@@ -17,17 +17,10 @@ namespace LMSweb.Models
         // GET: Missions
         public ActionResult Index(string cid)
         {
-            MissionViewModel model = new MissionViewModel();
-            if (cid == null)
-            {
-                model.missions = db.Missions.Where(m => m.CID == cid);
-                return View(model);
-            }
-            var course = db.Courses.Where(c => c.CID == cid).Single();
-            model.missions = db.Missions.Where(m => m.CID == cid);
-            model.CID = course.CID;
-
-            return View(model);
+            Mission mission = db.Missions.Find(cid);
+            var vmodel = new MissionViewModel();
+            vmodel.CID = mission.CID;
+            return View(vmodel);
         }
 
         public ActionResult Details(string mid)

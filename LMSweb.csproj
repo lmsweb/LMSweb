@@ -201,7 +201,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KnowledgePointsController.cs" />
     <Compile Include="Controllers\LearningBehaviorsController.cs" />
-    <Compile Include="Controllers\Missions1Controller.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherAssessmentsController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
@@ -478,6 +477,7 @@
     <Content Include="Scripts\bootstrap.esm.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Views\LearningBehaviors\Chat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,15 +9,14 @@
 }
 else
 {
-    <li class="dropdown">
-        <a href="#" class="dropdown-toggle" id="dropdownMenuButton1" role="button"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <li class="nav-item dropdown">
+        <ul class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             登入
-        </a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <a class="dropdown-item" href="@Url.Action("Login","Student")">學生</a>
-            <a class="dropdown-item" href="@Url.Action("Login","Teacher")">教師</a>
-        </div>
+        </ul>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="@Url.Action("Login","Student")">學生</a></li>
+            <li><a class="dropdown-item" href="@Url.Action("Login","Teacher")">教師</a></li>
+        </ul>
     </li>
 }
 
