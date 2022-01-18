@@ -13,16 +13,20 @@ namespace LMSweb.Models
     public class MissionsController : Controller
     {
         private LMSmodel db = new LMSmodel();
-
-        // GET: Missions
         public ActionResult Index(string cid)
         {
-            Mission mission = db.Missions.Find(cid);
-            var vmodel = new MissionViewModel();
-            vmodel.CID = mission.CID;
-            return View(vmodel);
-        }
+            MissionViewModel model = new MissionViewModel();
+            if (cid == null)
+            {
+                model.missions = db.Missions.Where(m => m.CID == cid);
+                return View(model);
+            }
+            var course = db.Courses.Where(c => c.CID == cid).Single();
+            model.missions = db.Missions.Where(m => m.CID == cid);
+            model.CID = course.CID;
 
+            return View(model);
+        }
         public ActionResult Details(string mid)
         {
             if (mid == null)
@@ -46,57 +50,116 @@ namespace LMSweb.Models
         {
             return new MultiSelectList(db.KnowledgePoints, "KID", "KContent", SelectKnowledgeList);
         }
+        //[HttpGet]
+        //public ActionResult Create(string cid)
+        //{
+        //    var model = new MissionCreateViewModel();
+        //    model.CID = cid;
+        //    var kps = db.KnowledgePoints.Where(k => k.CID == cid);
+        //    string str = "";
+        //    foreach(var kp in kps)
+        //    {
+        //        str += kp.KContent;
+        //    }
+        //    ViewBag.kps_string = str;
+ 
+        //    return View(model);
+        //}
+
         [HttpGet]
         public ActionResult Create(string cid)
         {
-            var model = new Mission();
+            var model = new MissionCreateViewModel();
+            model.KnowledgeList = GetKnowledge();
             model.CID = cid;
- 
-            return View(model);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MID,Start,End,MName,Tip,MDetail,AddMetacognition,discuss_k,chart_k,code_k,eva_k,per_k,relatedKP,CID")] Mission mission)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Missions.Add(mission);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+          
 
-            ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
-            return View(mission);
+            return View(model);
         }
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Create(MissionCreateViewModel model)
+        //public ActionResult Create([Bind(Include = "MID,Start,End,MName,Tip,MDetail,AddMetacognition,discuss_k,chart_k,code_k,eva_k,per_k,relatedKP,CID")] Mission mission)
         //{
-        //    Mission mission = new Mission();
-        //    mission.CID = model.CID;
-        //    //var inputlist = model.SelectKnowledgeList.ToList();
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Missions.Add(mission);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-        //    //foreach(int item in inputlist)
+        //    ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
+        //    return View(mission);
+        //}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(MissionCreateViewModel model)
+        {
+            //var inputlist = model.SelectKnowledgeList.ToList();
+            var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
+            string kp_str = "";
+            foreach (var kp in kps)
+            {
+                kp_str += kp.KContent + '\n' ;
+            }
+
+            //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
+
+            model.mission.relatedKP = kp_str;
+            model.mission.CID = model.CID;
+            if (ModelState.IsValid)
+            {
+                db.Missions.Add(model.mission);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { cid = model.CID });
+            }
+            var vmodel = new MissionCreateViewModel();
+            vmodel.KnowledgeList = GetKnowledge();
+            vmodel.CID = model.CID;
+
+            vmodel.mission.MID = model.mission.MID;
+
+            return View(vmodel);
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create1(MissionCreateViewModel model)
+        //{
+
+        //    //foreach (int kid in model.SelectKnowledgeList)
         //    //{
-        //    //    string itemName = db.KnowledgePoints.Find(item, model.CID).KContent;
+        //    //    System.Diagnostics.Debug.WriteLine(kid);
         //    //}
 
-        //    //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
-
-        //    //mission.relatedKP = model.SelectKnowledgeList;
-        //    if (ModelState.IsValid) {
+        //    if (ModelState.IsValid)
+        //    {
+        //        var mission = db.Missions.Add(model.mission);
+        //        mission.CID = model.CID;
+        //        mission.KnowledgePoints = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
+        //        var prompt = db.Prompts.Add(model.prompt);
+        //        prompt.MID = model.mission.MID;
+        //        //var KPs = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID));
+        //        //foreach (var kp in KPs)
+        //        //{
+        //        //    mission.KnowledgePoints.Add(kp);
+        //        //    //kp.Missions.Add(mission);
+        //        //}
+        //        //mission.Prompts = db.Prompts.Where(p => model.SelectPromptList.ToList().Contains(p.PID)).ToList();
         //        db.SaveChanges();
-        //        return RedirectToAction("Index", new { cid = model.CID});   
+        //        return RedirectToAction("Index", new { cid = model.CID });
         //    }
         //    var vmodel = new MissionCreateViewModel();
-        //    //vmodel.KnowledgeList = GetKnowledge();
+        //    vmodel.KnowledgeList = GetKnowledge();
         //    vmodel.CID = model.CID;
-
+        //    vmodel.CName = model.CName;
         //    vmodel.mission.MID = model.mission.MID;
 
         //    return View(vmodel);
         //}
+
+
 
         // GET: Missions/Edit/5
         public ActionResult Edit(string mid)

@@ -6,7 +6,7 @@
 
 <body>
     <div class="article">
-
+        
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link" href="https://localhost:44301/Course/StudentManagement?CID=@Model.CID">修課名單</a>
@@ -19,10 +19,10 @@
         <br />
         @*onclick="myFunction()*@
         <label>
-            分組數量 : 
-            <input type="number" min="1" max="" placeholder="需要分成多少組" v-model="groupNum" id="groupN"/>
+            分組數量 :
+            <input type="number" min="1" max="" placeholder="需要分成多少組" v-model="groupNum" id="groupN" />
         </label>
-        <button class="btn btn-primary" id="groupclick" >隨機分組</button>
+        <button class="btn btn-primary" id="groupclick">隨機分組</button>
 
         <div class="row">
             <div class="col-sm-6">
@@ -60,15 +60,14 @@
                     </div>
                     <div class="card-body">
                         @*<button class="btn btn-primary" id="btn">新增組別</button>*@
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">新增組別</button>
-                        
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">新增組別</button>
                         <br />
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">新增組別</h5>
-                                        <button type="button" class="close groupclose" data-dismiss="modal" aria-label="Close">
+                                        <h5 class="modal-title" id="exampleModalLabel">新增組別</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -112,7 +111,7 @@
                                         <div class="col-sm-4">
                                             <div class="row justify-content-md-end">
                                                 <div>
-                                                    <button type="button" class="btn btn-primary  btn-sm addGbtn"  id="@item.GID">
+                                                    <button type="button" class="btn btn-primary  btn-sm addGbtn" id="@item.GID">
                                                         加入組別
                                                     </button>
                                                 </div>
@@ -122,14 +121,14 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="card-body">
                                     @foreach (var stu in item.Students)
-                                    { 
+                                    {
                                         <button type="button" class="close stuclose" aria-label="Close" id="@stu.SID">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -137,7 +136,7 @@
                                     }
                                 </div>
 
-                                </div>
+                            </div>
                             <br />
                         }
                     </div>
@@ -147,17 +146,17 @@
     </div>   
 </body>
 
-<script type="text/javascript" src="../jquery/jquery.js"></script>
-<script type="text/javascript" src="../jquery/jquery-ui.js"></script>
+@*<script type="text/javascript" src="../jquery/jquery.js"></script>
+<script type="text/javascript" src="../jquery/jquery-ui.js"></script>*@
 @section scripts {
-    <script type="text/javascript"></script>
     <script>
-        
+        console.log('123213');
         $('#exampleModal').on('show.bs.modal', function (event) {     //將選取的學生顯示在Modal上
             var button = $(event.relatedTarget) // Button that triggered the modal
             //var recipient = button.data('whatever') // Extract info from data-* attributes
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            console.log("eqwewq");
             var modal = $(this)
             var text = ''
             $("input[name='all_student']").each(function () {

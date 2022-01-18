@@ -428,7 +428,7 @@ namespace LMSweb.Controllers
                 group.Students = (ICollection <Student>)db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
                 db.Groups.Add(group);
                 db.SaveChanges();
-                return RedirectToAction("Index", new { cid = CID });
+                return new HttpStatusCodeResult(200);
             }
             var vmodel = new GroupCreateViewModel();
             vmodel.StudentList = GetStudent();
@@ -530,7 +530,7 @@ namespace LMSweb.Controllers
                 //Group group = db.Groups.Find(gid);
                 foreach(var sid in StudentList)
                 {
-                    Student student = db.Students.Find(sid, CID);
+                    Student student = db.Students.Find(sid);
                     
                     Group group = db.Groups.Find(gid);
                     //student.group = group;
@@ -544,7 +544,7 @@ namespace LMSweb.Controllers
 
                 
                 db.SaveChanges();
-                return RedirectToAction("Index", new { cid = CID });
+                return new HttpStatusCodeResult(200);
             }
             var vmodel = new GroupCreateViewModel();
             vmodel.StudentList = GetStudent();

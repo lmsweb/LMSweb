@@ -31,7 +31,13 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-fileinput/css/fileinput.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+
+    @*<link rel="stylesheet" href="~/Content/bootstrap-multiselect.css" type="text/css" />*@
+
+    @*<link href="~/Content/" rel="stylesheet" />*@
 </head>
 <body class="body">
     <div class="container">
@@ -74,31 +80,35 @@
     </div>
     <div class="container">
         @RenderBody()
-    <hr />
-    <footer>
-        <p>&copy; @DateTime.Now.Year</p>
-    </footer>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year</p>
+        </footer>
     </div>
     <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    @*<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>*@
     @*<script src="~/Scripts/popper.min.js"></script>*@
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     @*<script src="~/Scripts/bootstrap.min.js"></script>*@
     @*<script src="~/Scripts/jasny-bootstrap.min.js"></script>*@
 
-    <script src="~/Scripts/bootstrap-select.min.js"></script>
     @*<script src="~/Scripts/bootstrap-datepicker.min.js"></script>*@
+    @*<script type="text/javascript" src="~/Scripts/bootstrap-multiselect.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/Scripts/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-5.min.js" integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==" crossorigin="anonymous"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-5.min.js" integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==" crossorigin="anonymous"></script>*@
     <script type="text/javascript">
-    var waitForEl = function (selector, callback) {
-        if (jQuery(selector).length) {
-            callback();
-        } else {
-            setTimeout(function () {
-                waitForEl(selector, callback);
-            }, 100);
-        }
-    };
+        var waitForEl = function (selector, callback) {
+            if (jQuery(selector).length) {
+                callback();
+            } else {
+                setTimeout(function () {
+                    waitForEl(selector, callback);
+                }, 100);
+            }
+        };
     </script>
 
     @RenderSection("scripts", required: false)
