@@ -199,6 +199,7 @@
     <Compile Include="Controllers\apiController\DiscussApiController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IActionResult.cs" />
     <Compile Include="Controllers\KnowledgePointsController.cs" />
     <Compile Include="Controllers\LearningBehaviorsController.cs" />
     <Compile Include="Controllers\StudentController.cs" />

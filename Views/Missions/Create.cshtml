@@ -127,32 +127,12 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </div>
             <p>或</p>
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="新增知識點" onclick="location.href='@Url.Action("Stu_Create", "Course")'" class="btn btn-default" />
-            </div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kpModal">
-                新增知識點
-            </button>
-            <div class="modal fade" id="kpModal" tabindex="-1" aria-labelledby="kpModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="kpModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                    
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-                </div>
+                <input type="button" value="新增知識點" onclick="myFunction()" class="btn btn-primary" />
             </div>
 
         </div>
@@ -165,7 +145,53 @@
 @section scripts
 {
     <script>
-        $('#kpModal').on('show.bs.modal', function (event) { 
+        $(function () {
+            $('#SelectKnowledgeList').on('shown.bs.select', function (e) {
+                $('#SelectKnowledgeList').empty();
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("GetKnowledgeJSON", "Missions")',
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        //var options = []
+                        $.each(response['Data'], function (index, item) {
+                            $('#SelectKnowledgeList').append('<option value="' + item.Value + '">' + item.Text + '</option>');
+                        });
+                        $('#SelectKnowledgeList').selectpicker('refresh');
+                    },
+                    error: function (thrownError) {
+                        console.log(thrownError);
+                    }
+                });
+            });
+        })
+        function myFunction() {
+            console.log('@Url.Action("Details", "Course", new { CID = Model.CID})');
+            const myWindow = window.open('@Url.Action("Details", "Course", new { CID = Model.CID})', "", "width=800,height=800");
+            //myWindow.opener.document.getElementById("demo").innerHTML = "HELLO!";
+        }
+        function kpListReLoad() {
+            var kps = $(this).next('.cities'); // get the associated cities dropdownlist
+            cities.empty(); // clear existing options
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetKnowledgeJSON", "Missions")',
+                dataType: "json",
+                success: function (response) {
+                    console.log(response);
+                    var options = []
+                    $.each(response['Data'], function (index, item) {
+                        options.append($('<option</option>').val(item.value).html(item.Text));
+                    });
+                },
+                error: function (thrownError) {
+                    console.log(thrownError);
+                }
+            });
+        }
+
+        $('#kpModal').on('show.bs.modal', function (event) {
             var modal = $(this)
             var text = ''
             $("input[name='all_student']").each(function () {
@@ -173,7 +199,7 @@
                     text += $(this).attr('id') + '<br/>';
                 }
             });
-            
+
         });
     </script>
     <script type="text/javascript">

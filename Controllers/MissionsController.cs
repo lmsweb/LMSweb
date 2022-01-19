@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using LMSweb.ViewModel;
@@ -46,7 +48,12 @@ namespace LMSweb.Models
             return View(model);
         }
 
-        private IEnumerable<SelectListItem> GetKnowledge(IEnumerable<int> SelectKnowledgeList=null)
+        public JsonResult GetKnowledgeJSON(IEnumerable<int> SelectKnowledgeList = null)
+        {
+             return Json(new { Data = new MultiSelectList(db.KnowledgePoints, "KID", "KContent", SelectKnowledgeList) }, JsonRequestBehavior.AllowGet);
+        }
+
+        public IEnumerable<SelectListItem> GetKnowledge(IEnumerable<int> SelectKnowledgeList=null)
         {
             return new MultiSelectList(db.KnowledgePoints, "KID", "KContent", SelectKnowledgeList);
         }
@@ -72,7 +79,7 @@ namespace LMSweb.Models
             var model = new MissionCreateViewModel();
             model.KnowledgeList = GetKnowledge();
             model.CID = cid;
-          
+            
 
             return View(model);
         }
