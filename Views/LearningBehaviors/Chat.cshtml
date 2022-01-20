@@ -52,6 +52,7 @@
         //$('#missionname').val(prompt('請輸入任務編號:'));
         //$('#groupname').val(prompt('請輸入組別:'));
         //$('#displayname').val(prompt('請輸入暱稱:'));
+
         $('#missionname').val('M001');
         $('#groupname').val('G001');
         $('#displayname').val('S001');
@@ -63,10 +64,10 @@
             write_msg(groupname, name, time, message);
         };       
         //chat.client.receivemessage = function (name, time, message) {
-        //    write_msg( name, time, message);
+        //    write_msg(name, time, message);
         //};
         $(".btn-primary").click(function () {
-            chat.server.send($('#groupname').val(), $('#displayname').val(), $('#message').val())
+            chat.server.send($('#displayname').val(), $('#message').val())
                 .done(function () {
                     //用fetch將資料傳進資料庫
                     //fetch(url, {
@@ -106,7 +107,7 @@
     function write_msg(groupname, name, time, message) {
         var myid = name;
         if (myid == $('#displayname').val()) {
-            $('#messages').append('<li class="me"><div><p>' + groupname +'我(' + time + ')</p>' + message + '</div><li>');
+            $('#messages').append('<li class="me"><div><p>'+ groupname +'我(' + time + ')</p>' + message + '</div><li>');
         }
         else {
             $('#messages').append('<li class="you"><div><p>' + groupname + name + '(' + time + ')</p>' + message + '</div><li>');
