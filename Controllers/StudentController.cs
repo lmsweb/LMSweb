@@ -147,12 +147,13 @@ namespace LMSweb.Controllers
             model.MID = mid;
             return View(model);
         }
-        public ActionResult Chat(string cid, string mid, string sid)
+        public ActionResult Chat(string cid, string mid)
         {
             MissionViewModel model = new MissionViewModel();
             var mission = db.Missions.Where(m => m.MID == mid).Single();
-            
-            ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
+            model.CID = cid;
+            model.MID = mid;
+            //ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
             
             return View(model);
         }
