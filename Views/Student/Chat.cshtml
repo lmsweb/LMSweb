@@ -35,22 +35,17 @@
     <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
     <script src="~/signalr/hubs"></script>
     <script type="text/javascript">
-
         $(document).ready(function () {
             var chat = $.connection.chatHub;
-            $('#displayname').val(@Model.SID);
+            $('#displayname').val('@User.Identity.Name');
             //$('#displayname').val(prompt('請輸入暱稱:'));
             var today = new Date();
-
             var currentDateTime =
-
                 today.getFullYear() + '/' +
-
                 (today.getMonth() + 1) + '/' +
-
                 today.getDate() + '/' +
-
                 today.getHours() + ':' + today.getMinutes();
+
             let url = 'https://localhost:44301/api/test/live';
             chat.client.receiveMessage = function (name, time, message) {
                 write_msg(name, time, message);
@@ -58,28 +53,27 @@
             $(".btn-primary").click(function () {
                 chat.server.send($('#displayname').val(), $('#message').val())
                     .done(function () {
-                        fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                ActionType: "D",
-                                subAction: "R",
-                                Detail: $('#message').val(),
-                                Time: currentDateTime,
-                                SID: $('#displayname').val(),
-                                MID: "M001"
-                            })
+                        //fetch(url, {
+                        //    method: 'POST',
+                        //    headers: {
+                        //        'Content-Type': 'application/json'
+                        //    },
+                        //    body: JSON.stringify({
+                        //        ActionType: "D",
+                        //        subAction: "R",
+                        //        Detail: $('#message').val(),
+                        //        Time: currentDateTime,
+                        //        SID: $('#displayname').val(),
+                        //        MID: "M001"
+                        //    })
 
-                        }).then((response) => {
-                            return response.json();
-                        }).then((jsonData) => {
-                            console.log(jsonData);
-                        }).catch((err) => {
-                            console.log('錯誤:', err);
-                        })
-
+                        //}).then((response) => {
+                        //    return response.json();
+                        //}).then((jsonData) => {
+                        //    console.log(jsonData);
+                        //}).catch((err) => {
+                        //    console.log('錯誤:', err);
+                        //})
                         console.log('send suc');
                         $('#message').val("");
                     })
@@ -96,7 +90,7 @@
         function write_msg(name, time, message) {
             var myid = name;
             if (myid == $('#displayname').val()) {
-                $('#messages').append('<li class="me"><div><p>我(' + time + ')</p>' + message + '</div><li>');
+                $('#messages').append('<li class="me"><div><p>' + name + '(' + time + ')</p>' + message + '</div><li>');
             }
             else {
                 $('#messages').append('<li class="you"><div><p>' + name + '(' + time + ')</p>' + message + '</div><li>');
