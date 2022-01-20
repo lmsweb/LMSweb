@@ -240,6 +240,10 @@
     <Compile Include="Migrations\202201200527502_teacherAmission.Designer.cs">
       <DependentUpon>202201200527502_teacherAmission.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201200607522_groupCID.cs" />
+    <Compile Include="Migrations\202201200607522_groupCID.Designer.cs">
+      <DependentUpon>202201200607522_groupCID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ColLevel.cs" />
     <Compile Include="Models\Course.cs" />
@@ -263,6 +267,7 @@
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\DiscussViewModel.cs" />
     <Compile Include="ViewModel\GroupCreateViewModel.cs" />
+    <Compile Include="ViewModel\GroupViewModel.cs" />
     <Compile Include="ViewModel\LearnBViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
@@ -634,6 +639,9 @@
     <Content Include="Views\Student\StudentMissionDetail.cshtml" />
     <Content Include="Views\Student\StudentCoding.cshtml" />
     <Content Include="Views\Student\StudentDrawing.cshtml" />
+    <Content Include="Views\Groups\CheckCoding.cshtml" />
+    <Content Include="Views\Groups\CheckDrawing.cshtml" />
+    <Content Include="Views\Groups\Assessment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -669,6 +677,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201200527502_teacherAmission.resx">
       <DependentUpon>202201200527502_teacherAmission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201200607522_groupCID.resx">
+      <DependentUpon>202201200607522_groupCID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

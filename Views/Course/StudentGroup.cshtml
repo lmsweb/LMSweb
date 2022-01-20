@@ -20,7 +20,7 @@
         @*onclick="myFunction()*@
         <label>
             分組數量 :
-            <input type="number" min="1" max="" placeholder="需要分成多少組" v-model="groupNum" id="groupN" />
+            <input type="number" min="1" max="10"  placeholder="需要分成多少組" v-model="groupNum" id="groupN" />
         </label>
         <button class="btn btn-primary" id="groupclick">隨機分組</button>
 
@@ -232,12 +232,13 @@
         $('#groupclick').click(function () {    //隨機分組
             var students = [];
             var gn = $("#groupN").val();
+            var cid = '@Model.CID';
             console.log(gn);
             $.ajax({
                 url: "@Url.Action("GroupN", "Course")",
                 method: "post",
                 contentType: 'application/json',
-                data: JSON.stringify({ n: gn }),
+                data: JSON.stringify({ n: gn , cid : cid}),
                 success: function (response) {
                     window.location.reload();
                     

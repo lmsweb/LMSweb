@@ -17,6 +17,7 @@ namespace LMSweb.Models
         [Display(Name = "組別名稱")]
         public string GName { get; set; }
 
+        public string CID { get; set; }
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<TeacherAssessment> TeacherA { get; set; }
 

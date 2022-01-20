@@ -378,30 +378,30 @@ namespace LMSweb.Controllers
         }
 
         [HttpGet]
-        public ActionResult StudentGroup(string CID)
+        public ActionResult StudentGroup(string cid)
         {            
             var vmodel = new GroupCreateViewModel();
-            vmodel.StudentList = GetStudent(CID);
-            vmodel.students = db.Students.Where(x => x.@group != null && x.CID == CID).ToList();
-            vmodel.CID = CID;
-            vmodel.groups = db.Groups.ToList();
+            vmodel.StudentList = GetStudent(cid);
+            vmodel.students = db.Students.Where(x => x.@group != null && x.CID == cid).ToList();
+            vmodel.CID = cid;
+            vmodel.groups = db.Groups.Where(g =>g.CID == cid).ToList();
 
-            var result = from g in db.Groups
-                         from s in db.Students
-                         where g.GID == s.@group.GID
-                         select new { s.SName, s.@group.GName };
+            //var result = from g in db.Groups
+            //             from s in db.Students
+            //             where g.GID == s.@group.GID
+            //             select new { s.SName, s.@group.GName };
 
             return View(vmodel);
         }
 
         [HttpPost]
-        public ActionResult StudentGroup(string GName, List<string> StudentList, string CID)
+        public ActionResult StudentGroup(string GName, List<string> StudentList, string cid)
         {
             if (ModelState.IsValid)
             {
                 Group group = new Group();
                 group.GName = GName;
-
+                group.CID = cid;
                 group.Students = (ICollection <Student>)db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
                 db.Groups.Add(group);
                 db.SaveChanges();
@@ -433,16 +433,18 @@ namespace LMSweb.Controllers
         }
 
         [HttpPost]
-        public ActionResult GroupN(int n)
+        public ActionResult GroupN(int n, string cid)
         {
             
-            var stus = GetRandomElements(db.Students.Where(x => x.@group == null).ToList());
+            var stus = GetRandomElements(db.Students.Where(x => x.@group == null && cid == x.CID).ToList());
             List<Group> groups = new List<Group>();
             var left_s = stus.Count % n;
             for(int i = 1; i <= n; i++)
             {
                 var g = new Group();
                 g.GName = "第" + i.ToString() + "組"+"_"+ g.GID;
+                g.Students = new List<Student>();
+                g.CID = cid;
                 groups.Add(g);
             }
             int g_idx = 0;

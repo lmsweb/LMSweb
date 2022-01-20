@@ -20,11 +20,11 @@ namespace LMSweb.Controllers
             return View(db.TeacherA.ToList());
         }
 
-        public ActionResult CheckMission(string gid)
-        {
-            //TeacherAssessment teacherAssessment = db.TeacherA.Where(ta => ta.GID == gid).ToList();
-            return View(db.TeacherA);
-        }
+        //public ActionResult CheckMission(string mid)
+        //{
+        //    TeacherAssessment teacherAssessment = db.TeacherA;
+        //    return View(db.TeacherA);
+        //}
         // GET: TeacherAssessments/Details/5
         public ActionResult Details(int? id)
         {

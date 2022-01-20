@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LMSweb.Models;
+using LMSweb.ViewModel;
 
 namespace LMSweb.Controllers
 {
@@ -15,12 +16,48 @@ namespace LMSweb.Controllers
         private LMSmodel db = new LMSmodel();
 
         // GET: Groups
-        public ActionResult Index()
+        public ActionResult Index(string cid)
         {
-            
-            return View(db.Groups.ToList());
-        }
 
+            var gmodel = new GroupViewModel();
+            gmodel.CID = cid;
+            gmodel.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+            return View(gmodel);
+        }
+        public ActionResult CheckCoding(string gid, string cid)
+        {
+            GroupViewModel model = new GroupViewModel();
+            model.CID = cid;
+            model.GID = gid;
+            return View(model);
+        }
+        public ActionResult CheckDrawing(string gid, string cid)
+        {
+            GroupViewModel model = new GroupViewModel();
+            model.CID = cid;
+            model.GID = gid;
+            return View(model);
+        }
+        public ActionResult Assessment(string gid, string cid)
+        {
+            GroupViewModel model = new GroupViewModel();
+            model.CID = cid;
+            model.GID = gid;
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "TEID,TeacherA,GroupAchievementLevel,GID")] TeacherAssessment teacherAssessment)
+        {
+            if (ModelState.IsValid)
+            {
+                db.TeacherA.Add(teacherAssessment);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(teacherAssessment);
+        }
         // GET: Groups/Details/5
         public ActionResult Details(int? id)
         {
