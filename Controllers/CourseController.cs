@@ -36,27 +36,6 @@ namespace LMSweb.Controllers
 
             return View(courses);
         }
-
-        //public ActionResult Stu_Index(string cid)
-        //{   
-        //    if(cid == null)
-        //    {
-        //        return RedirectToAction("Stu_Index");
-        //    }
-        //    CourseViewModel model = new CourseViewModel();
-        //    var course = db.Courses.Where(c => c.CID == cid).Single();
-        //    model.CID = course.CID;
-        //    model.CName = course.CName;
-        //    model.students = course.Students;
-        //    ViewBag.CID = cid;
-        //    //model.missions = db.Missions.Where(m => m.CID == cid);
-
-        //    return View(model);
-        //}
-        //public ActionResult Stu_Details()
-        //{
-        //    return View();
-        //}
         public ActionResult Stu_Details(string sid,string cid)
         {
             if (sid == null)
@@ -139,18 +118,6 @@ namespace LMSweb.Controllers
             }
             return View(student);
         }
-
-        // POST: Student/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Stu_DeleteConfirmed(string sid, string cid)
-        //{
-        //    Student student = db.Students.Find(sid, cid);
-        //    db.Students.Remove(student);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-        // GET: Course/Details/5
         public ActionResult Details(string cid)
         {
             if (cid == null)
@@ -165,7 +132,7 @@ namespace LMSweb.Controllers
             CourseViewModel model = new CourseViewModel();
             model.CID = course.CID;
             model.CName = course.CName;
-            model.kps = db.KnowledgePoints.ToList();
+            model.kps = db.KnowledgePoints.Where(kp => kp.CID == cid).ToList();
 
             return View(model);
         }
@@ -184,16 +151,17 @@ namespace LMSweb.Controllers
         [HttpPost]
         [Authorize]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CID,TID,CName")] Course course)
+        public ActionResult Create([Bind(Include = "CID,TID")] Course course)
         {
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
-                return RedirectToAction("TeacherHomePage", "Teacher", null);
+                return RedirectToAction("TeacherHomePage", "Teacher");
             }
 
             ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
+            
             return View(course);
         }
 

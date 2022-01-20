@@ -129,11 +129,12 @@
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
+                <p>或</p>
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" value="新增知識點" onclick="myFunction()" class="btn btn-primary" />
+                </div>
             </div>
-            <p>或</p>
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="新增知識點" onclick="myFunction()" class="btn btn-primary" />
-            </div>
+            
 
         </div>
      }
@@ -150,7 +151,7 @@
                 $('#SelectKnowledgeList').empty();
                 $.ajax({
                     type: "GET",
-                    url: '@Url.Action("GetKnowledgeJSON", "Missions")',
+                    url: '@Url.Action("GetKnowledgeJSON", "Missions", new { cid = Model.CID})',
                     dataType: "json",
                     success: function (response) {
                         console.log(response);
