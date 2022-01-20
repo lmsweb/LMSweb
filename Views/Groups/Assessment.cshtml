@@ -5,7 +5,7 @@
 }
 <div class="article">
     <h2>Assessment</h2>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Create", "Groups", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
@@ -30,10 +30,10 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.GID, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.TeacherAssessment.GID, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.GID, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.GID, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.TeacherAssessment.GID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TeacherAssessment.GID, "", new { @class = "text-danger" })
                 </div>
             </div>
 

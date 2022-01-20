@@ -53,7 +53,7 @@ namespace LMSweb.Controllers
             {
                 db.TeacherA.Add(teacherAssessment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(200);
             }
 
             return View(teacherAssessment);
@@ -81,20 +81,20 @@ namespace LMSweb.Controllers
 
         // POST: Groups/Create
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GName")] Group group)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Groups.Add(group);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //// 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "GName")] Group group)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Groups.Add(group);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            return View(group);
-        }
+        //    return View(group);
+        //}
 
         // GET: Groups/Edit/5
         public ActionResult Edit(int? id)
