@@ -16,12 +16,12 @@ namespace LMSweb.Controllers
         private LMSmodel db = new LMSmodel();
 
         // GET: Groups
-        public ActionResult Index(string cid)
+        public ActionResult Index(string mid)
         {
-
             var gmodel = new GroupViewModel();
-            gmodel.CID = cid;
-            gmodel.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+            gmodel.MID = mid;
+            var mis = db.Missions.Find(mid);
+            gmodel.Groups = db.Groups.Where(g => mis.CID == g.CID).ToList();
             return View(gmodel);
         }
         public ActionResult CheckCoding(string gid, string cid)
@@ -47,13 +47,17 @@ namespace LMSweb.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TEID,TeacherA,GroupAchievementLevel,GID")] TeacherAssessment teacherAssessment)
+        public ActionResult Create([Bind(Include = "TEID,TeacherA,GroupAchievementLevel,GID")] TeacherAssessment teacherAssessment, string cid)
         {
             if (ModelState.IsValid)
             {
+                teacherAssessment.group = db.Groups.Find(teacherAssessment.GID);
                 db.TeacherA.Add(teacherAssessment);
                 db.SaveChanges();
-                return new HttpStatusCodeResult(200);
+                var gmodel = new GroupViewModel();
+                gmodel.CID = cid;
+                gmodel.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+                return View("Index", gmodel);
             }
 
             return View(teacherAssessment);

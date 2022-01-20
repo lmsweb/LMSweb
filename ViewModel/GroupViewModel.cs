@@ -9,6 +9,7 @@ namespace LMSweb.ViewModel
     {
         public string CID { get; set; }
         public string GID { get; set; }
+        public string MID { get; set; }
         public List<LMSweb.Models.Group> Groups { get; set; }
         public LMSweb.Models.TeacherAssessment TeacherAssessment { get; set; }
     }

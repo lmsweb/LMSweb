@@ -50,6 +50,7 @@ namespace LMSweb.Models
                 model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
             }
             model.mis = mission;
+            model.MID = mission.MID;
 
             return View(model);
         }
