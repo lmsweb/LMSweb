@@ -33,7 +33,7 @@ namespace LMSweb.Models
         [Display(Name = "組別編號")]
         public string GID { get; set; }
 
-        //public virtual Mission Mission { get; set; }
+        public virtual Mission Mission { get; set; }
 
         public virtual Group group { get; set; }
     }

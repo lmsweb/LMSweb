@@ -236,6 +236,10 @@
     <Compile Include="Migrations\202201060937347_StudentLB.Designer.cs">
       <DependentUpon>202201060937347_StudentLB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201200527502_teacherAmission.cs" />
+    <Compile Include="Migrations\202201200527502_teacherAmission.Designer.cs">
+      <DependentUpon>202201200527502_teacherAmission.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ColLevel.cs" />
     <Compile Include="Models\Course.cs" />
@@ -662,6 +666,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201060937347_StudentLB.resx">
       <DependentUpon>202201060937347_StudentLB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201200527502_teacherAmission.resx">
+      <DependentUpon>202201200527502_teacherAmission.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

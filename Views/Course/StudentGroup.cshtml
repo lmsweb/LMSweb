@@ -116,7 +116,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                    <button type="button" class="close groupclose" aria-label="Close" id="@item.GID">
+                                                    <button type="button" class="btn-close groupclose" aria-label="Close" id="@item.GID">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
@@ -125,11 +125,10 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="card-body">
                                     @foreach (var stu in item.Students)
                                     {
-                                        <button type="button" class="close stuclose" aria-label="Close" id="@stu.SID">
+                                        <button type="button" class="btn-close stuclose" aria-label="Close" id="@stu.SID">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                         <p>@Html.DisplayFor(sid => stu.SName) &ensp;</p>
@@ -150,13 +149,9 @@
 <script type="text/javascript" src="../jquery/jquery-ui.js"></script>*@
 @section scripts {
     <script>
-        console.log('123213');
         $('#exampleModal').on('show.bs.modal', function (event) {     //將選取的學生顯示在Modal上
             var button = $(event.relatedTarget) // Button that triggered the modal
             //var recipient = button.data('whatever') // Extract info from data-* attributes
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            console.log("eqwewq");
             var modal = $(this)
             var text = ''
             $("input[name='all_student']").each(function () {
@@ -277,13 +272,12 @@
         
         $('.stuclose').click(function () {   //刪除已分好的組別裡面的某位學生
             var sid = this.id;
-            //alert(sid);
             
             $.ajax({
                 url: "@Url.Action("GroupStudentDelete", "Course")",
                 method: "post",
                 contentType: 'application/json',
-                data: JSON.stringify({ groupStuId: sid , CID : "@Model.CID"}),
+                data: JSON.stringify({groupStuId: sid}),
                 success: function (response) {
                     window.location.reload();
                     

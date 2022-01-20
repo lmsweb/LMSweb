@@ -74,13 +74,13 @@ namespace LMSweb.Controllers
         }
 
         // GET: Student/Edit/5
-        public ActionResult Stu_Edit(string sid, string cid)
+        public ActionResult Stu_Edit(string sid)
         {
             if (sid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(sid, cid);
+            Student student = db.Students.Find(sid);
             if (student == null)
             {
                 return HttpNotFound();
@@ -99,19 +99,19 @@ namespace LMSweb.Controllers
             {
                 db.Entry(student).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("StudentManagement", "Course", new { student.CID});
             }
             return View(student);
         }
 
         // GET: Student/Delete/5
-        public ActionResult Stu_Delete(string sid, string cid)
+        public ActionResult Stu_Delete(string sid)
         {
             if (sid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(sid, cid);
+            Student student = db.Students.Find(sid);
             if (student == null)
             {
                 return HttpNotFound();
@@ -220,6 +220,15 @@ namespace LMSweb.Controllers
         {
             Course course = db.Courses.Find(cid);
             db.Courses.Remove(course);
+            db.SaveChanges();
+            return RedirectToAction("TeacherHomePage", "Teacher", null);
+        }
+        [HttpPost, ActionName("Stu_Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Stu_DeleteConfirmed(string sid)
+        {
+            Student student = db.Students.Find(sid);
+            db.Students.Remove(student);
             db.SaveChanges();
             return RedirectToAction("TeacherHomePage", "Teacher", null);
         }
@@ -363,17 +372,17 @@ namespace LMSweb.Controllers
             }
             base.Dispose(disposing);
         }
-        private List<SelectListItem> GetStudent(IEnumerable<int> SelectStudentList = null)
+        private List<SelectListItem> GetStudent(string cid, IEnumerable<int> SelectStudentList = null)
         {
-            return new MultiSelectList(db.Students.Where(x => x.@group == null), "SID", "SName", SelectStudentList).ToList();
+            return new MultiSelectList(db.Students.Where(x => x.@group == null && x.CID == cid), "SID", "SName", SelectStudentList).ToList();
         }
 
         [HttpGet]
         public ActionResult StudentGroup(string CID)
         {            
             var vmodel = new GroupCreateViewModel();
-            vmodel.StudentList = GetStudent();
-            vmodel.students = db.Students.Where(x => x.@group != null ).ToList();
+            vmodel.StudentList = GetStudent(CID);
+            vmodel.students = db.Students.Where(x => x.@group != null && x.CID == CID).ToList();
             vmodel.CID = CID;
             vmodel.groups = db.Groups.ToList();
 
@@ -399,7 +408,7 @@ namespace LMSweb.Controllers
                 return new HttpStatusCodeResult(200);
             }
             var vmodel = new GroupCreateViewModel();
-            vmodel.StudentList = GetStudent();
+            vmodel.StudentList = GetStudent(vmodel.CID);
 
             return View(vmodel);
         }
@@ -410,7 +419,7 @@ namespace LMSweb.Controllers
 
             if (cid == null)
             {
-                return RedirectToAction("StudentGroup");
+                return new HttpStatusCodeResult(404);
             }
             CourseViewModel model = new CourseViewModel();
             var course = db.Courses.Where(c => c.CID == cid).Single();
@@ -474,9 +483,9 @@ namespace LMSweb.Controllers
             return RedirectToAction("StudentGroup");
         }
 
-        public ActionResult GroupStudentDelete(string groupStuId, string CID)
+        public ActionResult GroupStudentDelete( string groupStuId)
         {
-            Student student = db.Students.Find(groupStuId, CID);
+            Student student = db.Students.Find(groupStuId);
 
             if (student == null)
             {
@@ -489,7 +498,7 @@ namespace LMSweb.Controllers
 
             db.SaveChanges();
 
-            return RedirectToAction("StudentGroup");
+            return new HttpStatusCodeResult(200);
         }
         public ActionResult AddStuToOtherGroup(int gid, List<string> StudentList, string CID)
         {
@@ -515,7 +524,7 @@ namespace LMSweb.Controllers
                 return new HttpStatusCodeResult(200);
             }
             var vmodel = new GroupCreateViewModel();
-            vmodel.StudentList = GetStudent();
+            vmodel.StudentList = GetStudent(vmodel.CID);
 
             return View(vmodel);                                                                                                                                                                                                         
 
