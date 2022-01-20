@@ -8,21 +8,21 @@ namespace LMSweb
 {
     public class ChatHub : Hub
     {
-        public void Group(String GroupId)
+        
+
+        public void AddGroup(string GroupId)
         {
             Groups.Add(Context.ConnectionId, GroupId);
-            Clients.Group(GroupId).addMessage("Welcome");
+           
+            Clients.Client(Context.ConnectionId).addGroup(GroupId);
+            //Clients.Group(GroupId).groupMessage("Welcome");
         }
-
-        public void GroupSend(string GroupId, string name, string Message)
-        {
-            Clients.Group(GroupId).groupMessage(name, DateTime.Now.ToString("HH:mm"), Message);
-        }
-        public void Send(string name, string message)
+        public void Send(string GroupId, string name, string message)
         {
             // Call the addNewMessageToPage method to update clients.
-            Clients.All.addNewMessageToPage(name, message);
-            Clients.All.receiveMessage(name, DateTime.Now.ToString("HH:mm"), message);
+            //Clients.All.addNewMessageToPage(name, message);
+            //Clients.All.receiveMessage(GroupId,name, DateTime.Now.ToString("HH:mm"), message);
+            Clients.Group(GroupId, new string[0]).groupMessage(GroupId, name, DateTime.Now.ToString("HH:mm"), message);
         }
     }
 }

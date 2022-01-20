@@ -4,69 +4,103 @@
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
 
-<body>
-    <h2>Chat</h2>
-    <div class="container">
-        <input type="text" id="message" />
-        <input type="button" id="sendmessage" value="Send" />
-        <input type="hidden" id="displayname"/>
-        <input type="hidden" id="mid" value="@Model.MID"/>
-        
-        <ul id="discussion"></ul>
+<h2>@Model.MID</h2>
+<div class="container">
+    <div style="width:500px; height:500px; border:2px solid #eee; border-radius:10px;">
+        <div id="scroll" style="width:496px; height:420px; overflow-x:hidden; overflow-y:auto;">
+            <ul id="messages" style="margin:0; padding:10px; list-style-type:none; width:100%;"></ul>
+        </div>
+        <div style="width:496px; height:80px; border-top:2px solid #eee;">
+            <div class="row align-items-end">
+                <div class="col-md-9">
+                    <input type="text" id="message" placeholder="想說的話" style="width:400px; height:74px; border:0; border-bottom-left-radius:10px; resize:none;" />
+                    @*<textarea id="message" placeholder="想說的話" style="width:400px; height:74px; border:0; border-bottom-left-radius:10px; resize:none;"></textarea>*@
+                </div>
+                <div class="col-auto">
+                    <input type="button" value="Send" class="btn btn-primary" style="width:106px; height:74px;border:0; border-bottom-right-radius:10px; resize:none;" />
+                    <input type="hidden" id="displayname" />
+                </div>
+            </div>
+        </div>
     </div>
-</body>
+</div>
 
 <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
 
 <script src="~/signalr/hubs"></script>
 
 @section scripts {
+    <script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
     <script src="~/signalr/hubs"></script>
-    <script>
-        $(function () {
-            var chat = $.connection.charHub;
-            var today = new Date(); var currentDateTime = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getHours() + ':' + today.getMinutes();
-            let url = 'https://localhost:44301/api/test/live';
-            chat.client.addNewMessageToPage = function (name, message) {
-                $('#discussion').append('<li><strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
-            };
-            
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var chat = $.connection.chatHub;
             $('#displayname').val(@Model.SID);
-            $('#message').focus();
-            $.connection.hub.start().done(function () {
-                $('#sendmessage').click(function () {
-                    chat.server.send($('#displayname').val(), $('#message').val());
-                    fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            ActionType: "D",
-                            subAction: "R",
-                            Detail: $('#message').val(),
-                            Time: currentDateTime,
-                            SID: "@Model.SID",
-                            MID: $('#mid').val()
+            //$('#displayname').val(prompt('請輸入暱稱:'));
+            var today = new Date();
+
+            var currentDateTime =
+
+                today.getFullYear() + '/' +
+
+                (today.getMonth() + 1) + '/' +
+
+                today.getDate() + '/' +
+
+                today.getHours() + ':' + today.getMinutes();
+            let url = 'https://localhost:44301/api/test/live';
+            chat.client.receiveMessage = function (name, time, message) {
+                write_msg(name, time, message);
+            };
+            $(".btn-primary").click(function () {
+                chat.server.send($('#displayname').val(), $('#message').val())
+                    .done(function () {
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+
+                            body: JSON.stringify({
+                                ActionType: "D",
+                                subAction: "R",
+                                Detail: $('#message').val(),
+                                Time: currentDateTime,
+                                SID: $('#displayname').val(),
+                                MID: "M001"
+                            })
+
+                        }).then((response) => {
+                            return response.json();
+                        }).then((jsonData) => {
+                            console.log(jsonData);
+                        }).catch((err) => {
+                            console.log('錯誤:', err);
                         })
 
-                    }).then((response) => {
-                        return response.json();
-                    }).then((jsonData) => {
-                        console.log(jsonData);
-                    }).catch((err) => {
-                        console.log('錯誤:', err);
+                        console.log('send suc');
+                        $('#message').val("");
                     })
-                    
-                    $('#message').val('').focus();
-                });
+                    .fail(function (e) {
+                        console.warn(e);
+                    });
             });
+            $.connection.hub.start();
         });
-        function htmlEncode(value) {
-            var encodedValue = $('<div />').text(value).html();
-            return encodedValue;
+        //function htmlEncode(value) {
+        //    var encodedValue = $('<div />').text(value).html();
+        //    return encodedValue;
+        //}
+        function write_msg(name, time, message) {
+            var myid = name;
+            if (myid == $('#displayname').val()) {
+                $('#messages').append('<li class="me"><div><p>我(' + time + ')</p>' + message + '</div><li>');
+            }
+            else {
+                $('#messages').append('<li class="you"><div><p>' + name + '(' + time + ')</p>' + message + '</div><li>');
+            }
         }
     </script>
 }

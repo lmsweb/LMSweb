@@ -113,11 +113,8 @@ namespace LMSweb.Controllers
         {
             MissionViewModel model = new MissionViewModel();
             var mission = db.Missions.Where(m => m.MID == mid).Single();
-            var course = db.Missions.Where(c => c.CID == cid).Single();
+            
             ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
-
-            model.mis.CID = course.CID;
-            model.mis.MID = mission.MID;
             
             return View(model);
         }

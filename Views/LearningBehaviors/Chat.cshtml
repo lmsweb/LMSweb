@@ -1,16 +1,16 @@
 ﻿@model LMSweb.ViewModel.LearnBViewModel
 @{
     ViewBag.Title = "Chat";
+
 }
 @*<body class="sticky">
-        <div class="container">
-            <input type="text" id="message" />
-            <input type="button" id="sendmessage" value="Send" />
-            <input type="hidden" id="displayname" />
-            <ul id="discussion">
-            </ul>
-        </div>
-    </body>*@
+    <div class="container">
+        <input type="text" id="message" />
+        <input type="button" id="sendmessage" value="Send" />
+        <input type="hidden" id="displayname" />
+        <ul id="discussion"></ul>
+    </div>
+</body>*@
 <h2>Chat</h2>
 <div class="container">
     <div style="width:500px; height:500px; border:2px solid #eee; border-radius:10px;">
@@ -26,6 +26,8 @@
                 <div class="col-auto">
                     <input type="button" value="Send" class="btn btn-primary" style="width:106px; height:74px;border:0; border-bottom-right-radius:10px; resize:none;" />
                     <input type="hidden" id="displayname" />
+                    <input type="hidden" id="groupname" />
+                    <input type="hidden" id="missionname" />
                 </div>
             </div>
         </div>
@@ -33,144 +35,80 @@
 </div>
 
 @section scripts {
-    <script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
-    <script src="~/signalr/hubs"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var chat = $.connection.chatHub;
-            $('#displayname').val(prompt('請輸入暱稱:'));
-            var today = new Date();
+<script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
+<script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var chat = $.connection.chatHub;
+        var today = new Date();
+        var currentDateTime =
+            today.getFullYear() + '/' +
+            (today.getMonth() + 1) + '/' +
+            today.getDate() + '/' +
+            today.getHours() + ':' + today.getMinutes();
+        let url = 'https://localhost:44301/api/test/live';
 
-            var currentDateTime =
+        //$('#missionname').val(prompt('請輸入任務編號:'));
+        //$('#groupname').val(prompt('請輸入組別:'));
+        //$('#displayname').val(prompt('請輸入暱稱:'));
+        $('#missionname').val('M001');
+        $('#groupname').val('G001');
+        $('#displayname').val('S001');
 
-                today.getFullYear() + '/' +
+        chat.server.addgroup($('#groupname').val());
+        chat.client.groupMessage = function (groupname, name, time, message) {
+            write_msg(groupname, name, time, message);
+        };       
+        //chat.client.receivemessage = function (name, time, message) {
+        //    write_msg( name, time, message);
+        //};
+        $(".btn-primary").click(function () {
+            chat.server.send($('#groupname').val(), $('#displayname').val(), $('#message').val())
+                .done(function () {
+                    //用fetch將資料傳進資料庫
+                    //fetch(url, {
+                    //    method: 'POST',
+                    //    headers: {
+                    //        'Content-Type': 'application/json'
+                    //    },
+                    //    body: JSON.stringify({
+                    //        ActionType: "D",
+                    //        subAction: "R",
+                    //        Detail: $('#message').val(),
+                    //        Time: currentDateTime,
+                    //        SID: $('#displayname').val(),
+                    //        MID: "M001"
+                    //    })
+                    //}).then((response) => {
+                    //    return response.json();
+                    //}).then((jsonData) => {
+                    //    console.log(jsonData);
+                    //}).catch((err) => {
+                    //    console.log('錯誤:', err);
+                    //})
 
-                (today.getMonth() + 1) + '/' +
-
-                today.getDate() + '/' +
-
-                today.getHours() + ':' + today.getMinutes();
-            let url = 'https://localhost:44301/api/test/live';
-            chat.client.receiveMessage = function (name, time, message) {
-                write_msg(name, time, message);
-            };
-            $(".btn-primary").click(function () {
-                chat.server.send($('#displayname').val(), $('#message').val())
-                    .done(function () {
-                        fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-
-                            body: JSON.stringify({
-                                ActionType: "D",
-                                subAction: "R",
-                                Detail: $('#message').val(),
-                                Time: currentDateTime,
-                                SID: $('#displayname').val(),
-                                MID: "M001"
-                            })
-
-                        }).then((response) => {
-                            return response.json();
-                        }).then((jsonData) => {
-                            console.log(jsonData);
-                        }).catch((err) => {
-                            console.log('錯誤:', err);
-                        })
-
-                        console.log('send suc');
-                        $('#message').val("");
-                    })
-                    .fail(function (e) {
-                        console.warn(e);
-                    });
-            });
-            $.connection.hub.start();
-        });
-        //function htmlEncode(value) {
-        //    var encodedValue = $('<div />').text(value).html();
-        //    return encodedValue;
-        //}
-        function write_msg(name, time, message) {
-            var myid = name;
-            if (myid == $('#displayname').val()) {
-                $('#messages').append('<li class="me"><div><p>我(' + time + ')</p>' + message + '</div><li>');
-            }
-            else {
-                $('#messages').append('<li class="you"><div><p>' + name + '(' + time + ')</p>' + message + '</div><li>');
-            }
-        }
-    </script>
-    @*<script>
-            $(function () {
-                // Reference the auto-generated proxy for the hub.
-                var chat = $.connection.chatHub;
-                var today = new Date();
-
-                var currentDateTime =
-
-                    today.getFullYear() + '/' +
-
-                    (today.getMonth() + 1) + '/' +
-
-                    today.getDate() + '/' +
-
-                    today.getHours() + ':' + today.getMinutes();
-                let url = 'https://localhost:44301/api/test/live';
-
-                // Create a function that the hub can call back to display messages.創建一個函數，集線器可以回調顯示消息
-                chat.client.addNewMessageToPage = function (name, message) {
-
-                    // Add the message to the page.將消息添加到頁面
-                    $('#discussion').append('<li><strong>' + htmlEncode(name)
-                        + '</strong>: ' + htmlEncode(message) + '</li>');
-                };
-                // Get the user name and store it to prepend to messages.獲取用戶名並將其存儲在消息的前面
-                //$('#displayname').val('S001');
-                $('#displayname').val(prompt('請輸入暱稱:'));
-                // Set initial focus to message input box.將初始焦點設置為消息輸入框
-                $('#message').focus();
-                // Start the connection.
-                $.connection.hub.start().done(function () {
-                    $('#sendmessage').click(function () {
-                        // Call the Send method on the hub.在集線器上調用 Send 方法
-                        chat.server.send($('#displayname').val(), $('#message').val());
-                        //fetch(url, {
-                        //    method: 'POST',
-                        //    headers: {
-                        //        'Content-Type': 'application/json'
-                        //    },
-
-                        //    body: JSON.stringify({
-                        //        ActionType: "D",
-                        //        subAction: "R",
-                        //        Detail: $('#message').val(),
-                        //        Time: currentDateTime,
-                        //        SID: "S001",
-                        //        MID: "M001"
-                        //        //SID: Model.SID,
-                        //    })
-
-                        //}).then((response) => {
-                        //    return response.json();
-                        //}).then((jsonData) => {
-                        //    console.log(jsonData);
-                        //}).catch((err) => {
-                        //    console.log('錯誤:', err);
-                        //})
-                        // Clear text box and reset focus for next comment.清除文本框並重置下一條評論的焦點
-                        $('#message').val('').focus();
-                    });
+                    console.log('send suc');
+                    $('#message').val("");
+                })
+                .fail(function (e) {
+                    console.warn(e);
                 });
-            });
-            // This optional function html-encodes messages for display in the page.此可選函數對要在頁面中顯示的消息進行 html 編碼
-            function htmlEncode(value) {
-                var encodedValue = $('<div />').text(value).html();
-                return encodedValue;
-            }
-
-        </script>*@
+        });
+        $.connection.hub.start()
+    });
+    //function htmlEncode(value) {
+    //    var encodedValue = $('<div />').text(value).html();
+    //    return encodedValue;
+    //}
+    function write_msg(groupname, name, time, message) {
+        var myid = name;
+        if (myid == $('#displayname').val()) {
+            $('#messages').append('<li class="me"><div><p>' + groupname +'我(' + time + ')</p>' + message + '</div><li>');
+        }
+        else {
+            $('#messages').append('<li class="you"><div><p>' + groupname + name + '(' + time + ')</p>' + message + '</div><li>');
+        }
+    }
+</script>
 }
