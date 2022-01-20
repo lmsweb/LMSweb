@@ -19,16 +19,16 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.MName)
+                    @Html.DisplayNameFor(model => model.missions.First().MName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Start)
+                    @Html.DisplayNameFor(model => model.missions.First().Start)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.End)
+                    @Html.DisplayNameFor(model => model.missions.First().End)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MDetail)
+                    @Html.DisplayNameFor(model => model.missions.First().MDetail)
                 </th>
                 <th></th>
             </tr>
@@ -49,10 +49,9 @@
                         @Html.DisplayFor(modelItem => item.MDetail)
                     </td>
                     <td>
-                        @Html.ActionLink("進入任務", "Details", new { mid = item.MID }) |
-                        @Html.ActionLink("編輯", "Edit", new { mid = item.MID }) |
-                        @Html.ActionLink("刪除", "Delete", new { mid = item.MID }) |
-                        @Html.ActionLink("新增知識點關聯", "Create","KnowledgePoints", new { mid = item.MID })
+                        @Html.ActionLink("進入任務", "Details", new { mid = item.MID}) |
+                        @Html.ActionLink("編輯", "Edit", new { mid = item.MID, cid = item.CID }) |
+                        @Html.ActionLink("刪除", "Delete", new { mid = item.MID, cid = item.CID })
                     </td>
                 </tr>
             }

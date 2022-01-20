@@ -115,7 +115,7 @@ namespace LMSweb.Controllers
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("TeacherHomePage");
             }
 
             ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);

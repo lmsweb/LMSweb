@@ -32,7 +32,6 @@
                     
                     <td>
                         @Html.ActionLink("編輯", "Edit", "KnowledgePoints", new { kid = item.KID}, null) |
-                        @Html.ActionLink("詳細資料", "Details", "KnowledgePoints", new { kid = item.KID }, null) |
                         @Html.ActionLink("刪除", "Delete", "KnowledgePoints", new { kid = item.KID }, null)
                     </td>
                 </tr>
@@ -41,11 +40,11 @@
         </table>
         <hr />
         @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
-        <p>
+        @*<p>
             @Html.ActionLink("新增知識點", "Create", "KnowledgePoints", new { cid = Model.CID }, null) |
             @Html.ActionLink("編輯", "Edit", new { cid = Model.CID }) |
             @Html.ActionLink("返回", "Index")
-        </p>
+        </p>*@
 
     </div>
 </body>

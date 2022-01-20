@@ -70,33 +70,29 @@
             </tr>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.mis.KnowledgePoints)
+                    @Html.DisplayNameFor(model => model.mis.relatedKP)
                 </th>
                 <td>
-                    @foreach (var kp in Model.mis.KnowledgePoints)
+                    @foreach (var kp in Model.KContents)
                     {
-                        @Html.DisplayFor(KContent => kp.KContent)
+                        @kp
                         <br>
                     }
                 </td>
             </tr>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.mis.Prompts)
+                    @Html.DisplayNameFor(model => model.mis.Tip)
                 </th>
                 <td>
-                    @foreach (var p in Model.mis.Prompts)
-                    {
-                        @Html.DisplayFor(PContent => p.PContent)
-                        <br>
-                    }
+                    @Html.DisplayFor(model => model.mis.Tip)
                 </td>
             </tr>
         </table>
             
     </div>
     <p>
-        @Html.ActionLink("查看作業", "CheckMission", "TeacherAssessment", new { mid = Model.mis.MID }, null) 
+        @Html.ActionLink("查看作業", "Index", "Groups", new { cid = Model.CID }, null) 
     </p>
     
     <p>

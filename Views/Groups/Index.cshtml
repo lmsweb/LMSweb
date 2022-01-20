@@ -1,40 +1,43 @@
-﻿@model IEnumerable<LMSweb.Models.Group>
+﻿@model LMSweb.ViewModel.GroupViewModel
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 
 <h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.GName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Students)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.GName)
-        </td>
-        <td>
-            
-            
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.GID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.GID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.GID })
-        </td>
-    </tr>
+@if (Model.Groups.Count == 0)
+{
+    <p>目前還沒有新增組別哦</p>
 }
+ else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Groups[0].GName)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Groups[0].Students)
+            </th>*@
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model.Groups) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GName)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Students)
+            </td>*@
+            <td>
+                @Html.ActionLink("程式碼", "CheckCoding", new { gid=item.GID, cid = Model.CID }) |
+                @Html.ActionLink("流程圖", "CheckDrawing", new { gid=item.GID, cid = Model.CID }) |
+                @Html.ActionLink("評分", "Assessment", new { gid=item.GID, cid = Model.CID })
+            </td>
+        </tr>
+    }
 
 </table>
+}

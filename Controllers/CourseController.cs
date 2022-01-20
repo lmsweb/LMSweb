@@ -36,27 +36,6 @@ namespace LMSweb.Controllers
 
             return View(courses);
         }
-
-        //public ActionResult Stu_Index(string cid)
-        //{   
-        //    if(cid == null)
-        //    {
-        //        return RedirectToAction("Stu_Index");
-        //    }
-        //    CourseViewModel model = new CourseViewModel();
-        //    var course = db.Courses.Where(c => c.CID == cid).Single();
-        //    model.CID = course.CID;
-        //    model.CName = course.CName;
-        //    model.students = course.Students;
-        //    ViewBag.CID = cid;
-        //    //model.missions = db.Missions.Where(m => m.CID == cid);
-
-        //    return View(model);
-        //}
-        //public ActionResult Stu_Details()
-        //{
-        //    return View();
-        //}
         public ActionResult Stu_Details(string sid,string cid)
         {
             if (sid == null)
@@ -95,13 +74,13 @@ namespace LMSweb.Controllers
         }
 
         // GET: Student/Edit/5
-        public ActionResult Stu_Edit(string sid, string cid)
+        public ActionResult Stu_Edit(string sid)
         {
             if (sid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(sid, cid);
+            Student student = db.Students.Find(sid);
             if (student == null)
             {
                 return HttpNotFound();
@@ -120,37 +99,25 @@ namespace LMSweb.Controllers
             {
                 db.Entry(student).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("StudentManagement", "Course", new { student.CID});
             }
             return View(student);
         }
 
         // GET: Student/Delete/5
-        public ActionResult Stu_Delete(string sid, string cid)
+        public ActionResult Stu_Delete(string sid)
         {
             if (sid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Student student = db.Students.Find(sid, cid);
+            Student student = db.Students.Find(sid);
             if (student == null)
             {
                 return HttpNotFound();
             }
             return View(student);
         }
-
-        // POST: Student/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Stu_DeleteConfirmed(string sid, string cid)
-        //{
-        //    Student student = db.Students.Find(sid, cid);
-        //    db.Students.Remove(student);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-        // GET: Course/Details/5
         public ActionResult Details(string cid)
         {
             if (cid == null)
@@ -165,7 +132,7 @@ namespace LMSweb.Controllers
             CourseViewModel model = new CourseViewModel();
             model.CID = course.CID;
             model.CName = course.CName;
-            model.kps = db.KnowledgePoints.ToList();
+            model.kps = db.KnowledgePoints.Where(kp => kp.CID == cid).ToList();
 
             return View(model);
         }
@@ -184,16 +151,17 @@ namespace LMSweb.Controllers
         [HttpPost]
         [Authorize]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CID,TID,CName")] Course course)
+        public ActionResult Create([Bind(Include = "CID,TID")] Course course)
         {
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
-                return RedirectToAction("TeacherHomePage", "Teacher", null);
+                return RedirectToAction("TeacherHomePage", "Teacher");
             }
 
             ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
+            
             return View(course);
         }
 
@@ -252,6 +220,15 @@ namespace LMSweb.Controllers
         {
             Course course = db.Courses.Find(cid);
             db.Courses.Remove(course);
+            db.SaveChanges();
+            return RedirectToAction("TeacherHomePage", "Teacher", null);
+        }
+        [HttpPost, ActionName("Stu_Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Stu_DeleteConfirmed(string sid)
+        {
+            Student student = db.Students.Find(sid);
+            db.Students.Remove(student);
             db.SaveChanges();
             return RedirectToAction("TeacherHomePage", "Teacher", null);
         }
@@ -395,43 +372,43 @@ namespace LMSweb.Controllers
             }
             base.Dispose(disposing);
         }
-        private List<SelectListItem> GetStudent(IEnumerable<int> SelectStudentList = null)
+        private List<SelectListItem> GetStudent(string cid, IEnumerable<int> SelectStudentList = null)
         {
-            return new MultiSelectList(db.Students.Where(x => x.@group == null), "SID", "SName", SelectStudentList).ToList();
+            return new MultiSelectList(db.Students.Where(x => x.@group == null && x.CID == cid), "SID", "SName", SelectStudentList).ToList();
         }
 
         [HttpGet]
-        public ActionResult StudentGroup(string CID)
+        public ActionResult StudentGroup(string cid)
         {            
             var vmodel = new GroupCreateViewModel();
-            vmodel.StudentList = GetStudent();
-            vmodel.students = db.Students.Where(x => x.@group != null ).ToList();
-            vmodel.CID = CID;
-            vmodel.groups = db.Groups.ToList();
+            vmodel.StudentList = GetStudent(cid);
+            vmodel.students = db.Students.Where(x => x.@group != null && x.CID == cid).ToList();
+            vmodel.CID = cid;
+            vmodel.groups = db.Groups.Where(g =>g.CID == cid).ToList();
 
-            var result = from g in db.Groups
-                         from s in db.Students
-                         where g.GID == s.@group.GID
-                         select new { s.SName, s.@group.GName };
+            //var result = from g in db.Groups
+            //             from s in db.Students
+            //             where g.GID == s.@group.GID
+            //             select new { s.SName, s.@group.GName };
 
             return View(vmodel);
         }
 
         [HttpPost]
-        public ActionResult StudentGroup(string GName, List<string> StudentList, string CID)
+        public ActionResult StudentGroup(string GName, List<string> StudentList, string cid)
         {
             if (ModelState.IsValid)
             {
                 Group group = new Group();
                 group.GName = GName;
-
+                group.CID = cid;
                 group.Students = (ICollection <Student>)db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
                 db.Groups.Add(group);
                 db.SaveChanges();
-                return RedirectToAction("Index", new { cid = CID });
+                return new HttpStatusCodeResult(200);
             }
             var vmodel = new GroupCreateViewModel();
-            vmodel.StudentList = GetStudent();
+            vmodel.StudentList = GetStudent(vmodel.CID);
 
             return View(vmodel);
         }
@@ -442,7 +419,7 @@ namespace LMSweb.Controllers
 
             if (cid == null)
             {
-                return RedirectToAction("StudentGroup");
+                return new HttpStatusCodeResult(404);
             }
             CourseViewModel model = new CourseViewModel();
             var course = db.Courses.Where(c => c.CID == cid).Single();
@@ -456,16 +433,18 @@ namespace LMSweb.Controllers
         }
 
         [HttpPost]
-        public ActionResult GroupN(int n)
+        public ActionResult GroupN(int n, string cid)
         {
             
-            var stus = GetRandomElements(db.Students.Where(x => x.@group == null).ToList());
+            var stus = GetRandomElements(db.Students.Where(x => x.@group == null && cid == x.CID).ToList());
             List<Group> groups = new List<Group>();
             var left_s = stus.Count % n;
             for(int i = 1; i <= n; i++)
             {
                 var g = new Group();
                 g.GName = "第" + i.ToString() + "組"+"_"+ g.GID;
+                g.Students = new List<Student>();
+                g.CID = cid;
                 groups.Add(g);
             }
             int g_idx = 0;
@@ -506,9 +485,9 @@ namespace LMSweb.Controllers
             return RedirectToAction("StudentGroup");
         }
 
-        public ActionResult GroupStudentDelete(string groupStuId, string CID)
+        public ActionResult GroupStudentDelete( string groupStuId)
         {
-            Student student = db.Students.Find(groupStuId, CID);
+            Student student = db.Students.Find(groupStuId);
 
             if (student == null)
             {
@@ -521,7 +500,7 @@ namespace LMSweb.Controllers
 
             db.SaveChanges();
 
-            return RedirectToAction("StudentGroup");
+            return new HttpStatusCodeResult(200);
         }
         public ActionResult AddStuToOtherGroup(int gid, List<string> StudentList, string CID)
         {
@@ -530,7 +509,7 @@ namespace LMSweb.Controllers
                 //Group group = db.Groups.Find(gid);
                 foreach(var sid in StudentList)
                 {
-                    Student student = db.Students.Find(sid, CID);
+                    Student student = db.Students.Find(sid);
                     
                     Group group = db.Groups.Find(gid);
                     //student.group = group;
@@ -544,10 +523,10 @@ namespace LMSweb.Controllers
 
                 
                 db.SaveChanges();
-                return RedirectToAction("Index", new { cid = CID });
+                return new HttpStatusCodeResult(200);
             }
             var vmodel = new GroupCreateViewModel();
-            vmodel.StudentList = GetStudent();
+            vmodel.StudentList = GetStudent(vmodel.CID);
 
             return View(vmodel);                                                                                                                                                                                                         
 

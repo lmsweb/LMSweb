@@ -18,7 +18,7 @@
 
     <br />
     <p>
-        <input type="button" class="btn btn-primary" value="匯入資料" data-target="#UploadModal" data-toggle="modal" onclick="UploadModal()" />
+        <input type="button" class="btn btn-primary" value="匯入資料" data-bs-target="#UploadModal" data-bs-toggle="modal" onclick="UploadModal()" />
         <input type="button" class="btn btn-primary" value="新增學生" onclick="location.href='@Url.Action("Stu_Create", "Course")'" />
     </p>
     @*<div style="position: relative">*@
@@ -73,9 +73,8 @@
                     @Html.DisplayFor(modelItem => item.Score)
                 </td>
                 <td>
-                    @Html.ActionLink("編輯", "Stu_Edit", new { sid = item.SID, cid = item.CID }) |
-                    @Html.ActionLink("詳細資料", "Stu_Details", new { sid = item.SID, cid = item.CID }) |
-                    @Html.ActionLink("刪除", "Stu_Delete", new { sid = item.SID, cid = item.CID })
+                    @Html.ActionLink("編輯", "Stu_Edit", new { sid = item.SID}) |
+                    @Html.ActionLink("刪除", "Stu_Delete", new { sid = item.SID})
                 </td>
             </tr>
         }

@@ -90,9 +90,10 @@ namespace LMSweb.Controllers
         public ActionResult DeleteConfirmed(int? kid)
         {
             KnowledgePoint knowledgePoint = db.KnowledgePoints.Find(kid);
+            var cid = knowledgePoint.CID;
             db.KnowledgePoints.Remove(knowledgePoint);
             db.SaveChanges();
-            return RedirectToAction("Details", "Course", new { cid = knowledgePoint.CID });
+            return RedirectToAction("Details", "Course", new { cid = cid });
         }
 
         protected override void Dispose(bool disposing)

@@ -1,0 +1,221 @@
+﻿@model LMSweb.ViewModel.MissionCreateViewModel
+@{
+    ViewBag.Title = "AddMission";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+}
+<div claas="article">
+    @using (Html.BeginForm("Create", "Missions"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.mission.MID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group date" id="datetimepicker_start" data-target-input="nearest">
+                    @Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker_start" } })
+                    @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
+                    <div class="input-group-append" data-target="#datetimepicker_start" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.End, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group date" id="datetimepicker_end" data-target-input="nearest">
+                    @Html.EditorFor(model => model.mission.End, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker_end" } })
+                    @Html.ValidationMessageFor(model => model.mission.End, "", new { @class = "text-danger" })
+                    <div class="input-group-append" data-target="#datetimepicker_end" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.MName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mission.MName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mission.MName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mission.MDetail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.mission.CID, "CID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.mission.CID, (SelectList)ViewBag.CID, htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true", title = "請選擇課程..." })
+                @Html.ValidationMessageFor(model => model.mission.CID, "", new { @class = "text-danger" })
+            </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.Tip, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mission.Tip, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mission.Tip, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.AddMetacognition, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.mission.AddMetacognition)
+                    @Html.ValidationMessageFor(model => model.mission.AddMetacognition, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.discuss_k, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mission.discuss_k, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mission.discuss_k, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.chart_k, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mission.chart_k, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mission.chart_k, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.code_k, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mission.code_k, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mission.code_k, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.eva_k, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mission.eva_k, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mission.eva_k, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mission.per_k, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mission.per_k, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mission.per_k, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            <p>或</p>
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="新增知識點" onclick="myFunction()" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+</div>
+
+
+<div>
+    @Html.ActionLink("返回任務", "Index", new { cid = Model.CID })
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+    $(function () {
+            $('#SelectKnowledgeList').on('shown.bs.select', function (e) {
+                $('#SelectKnowledgeList').empty();
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("GetKnowledgeJSON", "Missions", new { cid = Model.CID})',
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        //var options = []
+                        $.each(response['Data'], function (index, item) {
+                            $('#SelectKnowledgeList').append('<option value="' + item.Value + '">' + item.Text + '</option>');
+                        });
+                        $('#SelectKnowledgeList').selectpicker('refresh');
+                    },
+                    error: function (thrownError) {
+                        console.log(thrownError);
+                    }
+                });
+            });
+        })
+        function myFunction() {
+            console.log('@Url.Action("Details", "Course", new { CID = Model.CID})');
+            const myWindow = window.open('@Url.Action("Details", "Course", new { CID = Model.CID})', "", "width=800,height=800");
+            //myWindow.opener.document.getElementById("demo").innerHTML = "HELLO!";
+        }
+
+
+        $('#kpModal').on('show.bs.modal', function (event) {
+            var modal = $(this)
+            var text = ''
+            $("input[name='all_student']").each(function () {
+                if ($(this).prop("checked")) {
+                    text += $(this).attr('id') + '<br/>';
+                }
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        var check_start_Exist = setInterval(function () {
+            if ($('#datepicker_start').length) {
+                console.log("Exists!");
+                $('#datepicker_start').datepicker({
+                    icons: {
+                        time: "fa fa-clock-o",
+                        date: "fa fa-calendar",
+                        up: "fa fa-arrow-up",
+                        down: "fa fa-arrow-down"
+                    }
+                });
+                clearInterval(check_start_Exist);
+            }
+        }, 100); // check every 100ms
+
+        var check_end_Exist = setInterval(function () {
+            if ($('#datepicker_end').length) {
+                console.log("Exists!");
+                $('#datepicker_end').datepicker({
+                    icons: {
+                        time: "fa fa-clock-o",
+                        date: "fa fa-calendar",
+                        up: "fa fa-arrow-up",
+                        down: "fa fa-arrow-down"
+                    }
+                });
+                clearInterval(check_end_Exist);
+            }
+        }, 100); // check every 100ms
+    </script>
+}
+
+
+
