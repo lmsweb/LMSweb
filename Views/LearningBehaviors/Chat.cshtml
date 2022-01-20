@@ -56,7 +56,9 @@
         $('#groupname').val('G001');
         $('#displayname').val('S001');
 
-        chat.server.addgroup($('#groupname').val());
+        chat.client.AddRoom = function (groupname) {
+
+        };
         chat.client.groupMessage = function (groupname, name, time, message) {
             write_msg(groupname, name, time, message);
         };       
@@ -109,6 +111,11 @@
         else {
             $('#messages').append('<li class="you"><div><p>' + groupname + name + '(' + time + ')</p>' + message + '</div><li>');
         }
+    }
+
+    function AddRoom(groupname) {
+        var data = $(groupname).attr("groupname");
+        chat.server.AddGroup(data);
     }
 </script>
 }
