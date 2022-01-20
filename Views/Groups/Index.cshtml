@@ -4,40 +4,50 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
+<div class="article">
+    <h2>Index</h2>
+    @if (Model.Groups.Count == 0)
+    {
+        <p>目前還沒有新增組別哦</p>
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Groups[0].GName)
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model)*@
+                </th>
+                <th></th>
+            </tr>
 
-<h2>Index</h2>
-@if (Model.Groups.Count == 0)
-{
-    <p>目前還沒有新增組別哦</p>
-}
- else
-{
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Groups[0].GName)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Groups[0].Students)
-            </th>*@
-            <th></th>
-        </tr>
+            @foreach (var item in Model.Groups)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GName)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item)*@
+                    </td>
+                    @foreach(var ta in item.TeacherA)
+                    {
+                        @item.TeacherA.Count
+                        @ta.GroupAchievementLevel
+                        @ta.TeacherA
+                        <br />
+                    }
+                    <td>
+                        @Html.ActionLink("程式碼", "CheckCoding", new { gid = item.GID, cid = Model.CID }) |
+                        @Html.ActionLink("流程圖", "CheckDrawing", new { gid = item.GID, cid = Model.CID }) |
+                        @Html.ActionLink("評分", "Assessment", new { gid = item.GID, cid = Model.CID })
+                    </td>
+                </tr>
+            }
 
-    @foreach (var item in Model.Groups) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.GName)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Students)
-            </td>*@
-            <td>
-                @Html.ActionLink("程式碼", "CheckCoding", new { gid=item.GID, cid = Model.CID }) |
-                @Html.ActionLink("流程圖", "CheckDrawing", new { gid=item.GID, cid = Model.CID }) |
-                @Html.ActionLink("評分", "Assessment", new { gid=item.GID, cid = Model.CID })
-            </td>
-        </tr>
+        </table>
     }
 
-</table>
-}
+</div>

@@ -12,7 +12,8 @@ namespace LMSweb
 
         public void AddGroup(string GroupId)
         {
-            Groups.Add(Context.ConnectionId, GroupId);           
+            Groups.Add(Context.ConnectionId, GroupId);
+           
             Clients.Client(Context.ConnectionId).addGroup(GroupId);
             //Clients.Group(GroupId).groupMessage("Welcome");
         }
@@ -20,7 +21,7 @@ namespace LMSweb
         {
             // Call the addNewMessageToPage method to update clients.
             //Clients.All.addNewMessageToPage(name, message);
-            Clients.All.receiveMessage(name, DateTime.Now.ToString("HH:mm"), message);
+            Clients.All.receiveMessage(GroupId,name, DateTime.Now.ToString("HH:mm"), message);
             //Clients.Group(GroupId, new string[0]).groupMessage(GroupId, name, DateTime.Now.ToString("HH:mm"), message);
         }
     }

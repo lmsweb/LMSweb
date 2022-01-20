@@ -16,12 +16,12 @@ namespace LMSweb.Controllers
         private LMSmodel db = new LMSmodel();
 
         // GET: Groups
-        public ActionResult Index(string cid)
+        public ActionResult Index(string mid)
         {
-
             var gmodel = new GroupViewModel();
-            gmodel.CID = cid;
-            gmodel.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+            gmodel.MID = mid;
+            var mis = db.Missions.Find(mid);
+            gmodel.Groups = db.Groups.Where(g => mis.CID == g.CID).ToList();
             return View(gmodel);
         }
         public ActionResult CheckCoding(string gid, string cid)
@@ -47,13 +47,17 @@ namespace LMSweb.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TEID,TeacherA,GroupAchievementLevel,GID")] TeacherAssessment teacherAssessment)
+        public ActionResult Create([Bind(Include = "TEID,TeacherA,GroupAchievementLevel,GID")] TeacherAssessment teacherAssessment, string cid)
         {
             if (ModelState.IsValid)
             {
+                teacherAssessment.group = db.Groups.Find(teacherAssessment.GID);
                 db.TeacherA.Add(teacherAssessment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                var gmodel = new GroupViewModel();
+                gmodel.CID = cid;
+                gmodel.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+                return View("Index", gmodel);
             }
 
             return View(teacherAssessment);
@@ -81,20 +85,20 @@ namespace LMSweb.Controllers
 
         // POST: Groups/Create
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "GName")] Group group)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Groups.Add(group);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //// 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "GName")] Group group)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Groups.Add(group);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
 
-            return View(group);
-        }
+        //    return View(group);
+        //}
 
         // GET: Groups/Edit/5
         public ActionResult Edit(int? id)
