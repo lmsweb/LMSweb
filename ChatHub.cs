@@ -17,12 +17,17 @@ namespace LMSweb
             Clients.Client(Context.ConnectionId).addGroup(GroupId);
             //Clients.Group(GroupId).groupMessage("Welcome");
         }
-        public void Send(string name, string message)
+        public void Send(string GroupId, string name, string message)
         {
-            // Call the addNewMessageToPage method to update clients.
-            //Clients.All.addNewMessageToPage(name, message);
-            Clients.All.receiveMessage(name, DateTime.Now.ToString("HH:mm"), message);
-            //Clients.Group(GroupId, new string[0]).groupMessage(GroupId, name, DateTime.Now.ToString("HH:mm"), message);
+            //Call the addNewMessageToPage method to update clients.
+            
+            //Clients.All.receiveMessage(name, DateTime.Now.ToString("HH:mm"), message);
+            Clients.Group(GroupId, new string[0]).groupMessage(GroupId, name, DateTime.Now.ToString("HH:mm"), message);
         }
+        //public void GroupSend(string GroupId, string name, string message)
+        //{
+        //    //Call the addNewMessageToPage method to update clients.
+        //    Clients.Group(GroupId, new string[0]).groupMessage(GroupId, name, DateTime.Now.ToString("HH:mm"), message);
+        //}
     }
 }

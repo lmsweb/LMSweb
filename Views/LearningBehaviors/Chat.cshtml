@@ -67,7 +67,7 @@
         //    write_msg(name, time, message);
         //};
         $(".btn-primary").click(function () {
-            chat.server.send($('#displayname').val(), $('#message').val())
+            chat.server.send($('#groupname').val(), $('#displayname').val(), $('#message').val())
                 .done(function () {
                     //用fetch將資料傳進資料庫
                     //fetch(url, {
