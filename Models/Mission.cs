@@ -27,9 +27,6 @@ namespace LMSweb.Models
         [Display(Name = "任務名稱")]
         public string MName { get; set; }
 
-        [Display(Name = "提示內容")]
-        public string Tip { get; set; }
-
         [Required]
         [Display(Name = "任務內容")]
         public string MDetail { get; set; }

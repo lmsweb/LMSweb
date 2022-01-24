@@ -249,7 +249,6 @@ namespace LMSweb.Models
             model.mission.MName = mission.MName;
             //db.Missions.Add(model.mission);
             model.mission.MDetail = mission.MDetail;
-            model.mission.Tip = mission.Tip;
             //model.mission.code_k = mission.code_k;
             //model.mission.discuss_k = mis
             model.KnowledgeList = GetKnowledge(cid);

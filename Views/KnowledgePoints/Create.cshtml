@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+    Layout = "~/Views/Shared/_LayoutKPPage.cshtml";
 }
 <body>
     <div class="article">
@@ -39,7 +39,6 @@
                 </div>
             </div>
         }
-
         <div>
             @Html.ActionLink("Back to List", "Details", "Course", new { cid = Model.CID }, null)
         </div>

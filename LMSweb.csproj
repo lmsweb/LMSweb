@@ -244,6 +244,10 @@
     <Compile Include="Migrations\202201200607522_groupCID.Designer.cs">
       <DependentUpon>202201200607522_groupCID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201241545055_delTip.cs" />
+    <Compile Include="Migrations\202201241545055_delTip.Designer.cs">
+      <DependentUpon>202201241545055_delTip.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ColLevel.cs" />
     <Compile Include="Models\Course.cs" />
@@ -471,6 +475,8 @@
     <Content Include="Scripts\jquery-3.6.0.slim.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.2.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.2.min.js" />
     <Content Include="Scripts\locales\ar.js" />
     <Content Include="Scripts\locales\az.js" />
     <Content Include="Scripts\locales\bg.js" />
@@ -646,6 +652,7 @@
     <Content Include="Views\Groups\CheckCoding.cshtml" />
     <Content Include="Views\Groups\CheckDrawing.cshtml" />
     <Content Include="Views\Groups\Assessment.cshtml" />
+    <Content Include="Views\Shared\_LayoutKPPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -684,6 +691,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201200607522_groupCID.resx">
       <DependentUpon>202201200607522_groupCID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201241545055_delTip.resx">
+      <DependentUpon>202201241545055_delTip.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
