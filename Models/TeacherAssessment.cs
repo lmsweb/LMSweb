@@ -15,7 +15,7 @@ namespace LMSweb.Models
         public int TEID { get; set; }
 
         [Required]
-        [Display(Name = "教師評價")]
+        [Display(Name = "教師評語")]
         public string TeacherA { get; set; }
 
 

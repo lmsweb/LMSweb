@@ -652,7 +652,8 @@
     <Content Include="Views\Groups\CheckCoding.cshtml" />
     <Content Include="Views\Groups\CheckDrawing.cshtml" />
     <Content Include="Views\Groups\Assessment.cshtml" />
-    <Content Include="Views\Shared\_LayoutKPPage.cshtml" />
+    <Content Include="Views\Shared\_WindowLayoutPage.cshtml" />
+    <Content Include="Views\Student\StudentMDetailWindow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

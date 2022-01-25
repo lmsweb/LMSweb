@@ -1,5 +1,4 @@
-﻿@*@model  LMSweb.ViewModel.CourseLayoutViewModelbase*@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -22,7 +21,6 @@
             background: #F0F0F2;
             box-shadow: 0 2px 2px;
         }
-
         .body {
             background-color: #BFC5D9
         }
@@ -65,17 +63,11 @@
                     <li class="nav-item active">
                         <a class="nav-link text-light " href="@Url.Action("StudentHomePage","Student")">回課程首頁</a>
                     </li>
-                    @*<li class="nav-item active">
-                        <a class="nav-link text-light " href="@Url.Action("StudentCourse","Student", new { CID = Model.CID})"></a>
-                    </li>*@
                     <li class="nav-item active">
                         <a class="nav-link text-light " href="@Url.Action("StudentMission", "Student", new { CID = Model.CID})">任務列表</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link text-light " href="@Url.Action("","")">總成績</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link text-light " href="@Url.Action("","")">學習歷程</a>
+                        <a class="nav-link text-light " href="@Url.Action("","")">學習表現</a>
                     </li>
                 </ul>
             </div>

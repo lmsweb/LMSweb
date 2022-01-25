@@ -6,7 +6,15 @@
 <div class="article">
     @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
     @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-    @Html.ActionLink("任務內容", "StudentMissionDetail", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
+    <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-success" />
     <h2>StudentCoding</h2>
 </div>
+@section scripts
+{
+    <script>
+        function myFunction() {
+            const myWindow = window.open('@Url.Action( "StudentMDetailWindow", "Student", new { MID = Model.MID, CID = Model.CID})', "", "width=800,height=800");
+        }
+    </script>
 
+}

@@ -3,7 +3,7 @@
     ViewBag.Title = "AddMission";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
-<div claas="article">
+<div class="article">
     @using (Html.BeginForm("Create", "Missions"))
     {
         @Html.AntiForgeryToken()
@@ -59,19 +59,15 @@
             </div>
             </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
+        @Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="input-group mb-3">
+            <div class="form-control " aria-describedby="button-addon2">
+                @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", @data_live_search_placeholder = "輸入知識點關鍵字", title = "請選擇知識點..." })
             </div>
-        </div>
+            <div id="button-addon2">
+                <input type="button" value="管理知識點" onclick="KPmanagement()" class="btn btn-primary" />
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.Tip, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mission.Tip, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mission.Tip, "", new { @class = "text-danger" })
-            </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.mission.AddMetacognition, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -130,9 +126,6 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
             <p>或</p>
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="新增知識點" onclick="myFunction()" class="btn btn-primary" />
-            </div>
         </div>
     }
 </div>
@@ -166,12 +159,11 @@
                 });
             });
         })
-        function myFunction() {
+         function KPmanagement() {
             console.log('@Url.Action("Details", "Course", new { CID = Model.CID})');
             const myWindow = window.open('@Url.Action("Details", "Course", new { CID = Model.CID})', "", "width=800,height=800");
             //myWindow.opener.document.getElementById("demo").innerHTML = "HELLO!";
         }
-
 
         $('#kpModal').on('show.bs.modal', function (event) {
             var modal = $(this)
