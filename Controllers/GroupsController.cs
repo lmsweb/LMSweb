@@ -43,6 +43,7 @@ namespace LMSweb.Controllers
             GroupViewModel model = new GroupViewModel();
             model.CID = cid;
             model.GID = gid;
+
             return View(model);
         }
         [HttpPost]

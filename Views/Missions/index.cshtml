@@ -6,7 +6,7 @@
  
     <p>
         <input type="button" class="btn btn-primary" value="新增任務" onclick="location.href='@Url.Action("Create", "Missions", new { CID = Model.CID})'" />
-        <input type="button" class="btn btn-primary" value="選擇任務" onclick="location.href='@Url.Action("SelectMissions", "Missions", new { CID = Model.CID })'" />
+        <input type="button" class="btn btn-primary" value="複製任務" onclick="location.href='@Url.Action("SelectMissions", "Missions", new { CID = Model.CID })'" />
     </p>
     @if (Model.CID == null || Model.CID.Count() == 0)
     {

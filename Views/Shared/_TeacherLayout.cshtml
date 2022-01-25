@@ -9,7 +9,6 @@
             padding: 20px;
             text-align: left;
         }
-
         .article {
             position: relative;
             display: block;
@@ -22,7 +21,6 @@
             background: #F0F0F2;
             box-shadow: 0 2px 2px;
         }
-
         .body {
             background-color: #BFC5D9
         }
@@ -69,10 +67,7 @@
                         <a class="nav-link text-light " href="@Url.Action("StudentManagement", "Course", new { CID = Model.CID})">學生名單</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link text-light " href="@Url.Action("","")">總成績</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link text-light " href="@Url.Action("PersonalJourney","LearningBehaviors", new { CID = Model.CID})">學習歷程</a>
+                        <a class="nav-link text-light " href="@Url.Action("PersonalJourney","LearningBehaviors", new { CID = Model.CID})">學習表現</a>
                     </li>
                 </ul>
             </div>

@@ -1,7 +1,7 @@
 ﻿@model LMSweb.ViewModel.MissionViewModel
 @{
-    ViewBag.Title = "StudentMissionDetail";
-    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    ViewBag.Title = "StudentMDetailWindow";
+    Layout = "~/Views/Shared/_WindowLayoutPage.cshtml";
 }
 <style>
     table {
@@ -27,10 +27,6 @@
 </style>
 
 <div class="article">
-    @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-    @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-    <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-success" />
-    @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
     <h5>任務內容</h5>
     <hr />
     <table>
@@ -87,16 +83,4 @@
             </td>
         </tr>
     </table>
-
 </div>
-@section scripts
-{
-    <script>
-        function myFunction() {
-            const myWindow = window.open('@Url.Action( "StudentMDetailWindow", "Student", new { MID = Model.MID, CID = Model.CID})', "", "width=800,height=800");
-        }
-    </script>
-    
-}
-
-

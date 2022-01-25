@@ -232,7 +232,7 @@ namespace LMSweb.Models
             var model = new MissionCreateViewModel();   //new
 
             model.mission = new Mission();
-            
+
             //var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
             //string kp_str = "";
             //foreach (var kp in kps)
@@ -240,19 +240,23 @@ namespace LMSweb.Models
             //    kp_str += kp.KID.ToString() + ",";
             //}
 
-            ////mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
+            //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
 
             //model.mission.relatedKP = kp_str;
             model.mission.MID = mission.MID + "_Copy_" + mission.CID;
             model.mission.Start = mission.Start;
             model.mission.End = mission.End;
             model.mission.MName = mission.MName;
+
             //db.Missions.Add(model.mission);
             model.mission.MDetail = mission.MDetail;
-            //model.mission.code_k = mission.code_k;
-            //model.mission.discuss_k = mis
+            model.mission.code_k = mission.code_k;
+            model.mission.discuss_k = mission.discuss_k;
+            model.mission.chart_k = mission.chart_k;
+            model.mission.eva_k = mission.eva_k;
+            model.mission.per_k = mission.per_k;
             model.KnowledgeList = GetKnowledge(cid);
-            //model.mission.KnowledgePoints  = mission.KnowledgePoints;
+
 
             model.mission.CID = cid;
             model.CID = cid;

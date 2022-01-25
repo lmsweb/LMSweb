@@ -31,7 +31,7 @@ namespace LMSweb.Models
         [Display(Name = "任務內容")]
         public string MDetail { get; set; }
 
-        [Display(Name = "是否加入後設認知")]
+        [Display(Name = "加入後設認知")]
         public bool AddMetacognition { get; set; }
 
         [Display(Name = "討論權重")]
@@ -49,6 +49,7 @@ namespace LMSweb.Models
         [Display(Name = "個人分數權重")]
         public int per_k {get;set;}
 
+        [Display(Name = "知識點")]
         public string relatedKP { get; set; }
 
         [Display(Name = "課程編號")]
