@@ -3,10 +3,47 @@
     ViewBag.Title = "StudentCoding";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
+
+<head>
+
+    <title>CodeMirrorTest</title>
+
+    <!--下面兩個是使用Code Mirror必須引入的-->
+    <link rel="stylesheet" href="codemirror-5.63.3/lib/codemirror.css">
+    <link rel="stylesheet" href="../../CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/lib/codemirror.css">
+
+    <script src="../../CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/lib/codemirror.js"></script>
+
+    <!--Java代碼高亮必須引入-->
+    <script src="../../CodeMirror.Erideon.5.65.0/mode/python/python.js"></script>
+
+    <!--引入css文件，用以支持主題-->
+    <link rel="stylesheet" href="../../CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/theme/seti.css">
+
+    <!--引入js，綁定Vim-->
+    <link rel="stylesheet" href="../../CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/addon/dialog/dialog.css">
+    <script src="../../CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/keymap/vim.js"></script>
+    <script src="../../CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/addon/search/searchcursor.js"></script>
+
+    <!--改善vim輸入命令時的樣式-->
+    <script src="codemirror-5.63.3/addon/dialog/dialog.js"></script>
+
+    <!--全屏模式-->
+    <link rel="stylesheet" href="../../CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/addon/display/fullscreen.css">
+    <script src="../../CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/addon/display/fullscreen.js"></script>
+</head>
+
+<body>
+
+</body>
 <div class="article">
     @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
     @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
     @Html.ActionLink("任務內容", "StudentMissionDetail", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
     <h2>StudentCoding</h2>
+
+    <textarea id="code"></textarea>
+    <script src="coding_editor.js"></script>
+
 </div>
 
