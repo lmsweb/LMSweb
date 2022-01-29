@@ -43,11 +43,14 @@ namespace LMSweb.Models
         [Display(Name = "撰寫權重")]
         public int code_k { get; set; }
 
-        [Display(Name = "互評分數權重")]
+        [Display(Name = "互動合作分數權重")]
         public int eva_k { get; set; }
 
         [Display(Name = "個人分數權重")]
         public int per_k {get;set;}
+
+        [Display(Name = "小組分數權重")]
+        public int group_k { get; set; }
 
         [Display(Name = "知識點")]
         public string relatedKP { get; set; }

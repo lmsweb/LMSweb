@@ -90,6 +90,26 @@ namespace LMSweb.Models
 
             model.mission.relatedKP = kp_str;
             model.mission.CID = model.CID;
+
+            var n1 = model.mission.discuss_k;
+            var n2 = model.mission.chart_k;
+            var n3 = model.mission.code_k;
+            var n = n1 + n2 + n3;
+            var n1Score = (int)(((decimal)n1 / n) * 100);
+            var n2Score = (int)(((decimal)n2 / n) * 100);
+            var n3Score = (int)(((decimal)n3 / n) * 100);
+            model.mission.discuss_k = n1Score;
+            model.mission.chart_k = n2Score;
+            model.mission.code_k = n3Score;
+
+            var m1 = model.mission.eva_k;
+            var m2 = model.mission.per_k;
+            var m = m1 + m2;
+            var m1Score = (int)(((decimal)m1 / m) * 100);
+            var m2Score = (int)(((decimal)m2 / m) * 100);
+            model.mission.eva_k = m1Score;
+            model.mission.per_k = m2Score;
+
             if (ModelState.IsValid)
             {
                 db.Missions.Add(model.mission);
@@ -99,7 +119,6 @@ namespace LMSweb.Models
             var vmodel = new MissionCreateViewModel();
             vmodel.KnowledgeList = GetKnowledge(vmodel.CID);
             vmodel.CID = model.CID;
-
             vmodel.mission.MID = model.mission.MID;
 
             return View(vmodel);
