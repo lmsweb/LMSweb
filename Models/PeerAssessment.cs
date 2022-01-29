@@ -15,9 +15,11 @@ namespace LMSweb.Models
         public int PEID { get; set; }
 
         [Required]
-        [Display(Name = "評價內容")]
+        [Display(Name = "評語")]
         public string PeerA { get; set; }
 
+        [Display(Name = "互動合作分數")]
+        public int CooperationScore { get; set; }
 
         [Required]
         [Display(Name = "被評價學生")]

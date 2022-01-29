@@ -27,14 +27,11 @@ namespace LMSweb.Models
         [Display(Name = "任務名稱")]
         public string MName { get; set; }
 
-        [Display(Name = "提示內容")]
-        public string Tip { get; set; }
-
         [Required]
         [Display(Name = "任務內容")]
         public string MDetail { get; set; }
 
-        [Display(Name = "是否加入後設認知")]
+        [Display(Name = "加入後設認知")]
         public bool AddMetacognition { get; set; }
 
         [Display(Name = "討論權重")]
@@ -46,12 +43,16 @@ namespace LMSweb.Models
         [Display(Name = "撰寫權重")]
         public int code_k { get; set; }
 
-        [Display(Name = "互評分數權重")]
+        [Display(Name = "互動合作分數權重")]
         public int eva_k { get; set; }
 
         [Display(Name = "個人分數權重")]
         public int per_k {get;set;}
 
+        [Display(Name = "小組分數權重")]
+        public int group_k { get; set; }
+
+        [Display(Name = "知識點")]
         public string relatedKP { get; set; }
 
         [Display(Name = "課程編號")]

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+    Layout = "~/Views/Shared/_WindowLayoutPage.cshtml";
 }
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,12 +14,13 @@
 <body>
     <div class="article">
         <h4>@(Model.CName)</h4>
+        @Html.ActionLink("新增知識點", "Create", "KnowledgePoints", new { cid = Model.CID }, null)
         <table class="table">
             <tr>
                 <th>
                     知識點
                 </th>
-                
+
                 <th></th>
             </tr>
 
@@ -29,9 +30,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.KContent)
                     </td>
-                    
+
                     <td>
-                        @Html.ActionLink("編輯", "Edit", "KnowledgePoints", new { kid = item.KID}, null) |
+                        @Html.ActionLink("編輯", "Edit", "KnowledgePoints", new { kid = item.KID }, null) |
                         @Html.ActionLink("刪除", "Delete", "KnowledgePoints", new { kid = item.KID }, null)
                     </td>
                 </tr>

@@ -90,6 +90,26 @@ namespace LMSweb.Models
 
             model.mission.relatedKP = kp_str;
             model.mission.CID = model.CID;
+
+            var n1 = model.mission.discuss_k;
+            var n2 = model.mission.chart_k;
+            var n3 = model.mission.code_k;
+            var n = n1 + n2 + n3;
+            var n1Score = (int)(((decimal)n1 / n) * 100);
+            var n2Score = (int)(((decimal)n2 / n) * 100);
+            var n3Score = (int)(((decimal)n3 / n) * 100);
+            model.mission.discuss_k = n1Score;
+            model.mission.chart_k = n2Score;
+            model.mission.code_k = n3Score;
+
+            var m1 = model.mission.eva_k;
+            var m2 = model.mission.per_k;
+            var m = m1 + m2;
+            var m1Score = (int)(((decimal)m1 / m) * 100);
+            var m2Score = (int)(((decimal)m2 / m) * 100);
+            model.mission.eva_k = m1Score;
+            model.mission.per_k = m2Score;
+
             if (ModelState.IsValid)
             {
                 db.Missions.Add(model.mission);
@@ -99,7 +119,6 @@ namespace LMSweb.Models
             var vmodel = new MissionCreateViewModel();
             vmodel.KnowledgeList = GetKnowledge(vmodel.CID);
             vmodel.CID = model.CID;
-
             vmodel.mission.MID = model.mission.MID;
 
             return View(vmodel);
@@ -232,7 +251,7 @@ namespace LMSweb.Models
             var model = new MissionCreateViewModel();   //new
 
             model.mission = new Mission();
-            
+
             //var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
             //string kp_str = "";
             //foreach (var kp in kps)
@@ -240,20 +259,23 @@ namespace LMSweb.Models
             //    kp_str += kp.KID.ToString() + ",";
             //}
 
-            ////mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
+            //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
 
             //model.mission.relatedKP = kp_str;
             model.mission.MID = mission.MID + "_Copy_" + mission.CID;
             model.mission.Start = mission.Start;
             model.mission.End = mission.End;
             model.mission.MName = mission.MName;
+
             //db.Missions.Add(model.mission);
             model.mission.MDetail = mission.MDetail;
-            model.mission.Tip = mission.Tip;
-            //model.mission.code_k = mission.code_k;
-            //model.mission.discuss_k = mis
+            model.mission.code_k = mission.code_k;
+            model.mission.discuss_k = mission.discuss_k;
+            model.mission.chart_k = mission.chart_k;
+            model.mission.eva_k = mission.eva_k;
+            model.mission.per_k = mission.per_k;
             model.KnowledgeList = GetKnowledge(cid);
-            //model.mission.KnowledgePoints  = mission.KnowledgePoints;
+
 
             model.mission.CID = cid;
             model.CID = cid;

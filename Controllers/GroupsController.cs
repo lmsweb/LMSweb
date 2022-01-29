@@ -43,6 +43,7 @@ namespace LMSweb.Controllers
             GroupViewModel model = new GroupViewModel();
             model.CID = cid;
             model.GID = gid;
+
             return View(model);
         }
         [HttpPost]
@@ -51,7 +52,7 @@ namespace LMSweb.Controllers
         {
             if (ModelState.IsValid)
             {
-                teacherAssessment.group = db.Groups.Find(teacherAssessment.GID);
+                //teacherAssessment.group = db.Groups.Find(teacherAssessment.GID);
                 db.TeacherA.Add(teacherAssessment);
                 db.SaveChanges();
                 var gmodel = new GroupViewModel();

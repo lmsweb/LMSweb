@@ -133,6 +133,31 @@ namespace LMSweb.Controllers
 
             return View(model);
         }
+        public ActionResult StudentMDetailWindow(string cid, string mid)
+        {
+            if (mid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Mission mission = db.Missions.Find(mid);
+            if (mission == null)
+            {
+                return HttpNotFound();
+            }
+            var model = new MissionViewModel();
+            model.CID = mission.CID;
+            model.MID = mid;
+            //model.CName = mission.course.CName;
+            var kps = mission.relatedKP.Split(',');
+            model.KContents = new List<string>();
+            for (int i = 0; i < kps.Length - 1; i++)
+            {
+                model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
+            }
+            model.mis = mission;
+
+            return View(model);
+        }
         public ActionResult StudentCoding(string mid, string cid)
         {
             MissionViewModel model = new MissionViewModel();

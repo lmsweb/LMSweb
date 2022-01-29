@@ -12,15 +12,15 @@
         <div class="form-horizontal">
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
+            <div class="mb-3">
                 @Html.LabelFor(model => model.mission.MID, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.mission.MID, new { htmlAttributes = new { @class = "form-control", @Value = "M" + DateTime.Now.ToString("yyMMddHHmmss") } })
+                    @Html.EditorFor(model => model.mission.MID, new { htmlAttributes = new { @class = "form-control", @Value = "M" + DateTime.Now.ToString("yyMMddHHmmss")} })
                     @Html.ValidationMessageFor(model => model.mission.MID, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 @Html.LabelFor(model => model.mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="input-group date" id="datepicker_start" data-target-input="nearest">
@@ -30,11 +30,10 @@
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 @Html.LabelFor(model => model.mission.End, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="input-group date" id="datepicker_end" data-target-input="nearest">
@@ -47,70 +46,56 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 @Html.LabelFor(model => model.mission.MName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.mission.MName, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.mission.MName, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
+            @Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="input-group mb-3">
+                <div class="form-control " aria-describedby="button-addon2">
+                    @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", @data_live_search_placeholder = "輸入知識點關鍵字", title = "請選擇知識點..." })
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.mission.Tip, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.mission.Tip, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mission.Tip, "", new { @class = "text-danger" })
+                <div id="button-addon2">
+                    <input type="button" value="管理知識點" onclick="myFunction()" class="btn btn-primary" />
                 </div>
+               
             </div>
-
-            <div class="form-group">
+            <div class="mb-3">
                 @Html.LabelFor(model => model.mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.mission.MDetail, new { htmlAttributes = new { @class = "form-control" } })
+                  
+                    @Html.TextAreaFor(model => model.mission.MDetail, 10, 120, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.mission.AddMetacognition, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="mb-3">
+                @Html.LabelFor(model => model.mission.discuss_k, htmlAttributes: new { @class = "control-label col-md-2" })<p id="discussVal"></p>
                 <div class="col-md-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.mission.AddMetacognition)
-                        @Html.ValidationMessageFor(model => model.mission.AddMetacognition, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.mission.discuss_k, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.mission.discuss_k, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.EditorFor(model => model.mission.discuss_k, new { htmlAttributes = new { @class = "form-control", @min = "0", @max = "100" } })*@
+                    <input type="range" class="form-range"  min="0" max="100" step="10" value="50" id="mission_discuss_k" name="mission.discuss_k">
                     @Html.ValidationMessageFor(model => model.mission.discuss_k, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.mission.chart_k, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="mb-3">
+                @Html.LabelFor(model => model.mission.chart_k, htmlAttributes: new { @class = "control-label col-md-2" })<p id="chartVal"></p>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.mission.chart_k, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.EditorFor(model => model.mission.chart_k, new { htmlAttributes = new { @class = "form-control", @id = "n2" } })*@
+                    <input type="range" class="form-range"  min="0" max="100" step="10" value="50" id="mission_chart_k" name="mission.chart_k">
                     @Html.ValidationMessageFor(model => model.mission.chart_k, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.mission.code_k, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="mb-3">
+                @Html.LabelFor(model => model.mission.code_k, htmlAttributes: new { @class = "control-label col-md-2" })<p id="codeVal"></p>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.mission.code_k, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.EditorFor(model => model.mission.code_k, new { htmlAttributes = new { @class = "form-control", @id = "n3" } })*@
+                    <input type="range" class="form-range"  min="0" max="100" step="10" value="50" id="mission_code_k" name="mission.code_k">
                     @Html.ValidationMessageFor(model => model.mission.code_k, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="form-group">
+            <div class="mb-3">
                 @Html.LabelFor(model => model.mission.eva_k, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.mission.eva_k, new { htmlAttributes = new { @class = "form-control" } })
@@ -118,20 +103,24 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="mb-3">
                 @Html.LabelFor(model => model.mission.per_k, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.mission.per_k, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.mission.per_k, "", new { @class = "text-danger" })
                 </div>
+            </div> 
+            <div class="mb-3">
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.mission.AddMetacognition)
+                        @Html.ValidationMessageFor(model => model.mission.AddMetacognition, "", new { @class = "text-danger" })加入後設認知
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-                <p>或</p>
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="button" value="新增知識點" onclick="myFunction()" class="btn btn-primary" />
                 </div>
             </div>
             
@@ -168,9 +157,7 @@
             });
         })
         function myFunction() {
-            console.log('@Url.Action("Details", "Course", new { CID = Model.CID})');
             const myWindow = window.open('@Url.Action("Details", "Course", new { CID = Model.CID})', "", "width=800,height=800");
-            //myWindow.opener.document.getElementById("demo").innerHTML = "HELLO!";
         }
         function kpListReLoad() {
             var kps = $(this).next('.cities'); // get the associated cities dropdownlist
@@ -202,6 +189,20 @@
             });
 
         });
+
+        $('#mission_discuss_k').change(function () {
+            console.log($('#mission_discuss_k').val());
+            document.getElementById("discussVal").innerHTML = $('#mission_discuss_k').val();
+        }); 
+        $('#mission_chart_k').change(function () {
+            console.log($('#mission_chart_k').val());
+            document.getElementById("chartVal").innerHTML = $('#mission_chart_k').val();
+        });
+        $('#mission_code_k').change(function () {
+            console.log($('#mission_code_k').val());
+            document.getElementById("codeVal").innerHTML = $('#mission_code_k').val();
+        });
+
     </script>
     <script type="text/javascript">
         var check_start_Exist = setInterval(function () {
@@ -233,5 +234,6 @@
                 clearInterval(check_end_Exist);
             }
         }, 100); // check every 100ms
+
     </script>
 }

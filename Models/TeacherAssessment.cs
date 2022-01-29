@@ -15,26 +15,14 @@ namespace LMSweb.Models
         public int TEID { get; set; }
 
         [Required]
-        [Display(Name = "教師評價")]
+        [Display(Name = "教師評語")]
         public string TeacherA { get; set; }
 
 
         [Required]
-        [Display(Name = "小組成果級別")]
-        public int GroupAchievementLevel { get; set; }
+        [Display(Name = "小組成果分數")]
+        public int GroupAchievementScore { get; set; }
 
-        ////[Key]
-        ////[Column(Order = 1)]
-        //[Display(Name = "任務編號")]
-        //public string MID { get; set; }
-
-        //[Key]
-        //[Column(Order = 2)]
-        [Display(Name = "組別編號")]
-        public string GID { get; set; }
-
-        public virtual Mission Mission { get; set; }
-
-        public virtual Group group { get; set; }
+        public virtual ICollection<StudentMission> StudentMissions { get; set; }
     }
 }
