@@ -71,6 +71,31 @@
                     @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
                 </div>
             </div>
+
+            <div class="row g-3">
+                <label for="colFormLabelSm" class="col-1 col-form-label">Email</label>
+                <div class="col-sm-1">
+                    <input type="text" class="form-control" placeholder="City" aria-label="City">
+                </div>
+                <div class="col-sm-1">
+                    <input type="text" class="form-control" placeholder="State" aria-label="State">
+                </div>
+                <div class="col-sm-1">
+                    <input type="text" class="form-control" placeholder="Zip" aria-label="Zip">
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
             <div class="mb-3">
                 @Html.LabelFor(model => model.mission.discuss_k, htmlAttributes: new { @class = "control-label col-md-2" })<p id="discussVal"></p>
                 <div class="col-md-10">
