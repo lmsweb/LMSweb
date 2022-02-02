@@ -1,0 +1,63 @@
+﻿@model LMSweb.ViewModel.GroupViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="article">
+        <h2>Index</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Students[0].SName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PeerAssessment.PeerA)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PeerAssessment.CooperationScore)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Groups)
+                {
+                    <tr>
+                        <td>
+                            @foreach (var s in item.Students)
+                            {
+                                if (s.GID == Model.GID)
+                                {
+                                    <label>@s.SName</label>
+                                    <br />
+                                }
+                            }
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            @foreach (var s in item.Students)
+                            {
+                                @Html.ActionLink("評分", "Create", new { sid = s.SID, mid = Model.MID, gid = Model.GID }, new { @class = "" })
+                                <br />
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

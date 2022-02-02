@@ -38,26 +38,29 @@ namespace LMSweb.Controllers
             model.GID = gid;
             return View(model);
         }
-        public ActionResult Assessment(string gid, string cid)
+        public ActionResult Assessment(string gid, string mid)
         {
             GroupViewModel model = new GroupViewModel();
-            model.CID = cid;
+            model.MID = mid;
             model.GID = gid;
 
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TEID,TeacherA,GroupAchievementLevel,GID")] TeacherAssessment teacherAssessment, string cid)
+        public ActionResult Create([Bind(Include = "TEID,TeacherA,GroupAchievementScore,GID,MID")] TeacherAssessment teacherAssessment, string cid)
         {
             if (ModelState.IsValid)
             {
-                teacherAssessment.group = db.Groups.Find(teacherAssessment.GID);
+                //teacherAssessment.group = db.Groups.Find(teacherAssessment.GID);
                 db.TeacherA.Add(teacherAssessment);
                 db.SaveChanges();
                 var gmodel = new GroupViewModel();
                 gmodel.CID = cid;
+                
+
                 gmodel.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+
                 return View("Index", gmodel);
             }
 

@@ -1,0 +1,43 @@
+﻿@model LMSweb.Models.PeerAssessment
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutKPPage.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PeerAssessment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PeerA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PeerA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CooperationScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CooperationScore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssessedSID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssessedSID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PEID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

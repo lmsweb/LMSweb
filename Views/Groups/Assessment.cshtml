@@ -22,22 +22,30 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.TeacherAssessment.GroupAchievementLevel, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.TeacherAssessment.GroupAchievementScore, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.TeacherAssessment.GroupAchievementLevel, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TeacherAssessment.GroupAchievementLevel, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.TeacherAssessment.GroupAchievementScore, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TeacherAssessment.GroupAchievementScore, "", new { @class = "text-danger" })
                 </div>
             </div>
-            @*<div class="form-group">
+            <div class="form-group">
                 @Html.LabelFor(model => model.TeacherAssessment.GID, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.TeacherAssessment.GID, new { htmlAttributes = new { @class = "form-control", @Value = Model.GID} })
                     @Html.ValidationMessageFor(model => model.TeacherAssessment.GID, "", new { @class = "text-danger" })
                 </div>
-            </div>*@
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TeacherAssessment.MID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TeacherAssessment.MID, new { htmlAttributes = new { @class = "form-control", @Value = Model.MID} })
+                    @Html.ValidationMessageFor(model => model.TeacherAssessment.MID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
             @Html.HiddenFor(model => model.CID)
             @Html.HiddenFor(model => model.GID)
-            @Html.HiddenFor(model => model.GID)
+            @Html.HiddenFor(model => model.MID)
             <br />
             <div class="mb-3">
                 <div class="col-md-offset-2 col-md-10">

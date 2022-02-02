@@ -21,11 +21,17 @@ namespace LMSweb.Models
 
         public int total_score { get; set; }
 
+        [Display(Name = "個人貢獻度分數")]
+        public int PersonalScore { get; set; }
+
+        [Display(Name = "自我評價")]
+        public int SelfA { get; set; }
         public virtual Student Student { get; set; }
         public virtual Mission Mission { get; set; }
 
-        public virtual SelfAssessment selfAssessment { get; set; }
+        // public virtual SelfAssessment SelfAssessment { get; set; }
         public virtual ICollection<PeerAssessment> PeerAssessments { get; set; }
+        public virtual TeacherAssessment TeacherAssessment { get; set; }
         public virtual ICollection<LearningBehavior> LearnBs { get; set; }
 
 

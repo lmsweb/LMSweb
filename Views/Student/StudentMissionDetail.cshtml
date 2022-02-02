@@ -87,7 +87,7 @@
             </td>
         </tr>
     </table>
-
+    @Html.ActionLink("學生互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID ,GID = Model.GID}, new { @class = "btn btn-primary" })
 </div>
 @section scripts
 {

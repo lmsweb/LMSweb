@@ -32,17 +32,21 @@
                     <td>
                         @*@Html.DisplayFor(modelItem => item)*@
                     </td>
-                    @foreach(var ta in item.TeacherA)
-                    {
-                        @item.TeacherA.Count
-                        @ta.GroupAchievementLevel
-                        @ta.TeacherA
-                        <br />
-                    }
                     <td>
-                        @*@html.actionlink("程式碼", "checkcoding", new { gid = item.gid, cid = model.cid }) |
-                        @html.actionlink("流程圖", "checkdrawing", new { gid = item.gid, cid = model.cid }) |*@
-                        @Html.ActionLink("評分", "Assessment", new { gid = item.GID, cid = Model.CID})
+                        @foreach (var ta in item.TeacherA)
+                        {
+                            if (ta.MID == Model.MID)
+                            {
+                                @item.TeacherA.Count
+                                @ta.GroupAchievementScore
+                                @ta.TeacherA
+                                <br />
+                            }
+                        }
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("評分", "Assessment", new { gid = item.GID, mid = Model.MID})
                     </td>
                 </tr>
             }
