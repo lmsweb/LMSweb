@@ -4,23 +4,24 @@
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 
-<body>
-    <div class="article">
-        
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link" href="https://localhost:44301/Course/StudentManagement?CID=@Model.CID">修課名單</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="https://localhost:44301/Course/StudentGroup?CID=@Model.CID">分組名單</a>
-            </li>
+<div class="card " style="box-sizing: border-box; width: 100%; max-width: 1200px; margin: 20px auto 20px; border-radius: 15px; box-shadow: 0 2px 2px;">
 
+    <div class="card-header" style="padding: 30px 50px 8px 50px;">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link " href="https://localhost:44301/Course/StudentManagement?CID=@Model.CID"><h5>修課名單</h5></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="true" href="https://localhost:44301/Course/StudentGroup?CID=@Model.CID"><h5>分組名單</h5></a>
+            </li>
         </ul>
-        <br />
-        @*onclick="myFunction()*@
+    </div>
+
+    <br />
+    <div class="card-body" style="padding: 20px 50px 50px;">
         <label>
             分組數量 :
-            <input type="number" min="1" max="10"  placeholder="需要分成多少組" v-model="groupNum" id="groupN" />
+            <input type="number" min="1" max="10" placeholder="需要分成多少組" v-model="groupNum" id="groupN" />
         </label>
         <button class="btn btn-primary" id="groupclick">隨機分組</button>
 
@@ -142,13 +143,13 @@
                 </div>
             </div>
         </div>
-    </div>   
-</body>
+    </div>
+</div>
 
-@*<script type="text/javascript" src="../jquery/jquery.js"></script>
-<script type="text/javascript" src="../jquery/jquery-ui.js"></script>*@
-@section scripts {
-    <script>
+    @*<script type="text/javascript" src="../jquery/jquery.js"></script>
+        <script type="text/javascript" src="../jquery/jquery-ui.js"></script>*@
+    @section scripts {
+        <script>
         $('#exampleModal').on('show.bs.modal', function (event) {     //將選取的學生顯示在Modal上
             var button = $(event.relatedTarget) // Button that triggered the modal
             //var recipient = button.data('whatever') // Extract info from data-* attributes
@@ -161,7 +162,7 @@
                     // get val use " $(this).val() "
                 }
             });
-            
+
 
             modal.find('#selected_students').html(text)
             //modal.find('#selected_students').append(text)
@@ -171,12 +172,12 @@
             //modal.find('.modal-body input').val(recipient)
             //modal.find('.modal-body input').val(recipient)
         });
-        
+
         $('.addGbtn').click(function () {   //將已分好組別裡的某位學生加入其他組別
             var otherGroupStudent = [];
             var gid = this.id;
             $("input[name='all_student']").each(function () {
-                if ($(this).prop("checked")) {                
+                if ($(this).prop("checked")) {
                     otherGroupStudent.push($(this).val());
                 }
             });
@@ -190,14 +191,14 @@
                 data: JSON.stringify({ gid: gid, StudentList : otherGroupStudent, CID : "@Model.CID" }),
                 success: function (response) {
                     window.location.reload();
-                   
+
                 },
                 error: function (thrownError) {
                     console.log(thrownError);
                 }
             });
         });
-        
+
         $('#alert').click(function () {    //儲存Modal的資料
             console.log($('#group_name').val());
             var students = [];
@@ -226,7 +227,7 @@
                     console.log(thrownError);
                 }
             });
-            
+
         });
 
         $('#groupclick').click(function () {    //隨機分組
@@ -241,7 +242,7 @@
                 data: JSON.stringify({ n: gn , cid : cid}),
                 success: function (response) {
                     window.location.reload();
-                    
+
                 },
                 error: function (thrownError) {
                     console.log(thrownError);
@@ -261,7 +262,7 @@
                 data: JSON.stringify({ groupId: gid }),
                 success: function (response) {
                     window.location.reload();
-                    
+
                 },
                 error: function (thrownError) {
                     console.log(thrownError);
@@ -270,10 +271,10 @@
             console.log(123);
         })
 
-        
+
         $('.stuclose').click(function () {   //刪除已分好的組別裡面的某位學生
             var sid = this.id;
-            
+
             $.ajax({
                 url: "@Url.Action("GroupStudentDelete", "Course")",
                 method: "post",
@@ -281,16 +282,16 @@
                 data: JSON.stringify({groupStuId: sid}),
                 success: function (response) {
                     window.location.reload();
-                    
+
                 },
                 error: function (thrownError) {
                     console.log(thrownError);
                 }
             });
-           
+
         })
 
 
-    </script>
-}
+        </script>
+    }
 

@@ -35,28 +35,20 @@
     
 </head>
 <body class="body">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="header">
-                <h3>
+    <div class="navbar navbar-expand-lg navbar-light bg-dark">
+        <div class="container-fluid">
+            <header>
+                <h2 class="text-light">
                     結合後設認知策略與運算思維框架的互動式程式設計合作學習環境
-                </h3>
-            </div>
- 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    @Html.Partial("_LoginPartial")
-                </ul>
-            </div>
-
-        </nav>
+                </h2>
+            </header>
+            <ul class="navbar-nav px-3 text-light">
+                <li class="text-light">@Html.Partial("_LoginPartial")</li>
+            </ul>
+        </div>
     </div>
-
     <div class="container">
-        @RenderBody()
+        @RenderBody()       
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year </p>

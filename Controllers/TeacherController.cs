@@ -66,8 +66,6 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
             var tid = claimData[0].Value; //取值(因為只有一筆)
             var courses = db.Courses.Where(c => c.TID == tid);
-
-
             return View(courses);
         }
         // GET: Teacher
