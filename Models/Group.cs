@@ -20,6 +20,6 @@ namespace LMSweb.Models
         public string CID { get; set; }
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<TeacherAssessment> TeacherA { get; set; }
-
+        public virtual ICollection<PeerAssessment> PeerAssessments{ get; set; }
     }
 }

@@ -23,6 +23,12 @@ namespace LMSweb.Models
         [Display(Name = "小組成果分數")]
         public int GroupAchievementScore { get; set; }
 
+        public int GID { get; set; }
+        public virtual Group Group { get; set; }
+            
+        public string MID { get; set; }
+        public virtual Mission Mission { get; set; }
+
         public virtual ICollection<StudentMission> StudentMissions { get; set; }
     }
 }
