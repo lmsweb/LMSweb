@@ -8,6 +8,7 @@ namespace LMSweb.ViewModel
     public class MissionViewModel
     {
         public string CID { get; set; }
+        public string CName { get; set; }
         public string MID { get; set; }
         public string SID { get; set; }
         public string GID { get; set; }

@@ -17,7 +17,7 @@ namespace LMSweb.Controllers
         private LMSmodel db = new LMSmodel();
 
         // GET: PeerAssessments
-        public ActionResult Index(string mid, string gid)
+        public ActionResult Index(string mid, string gid, string cid)
         {
             var gmodel = new GroupViewModel();
             gmodel.MID = mid;
@@ -28,6 +28,8 @@ namespace LMSweb.Controllers
             var stu= db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).group;
             gmodel.Groups = db.Groups.Where(g => g.GID == stuG.GID).ToList();
+            var course = db.Courses.Where(c => c.CID == cid).Single();
+            gmodel.CName = course.CName;
             return View(gmodel);
         }
 

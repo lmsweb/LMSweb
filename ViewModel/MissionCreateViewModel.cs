@@ -11,6 +11,7 @@ namespace LMSweb.ViewModel
     {
         [Required]
         public string CID { get; set; }
+        public string CName { get; set; }
         public IEnumerable<SelectListItem> KnowledgeList { get; set; }
         [Required]
         public IEnumerable<int> SelectKnowledgeList { get; set; }

@@ -16,12 +16,14 @@ namespace LMSweb.Controllers
         private LMSmodel db = new LMSmodel();
 
         // GET: Groups
-        public ActionResult Index(string mid)
+        public ActionResult Index(string mid, string cid)
         {
             var gmodel = new GroupViewModel();
             gmodel.MID = mid;
             var mis = db.Missions.Find(mid);
             gmodel.Groups = db.Groups.Where(g => mis.CID == g.CID).ToList();
+            gmodel.CID = cid;
+            gmodel.CName = mis.course.CName;
             return View(gmodel);
         }
         public ActionResult CheckCoding(string gid, string cid)
