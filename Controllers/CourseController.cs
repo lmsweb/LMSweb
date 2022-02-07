@@ -61,7 +61,7 @@ namespace LMSweb.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Stu_Create([Bind(Include = "SID,CID,SName,SPassword,Sex,Stage,Grade,Score")] Student student)
+        public ActionResult Stu_Create([Bind(Include = "SID,CID,SName,SPassword,Sex,Score")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace LMSweb.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Stu_Edit([Bind(Include = "SID,CID,SName,SPassword,Sex,Stage,Grade,Score")] Student student)
+        public ActionResult Stu_Edit([Bind(Include = "SID,CID,SName,SPassword,Sex,Score")] Student student)
         {
             if (ModelState.IsValid)
             {

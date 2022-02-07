@@ -44,11 +44,6 @@
                     @Html.DisplayNameFor(model => model.students.First().Sex)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.students.First().Stage)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.students.First().Grade)
-                </th>
 
                 <th></th>
             </tr>
@@ -62,12 +57,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Sex)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Stage)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Grade)
-                    </td>
+
                     <td>
                         <button type="button" class="btn btn-link" style="padding: 5px 5px 5px 5px" onclick="location.href='@Url.Action("Stu_Edit", "Course", new { sid = item.SID})'">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-pencil-fill" viewBox="0 0 16 16">
