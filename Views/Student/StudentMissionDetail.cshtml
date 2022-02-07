@@ -6,8 +6,7 @@
 <style>
     table {
         border-collapse: collapse;
-        width: 80%;
-        margin: 10px auto;
+        /*margin: 10px auto;*/
     }
 
         table tr {
@@ -15,24 +14,53 @@
         }
 
     th {
-        background-color: #3E4D59;
+        background-color: cadetblue;
         color: #F0F0F2;
         text-align: center;
         padding: 10px 0;
+        width: 50%;
     }
 
     td {
         padding: 10px 10px;
     }
-</style>
 
-<div class="article">
-    @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-    @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-    <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-success" />
-    @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-    <h5>任務內容</h5>
-    <hr />
+    .MissionDetailArticle {
+        position: relative;
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 1200px;
+        margin: 20px auto 20px;
+        padding: 30px 0px 50px 70px;
+        border-radius: 5px;
+        background: #F0F0F2;
+        border: 1px solid #dee2e6;
+        border-color: #cdcdcd;
+    }
+</style>
+<div class="cardArticle">
+      <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="https://localhost:44301/Student/StudentMission?CID=@Model.CID  ">任務列表</a></li>
+            <li class="breadcrumb-item active" aria-current="page">任務內容</li>
+        </ol>
+    </nav>
+</div>
+<div class="MissionDetailArticle">
+    <div class="row">
+        <div class="col-7">
+            <h5><b>@Html.DisplayFor(model => model.mis.MName)</b></h5>
+        </div>
+        <div class="col align-self-end">
+            @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
+            <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-primary" />
+            @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("學生互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID, GID = Model.GID }, new { @class = "btn btn-primary" })
+        </div>
+    </div>
     <table>
         <tr>
             <th>
@@ -87,7 +115,7 @@
             </td>
         </tr>
     </table>
-    @Html.ActionLink("學生互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID ,GID = Model.GID}, new { @class = "btn btn-primary" })
+   
 </div>
 @section scripts
 {

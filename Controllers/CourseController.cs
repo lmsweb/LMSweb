@@ -53,7 +53,7 @@ namespace LMSweb.Controllers
         // GET: Student/Create
         public ActionResult Stu_Create()
         {
-            return View();
+             return View();
         }
 
         // POST: Student/Create
@@ -384,6 +384,8 @@ namespace LMSweb.Controllers
             vmodel.StudentList = GetStudent(cid);
             vmodel.students = db.Students.Where(x => x.@group != null && x.CID == cid).ToList();
             vmodel.CID = cid;
+            var course = db.Courses.Where(c => c.CID == cid).Single();
+            vmodel.CName = course.CName;
             vmodel.groups = db.Groups.Where(g =>g.CID == cid).ToList();
 
             //var result = from g in db.Groups
@@ -476,13 +478,13 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
-
+            var cid = group.CID;
             group.Students.Clear();
             db.Groups.Remove(group);
 
             db.SaveChanges();
 
-            return RedirectToAction("StudentGroup");
+            return RedirectToAction("StudentGroup", new { cid=cid} );
         }
 
         public ActionResult GroupStudentDelete( string groupStuId)

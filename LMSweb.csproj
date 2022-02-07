@@ -297,6 +297,7 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
     <Compile Include="ViewModel\MissionViewModel.cs" />
+    <Compile Include="ViewModel\StudentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitattributes" />

@@ -8,7 +8,7 @@
     <style>
         .header {
             padding: 20px;
-            text-align: left;
+            text-align: center;
         }
 
         .article {
@@ -16,16 +16,21 @@
             display: block;
             box-sizing: border-box;
             width: 100%;
-            max-width: 1500px;
+            max-width: 1200px;
             margin: 20px auto 20px;
-            padding: 30px 40px 50px;
-            border-radius: 15px;
+            padding: 30px 50px 50px;
+            border-radius: 5px;
             background: #F0F0F2;
-            box-shadow: 0 2px 2px;
+            border: 1px solid #dee2e6;
+            border-color: #cdcdcd;
         }
 
         .body {
-            background-color: #BFC5D9
+            background-color: #f8f8f8
+        }
+
+        .navBG {
+            background-color: #69899f
         }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -43,21 +48,22 @@
 
 <body class="body">
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="header">
-                <h3>
-                    結合後設認知策略與運算思維框架的互動式程式設計合作學習環境
-                </h3>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    @Html.Partial("_LoginPartial")
-                </ul>
+        <nav class="navbar navbar-expand-lg navbar-light navBG " style="border-radius: 0 0 5px 5px;">
+            <div class="container-fluid">
+                <header>
+                    <h2 class="text-light">
+                        結合後設認知策略與運算思維框架的互動式程式設計合作學習環境
+                    </h2>
+                </header>
             </div>
         </nav>
     </div>
-    <div>
+    <div class="container">
         @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year </p>
+        </footer>
     </div>
 </body>
 </html>

@@ -1,5 +1,4 @@
 ﻿@model LMSweb.ViewModel.MissionViewModel
-
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
@@ -7,33 +6,73 @@
 <style>
     table {
         border-collapse: collapse;
-        width: 80%;
-        margin: 10px auto;
+
+        /*margin: 10px auto;*/
     }
         table tr {
             border-bottom: solid 2px #F0F0F2;
         }
     th {
-        background-color: #3E4D59;
+        background-color:cadetblue;
         color: #F0F0F2 ;
         text-align: center;
         padding: 10px 0;
+        width:50%;
     }
     td {
         padding: 10px 10px;
     }
+    .MissionDetailArticle {
+        position: relative;
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 1200px;
+        margin: 20px auto 20px;
+        padding: 30px 0px 50px 70px;
+        border-radius: 5px;
+        background: #F0F0F2;
+        border: 1px solid #dee2e6;
+        border-color: #cdcdcd;
+    }
 </style>
-<div class="article">
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="https://localhost:44301/Missions?CID=@Model.CID">任務列表</a></li>
+            <li class="breadcrumb-item active" aria-current="page">任務內容</li>
+        </ol>
+    </nav>
+</div>
+<div class="MissionDetailArticle">
     <div>
-        <h5>任務內容</h5>
-        <hr />
+        <div class="row justify-content-between">
+            <div class="col-7">
+                <h5><b>@Html.DisplayFor(model => model.mis.MName)</b></h5>
+            </div>
+            <div class="col-4 align-self-end">
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index","Groups",new { mid = Model.MID, cid=Model.CID })'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
+                        <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" />
+                    </svg>
+                    學生作業
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Edit", "Missions", new {  mid = Model.MID, cid = Model.CID})'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg>
+                    編輯任務內容
+                </button>
+            </div>
+        </div>
         <table>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.mis.course.CName)
+                    @Html.DisplayNameFor(model => model.mis.MDetail)
                 </th>
                 <td>
-                    @Html.DisplayFor(model => model.mis.course.CName)
+                    @Html.DisplayFor(model => model.mis.MDetail)
                 </td>
             </tr>
             <tr>
@@ -54,22 +93,6 @@
             </tr>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.mis.MName)
-                </th>
-                <td>
-                    @Html.DisplayFor(model => model.mis.MName)
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.mis.MDetail)
-                </th>
-                <td>
-                    @Html.DisplayFor(model => model.mis.MDetail)
-                </td>
-            </tr>
-            <tr>
-                <th>
                     @Html.DisplayNameFor(model => model.mis.relatedKP)
                 </th>
                 <td>
@@ -80,18 +103,8 @@
                     }
                 </td>
             </tr>
-            
         </table>
-            
     </div>
-    <p>
-        @Html.ActionLink("查看作業", "Index", "Groups", new { mid = Model.MID }, null) 
-    </p>
-    
-    <p>
-        @Html.ActionLink("編輯", "Edit", new { mid = Model.MID, cid = Model.CID }) |
-        @Html.ActionLink("返回任務", "Index", new { cid = Model.CID })
-    </p>
 </div>
 
 

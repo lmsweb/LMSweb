@@ -3,8 +3,11 @@
 @{
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
-
-<div class="card " style="box-sizing: border-box; width: 100%; max-width: 1200px; margin: 20px auto 20px; border-radius: 15px; box-shadow: 0 2px 2px;">
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <p>學生分組</p>
+</div>
+<div class="card " style="box-sizing: border-box; width: 100%; max-width: 1200px; margin: 20px auto 20px; border-radius: 5px; box-shadow: 0 2px 2px;">
 
     <div class="card-header" style="padding: 30px 50px 8px 50px;">
         <ul class="nav nav-tabs card-header-tabs">
@@ -30,7 +33,14 @@
 
                 <div class="card">
                     <div class="card-header">
-                        未分組名單
+                        <div class="row justify-content-between">
+                            <div class="col-4">
+                                未分組名單
+                            </div>
+                            <div class="col-3">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">新增組別</button>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="form-check">
@@ -61,16 +71,17 @@
                     </div>
                     <div class="card-body">
                         @*<button class="btn btn-primary" id="btn">新增組別</button>*@
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">新增組別</button>
+                        
                         <br />
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">新增組別</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        <button type="button" class="btn-close" aria-label="Close" aria-hidden="true" data-bs-dismiss="modal"></button>
+                                        @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
-                                        </button>
+                                        </button>*@
                                     </div>
                                     <div class="modal-body">
                                         <form>
@@ -92,7 +103,7 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                        <button type="button" class="btn btn-secondary" aria-hidden="true" data-bs-dismiss="modal">關閉</button>
                                         <button type="button" class="btn btn-primary" id="alert">創建</button>
                                     </div>
                                 </div>
@@ -106,33 +117,39 @@
 
                                 <div class="card-header">
                                     <div class="row">
-                                        <div class="col-sm-7">
+                                        <div class="col-8">
                                             <p id="existedGroup_name">@Html.DisplayFor(modelItem => item.GName)</p>
                                         </div>
-                                        <div class="col-sm-4">
-                                            <div class="row justify-content-md-end">
-                                                <div>
-                                                    <button type="button" class="btn btn-primary  btn-sm addGbtn" id="@item.GID">
-                                                        加入組別
-                                                    </button>
-                                                </div>
-                                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                    <button type="button" class="btn-close groupclose" aria-label="Close" id="@item.GID">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                        <div class="col-3">
+
+                                            <button type="button" class="btn btn-primary addGbtn" id="@item.GID">
+                                                加入組別
+                                            </button>
 
                                         </div>
+                                        <div class="col-1">
+                                            <button type="button" class="btn-close groupclose" aria-label="btn-Close" aria-hidden="true" id="@item.GID">
+                                                @*<span >&times;</span>*@
+                                            </button>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     @foreach (var stu in item.Students)
                                     {
-                                        <button type="button" class="btn-close stuclose" aria-label="Close" id="@stu.SID">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <p>@Html.DisplayFor(sid => stu.SName) &ensp;</p>
+                                        <div class="row justify-content-between">
+                                            <div class="col-4">
+                                                <p>@Html.DisplayFor(sid => stu.SName) &ensp;</p>
+                                            </div>
+                                            <div class="col-1">
+                                                <button type="button" class="btn-close stuclose" aria-label="Close" aria-hidden="true" id="@stu.SID">
+                                                    @*<span >&times;</span>*@
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        
                                     }
                                 </div>
 

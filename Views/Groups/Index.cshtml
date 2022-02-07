@@ -4,8 +4,17 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="https://localhost:44301/Missions?CID=@Model.CID">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="https://localhost:44301/Missions/Details?mid=@Model.MID">任務內容</a></li>
+            <li class="breadcrumb-item" active" aria-current="page">作業評分</li>
+        </ol>
+    </nav>
+</div>
 <div class="article">
-    <h2>Index</h2>
     @if (Model.Groups.Count == 0)
     {
         <p>目前還沒有新增組別哦</p>
@@ -46,7 +55,15 @@
                     </td>
 
                     <td>
-                        @Html.ActionLink("評分", "Assessment", new { gid = item.GID, mid = Model.MID})
+                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Assessment","Groups", new { gid = item.GID, mid = Model.MID})'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                            </svg>      
+                            評分
+                        </button>
+                        @*@Html.ActionLink("評分", "Assessment", new { gid = item.GID, mid = Model.MID})*@
                     </td>
                 </tr>
             }

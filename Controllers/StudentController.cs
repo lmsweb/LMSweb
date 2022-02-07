@@ -130,6 +130,7 @@ namespace LMSweb.Controllers
                 model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
             }
             model.mis = mission;
+            model.CName = mission.course.CName;
 
             return View(model);
         }

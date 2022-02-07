@@ -11,6 +11,7 @@ namespace LMSweb.ViewModel
         public string GID { get; set; }
         public string MID { get; set; }
         public string SID { get; set; }
+        public string CName { get; set; }
         public List<LMSweb.Models.Group> Groups { get; set; }
         public LMSweb.Models.TeacherAssessment TeacherAssessment { get; set; }
 

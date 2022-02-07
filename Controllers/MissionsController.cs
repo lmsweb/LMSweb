@@ -26,7 +26,7 @@ namespace LMSweb.Models
             var course = db.Courses.Where(c => c.CID == cid).Single();
             model.missions = db.Missions.Where(m => m.CID == cid);
             model.CID = course.CID;
-
+            model.CName = course.CName;
             return View(model);
         }
         public ActionResult Details(string mid)
@@ -51,6 +51,7 @@ namespace LMSweb.Models
             }
             model.mis = mission;
             model.MID = mission.MID;
+            model.CName = mission.course.CName;
 
             return View(model);
         }
@@ -70,7 +71,8 @@ namespace LMSweb.Models
             var model = new MissionCreateViewModel();
             model.KnowledgeList = GetKnowledge(cid);
             model.CID = cid;
-            
+            var course = db.Courses.Where(c => c.CID == cid).Single();
+            model.CName = course.CName;
 
             return View(model);
         }
@@ -146,7 +148,7 @@ namespace LMSweb.Models
             vmodel.KnowledgeList = GetKnowledge(cid, db.KnowledgePoints.Where(kp => kp.CID == mission.CID).Select(kp => kp.KID));
             
             vmodel.CID = mission.CID;
-            //vmodel.CName = mission.course.CName;
+            vmodel.CName = mission.course.CName;
 
             return View(vmodel);
         }
@@ -243,7 +245,10 @@ namespace LMSweb.Models
             
             model.missions = db.Missions.ToList();
             model.CID = cid;
-            
+            var course = db.Courses.Where(c => c.CID == cid).Single();
+            model.CName = course.CName;
+           
+
             return View(model);
         }
 
@@ -282,6 +287,7 @@ namespace LMSweb.Models
 
             model.mission.CID = cid;
             model.CID = cid;
+            model.CName = mission.course.CName;
             //model.mission.CID = db.Courses.Find(cid);
 
             

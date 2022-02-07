@@ -8,18 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
 </head>
-
+<div class="cardArticle">
+    <h4>課程列表</h4>
+    <button class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Course")'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+        </svg>
+        新增課程
+    </button>
+</div>
 <div class="article">
-    <h5>
-        課程列表
-    </h5>
     @*<p>@User.Identity.Name</p>*@
-    <div>
-        <p>
-            @Html.ActionLink("新增課程", "Create", "Course", new { @class = "btn btn-primary" })
-        </p>
-    </div>
-    
     <div class="row row-cols-1 row-cols-md-4 mb-4 text-center">
         @foreach (var item in Model)
         {
@@ -36,6 +35,7 @@
                         <hr />
                         @Html.ActionLink("進入課程", "Index", "Missions", new { cid = item.CID }, new { @class = "btn btn-primary" })
                         @Html.ActionLink("編輯", "Edit", "Course", new { cid = item.CID }, new { @class = "btn btn-warning" })
+                        
                         @Html.ActionLink("刪除", "Delete", "Course", new { cid = item.CID }, new { @class = "btn btn-secondary" })
                         @*<button type="button" class="w-100 btn btn-lg btn-outline-primary">submin</button>*@
                     </div>
