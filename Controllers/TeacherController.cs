@@ -68,18 +68,84 @@ namespace LMSweb.Controllers
             var courses = db.Courses.Where(c => c.TID == tid);
             return View(courses);
         }
-        // GET: Teacher
-        //public ActionResult Index()
-        //{
-        //    ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-        //    var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
-        //    var tid = claimData[0].Value; //取值(因為只有一筆)
-        //    var courses = db.Courses.Where(c => c.TID == tid);
-        //    return View(courses);
-        //    //return View(db.Courses.ToList());
-        //}
 
-        // GET: Teacher/Details/5
+        [Authorize(Roles = "Teacher")]
+        public ActionResult CourseCreate()
+        {
+            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName");
+            return View();
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult CourseCreate([Bind(Include = "CID,TID, CName")] Course course)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Courses.Add(course);
+                db.SaveChanges();
+                return RedirectToAction("TeacherHomePage", "Teacher");
+            }
+
+            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
+
+            return View(course);
+        }
+
+        public ActionResult CourseEdit(string cid)
+        {
+            if (cid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = db.Courses.Find(cid);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
+            return View(course);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CourseEdit([Bind(Include = "CID,TID,CName")] Course course)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(course).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("TeacherHomePage", "Teacher", null);
+            }
+            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
+            return View(course);
+        }
+
+        public ActionResult CourseDelete(string cid)
+        {
+            if (cid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = db.Courses.Find(cid);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            return View(course);
+        }
+
+        [HttpPost, ActionName("CourseDelete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult CourseDeleteConfirmed(string cid)
+        {
+            Course course = db.Courses.Find(cid);
+            db.Courses.Remove(course);
+            db.SaveChanges();
+            return RedirectToAction("TeacherHomePage", "Teacher", null);
+        }
+
         public ActionResult Details(string cid)
         {
             if (cid == null)
