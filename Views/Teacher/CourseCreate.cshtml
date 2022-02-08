@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 <div class="article">
-    <h2>新增學生</h2>
+    <h4>新增課程</h4>
 
     @using (Html.BeginForm())
     {
@@ -36,17 +36,12 @@
                     @Html.ValidationMessageFor(model => model.CName, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <br />
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="新增" class="btn btn-primary" />
                 </div>
             </div>
         </div>
     }
-
-    <div>
-        @Html.ActionLink("返回", "TeacherHomePage")
-    </div>
-
 </div>

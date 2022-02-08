@@ -39,8 +39,6 @@ namespace LMSweb.Infrastructure.Helpers
             excelFile.AddMapping<Student>(x => x.SName, "SName");
             excelFile.AddMapping<Student>(x => x.SPassword, "SPassword");
             excelFile.AddMapping<Student>(x => x.Sex, "Sex");
-            excelFile.AddMapping<Student>(x => x.Stage, "Stage");
-            excelFile.AddMapping<Student>(x => x.Grade, "Grade");
             excelFile.AddMapping<Student>(x => x.Score, "Score");
             //excelFile.AddMapping<Student>(x => x.CID, "CID");
 
@@ -64,8 +62,6 @@ namespace LMSweb.Infrastructure.Helpers
                     student.SName = row.SName;
                     student.SPassword = row.SPassword;
                     student.Sex = row.Sex;
-                    student.Stage = row.Stage;
-                    student.Grade = row.Grade;
                     student.Score = row.Score;
                     //student.CID = row.CID;
 

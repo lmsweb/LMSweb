@@ -36,7 +36,7 @@ namespace LMSweb.Controllers
 
             return View(courses);
         }
-        public ActionResult Stu_Details(string sid,string cid)
+        public ActionResult StudentDetails(string sid,string cid)
         {
             if (sid == null)
             {
@@ -51,9 +51,10 @@ namespace LMSweb.Controllers
         }
 
         // GET: Student/Create
-        public ActionResult Stu_Create()
+        public ActionResult StudentCreate()
         {
-            return View();
+            
+             return View();
         }
 
         // POST: Student/Create
@@ -61,20 +62,20 @@ namespace LMSweb.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Stu_Create([Bind(Include = "SID,CID,SName,SPassword,Sex,Stage,Grade,Score")] Student student)
+        public ActionResult StudentCreate([Bind(Include = "SID,CID,SName,SPassword,Sex")] Student student)
         {
             if (ModelState.IsValid)
-            {
+            { 
                 db.Students.Add(student);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("e");
             }
 
             return View(student);
         }
 
         // GET: Student/Edit/5
-        public ActionResult Stu_Edit(string sid)
+        public ActionResult StudentEdit(string sid)
         {
             if (sid == null)
             {
@@ -93,7 +94,7 @@ namespace LMSweb.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Stu_Edit([Bind(Include = "SID,CID,SName,SPassword,Sex,Stage,Grade,Score")] Student student)
+        public ActionResult StudentEdit([Bind(Include = "SID,CID,SName,SPassword,Sex,Score")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -105,7 +106,7 @@ namespace LMSweb.Controllers
         }
 
         // GET: Student/Delete/5
-        public ActionResult Stu_Delete(string sid)
+        public ActionResult StudentDelete(string sid)
         {
             if (sid == null)
             {
@@ -137,95 +138,12 @@ namespace LMSweb.Controllers
             return View(model);
         }
 
-        // GET: Course/Create
-        [Authorize(Roles ="Teacher")]
-        public ActionResult Create()
-        {
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName");
-            return View();
-        }
+        
 
-        // POST: Course/Create
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [Authorize]
-        //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CID,TID")] Course course)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Courses.Add(course);
-                db.SaveChanges();
-                return RedirectToAction("TeacherHomePage", "Teacher");
-            }
-
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
-            
-            return View(course);
-        }
-
-        // GET: Course/Edit/5
-        public ActionResult Edit(string cid)
-        {
-            if (cid == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(cid);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
-            return View(course);
-        }
-
-        // POST: Course/Edit/5
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CID,TID,CName")] Course course)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(course).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("TeacherHomePage", "Teacher", null);
-            }
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
-            return View(course);
-        }
-
-        // GET: Course/Delete/5
-        public ActionResult Delete(string cid)
-        {
-            if (cid == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(cid);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
-        }
-
-        // POST: Course/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string cid)
-        {
-            Course course = db.Courses.Find(cid);
-            db.Courses.Remove(course);
-            db.SaveChanges();
-            return RedirectToAction("TeacherHomePage", "Teacher", null);
-        }
+        
         [HttpPost, ActionName("Stu_Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Stu_DeleteConfirmed(string sid)
+        public ActionResult StudentDeleteConfirmed(string sid)
         {
             Student student = db.Students.Find(sid);
             db.Students.Remove(student);
@@ -384,6 +302,8 @@ namespace LMSweb.Controllers
             vmodel.StudentList = GetStudent(cid);
             vmodel.students = db.Students.Where(x => x.@group != null && x.CID == cid).ToList();
             vmodel.CID = cid;
+            var course = db.Courses.Where(c => c.CID == cid).Single();
+            vmodel.CName = course.CName;
             vmodel.groups = db.Groups.Where(g =>g.CID == cid).ToList();
 
             //var result = from g in db.Groups
@@ -476,13 +396,13 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
-
+            var cid = group.CID;
             group.Students.Clear();
             db.Groups.Remove(group);
 
             db.SaveChanges();
 
-            return RedirectToAction("StudentGroup");
+            return RedirectToAction("StudentGroup", new { cid=cid} );
         }
 
         public ActionResult GroupStudentDelete( string groupStuId)
