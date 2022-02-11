@@ -93,25 +93,14 @@ namespace LMSweb.Models
             model.mission.relatedKP = kp_str;
             model.mission.CID = model.CID;
 
-            var n1 = model.mission.discuss_k;
-            var n2 = model.mission.chart_k;
-            var n3 = model.mission.code_k;
-            var n = n1 + n2 + n3;
-            var n1Score = (int)(((decimal)n1 / n) * 100);
-            var n2Score = (int)(((decimal)n2 / n) * 100);
-            var n3Score = (int)(((decimal)n3 / n) * 100);
-            model.mission.discuss_k = n1Score;
-            model.mission.chart_k = n2Score;
-            model.mission.code_k = n3Score;
-
-            var m1 = model.mission.eva_k;
+            var m1 = model.mission.discuss_k;
             var m2 = model.mission.per_k;
             var m3 = model.mission.group_k;
             var m = m1 + m2 + m3;
             var m1Score = (int)(((decimal)m1 / m) * 100);
             var m2Score = (int)(((decimal)m2 / m) * 100);
             var m3Score = (int)(((decimal)m3 / m) * 100);
-            model.mission.eva_k = m1Score;
+            model.mission.discuss_k = m1Score;
             model.mission.per_k = m2Score;
             model.mission.group_k = m3Score;
 
@@ -277,10 +266,7 @@ namespace LMSweb.Models
 
             //db.Missions.Add(model.mission);
             model.mission.MDetail = mission.MDetail;
-            model.mission.code_k = mission.code_k;
             model.mission.discuss_k = mission.discuss_k;
-            model.mission.chart_k = mission.chart_k;
-            model.mission.eva_k = mission.eva_k;
             model.mission.per_k = mission.per_k;
             model.KnowledgeList = GetKnowledge(cid);
 

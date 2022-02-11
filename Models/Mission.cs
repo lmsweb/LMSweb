@@ -37,14 +37,14 @@ namespace LMSweb.Models
         [Display(Name = "討論權重")]
         public int discuss_k { get; set; }
 
-        [Display(Name = "規劃權重")]
-        public int chart_k { get; set; }
+        //[Display(Name = "規劃權重")]
+        //public int chart_k { get; set; }
 
-        [Display(Name = "撰寫權重")]
-        public int code_k { get; set; }
+        //[Display(Name = "撰寫權重")]
+        //public int code_k { get; set; }
 
-        [Display(Name = "互動合作分數權重")]
-        public int eva_k { get; set; }
+        //[Display(Name = "互動合作分數權重")]
+        //public int eva_k { get; set; }
 
         [Display(Name = "個人分數權重")]
         public int per_k {get;set;}

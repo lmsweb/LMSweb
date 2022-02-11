@@ -277,6 +277,10 @@
     <Compile Include="Migrations\202202071829104_delStuCol.Designer.cs">
       <DependentUpon>202202071829104_delStuCol.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202110540116_del_k.cs" />
+    <Compile Include="Migrations\202202110540116_del_k.Designer.cs">
+      <DependentUpon>202202110540116_del_k.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Group.cs" />
@@ -1263,6 +1267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202071829104_delStuCol.resx">
       <DependentUpon>202202071829104_delStuCol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202110540116_del_k.resx">
+      <DependentUpon>202202110540116_del_k.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
