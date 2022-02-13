@@ -51,10 +51,11 @@ namespace LMSweb.Controllers
         }
 
         // GET: Student/Create
-        public ActionResult StudentCreate()
+        public ActionResult StudentCreate(string cid)
         {
-            
-             return View();
+            var s = new Student();
+            s.CID = cid;
+            return View(s);
         }
 
         // POST: Student/Create
@@ -62,13 +63,14 @@ namespace LMSweb.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StudentCreate([Bind(Include = "SID,CID,SName,SPassword,Sex")] Student student)
+        public ActionResult StudentCreate([Bind(Include = "SID,CID,SName,SPassword,Sex")] Student student, string cid)
         {
             if (ModelState.IsValid)
-            { 
+            {
+                student.CID = cid;
                 db.Students.Add(student);
                 db.SaveChanges();
-                return RedirectToAction("e");
+                return RedirectToAction("StudentManagement");
             }
 
             return View(student);
@@ -302,8 +304,8 @@ namespace LMSweb.Controllers
             vmodel.StudentList = GetStudent(cid);
             vmodel.students = db.Students.Where(x => x.@group != null && x.CID == cid).ToList();
             vmodel.CID = cid;
-            //var course = db.Courses.Where(c => c.CID == cid).Single();
-            //vmodel.CName = course.CName;
+            var course = db.Courses.Where(c => c.CID == cid).Single();
+            vmodel.CName = course.CName;
             vmodel.groups = db.Groups.Where(g =>g.CID == cid).ToList();
 
             //var result = from g in db.Groups
@@ -379,7 +381,7 @@ namespace LMSweb.Controllers
                 db.Groups.Add(groups[i]);
             }
             db.SaveChanges();
-            return RedirectToAction("StudentGroup");
+            return RedirectToAction("StudentGroup", new { cid });
 
         }
 
@@ -405,7 +407,7 @@ namespace LMSweb.Controllers
             return RedirectToAction("StudentGroup", new { cid=cid} );
         }
 
-        public ActionResult GroupStudentDelete( string groupStuId)
+        public ActionResult GroupStudentDelete(string groupStuId)
         {
             Student student = db.Students.Find(groupStuId);
 
