@@ -18,7 +18,6 @@ namespace LMSweb.Models
         [Display(Name = "教師評語")]
         public string TeacherA { get; set; }
 
-
         [Required]
         [Display(Name = "小組成果分數")]
         public int GroupAchievementScore { get; set; }

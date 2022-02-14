@@ -23,7 +23,7 @@ namespace LMSweb.Models
                 model.missions = db.Missions.Where(m => m.CID == cid);
                 return View(model);
             }
-            var course = db.Courses.Where(c => c.CID == cid).Single();
+            var course = db.Courses.Single(c => c.CID == cid);
             model.missions = db.Missions.Where(m => m.CID == cid);
             model.CID = course.CID;
             model.CName = course.CName;
@@ -71,7 +71,7 @@ namespace LMSweb.Models
             var model = new MissionCreateViewModel();
             model.KnowledgeList = GetKnowledge(cid);
             model.CID = cid;
-            var course = db.Courses.Where(c => c.CID == cid).Single();
+            var course = db.Courses.Single(c => c.CID == cid);
             model.CName = course.CName;
 
             return View(model);
@@ -169,11 +169,6 @@ namespace LMSweb.Models
                 model.mission.relatedKP = kp_str;
                 mission.CID = model.CID;
 
-                
-
-               
-
-                //mission.Prompts = db.Prompts.Where(pt => model.SelectPromptList.ToList().Contains(pt.PID)).ToList();
                 db.SaveChanges();
 
                 return RedirectToAction("Index", new { cid = model.CID});
@@ -181,8 +176,7 @@ namespace LMSweb.Models
 
             //model.KnowledgeList = GetKnowledge(model.SelectKnowledgeList);
             model.CID = mission.CID;
-           
-            //model.PromptList = GetPrompt(model.SelectPromptList);
+
             return View(model);
         }
 
@@ -234,7 +228,7 @@ namespace LMSweb.Models
             
             model.missions = db.Missions.ToList();
             model.CID = cid;
-            var course = db.Courses.Where(c => c.CID == cid).Single();
+            var course = db.Courses.Single(c => c.CID == cid);
             model.CName = course.CName;
            
 

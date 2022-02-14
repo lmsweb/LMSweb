@@ -102,7 +102,7 @@ namespace LMSweb.Controllers
                 model.missions = db.Missions.Where(m => m.CID == cid);
                 return View(model);
             }
-            var course = db.Courses.Where(c => c.CID == cid).Single();
+            var course = db.Courses.Single(c => c.CID == cid);
             model.missions = db.Missions.Where(m => m.CID == cid);
             model.CID = course.CID;
           
@@ -176,7 +176,7 @@ namespace LMSweb.Controllers
         public ActionResult Chat(string cid, string mid)
         {
             MissionViewModel model = new MissionViewModel();
-            var mission = db.Missions.Where(m => m.MID == mid).Single();
+            var mission = db.Missions.Single(m => m.MID == mid);
             model.CID = cid;
             model.MID = mid;
             //ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);

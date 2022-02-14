@@ -304,7 +304,7 @@ namespace LMSweb.Controllers
             vmodel.StudentList = GetStudent(cid);
             vmodel.students = db.Students.Where(x => x.@group != null && x.CID == cid).ToList();
             vmodel.CID = cid;
-            var course = db.Courses.Where(c => c.CID == cid).Single();
+            var course = db.Courses.Single(c => c.CID == cid);
             vmodel.CName = course.CName;
             vmodel.groups = db.Groups.Where(g =>g.CID == cid).ToList();
 
@@ -344,7 +344,7 @@ namespace LMSweb.Controllers
                 return new HttpStatusCodeResult(404);
             }
             CourseViewModel model = new CourseViewModel();
-            var course = db.Courses.Where(c => c.CID == cid).Single();
+            var course = db.Courses.Single(c => c.CID == cid);
             model.CID = course.CID;
             model.CName = course.CName;
             model.students = course.Students;
