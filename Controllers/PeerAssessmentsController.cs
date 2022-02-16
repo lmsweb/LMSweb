@@ -17,7 +17,7 @@ namespace LMSweb.Controllers
         private LMSmodel db = new LMSmodel();
 
         // GET: PeerAssessments
-        public ActionResult Index(string mid, string gid, string cid)
+        public ActionResult Index(string mid, int gid, string cid)
         {
             var gmodel = new GroupViewModel();
             gmodel.MID = mid;
@@ -28,7 +28,7 @@ namespace LMSweb.Controllers
             var stu= db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).group;
             gmodel.Groups = db.Groups.Where(g => g.GID == stuG.GID).ToList();
-            var course = db.Courses.Where(c => c.CID == cid).Single();
+            var course = db.Courses.Single(c => c.CID == cid);
             gmodel.CName = course.CName;
             return View(gmodel);
         }
@@ -49,7 +49,7 @@ namespace LMSweb.Controllers
         }
 
         // GET: PeerAssessments/Create
-        public ActionResult Create(string sid, string mid, string gid)
+        public ActionResult Create(string sid, string mid, int gid)
         {
             GroupViewModel model = new GroupViewModel();
             model.MID = mid;
@@ -64,7 +64,7 @@ namespace LMSweb.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PEID,PeerA,CooperationScore,AssessedSID")] PeerAssessment peerAssessment, string mid,string gid)
+        public ActionResult Create([Bind(Include = "PEID,PeerA,CooperationScore,AssessedSID")] PeerAssessment peerAssessment, string mid, int gid)
         {
             if (ModelState.IsValid)
             {

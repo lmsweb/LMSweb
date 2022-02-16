@@ -1,0 +1,70 @@
+﻿@model LMSweb.Models.Student
+
+@{
+    ViewBag.Title = "Create";
+
+}
+
+<div class="article">
+    @Model.CID
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                學生帳號
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                密碼
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SPassword, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.CID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <select class="form-select" id="Sex" name="Sex">
+                        <option selected>請選擇性別...</option>
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                    @*@Html.EditorFor(model => model.Sex, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="新增一名學生  " class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("返回學生名單", "StudentManagement", new { CID = Model.CID})
+    </div>
+
+</div>

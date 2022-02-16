@@ -19,10 +19,6 @@ namespace LMSweb.Models
         public string SName { get; set; }
 
         [Required]
-        [Display(Name = "年級")]
-        public string Grade { get; set; }
-
-        [Required]
         [StringLength(18, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "密碼")]
@@ -32,9 +28,6 @@ namespace LMSweb.Models
         [Display(Name = "性別")]
         public string Sex { get; set; }
 
-        [Required]
-        [Display(Name = "教育階段")]
-        public string Stage { get; set; }
 
         [Display(Name = "積分")]
         public string Score { get; set; }

@@ -19,13 +19,6 @@ namespace LMSweb.Controllers
         {
             return View(db.TeacherA.ToList());
         }
-
-        //public ActionResult CheckMission(string mid)
-        //{
-        //    TeacherAssessment teacherAssessment = db.TeacherA;
-        //    return View(db.TeacherA);
-        //}
-        // GET: TeacherAssessments/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)

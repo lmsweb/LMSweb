@@ -8,10 +8,11 @@ namespace LMSweb.ViewModel
     public class GroupViewModel
     {
         public string CID { get; set; }
-        public string GID { get; set; }
+        public int GID { get; set; }
         public string MID { get; set; }
         public string SID { get; set; }
         public string CName { get; set; }
+        public string GName { get; set; }
         public List<LMSweb.Models.Group> Groups { get; set; }
         public LMSweb.Models.TeacherAssessment TeacherAssessment { get; set; }
 

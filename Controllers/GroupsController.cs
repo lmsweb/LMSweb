@@ -15,7 +15,8 @@ namespace LMSweb.Controllers
     {
         private LMSmodel db = new LMSmodel();
 
-        // GET: Groups
+        // G
+        // ET: Groups
         public ActionResult Index(string mid, string cid)
         {
             var gmodel = new GroupViewModel();
@@ -24,49 +25,60 @@ namespace LMSweb.Controllers
             gmodel.Groups = db.Groups.Where(g => mis.CID == g.CID).ToList();
             gmodel.CID = cid;
             gmodel.CName = mis.course.CName;
+            var stu = db.Students.Where(s => s.group.CID == cid).ToList();
+
             return View(gmodel);
         }
-        public ActionResult CheckCoding(string gid, string cid)
+        public ActionResult CheckCoding(int gid, string cid)
         {
             GroupViewModel model = new GroupViewModel();
             model.CID = cid;
             model.GID = gid;
             return View(model);
         }
-        public ActionResult CheckDrawing(string gid, string cid)
+        public ActionResult CheckDrawing(int gid, string cid)
         {
             GroupViewModel model = new GroupViewModel();
             model.CID = cid;
             model.GID = gid;
             return View(model);
         }
-        public ActionResult Assessment(string gid, string mid)
+        public ActionResult Assessment(int gid, string mid, string cid)
         {
             GroupViewModel model = new GroupViewModel();
+            var mis = db.Missions.Find(mid);
             model.MID = mid;
             model.GID = gid;
+            model.CID = cid;
+
+            var group = db.Groups.Single(g =>g.GID == gid);
+
+            model.GName = group.GName; 
+            model.CName = mis.course.CName;
 
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TEID,TeacherA,GroupAchievementScore,GID,MID")] TeacherAssessment teacherAssessment, string cid)
+        public ActionResult Create(GroupViewModel groupVM, string cid, int gid, string mid)
         {
+
             if (ModelState.IsValid)
             {
-                //teacherAssessment.group = db.Groups.Find(teacherAssessment.GID);
-                db.TeacherA.Add(teacherAssessment);
+                groupVM.TeacherAssessment.GID = gid;
+                groupVM.TeacherAssessment.MID = mid;
+                db.TeacherA.Add(groupVM.TeacherAssessment);
+
                 db.SaveChanges();
-                var gmodel = new GroupViewModel();
-                gmodel.CID = cid;
-                
+                groupVM.CID = cid;
 
-                gmodel.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+                groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
 
-                return View("Index", gmodel);
+                return View("Index", groupVM);
             }
-
-            return View(teacherAssessment);
+            
+           
+            return View(groupVM);
         }
         // GET: Groups/Details/5
         public ActionResult Details(int? id)
@@ -88,53 +100,47 @@ namespace LMSweb.Controllers
         {
             return View();
         }
-
-        // POST: Groups/Create
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        //// 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "GName")] Group group)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Groups.Add(group);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(group);
-        //}
-
-        // GET: Groups/Edit/5
-        public ActionResult Edit(int? id)
+       
+        public ActionResult Edit(int? id, string cid, int gid, string mid)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Group group = db.Groups.Find(id);
-            if (group == null)
+            TeacherAssessment teacherAssessment = db.TeacherA.Find(id);
+            if (teacherAssessment == null)
             {
                 return HttpNotFound();
             }
-            return View(group);
+
+            var groupVM = new GroupViewModel();
+            groupVM.TeacherAssessment = teacherAssessment;
+            groupVM.CID = cid;
+            groupVM.MID = mid;
+            groupVM.GID = gid;
+
+            return View(groupVM);
         }
 
-        // POST: Groups/Edit/5
-        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
-        // 詳細資訊，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GID,GName")] Group group)
+        public ActionResult Edit(GroupViewModel groupVM, string cid, int gid, string mid)
         {
+            var teacherAssessment = groupVM.TeacherAssessment;
+            teacherAssessment.MID = mid;
+            teacherAssessment.GID = gid;
             if (ModelState.IsValid)
             {
-                db.Entry(group).State = EntityState.Modified;
+
+                db.Entry(teacherAssessment).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                groupVM.CID = cid;
+                groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+
+                return RedirectToAction("Index", groupVM);
             }
-            return View(group);
+            return View(groupVM);
         }
 
         // GET: Groups/Delete/5

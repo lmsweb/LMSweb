@@ -7,11 +7,11 @@
     <h4>@Model.CName</h4>
     <p>學生分組</p>
 </div>
-<div class="card " style="box-sizing: border-box; width: 100%; max-width: 1200px; margin: 20px auto 20px; border-radius: 5px; box-shadow: 0 2px 2px;">
+<div class="card " style="box-sizing: border-box; width: 100%; max-width: 1200px; margin: 20px auto 20px; border-radius: 5px; border: 1px solid #dee2e6; border-color: #cdcdcd;">
 
     <div class="card-header" style="padding: 30px 50px 8px 50px;">
         <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
+            <li class="nav-item">   
                 <a class="nav-link " href="https://localhost:44301/Course/StudentManagement?CID=@Model.CID"><h5>修課名單</h5></a>
             </li>
             <li class="nav-item">
@@ -165,150 +165,150 @@
 
     @*<script type="text/javascript" src="../jquery/jquery.js"></script>
         <script type="text/javascript" src="../jquery/jquery-ui.js"></script>*@
-    @section scripts {
-        <script>
-        $('#exampleModal').on('show.bs.modal', function (event) {     //將選取的學生顯示在Modal上
-            var button = $(event.relatedTarget) // Button that triggered the modal
-            //var recipient = button.data('whatever') // Extract info from data-* attributes
-            var modal = $(this)
-            var text = ''
-            $("input[name='all_student']").each(function () {
-                if ($(this).prop("checked")) {
-                    text += $(this).attr('id') + '<br/>';
+@section scripts {
+    <script>
+    $('#exampleModal').on('show.bs.modal', function (event) {     //將選取的學生顯示在Modal上
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        //var recipient = button.data('whatever') // Extract info from data-* attributes
+        var modal = $(this)
+        var text = ''
+        $("input[name='all_student']").each(function () {
+            if ($(this).prop("checked")) {
+                text += $(this).attr('id') + '<br/>';
 
-                    // get val use " $(this).val() "
-                }
-            });
-
-
-            modal.find('#selected_students').html(text)
-            //modal.find('#selected_students').append(text)
-
-            //modal.find('.modal-title').text('New message to ' + '123123')
-            //modal.find('.modal-title').text('New message to ' + recipient)
-            //modal.find('.modal-body input').val(recipient)
-            //modal.find('.modal-body input').val(recipient)
+                // get val use " $(this).val() "
+            }
         });
 
-        $('.addGbtn').click(function () {   //將已分好組別裡的某位學生加入其他組別
-            var otherGroupStudent = [];
-            var gid = this.id;
-            $("input[name='all_student']").each(function () {
-                if ($(this).prop("checked")) {
-                    otherGroupStudent.push($(this).val());
-                }
-            });
-            console.log(otherGroupStudent);
-            console.log(gid);
-            //alert(otherGroupStudent)
-            $.ajax({
-                url: "@Url.Action("AddStuToOtherGroup", "Course")",
-                method: "post",
-                contentType: 'application/json',
-                data: JSON.stringify({ gid: gid, StudentList : otherGroupStudent, CID : "@Model.CID" }),
-                success: function (response) {
-                    window.location.reload();
 
-                },
-                error: function (thrownError) {
-                    console.log(thrownError);
-                }
-            });
+        modal.find('#selected_students').html(text)
+        //modal.find('#selected_students').append(text)
+
+        //modal.find('.modal-title').text('New message to ' + '123123')
+        //modal.find('.modal-title').text('New message to ' + recipient)
+        //modal.find('.modal-body input').val(recipient)
+        //modal.find('.modal-body input').val(recipient)
+    });
+
+    $('.addGbtn').click(function () {   //將已分好組別裡的某位學生加入其他組別
+        var otherGroupStudent = [];
+        var gid = this.id;
+        $("input[name='all_student']").each(function () {
+            if ($(this).prop("checked")) {
+                otherGroupStudent.push($(this).val());
+            }
+        });
+        console.log(otherGroupStudent);
+        console.log(gid);
+        //alert(otherGroupStudent)
+        $.ajax({
+            url: "@Url.Action("AddStuToOtherGroup", "Course")",
+            method: "post",
+            contentType: 'application/json',
+            data: JSON.stringify({ gid: gid, StudentList : otherGroupStudent, CID : "@Model.CID" }),
+            success: function (response) {
+                window.location.reload();
+
+            },
+            error: function (thrownError) {
+                console.log(thrownError);
+            }
+        });
+    });
+
+    $('#alert').click(function () {    //儲存Modal的資料
+        console.log($('#group_name').val());
+        var students = [];
+        $("input[name='all_student']").each(function () {
+            if ($(this).prop("checked")) {
+                //text += $(this).attr('id') + '<br/>';zz
+                //var student = { SID: $(this).val()}
+                students.push($(this).val());
+                // get val use " $(this).val() "
+            }
+        });
+        console.log(students);
+        //console.log($('#selected_students').val());
+        $.ajax({
+            url: "@Url.Action("StudentGroup", "Course")",
+            method: "post",
+            contentType: 'application/json',
+            data: JSON.stringify({ GName: $('#group_name').val(), StudentList : students, CID : "@Model.CID" }),
+            success: function (response) {
+                window.location.reload();
+                //const charge = [];
+                //charge.push(...response);
+                //createDomElement(charge);
+            },
+            error: function (thrownError) {
+                console.log(thrownError);
+            }
         });
 
-        $('#alert').click(function () {    //儲存Modal的資料
-            console.log($('#group_name').val());
-            var students = [];
-            $("input[name='all_student']").each(function () {
-                if ($(this).prop("checked")) {
-                    //text += $(this).attr('id') + '<br/>';zz
-                    //var student = { SID: $(this).val()}
-                    students.push($(this).val());
-                    // get val use " $(this).val() "
-                }
-            });
-            console.log(students);
-            //console.log($('#selected_students').val());
-            $.ajax({
-                url: "@Url.Action("StudentGroup", "Course")",
-                method: "post",
-                contentType: 'application/json',
-                data: JSON.stringify({ GName: $('#group_name').val(), StudentList : students, CID : "@Model.CID" }),
-                success: function (response) {
-                    window.location.reload();
-                    //const charge = [];
-                    //charge.push(...response);
-                    //createDomElement(charge);
-                },
-                error: function (thrownError) {
-                    console.log(thrownError);
-                }
-            });
+    });
 
+    $('#groupclick').click(function () {    //隨機分組
+        var students = [];
+        var gn = $("#groupN").val();
+        var cid = '@Model.CID';
+        console.log(gn);
+        $.ajax({
+            url: "@Url.Action("GroupN", "Course")",
+            method: "post",
+            contentType: 'application/json',
+            data: JSON.stringify({ n: gn , cid : cid}),
+            success: function (response) {
+                window.location.reload();
+
+            },
+            error: function (thrownError) {
+                console.log(thrownError);
+            }
+        });
+        console.log(123);
+    })
+
+    $('.groupclose').click(function () {    //刪除已分好的組別
+        var gid = this.id;
+            //alert(gid);
+
+        $.ajax({
+            url: "@Url.Action("GroupDelete", "Course")",
+            method: "post",
+            contentType: 'application/json',
+            data: JSON.stringify({ groupId: gid }),
+            success: function (response) {
+                window.location.reload();
+
+            },
+            error: function (thrownError) {
+                console.log(thrownError);
+            }
+        });
+        console.log(123);
+    })
+
+
+    $('.stuclose').click(function () {   //刪除已分好的組別裡面的某位學生
+        var sid = this.id;
+
+        $.ajax({
+            url: "@Url.Action("GroupStudentDelete", "Course")",
+            method: "post",
+            contentType: 'application/json',
+            data: JSON.stringify({groupStuId: sid}),
+            success: function (response) {
+                window.location.reload();
+
+            },
+            error: function (thrownError) {
+                console.log(thrownError);
+            }
         });
 
-        $('#groupclick').click(function () {    //隨機分組
-            var students = [];
-            var gn = $("#groupN").val();
-            var cid = '@Model.CID';
-            console.log(gn);
-            $.ajax({
-                url: "@Url.Action("GroupN", "Course")",
-                method: "post",
-                contentType: 'application/json',
-                data: JSON.stringify({ n: gn , cid : cid}),
-                success: function (response) {
-                    window.location.reload();
-
-                },
-                error: function (thrownError) {
-                    console.log(thrownError);
-                }
-            });
-            console.log(123);
-        })
-
-        $('.groupclose').click(function () {    //刪除已分好的組別
-            var gid = this.id;
-                //alert(gid);
-
-            $.ajax({
-                url: "@Url.Action("GroupDelete", "Course")",
-                method: "post",
-                contentType: 'application/json',
-                data: JSON.stringify({ groupId: gid }),
-                success: function (response) {
-                    window.location.reload();
-
-                },
-                error: function (thrownError) {
-                    console.log(thrownError);
-                }
-            });
-            console.log(123);
-        })
+    })
 
 
-        $('.stuclose').click(function () {   //刪除已分好的組別裡面的某位學生
-            var sid = this.id;
-
-            $.ajax({
-                url: "@Url.Action("GroupStudentDelete", "Course")",
-                method: "post",
-                contentType: 'application/json',
-                data: JSON.stringify({groupStuId: sid}),
-                success: function (response) {
-                    window.location.reload();
-
-                },
-                error: function (thrownError) {
-                    console.log(thrownError);
-                }
-            });
-
-        })
-
-
-        </script>
-    }
+    </script>
+}
 

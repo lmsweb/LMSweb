@@ -1,37 +1,46 @@
-﻿@model LMSweb.Models.Group
-
+﻿@model LMSweb.ViewModel.GroupViewModel
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
+<div class="article">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-<h2>Edit</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Group</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.GID)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.GName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.GName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GName, "", new { @class = "text-danger" })
+        <div class="form-horizontal">
+            <h4>編輯評語</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.GID)
+            @Html.HiddenFor(model => model.MID)
+            @Html.HiddenFor(model => model.TeacherAssessment.TEID)
+            <div class="mb-3">
+                @Html.LabelFor(model => model.TeacherAssessment.TeacherA, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TeacherAssessment.TeacherA, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TeacherAssessment.TeacherA, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(model => model.TeacherAssessment.GroupAchievementScore, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TeacherAssessment.GroupAchievementScore, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TeacherAssessment.GroupAchievementScore, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row g-1 ">
+                <div class="col-auto">
+                    <input type="submit" value="儲存" class="btn btn-primary" />
+                </div>
+                <div class="col-auto">
+                    <input type="button" value="取消編輯" class="btn btn-secondary" onclick="location.href='@Url.Action("Index","Groups",new { mid = Model.MID, cid=Model.CID })'" />
+                </div>
+            
             </div>
         </div>
+    }
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+
