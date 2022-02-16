@@ -12,6 +12,7 @@ namespace LMSweb.ViewModel
         public string MID { get; set; }
         public string SID { get; set; }
         public string GID { get; set; }
+        public string GName { get; set; }
         public IEnumerable<LMSweb.Models.Mission> missions { get; set; }
         public LMSweb.Models.Mission mis { get; set; }
 
