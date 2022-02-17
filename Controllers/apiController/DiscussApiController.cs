@@ -29,10 +29,13 @@ namespace LMSweb.Controllers
                     .Where(x => x.MID == Discussapi.MID && x.SID == Discussapi.SID)
                     .FirstOrDefault();
 
+                    Group group = db.Groups.Where(a => a.GName == Discussapi.GName).FirstOrDefault();
+                    
                     lb.ActionType = Discussapi.ActionType;
                     lb.subAction = Discussapi.subAction;
                     lb.Detail = Discussapi.Detail;
                     lb.Time = Discussapi.Time;
+                    lb.CID = Discussapi.CID;
                     lb.StudentMissions = data;
 
                     db.LearnB.Add(lb);

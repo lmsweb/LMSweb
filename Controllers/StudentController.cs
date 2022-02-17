@@ -179,8 +179,15 @@ namespace LMSweb.Controllers
             var mission = db.Missions.Single(m => m.MID == mid);
             model.CID = cid;
             model.MID = mid;
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var stu = db.Students.Where(s => s.SID == sid);
+            var stuG = db.Students.Find(sid).group;
+            var gname = stuG.GName;
+            model.GName = gname;
             //ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
-            
+
             return View(model);
         }
         protected override void Dispose(bool disposing)
