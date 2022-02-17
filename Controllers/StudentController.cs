@@ -186,6 +186,7 @@ namespace LMSweb.Controllers
             var stuG = db.Students.Find(sid).group;
             var gname = stuG.GName;
             model.GName = gname;
+            model.SID = sid;
             //ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
 
             return View(model);
