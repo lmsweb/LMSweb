@@ -19,80 +19,97 @@
     {
         @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h5>編輯任務</h5>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.mission.MID)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="input-group date" id="datetimepicker_start" data-target-input="nearest">
-                    @Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker_start" } })
-                    @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
-                    <div class="input-group-append" data-target="#datetimepicker_start" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                </div>
+     <div class="form-horizontal">
+         <h4><b>編輯任務</b></h4>
+         <hr />
+         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+         @Html.HiddenFor(model => model.mission.MID)
+         <div class="mb-3">
+             @Html.LabelFor(model => model.mission.MName, htmlAttributes: new { @class = "control-label col-md-2" })
+             <div class="col-5">
+                 @Html.EditorFor(model => model.mission.MName, new { htmlAttributes = new { @class = "form-control" } })
+                 @Html.ValidationMessageFor(model => model.mission.MName, "", new { @class = "text-danger" })
+             </div>
+         </div>
+       
+         <div class="mb-3">
+             @Html.LabelFor(model => model.mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
+             <div class="col-5">
+                 @Html.TextAreaFor(model => model.mission.MDetail, 10, 53, new { htmlAttributes = new { @class = "form-control", rows = "20" } })
+                 @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
+             </div>
+         </div>
+         <div class="mb-3">
+             @Html.LabelFor(model => model.mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
+             <div class="col-5">
+                 <div class="input-group date" id="datetimepicker_start" data-target-input="nearest">
+                     @Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker_start" } })
+                     @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
+                     <div class="input-group-append" data-target="#datetimepicker_start" data-toggle="datetimepicker">
+                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                     </div>
+                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.End, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="input-group date" id="datetimepicker_end" data-target-input="nearest">
-                    @Html.EditorFor(model => model.mission.End, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker_end" } })
-                    @Html.ValidationMessageFor(model => model.mission.End, "", new { @class = "text-danger" })
-                    <div class="input-group-append" data-target="#datetimepicker_end" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+         <div class="mb-3">
+             @Html.LabelFor(model => model.mission.End, htmlAttributes: new { @class = "control-label col-md-2" })
+             <div class="col-5">
+                 <div class="input-group date" id="datetimepicker_end" data-target-input="nearest">
+                     @Html.EditorFor(model => model.mission.End, new { htmlAttributes = new { @class = "form-control datetimepicker-input", data_target = "#datetimepicker_end" } })
+                     @Html.ValidationMessageFor(model => model.mission.End, "", new { @class = "text-danger" })
+                     <div class="input-group-append" data-target="#datetimepicker_end" data-toggle="datetimepicker">
+                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                     </div>
+                 </div>
+             </div>
+         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.MName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mission.MName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mission.MName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mission.MDetail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-        @Html.LabelFor(model => model.mission.CID, "CID", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.mission.CID, (SelectList)ViewBag.CID, htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true", title = "請選擇課程..." })
-            @Html.ValidationMessageFor(model => model.mission.CID, "", new { @class = "text-danger" })
-        </div>
-        </div>*@
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
-            </div>
-        </div>
-
-
-
-        @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
-        <br />
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="儲存" class="btn btn-primary" />
-            </div>
-        </div>
-    </div>
-    }
+         <div class="mb-3">
+             @Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
+             <div class="col-5">
+                 @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
+             </div>
+         </div>
+         <label class="mb-3">總成績權重調整 : </label>
+         <div class="container">
+             <div class="row">
+                 <div class="col">
+                     <div class="row">
+                         討論頻率權重 :
+                         <div class="col-5">
+                             @Html.EditorFor(model => model.mission.discuss_k, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+                         </div>%
+                     </div>
+                 </div>
+                 <div class="col">
+                     <div class="row">
+                         個人分數權重 :
+                         <div class="col-5">
+                             @Html.EditorFor(model => model.mission.per_k, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+                         </div>%
+                     </div>
+                 </div>
+                 <div class="col">
+                     <div class="row">
+                         小組分數權重 :
+                         <div class="col-5">
+                             @Html.EditorFor(model => model.mission.group_k, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+                         </div>%
+                     </div>
+                 </div>
+             </div>
+         </div>
+         @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
+         <br />
+         <div class="mb-3">
+             <div class="col">
+                 <input type="submit" value="儲存" class="btn btn-primary" />
+                 <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Missions" , new { cid = Model.CID })'"/>
+             </div>
+         </div>
+     </div>
+     }
 </div>
 
 <script type="text/javascript">

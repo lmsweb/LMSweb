@@ -29,14 +29,15 @@
                         </h4>
                     </div>*@
                     <div class="card-body">
-                        <h4 class="card-title pricing-card-title" style="padding: 30px 40px 50px;">
-                            @Html.DisplayFor(modelItem => item.CName)
-                        </h4>
+                        <div class="card-title pricing-card-title" style="padding: 30px 40px 30px;">
+                            <p class="h4"><b>@Html.DisplayFor(modelItem => item.CName)</b></p>
+                        </div>
+                        <p class="h6" style="bottom">ID : @Html.DisplayFor(modelItem => item.CID)</p>
                         <hr />
                         @Html.ActionLink("進入課程", "Index", "Missions", new { cid = item.CID }, new { @class = "btn btn-primary" })
                         @Html.ActionLink("編輯", "CourseEdit", "Teacher", new { cid = item.CID }, new { @class = "btn btn-warning" })
-                        
-                        @Html.ActionLink("刪除", "CourseDelete", "Teacher  ", new { cid = item.CID }, new { @class = "btn btn-secondary" })
+
+                        @Html.ActionLink("刪除", "CourseDelete", "Teacher", new { cid = item.CID }, new { @class = "btn btn-secondary" })
                         @*<button type="button" class="w-100 btn btn-lg btn-outline-primary">submin</button>*@
                     </div>
 

@@ -10,7 +10,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="https://localhost:44301/Student/StudentMission?CID=@Model.CID">任務列表</a></li>
             <li class="breadcrumb-item"><a href="https://localhost:44301/Student/StudentMissionDetail?mid=@Model.MID&cid=@Model.CID">任務內容</a></li>
-            <li class="breadcrumb-item active" aria-current="page">學生互評</li>
+            <li class="breadcrumb-item active" aria-current="page">自評與互評</li>
 
         </ol>
     </nav>
@@ -36,14 +36,28 @@
                         <td>
                             @foreach (var s in item.Students)
                             {
-                                if (s.GID == Model.GID)
+                                if (s.GID == item.GID)
                                 {
-                                    <label>@s.SName</label>
+                                    @s.SName
+
                                     <br />
                                 }
                             }
                         </td>
-                       
+                        <td>
+
+                            @foreach (var s in item.Students)
+                            {
+                                if (Model.PeerAssessment != null && s.SID == Model.PeerAssessment.AssessedSID)
+                                {
+                                    
+                                    @Model.PeerAssessment.PeerA
+
+
+                                }
+                                <br />
+                            }
+                        </td>
                         <td>
                             @foreach (var s in item.Students)
                             {
@@ -55,10 +69,6 @@
                 }
             </tbody>
         </table>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+      
     </div>
 }

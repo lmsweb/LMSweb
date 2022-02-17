@@ -11,7 +11,7 @@
 
 <div class="article">
     <h5>
-        課程列表
+        課程資訊
     </h5>
     <div>
         <table class="table">
@@ -23,7 +23,7 @@
                     @Html.DisplayNameFor(model => model.course.CName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.course.teacher)
+                   授課老師
                 </th>
                 <th></th>
             </tr>
@@ -41,7 +41,7 @@
                         @Html.DisplayFor(modelItem => item.course.teacher.TName)
                     </td>
                     <td>
-                        @Html.ActionLink("進入課程", "StudentMission", new { cid = item.CID })
+                        @Html.ActionLink("進入我的課程", "StudentMission", new { cid = item.CID })
                     </td>
                 </tr>
             }

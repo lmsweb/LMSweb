@@ -17,19 +17,25 @@ namespace LMSweb.Controllers
         private LMSmodel db = new LMSmodel();
 
         // GET: PeerAssessments
-        public ActionResult Index(string mid, int gid, string cid)
+        public ActionResult Index(string mid, string cid)
         {
             var gmodel = new GroupViewModel();
             gmodel.MID = mid;
             var mis = db.Missions.Find(mid);
+
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var stu= db.Students.Where(s => s.SID == sid);
+
             var stuG = db.Students.Find(sid).group;
+
             gmodel.Groups = db.Groups.Where(g => g.GID == stuG.GID).ToList();
+            var pa = db.PeerA.SingleOrDefault(p => p.AssessedSID == sid && p.MID == mid);
+            gmodel.PeerAssessment = pa;
             var course = db.Courses.Single(c => c.CID == cid);
             gmodel.CName = course.CName;
+
             return View(gmodel);
         }
 
@@ -49,13 +55,13 @@ namespace LMSweb.Controllers
         }
 
         // GET: PeerAssessments/Create
-        public ActionResult Create(string sid, string mid, int gid)
+        public ActionResult Create(string sid, string mid, int gid, string cid)
         {
             GroupViewModel model = new GroupViewModel();
             model.MID = mid;
             model.GID = gid;
             model.SID = sid;
-
+            model.CID = cid;
             return View(model);
         }
 
@@ -64,15 +70,18 @@ namespace LMSweb.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PEID,PeerA,CooperationScore,AssessedSID")] PeerAssessment peerAssessment, string mid, int gid)
+        public ActionResult Create([Bind(Include = "PEID,PeerA,CooperationScore,AssessedSID,MID")] PeerAssessment peerAssessment, string mid, int gid, string cid)
         {
             if (ModelState.IsValid)
             {
+                //peerAssessment.StudentMissions.MID = mid;
+                
                 db.PeerA.Add(peerAssessment);
                 db.SaveChanges();
                 var gmodel = new GroupViewModel();
                 gmodel.MID = mid;
                 gmodel.GID = gid;
+                gmodel.CID = cid;
                 return RedirectToAction("Index", gmodel);
             }
 

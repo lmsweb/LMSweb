@@ -34,8 +34,7 @@ namespace LMSweb.Models
 
         [Required]
         [Display(Name = "課程編號")]
-        public string CID { get; set; }    
-        public string GID { get; set; }
+        public string CID { get; set; }
 
         public virtual Group group{ get; set; }
         public virtual Course course { get; set; }

@@ -14,7 +14,14 @@
 <body>
     <div class="article">
         <h4>@(Model.CName)</h4>
-        @Html.ActionLink("新增知識點", "Create", "KnowledgePoints", new { cid = Model.CID }, null)
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item" active" aria-current="page">知識點列表</li>
+            </ol>
+        </nav>
+        <div class="col-2">
+            <input type="button" value="新增知識點"class="btn btn-primary" onclick="location.href='@Url.Action("Create", "KnowledgePoints", new { cid = Model.CID })'"/>
+        </div>
         <table class="table">
             <tr>
                 <th>

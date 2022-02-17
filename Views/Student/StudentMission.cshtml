@@ -17,15 +17,16 @@
                     @Html.DisplayNameFor(model => model.missions.First().MName)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.missions.First().MDetail)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.missions.First().Start)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.missions.First().End)
                 </th>
 
-                <th>
-                    @Html.DisplayNameFor(model => model.missions.First().MDetail)
-                </th>
+
                 <th></th>
             </tr>
 
@@ -35,6 +36,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.MName)
                     </td>
+                     <td class="col-7">
+                        @Html.DisplayFor(modelItem => item.MDetail)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Start)
                     </td>
@@ -42,9 +46,7 @@
                         @Html.DisplayFor(modelItem => item.End)
                     </td>
                     
-                    <td class="col-7">
-                        @Html.DisplayFor(modelItem => item.MDetail)
-                    </td>
+                   
                     <td class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new { mid = item.MID, cid = item.CID})'">
                             進入任務

@@ -43,22 +43,22 @@
       <h4>@Model.CName</h4>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="https://localhost:44301/Student/StudentMission?CID=@Model.CID  ">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="https://localhost:44301/Student/StudentMission?CID=@Model.CID">任務列表</a></li>
             <li class="breadcrumb-item active" aria-current="page">任務內容</li>
         </ol>
     </nav>
 </div>
 <div class="MissionDetailArticle">
     <div class="row">
-        <div class="col-7">
+        <div class="col">
             <h5><b>@Html.DisplayFor(model => model.mis.MName)</b></h5>
         </div>
-        <div class="col align-self-end">
+        <div class="col-4 align-self-end">
             @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
             @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-            <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-primary" />
+            
             @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-            @Html.ActionLink("學生互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID, GID = Model.GID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
         </div>
     </div>
     <table>
@@ -117,14 +117,4 @@
     </table>
    
 </div>
-@section scripts
-{
-    <script>
-        function myFunction() {
-            const myWindow = window.open('@Url.Action( "StudentMDetailWindow", "Student", new { MID = Model.MID, CID = Model.CID})', "", "width=800,height=800");
-        }
-    </script>
-    
-}
-
 

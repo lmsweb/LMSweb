@@ -15,7 +15,24 @@ namespace LMSweb.Controllers
     public class KnowledgePointsController : Controller
     {
         private LMSmodel db = new LMSmodel();
- 
+        public ActionResult Index(string cid)
+        {
+            if (cid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Course course = db.Courses.Find(cid);
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            CourseViewModel model = new CourseViewModel();
+            model.CID = course.CID;
+            model.CName = course.CName;
+            model.kps = db.KnowledgePoints.Where(kp => kp.CID == cid).ToList();
+
+            return View(model);
+        }
         public ActionResult Create(string cid)
         {
             var model = new KnowledgePoint();
@@ -35,7 +52,7 @@ namespace LMSweb.Controllers
                
                 db.SaveChanges();
 
-                return RedirectToAction("Details", "Course", new { cid = kpmodel.CID });
+                return RedirectToAction("Index", "KnowledgePoints", new { cid = kpmodel.CID });
             } 
 
             return View(kpmodel);
@@ -64,7 +81,7 @@ namespace LMSweb.Controllers
             {
                 db.Entry(knowledgePoint).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Details", "Course", new { cid = knowledgePoint.CID });
+                return RedirectToAction("Index", "KnowledgePoints", new { cid = knowledgePoint.CID });
             }
             return View(knowledgePoint);
         }
@@ -93,7 +110,7 @@ namespace LMSweb.Controllers
             var cid = knowledgePoint.CID;
             db.KnowledgePoints.Remove(knowledgePoint);
             db.SaveChanges();
-            return RedirectToAction("Details", "Course", new { cid = cid });
+            return RedirectToAction("Index", "KnowledgePoints", new { cid = cid });
         }
 
         protected override void Dispose(bool disposing)

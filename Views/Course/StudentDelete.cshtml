@@ -2,13 +2,14 @@
 
 @{
     ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 
 }
 <div class="article">
-    <h2>刪除</h2>
+    <h4><b>刪除學生</b></h4>
 
     <div>
-        <h4>Student</h4>
+
         <hr />
         <dl class="dl-horizontal">
             <dt>
@@ -20,11 +21,11 @@
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.SPassword)
+                @Html.DisplayNameFor(model => model.SID)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.SPassword)
+                @Html.DisplayFor(model => model.SID)
             </dd>
 
             <dt>
@@ -34,13 +35,6 @@
             <dd>
                 @Html.DisplayFor(model => model.Sex)
             </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Score)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Score)
-            </dd>
 
         </dl>
 
@@ -48,9 +42,9 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-primary" /> |
-                @Html.ActionLink("返回學生名單", "Stu_Index")
+            <div class="mb-3">
+                <input type="submit" value="刪除" class="btn btn-primary" />
+                <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("StudentManagement", "Course", new { cid = Model.CID})'" />
             </div>
         }
     </div>

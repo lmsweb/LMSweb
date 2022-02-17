@@ -93,16 +93,16 @@ namespace LMSweb.Models
             model.mission.relatedKP = kp_str;
             model.mission.CID = model.CID;
 
-            var m1 = model.mission.discuss_k;
-            var m2 = model.mission.per_k;
-            var m3 = model.mission.group_k;
-            var m = m1 + m2 + m3;
-            var m1Score = (int)(((decimal)m1 / m) * 100);
-            var m2Score = (int)(((decimal)m2 / m) * 100);
-            var m3Score = (int)(((decimal)m3 / m) * 100);
-            model.mission.discuss_k = m1Score;
-            model.mission.per_k = m2Score;
-            model.mission.group_k = m3Score;
+            //var m1 = model.mission.discuss_k;
+            //var m2 = model.mission.per_k;
+            //var m3 = model.mission.group_k;
+            //var m = m1 + m2 + m3;
+            //var m1Score = (int)(((decimal)m1 / m) * 100);
+            //var m2Score = (int)(((decimal)m2 / m) * 100);
+            //var m3Score = (int)(((decimal)m3 / m) * 100);
+            //model.mission.discuss_k = m1Score;
+            //model.mission.per_k = m2Score;
+            //model.mission.group_k = m3Score;
 
             if (ModelState.IsValid)
             {
@@ -222,7 +222,7 @@ namespace LMSweb.Models
             }
             base.Dispose(disposing);
         }
-        public ActionResult SelectMissions(string cid)
+        public ActionResult SelectMissions(string cid, string missionCourse)
         {
             MissionViewModel model = new MissionViewModel();
             
@@ -230,8 +230,8 @@ namespace LMSweb.Models
             model.CID = cid;
             var course = db.Courses.Single(c => c.CID == cid);
             model.CName = course.CName;
-           
 
+           
             return View(model);
         }
 
@@ -253,7 +253,7 @@ namespace LMSweb.Models
             //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
 
             //model.mission.relatedKP = kp_str;
-            model.mission.MID = mission.MID + "_Copy_" + mission.CID;
+            model.mission.MID = mission.MID;
             model.mission.Start = mission.Start;
             model.mission.End = mission.End;
             model.mission.MName = mission.MName;
@@ -262,6 +262,7 @@ namespace LMSweb.Models
             model.mission.MDetail = mission.MDetail;
             model.mission.discuss_k = mission.discuss_k;
             model.mission.per_k = mission.per_k;
+            model.mission.group_k = mission.group_k;
             model.KnowledgeList = GetKnowledge(cid);
 
 

@@ -39,6 +39,7 @@ namespace LMSweb.Controllers
                     //加入使用者的相關資訊
                     new Claim(ClaimTypes.Role, "Teacher"),
                     new Claim(ClaimTypes.Name, result.TName),
+
                     new Claim("TID",result.TID)
                 }, "Teacher");
 
@@ -72,15 +73,23 @@ namespace LMSweb.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult CourseCreate()
         {
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName");
-            return View();
+            //ViewBag.TID = new SelectList(db.Teachers, "TID", "TName");
+            return View("CourseCreate1");
         }
 
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Teacher")]
         public ActionResult CourseCreate([Bind(Include = "CID,TID, CName")] Course course)
         {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
+            var tid = claimData[0].Value; //取值(因為只有一筆)
+            course.TID = tid;
+
+            ModelState.Clear();
+            TryValidateModel(ModelState);
+
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);

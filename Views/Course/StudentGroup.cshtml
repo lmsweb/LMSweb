@@ -22,11 +22,14 @@
 
     <br />
     <div class="card-body" style="padding: 20px 50px 50px;">
-        <label>
-            分組數量 :
-            <input type="number" min="1" max="10" placeholder="需要分成多少組" v-model="groupNum" id="groupN" />
-        </label>
-        <button class="btn btn-primary" id="groupclick">隨機分組</button>
+        <div class="mb-3">
+            <label>
+                分組數量 : 
+                <input type="text" min="1" max="10" placeholder="需要分成多少組" v-model="groupNum" id="groupN" />
+            </label>
+            <button class="btn btn-primary" id="groupclick">隨機分組</button>
+        </div>
+        
 
         <div class="row">
             <div class="col-sm-6">

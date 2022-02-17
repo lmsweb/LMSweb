@@ -25,6 +25,8 @@ namespace LMSweb.Models
         [Display(Name = "被評價學生")]
         public string AssessedSID { get; set; }
 
+        public string MID { get; set; }
+
         public virtual StudentMission StudentMissions { get; set; }
 
     }

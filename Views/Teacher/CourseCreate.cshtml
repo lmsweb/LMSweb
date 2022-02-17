@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 <div class="article">
     <h4>新增課程</h4>
@@ -13,34 +14,32 @@
         <div class="form-horizontal">
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.CID, htmlAttributes: new { @class = "control-label col-md-2"})
+            <div class="mb-3">
+                
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.CID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.HiddenFor(model => model.CID, new { @class = "form-control", @Value = "C" + DateTime.Now.ToString("yyMMddHHmmss") } )
                     @Html.ValidationMessageFor(model => model.CID, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
+            <!--<div class="form-group">
                 @Html.LabelFor(model => model.TID, "TID", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("TID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.EditorFor(model => model.TID,  new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.TID, "", new { @class = "text-danger" })
                 </div>
-            </div>
+            </div>-->
 
-            <div class="form-group">
+            <div class="mb-3">
                 @Html.LabelFor(model => model.CName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-5">
                     @Html.EditorFor(model => model.CName, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.CName, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <br />
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="新增" class="btn btn-primary" />
-                </div>
+            <div class="form-actions no-color">
+                <input type="submit" value="送出" class="btn btn-primary" />
+                <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("TeacherHomePage", "Teacher", new { cid = Model.CID})'" />
             </div>
         </div>
     }

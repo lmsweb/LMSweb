@@ -281,6 +281,18 @@
     <Compile Include="Migrations\202202110540116_del_k.Designer.cs">
       <DependentUpon>202202110540116_del_k.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202141219516_intGID.cs" />
+    <Compile Include="Migrations\202202141219516_intGID.Designer.cs">
+      <DependentUpon>202202141219516_intGID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202141608257_pa.cs" />
+    <Compile Include="Migrations\202202141608257_pa.Designer.cs">
+      <DependentUpon>202202141608257_pa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202161717133_delStuGID.cs" />
+    <Compile Include="Migrations\202202161717133_delStuGID.Designer.cs">
+      <DependentUpon>202202161717133_delStuGID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Group.cs" />
@@ -1090,7 +1102,7 @@
     <Content Include="Views\Teacher\Login.cshtml" />
     <Content Include="Views\Teacher\CourseCreate.cshtml" />
     <Content Include="Views\Teacher\CourseDelete.cshtml" />
-    <Content Include="Views\Course\Details.cshtml" />
+    <Content Include="Views\KnowledgePoints\Index.cshtml" />
     <Content Include="Views\Teacher\CourseEdit.cshtml" />
     <Content Include="Views\Teacher\TeacherHomePage.cshtml" />
     <Content Include="Views\Shared\_TeacherLayout.cshtml" />
@@ -1103,7 +1115,6 @@
     <Content Include="Views\Missions\Delete.cshtml" />
     <Content Include="Views\Missions\Details.cshtml" />
     <Content Include="Views\Missions\Edit.cshtml" />
-    <Content Include="Views\Missions\Create1.cshtml" />
     <Content Include="Views\Missions\index.cshtml" />
     <Content Include="Views\KnowledgePoints\Create.cshtml" />
     <Content Include="Views\KnowledgePoints\Delete.cshtml" />
@@ -1195,6 +1206,7 @@
     <Content Include="Views\PeerAssessments\Details.cshtml" />
     <Content Include="Views\PeerAssessments\Edit.cshtml" />
     <Content Include="Views\PeerAssessments\Index.cshtml" />
+    <Content Include="Views\Teacher\CourseCreate1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1270,6 +1282,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202110540116_del_k.resx">
       <DependentUpon>202202110540116_del_k.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202141219516_intGID.resx">
+      <DependentUpon>202202141219516_intGID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202141608257_pa.resx">
+      <DependentUpon>202202141608257_pa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202161717133_delStuGID.resx">
+      <DependentUpon>202202161717133_delStuGID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

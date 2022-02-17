@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 <div class="article">
-    <h2>編輯課程</h2>
+    <h4>編輯課程</h4>
 
     @using (Html.BeginForm())
     {
@@ -17,9 +17,9 @@
             @Html.HiddenFor(model => model.CID)
             @Html.HiddenFor(model => model.TID)
 
-            <div class="form-group">
+            <div class="mb-3">
                 @Html.LabelFor(model => model.CName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <div class="col-5">
                     @Html.EditorFor(model => model.CName, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.CName, "", new { @class = "text-danger" })
                 </div>
@@ -27,7 +27,8 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="儲存" class="btn btn-primary" />
+                    <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("TeacherHomePage", "Teacher", new { cid = Model.CID})'"/>
                 </div>
             </div>
         </div>

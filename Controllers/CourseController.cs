@@ -22,20 +22,6 @@ namespace LMSweb.Controllers
     public class CourseController : Controller
     {
         private LMSmodel db = new LMSmodel();
-
-        // GET: Course
-        
-        [Authorize(Roles ="Teacher")]
-        public ActionResult TeacherHomePage()
-        {
-            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
-            var tid = claimData[0].Value; //取值(因為只有一筆)
-            var courses = db.Courses.Where(c => c.TID == tid);
-            
-
-            return View(courses);
-        }
         public ActionResult StudentDetails(string sid,string cid)
         {
             if (sid == null)
@@ -57,26 +43,21 @@ namespace LMSweb.Controllers
             s.CID = cid;
             return View(s);
         }
-
-        // POST: Student/Create
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StudentCreate([Bind(Include = "SID,CID,SName,SPassword,Sex")] Student student, string cid)
+        public ActionResult StudentCreate(Student student, string cid)
         {
             if (ModelState.IsValid)
             {
+
                 student.CID = cid;
                 db.Students.Add(student);
                 db.SaveChanges();
-                return RedirectToAction("StudentManagement");
+                return RedirectToAction("StudentManagement",new { cid});
             }
 
             return View(student);
         }
-
-        // GET: Student/Edit/5
         public ActionResult StudentEdit(string sid)
         {
             if (sid == null)
@@ -91,9 +72,6 @@ namespace LMSweb.Controllers
             return View(student);
         }
 
-        // POST: Student/Edit/5
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult StudentEdit([Bind(Include = "SID,CID,SName,SPassword,Sex,Score")] Student student)
@@ -121,28 +99,6 @@ namespace LMSweb.Controllers
             }
             return View(student);
         }
-        public ActionResult Details(string cid)
-        {
-            if (cid == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(cid);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            CourseViewModel model = new CourseViewModel();
-            model.CID = course.CID;
-            model.CName = course.CName;
-            model.kps = db.KnowledgePoints.Where(kp => kp.CID == cid).ToList();
-
-            return View(model);
-        }
-
-        
-
-        
         [HttpPost, ActionName("StudentDelete")]
         [ValidateAntiForgeryToken]
         public ActionResult StudentDeleteConfirmed(string sid)
@@ -150,7 +106,7 @@ namespace LMSweb.Controllers
             Student student = db.Students.Find(sid);
             db.Students.Remove(student);
             db.SaveChanges();
-            return RedirectToAction("TeacherHomePage", "Teacher", null);
+            return RedirectToAction("StudentManagement", "Course", null);
         }
         private string fileSavedPath = WebConfigurationManager.AppSettings["UploadPath"];
 
@@ -304,8 +260,10 @@ namespace LMSweb.Controllers
             vmodel.StudentList = GetStudent(cid);
             vmodel.students = db.Students.Where(x => x.@group != null && x.CID == cid).ToList();
             vmodel.CID = cid;
-            var course = db.Courses.Single(c => c.CID == cid);
+            
+            var course = db.Courses.Where(c => c.CID == cid).Single();
             vmodel.CName = course.CName;
+
             vmodel.groups = db.Groups.Where(g =>g.CID == cid).ToList();
 
             //var result = from g in db.Groups

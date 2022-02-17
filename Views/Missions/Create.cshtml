@@ -14,6 +14,7 @@
     </nav>
 </div>
 <div class="article">
+    <h4><b>新增任務</b></h4>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -22,16 +23,33 @@
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="mb-3">
-                @Html.LabelFor(model => model.mission.MID, htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.mission.MID, htmlAttributes: new { @class = "control-label col-md-2" })*@
                 <div class="col-7">
-                    @Html.EditorFor(model => model.mission.MID, new { htmlAttributes = new { @class = "form-control", @Value = "M" + DateTime.Now.ToString("yyMMddHHmmss") } })
+                    @Html.HiddenFor(model => model.mission.MID, new { @class = "form-control", @Value = "M" + DateTime.Now.ToString("yyMMddHHmmss") })
                     @Html.ValidationMessageFor(model => model.mission.MID, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="mb-3">
+                @Html.LabelFor(model => model.mission.MName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-5">
+                    @Html.EditorFor(model => model.mission.MName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.mission.MName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="mb-3">
+                @Html.LabelFor(model => model.mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
+                @*<div class="col-md-10">
 
+                        @Html.TextAreaFor(model => model.mission.MDetail, 10, 120, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
+                    </div>*@
+                <div class="col-5">
+                    <textarea class="form-control" id="mission_MDetail" name="mission.MDetail"></textarea>
+                </div>
+            </div>
             <div class="mb-3">
                 @Html.LabelFor(model => model.mission.Start, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-7">
+                <div class="col-5">
                     <div class="input-group date" id="datepicker_start" data-target-input="nearest">
                         @Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control datepicker-input", data_target = "#datepicker_start" } })
                         @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
@@ -44,7 +62,7 @@
 
             <div class="mb-3">
                 @Html.LabelFor(model => model.mission.End, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-7">
+                <div class="col-5">
                     <div class="input-group date" id="datepicker_end" data-target-input="nearest">
                         @Html.EditorFor(model => model.mission.End, new { htmlAttributes = new { @class = "form-control datepicker-input", data_target = "#datepicker_end" } })
                         @Html.ValidationMessageFor(model => model.mission.End, "", new { @class = "text-danger" })
@@ -55,77 +73,56 @@
                 </div>
             </div>
 
-            <div class="mb-3">
-                @Html.LabelFor(model => model.mission.MName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-7">
-                    @Html.EditorFor(model => model.mission.MName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mission.MName, "", new { @class = "text-danger" })
-                </div>
-            </div>
+
 
             @Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="input-group mb-3">
-                <div style="width: 635px;">
+                <div class="col-5">
                     <div class="row justify-content-between">
                         <div class="col-10">
                             @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", @data_live_search_placeholder = "輸入知識點關鍵字", title = "請選擇知識點..." })
                         </div>
-                        <div class="col-2 align-self-end">
+                        <div class="col-2">
                             <input type="button" value="管理知識點" onclick="myFunction()" class="btn btn-primary" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="mb-3">
-                @Html.LabelFor(model => model.mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
-                @*<div class="col-md-10">
 
-                    @Html.TextAreaFor(model => model.mission.MDetail, 10, 120, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
-                </div>*@
-                <div class="form-floating">
-                    <textarea class="form-control" id="mission_MDetail" style="width: 645px;height: 100px;"></textarea>
-                </div>
-            </div>
-            @*<div class="card" style="background: #F0F0F2; border: 1px solid #dee2e6; border-color: #cdcdcd; width: 1000px; padding:5px 5px 5px 5px;">
-                <label>合作成績權重</label>
-                <div class="row justify-content-start">
-                    <label for="colFormLabelSm" class="col col-form-label">討論權重 : </label>
-                    <div class="col-2">
-                        <input type="text" class="form-control" placeholder="0~100" id="mission_discuss_k" name="mission.discuss_k" />
-                    </div>
-                    <label for="colFormLabelSm" class="col-2 col-form-label">規劃權重 : </label>
-                    <div class="col-2">
-                        <input type="text" class="form-control" placeholder="0~100" id="mission_chart_k" name="mission.chart_k" />
-                    </div>
-                    <label for="colFormLabelSm" class="col col-form-label">撰寫權重 : </label>
-                    <div class="col-2">
-                        <input type="text" class="form-control" placeholder="0~100" id="mission_code_k" name="mission.code_k" />
-                    </div>
-                </div>
-            </div>*@
             <br />
-            <div class="card" style="background: #F0F0F2; border: 1px solid #dee2e6; border-color: #cdcdcd; width: 1000px; padding:5px 5px 5px 5px;">
-                <label>總成績權重調整 : </label>
-                <div class="row row justify-content-start">
-                    <label for="colFormLabelSm"  class="col-2 col-form-label">討論頻率權重 : </label>
-                    <div class="col-2">
-                        <input type="text" class="form-control" placeholder="0~100" id="mission_discuss_k" name="mission.discuss_k" />
+            <label class="mb-3">總成績權重調整 : </label>
+            <div class="container">
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            討論頻率權重 :
+                            <div class="col-5">
+                                <input type="text" class="form-control" placeholder="請填0~100" id="mission_discuss_k" name="mission.discuss_k" />
+                            </div>%
+                        </div>
                     </div>
-                    <label for="colFormLabelSm" class="col-2 col-form-label">個人分數權重 : </label>
-                    <div class="col-2">
-                        <input type="text" class="form-control" placeholder="0~100" id="mission_per_k" name="mission.per_k" />
+                    <div class="col">
+                        <div class="row">
+                            個人分數權重 :
+                            <div class="col-5">
+                                <input type="text" class="form-control" placeholder="請填0~100" id="mission_per_k" name="mission.per_k" />
+                            </div>%
+                        </div>
                     </div>
-                    <label for="colFormLabelSm" class="col-2 col-form-label">小組分數權重 : </label>
-                    <div class="col-2">
-                        <input type="text" class="form-control" placeholder="0~100" id="mission_group_k" name="mission.group_k" />
+                    <div class="col">
+                        <div class="row">
+                            小組分數權重 :
+                            <div class="col-5">
+                                <input type="text" class="form-control" placeholder="請填0~100" id="mission_group_k" name="mission.group_k" />
+                            </div>%
+                        </div>
                     </div>
                 </div>
             </div>
-            
             <br />
             <div class="mb-3">
-                <div class="col-md-10">
+                <div class="col-5">
                     <div class="checkbox">
                         @Html.EditorFor(model => model.mission.AddMetacognition)
                         @Html.ValidationMessageFor(model => model.mission.AddMetacognition, "", new { @class = "text-danger" })加入後設認知
@@ -133,14 +130,15 @@
                 </div>
             </div>
             <div class="mb-3">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="確定新增" class="btn btn-primary" />
+                <div class="col">
+                    <input type="submit" value="送出" class="btn btn-primary" />
+                    <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Missions" , new { cid = Model.CID })'" />
                 </div>
             </div>
 
 
         </div>
-     }
+    }
 </div>
 @section scripts
 {
@@ -167,7 +165,7 @@
             });
         })
         function myFunction() {
-            const myWindow = window.open('@Url.Action("Details", "Course", new { CID = Model.CID})', "", "width=800,height=800");
+            const myWindow = window.open('@Url.Action("Index", "KnowledgePoints", new { CID = Model.CID})', "", "width=600,height=600");
         }
         function kpListReLoad() {
             var kps = $(this).next('.cities'); // get the associated cities dropdownlist
