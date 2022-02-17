@@ -28,8 +28,6 @@ namespace LMSweb.Controllers
                     StudentMission data = db.StudentMissions
                     .Where(x => x.MID == Discussapi.MID && x.SID == Discussapi.SID)
                     .FirstOrDefault();
-
-                    Group group = db.Groups.Where(a => a.GName == Discussapi.GName).FirstOrDefault();
                     
                     lb.ActionType = Discussapi.ActionType;
                     lb.subAction = Discussapi.subAction;
