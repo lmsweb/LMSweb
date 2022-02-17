@@ -493,6 +493,7 @@
     <Content Include="packages\CodeMirror.Erideon.5.65.0\.signature.p7s" />
     <Content Include="packages\CodeMirror.Erideon.5.65.0\CodeMirror.csproj" />
     <Content Include="packages\CodeMirror.Erideon.5.65.0\CodeMirror.Erideon.5.65.0.nupkg" />
+    <Content Include="FileDownload\Example.xlsx" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="packages\CodeMirror.Erideon.5.65.0\content\Scripts\CodeMirror\addon\comment\comment.js" />
     <Content Include="packages\CodeMirror.Erideon.5.65.0\content\Scripts\CodeMirror\addon\comment\continuecomment.js" />

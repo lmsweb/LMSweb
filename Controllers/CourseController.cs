@@ -22,6 +22,7 @@ namespace LMSweb.Controllers
     public class CourseController : Controller
     {
         private LMSmodel db = new LMSmodel();
+        
         public ActionResult StudentDetails(string sid,string cid)
         {
             if (sid == null)
@@ -41,6 +42,8 @@ namespace LMSweb.Controllers
         {
             var s = new Student();
             s.CID = cid;
+
+            
             return View(s);
         }
         [HttpPost]
@@ -106,7 +109,7 @@ namespace LMSweb.Controllers
             Student student = db.Students.Find(sid);
             db.Students.Remove(student);
             db.SaveChanges();
-            return RedirectToAction("StudentManagement", "Course", null);
+            return RedirectToAction("StudentManagement", "Course", new { student.CID });
         }
         private string fileSavedPath = WebConfigurationManager.AppSettings["UploadPath"];
 

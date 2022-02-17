@@ -73,14 +73,15 @@ namespace LMSweb.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult CourseCreate()
         {
+            Course course = new Course();
             //ViewBag.TID = new SelectList(db.Teachers, "TID", "TName");
-            return View("CourseCreate1");
+            return View(course);
         }
 
 
         [HttpPost]
         [Authorize(Roles = "Teacher")]
-        public ActionResult CourseCreate([Bind(Include = "CID,TID, CName")] Course course)
+        public ActionResult CourseCreate([Bind(Include = "CID, CName")] Course course)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID

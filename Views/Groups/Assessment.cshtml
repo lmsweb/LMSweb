@@ -15,9 +15,9 @@
     </nav>
 </div>
 <div class="article">
-    @Model.CID
+    @*@Model.CID
     @Model.MID
-    @Model.GID
+    @Model.GID*@
     <input type="button" value="程式碼" onclick="CodingWindow()" class="btn btn-primary" />
     <input type="button" value="流程圖" onclick="DrawingWindow()" class="btn btn-primary" />
     @using (Html.BeginForm("Create", "Groups", FormMethod.Post))

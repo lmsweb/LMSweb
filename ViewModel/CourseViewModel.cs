@@ -22,6 +22,6 @@ namespace LMSweb.ViewModel
         public IEnumerable<LMSweb.Models.Student> students { get; set; }
         public IEnumerable<LMSweb.Models.KnowledgePoint> kps { get; set; }
         public LMSweb.Models.KnowledgePoint knowledgePoint { get; set; }
-        //public LMSweb.Models.Student s { get; set; }
+        public LMSweb.Models.Course Course { get; set; }
     }
 }

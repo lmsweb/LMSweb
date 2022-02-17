@@ -43,7 +43,7 @@ namespace LMSweb.Infrastructure.Helpers
             //excelFile.AddMapping<Student>(x => x.CID, "CID");
 
             //SheetName
-            var excelContent = excelFile.Worksheet<Student>("工作表1");
+            var excelContent = excelFile.Worksheet<Student>("工作表1").Where(x => x != null); ;
 
             int errorCount = 0;
             int rowIndex = 1;

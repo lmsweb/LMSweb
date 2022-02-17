@@ -34,6 +34,7 @@
                 新增學生
             </button>
         </p>
+        
 
         <table class="table">
             <tr>
@@ -63,7 +64,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.SID)
                     </td>
-                     <td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.SPassword)
                     </td>
                     <td>
@@ -87,7 +88,8 @@
 
         </table>
 
-        @Html.Partial("_UploadFile")
+         @Html.Partial("_UploadFile")
+       
     </div>
 </div>
 

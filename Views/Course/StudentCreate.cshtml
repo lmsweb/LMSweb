@@ -5,9 +5,8 @@
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 
 }
-
 <div class="article">
-
+    <h4><b>新增學生</b></h4>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -32,11 +31,11 @@
             </div>
             <div class="mb-3">
                 <div class="col-5">
-                    @Html.HiddenFor(model => model.SPassword,new { @class = "form-control", @Value = "S" + DateTime.Now.ToString("HHmmss") } )
+                    @Html.HiddenFor(model => model.SPassword, new { @class = "form-control", @Value = "S" + DateTime.Now.ToString("HHmmss") })
                     @Html.ValidationMessageFor(model => model.SPassword, "", new { @class = "text-danger" })
                 </div>
             </div>
-           
+
             <div class="mb-3">
                 @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-5">
