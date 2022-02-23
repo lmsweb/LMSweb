@@ -25,6 +25,8 @@ namespace LMSweb.Models
         [Display(Name = "課程名稱")]
         public string CName { get; set; }
 
+        public string CreateTime { get; set; }
+
         [Required]
         public string TID { get; set; }
         public virtual Teacher teacher { get; set; }

@@ -23,23 +23,24 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.CID)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.CName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.teacher.TName)
-    </td>
-    <td>
-        @Html.ActionLink("進入課程", "Details", new { cid = item.CID }) |
-        @Html.ActionLink("編輯", "Edit", new { cid = item.CID }) |
-        @Html.ActionLink("刪除", "Delete", new { cid = item.CID })
-    </td>
-</tr>
-}
+    @foreach (var item in Model) 
+    {
+         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.teacher.TName)
+            </td>
+            <td>
+                @Html.ActionLink("進入課程", "Details", new { cid = item.CID }) |
+                @Html.ActionLink("編輯", "Edit", new { cid = item.CID }) |
+                @Html.ActionLink("刪除", "Delete", new { cid = item.CID })
+            </td>
+         </tr>
+    }
 
 </table>

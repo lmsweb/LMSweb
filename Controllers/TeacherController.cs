@@ -61,12 +61,27 @@ namespace LMSweb.Controllers
         }
 
         [Authorize(Roles = "Teacher")]
-        public ActionResult TeacherHomePage()
+        public ActionResult TeacherHomePage(string sortOrder)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
             var tid = claimData[0].Value; //取值(因為只有一筆)
             var courses = db.Courses.Where(c => c.TID == tid);
+
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            //switch (sortOrder)
+            //{
+                
+            //    case "Date":
+            //        courses = courses.OrderBy(s => s.EnrollmentDate);
+            //        break;
+            //    case "date_desc":
+            //        courses = courses.OrderByDescending(s => s.EnrollmentDate);
+            //        break;
+            //    default:
+            //        courses = courses.OrderBy(s => s.LastName);
+            //        break;
+            //}
             return View(courses);
         }
 
