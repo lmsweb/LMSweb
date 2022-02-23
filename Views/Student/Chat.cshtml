@@ -63,6 +63,14 @@
                                             聊天記錄如下:<ul>\
                                             </ul>\</table>'
                 $("#messages").append(html);
+
+                chat.server.historySend($('#groupname').val(), $('#displayname').val(), $('#cid').val(), $('#mid').val())
+                    .done(function () {
+                        console.log("send suc");
+                    })
+                    .fail(function (e) {
+                        console.varn(e);
+                    })                               
             };
             //訊息格式
             chat.client.groupMessage = function (groupname, name, time, message) {
