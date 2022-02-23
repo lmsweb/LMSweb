@@ -19,7 +19,6 @@ namespace LMSweb.Models
         public string SName { get; set; }
 
         [Required]
-        [StringLength(18, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "密碼")]
         public string SPassword { get; set; }

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <head>
@@ -18,6 +19,7 @@
     </button>
 </div>
 <div class="article">
+    
     <div class="row row-cols-1 row-cols-md-4 mb-4 text-center">
         @foreach (var item in Model)
         {
@@ -37,48 +39,48 @@
                     </div>
 
                 </div>
-            </div> 
-         }
-        </div>
-   
-    
+            </div>
+        }
+    </div>
+
+
     @*<div>
 
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.CID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.teacher.TName)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
+            <table class="table">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.teacher.TName)
-                    </td>
-                    <td>
-                        @Html.ActionLink("進入課程", "Index", "Missions", new { cid = item.CID }, null) |
-                        @Html.ActionLink("編輯", "Edit", "Course", new { cid = item.CID }, null) |
-                        @Html.ActionLink("刪除", "Delete", "Course", new { cid = item.CID }, null)
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.teacher.TName)
+                    </th>
+                    <th></th>
                 </tr>
-            }
 
-        </table>
-    </div>*@
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.teacher.TName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("進入課程", "Index", "Missions", new { cid = item.CID }, null) |
+                            @Html.ActionLink("編輯", "Edit", "Course", new { cid = item.CID }, null) |
+                            @Html.ActionLink("刪除", "Delete", "Course", new { cid = item.CID }, null)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>*@
 </div>
 

@@ -40,26 +40,34 @@ namespace LMSweb.Controllers
         // GET: Student/Create
         public ActionResult StudentCreate(string cid)
         {
-            var s = new Student();
-            s.CID = cid;
-
+            var vmodel = new StudentViewModel();
             
-            return View(s);
+            vmodel.CID = cid;
+            var course = db.Courses.Where(c => c.CID == cid).Single();
+
+            vmodel.CName = course.CName;
+            
+            return View(vmodel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StudentCreate(Student student, string cid)
+        public ActionResult StudentCreate(StudentViewModel vmodel, string cid)
         {
+            
             if (ModelState.IsValid)
             {
-
-                student.CID = cid;
-                db.Students.Add(student);
+                vmodel.student.CID = cid;
+                db.Students.Add(vmodel.student);
                 db.SaveChanges();
                 return RedirectToAction("StudentManagement",new { cid});
             }
 
-            return View(student);
+            
+            vmodel.CID = cid;
+            var course = db.Courses.Where(c => c.CID == cid).Single();
+            vmodel.CName = course.CName;                                     
+
+            return View(vmodel);
         }
         public ActionResult StudentEdit(string sid)
         {
