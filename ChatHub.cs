@@ -43,6 +43,11 @@ namespace LMSweb
             //AddChatHistory(name, DateTime.Now.ToString("HH:mm"), message, GroupId);
         }
 
+        public void HistorySend(string GroupId, string name, string time, string message)
+        {
+            Clients.Group(GroupId, new string[0]).groupMessage(GroupId, name, time, message);
+        }
+
         //public void GroupSend(string GroupId, string name, string message)
         //{
         //    //Call the addNewMessageToPage method to update clients.
