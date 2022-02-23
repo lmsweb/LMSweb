@@ -62,8 +62,8 @@
     <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
       <HintPath>packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
-    <Reference Include="LinqToExcel, Version=1.10.1.0, Culture=neutral, PublicKeyToken=9c8ea65a58f03f1f, processorArchitecture=MSIL">
-      <HintPath>packages\LinqToExcel_x64.1.10.1\lib\LinqToExcel.dll</HintPath>
+    <Reference Include="LinqToExcel, Version=1.11.0.0, Culture=neutral, PublicKeyToken=9c8ea65a58f03f1f, processorArchitecture=MSIL">
+      <HintPath>packages\LinqToExcel.1.11.0\lib\LinqToExcel.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>packages\log4net.2.0.14\lib\net45\log4net.dll</HintPath>
@@ -97,13 +97,13 @@
       <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="Remotion, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
-      <HintPath>packages\LinqToExcel_x64.1.10.1\lib\Remotion.dll</HintPath>
+      <HintPath>packages\LinqToExcel.1.11.0\lib\Remotion.dll</HintPath>
     </Reference>
     <Reference Include="Remotion.Data.Linq, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
-      <HintPath>packages\LinqToExcel_x64.1.10.1\lib\Remotion.Data.Linq.dll</HintPath>
+      <HintPath>packages\LinqToExcel.1.11.0\lib\Remotion.Data.Linq.dll</HintPath>
     </Reference>
     <Reference Include="Remotion.Interfaces, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
-      <HintPath>packages\LinqToExcel_x64.1.10.1\lib\Remotion.Interfaces.dll</HintPath>
+      <HintPath>packages\LinqToExcel.1.11.0\lib\Remotion.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -292,6 +292,10 @@
     <Compile Include="Migrations\202202161717133_delStuGID.cs" />
     <Compile Include="Migrations\202202161717133_delStuGID.Designer.cs">
       <DependentUpon>202202161717133_delStuGID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202230129024_LB.cs" />
+    <Compile Include="Migrations\202202230129024_LB.Designer.cs">
+      <DependentUpon>202202230129024_LB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
@@ -1292,6 +1296,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202161717133_delStuGID.resx">
       <DependentUpon>202202161717133_delStuGID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202230129024_LB.resx">
+      <DependentUpon>202202230129024_LB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

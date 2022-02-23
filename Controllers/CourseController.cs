@@ -111,6 +111,7 @@ namespace LMSweb.Controllers
             db.SaveChanges();
             return RedirectToAction("StudentManagement", "Course", new { student.CID });
         }
+
         private string fileSavedPath = WebConfigurationManager.AppSettings["UploadPath"];
 
         [HttpPost]
@@ -152,14 +153,15 @@ namespace LMSweb.Controllers
             try
             {
                 var uploadResult = this.FileUploadHandler(file);
-
-                result = this.Import(uploadResult, cid);
+                jo.Add("Result", !string.IsNullOrWhiteSpace(uploadResult));
+                jo.Add("Msg", !string.IsNullOrWhiteSpace(uploadResult) ? uploadResult : "");
+                //result = this.Import(uploadResult, cid);
 
 
                 //jo.Add("Result", !string.IsNullOrWhiteSpace(uploadResult));
                 //jo.Add("Msg", !string.IsNullOrWhiteSpace(uploadResult) ? uploadResult : "");
 
-                //result = JsonConvert.SerializeObject(jo);
+                result = JsonConvert.SerializeObject(jo);
             }
             catch (Exception ex)
             {
@@ -168,10 +170,10 @@ namespace LMSweb.Controllers
                 jo.Add("error", ex.Message);
                 result = JsonConvert.SerializeObject(jo);
             }
-            return Content(result, "application/json");
+            return Json(result, "application/json");
         }
 
-       
+
         private string FileUploadHandler(HttpPostedFileBase file)
         {
             string result;
@@ -211,11 +213,10 @@ namespace LMSweb.Controllers
             return result;
         }
 
-        private string Import(string savedFileName, string cid)
+        private ActionResult Import(string savedFileName, string cid)
         {
             var jo = new JObject();
             string result;
-
             try
             {
                 var fileName = string.Concat(Server.MapPath(fileSavedPath), "/", savedFileName);
@@ -224,10 +225,8 @@ namespace LMSweb.Controllers
 
                 var helper = new ImportDataHelper();
                 var checkResult = helper.CheckImportData(fileName, importStudents);
-
                 jo.Add("Result", checkResult.Success);
-                jo.Add("Msg", checkResult.ErrorMessage);
-                jo.Add("error", checkResult.ErrorMessage);
+                jo.Add("Msg", checkResult.Success ? string.Empty : checkResult.ErrorMessage);
 
                 if (checkResult.Success)
                 {
@@ -241,7 +240,7 @@ namespace LMSweb.Controllers
                 throw ex;
             }
 
-            return result;
+            return Content(result, "application/json");
         }
         protected override void Dispose(bool disposing)
         {

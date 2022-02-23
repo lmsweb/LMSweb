@@ -23,6 +23,7 @@ namespace LMSweb.Infrastructure.Helpers
 
             var targetFile = new FileInfo(fileName);
 
+
             if (!targetFile.Exists)
             {
                 result.ID = Guid.NewGuid();

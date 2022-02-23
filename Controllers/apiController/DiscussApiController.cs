@@ -25,16 +25,18 @@ namespace LMSweb.Controllers
                 if (ModelState.IsValid)
                 {
                     LearningBehavior lb = new LearningBehavior();
-                    StudentMission data = db.StudentMissions
-                    .Where(x => x.MID == Discussapi.MID && x.SID == Discussapi.SID)
-                    .FirstOrDefault();
+                    //StudentMission data = db.StudentMissions
+                    //.Where(x => x.MID == Discussapi.MID && x.SID == Discussapi.SID)
+                    //.FirstOrDefault();
                     
                     lb.ActionType = Discussapi.ActionType;
                     lb.subAction = Discussapi.subAction;
                     lb.Detail = Discussapi.Detail;
                     lb.Time = Discussapi.Time;
                     lb.CID = Discussapi.CID;
-                    lb.StudentMissions = data;
+                    //lb.StudentMissions = data;
+                    lb.student.SID = Discussapi.SID;
+                    lb.mission.MID = Discussapi.MID;
 
                     db.LearnB.Add(lb);
                     db.SaveChanges();

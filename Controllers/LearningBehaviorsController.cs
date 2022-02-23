@@ -46,7 +46,7 @@ namespace LMSweb.Controllers
             //ViewBag.Studemt = db.LearnB.Where(s => s.StudentMissions.SID == "S001");
             //產生ViewModel物件
             vm.CID = CID;
-            vm.learningbehavior = db.LearnB.Where(s => s.StudentMissions.SID == "S001").ToList();
+           // vm.learningbehavior = db.LearnB.Where(s => s.StudentMissions.SID == "S001").ToList();(因修改Model所以註解)
             return View(vm);
         }
         public ActionResult Chat()
@@ -70,8 +70,8 @@ namespace LMSweb.Controllers
             worksheet.Cell(1, 5).Value = "Time";
             for (int index = 1; index <= LMSList.Count; index++)
             {
-                worksheet.Cell(index + 1, 1).Value =
-                LMSList[index - 1].StudentMissions.SID;
+                //worksheet.Cell(index + 1, 1).Value =
+                //LMSList[index - 1].StudentMissions.SID;(因修改Model所以註解)
                 worksheet.Cell(index + 1, 2).Value =
                 LMSList[index - 1].ActionType;
                 worksheet.Cell(index + 1, 3).Value =
