@@ -27,16 +27,17 @@ namespace LMSweb.Controllers
                     LearningBehavior lb = new LearningBehavior();
                     //StudentMission data = db.StudentMissions
                     //.Where(x => x.MID == Discussapi.MID && x.SID == Discussapi.SID)
-                    //.FirstOrDefault();
-                    
+                    //.FirstOrDefault();(因修改Model所以註解)
+
                     lb.ActionType = Discussapi.ActionType;
                     lb.subAction = Discussapi.subAction;
                     lb.Detail = Discussapi.Detail;
                     lb.Time = Discussapi.Time;
                     lb.CID = Discussapi.CID;
-                    //lb.StudentMissions = data;
+                    //lb.StudentMissions = data;(因修改Model所以註解)
                     lb.student.SID = Discussapi.SID;
                     lb.mission.MID = Discussapi.MID;
+                    //38 39行是我加的
 
                     db.LearnB.Add(lb);
                     db.SaveChanges();
