@@ -301,6 +301,10 @@
     <Compile Include="Migrations\202202230325317_CourseAddTime.Designer.cs">
       <DependentUpon>202202230325317_CourseAddTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202202231559436_studentLBmission.cs" />
+    <Compile Include="Migrations\202202231559436_studentLBmission.Designer.cs">
+      <DependentUpon>202202231559436_studentLBmission.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Group.cs" />
@@ -1306,6 +1310,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202230325317_CourseAddTime.resx">
       <DependentUpon>202202230325317_CourseAddTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202231559436_studentLBmission.resx">
+      <DependentUpon>202202231559436_studentLBmission.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
