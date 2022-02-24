@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace LMSweb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class TeacherController : Controller
     {
         private LMSmodel db = new LMSmodel();
@@ -169,18 +169,22 @@ namespace LMSweb.Controllers
             return RedirectToAction("TeacherHomePage", "Teacher", null);
         }
 
-        public ActionResult Details(string cid)
+        public ActionResult Details()
         {
-            if (cid == null)
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
+            var tid = claimData[0].Value; //取值(因為只有一筆)
+
+            if (tid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(cid);
-            if (course == null)
+            Teacher teacher = db.Teachers.Find(tid);
+            if (teacher == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(teacher);
         }
 
         // GET: Teacher/Create
@@ -208,21 +212,27 @@ namespace LMSweb.Controllers
             ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
             return View(course);
         }
-
+       
+        
         // GET: Teacher/Edit/5
-        public ActionResult Edit(string cid)
+        public ActionResult SettingPage()
         {
-            if (cid == null)
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
+            var tid = claimData[0].Value; //取值(因為只有一筆)
+
+
+            if (tid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Find(cid);
-            if (course == null)
+            Teacher teacher = db.Teachers.Find(tid);
+            if (teacher == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
-            return View(course);
+           
+            return View(teacher);
         }
 
         // POST: Teacher/Edit/5
@@ -230,16 +240,16 @@ namespace LMSweb.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CID,TID,CName")] Course course)
+        public ActionResult SettingPage([Bind(Include = "TID, TPassword, TName, Email")] Teacher teacher)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(course).State = EntityState.Modified;
+                db.Entry(teacher).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("SettingPage");
             }
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
-            return View(course);
+            
+            return View(teacher);
         }
 
         // GET: Teacher/Delete/5
@@ -276,5 +286,11 @@ namespace LMSweb.Controllers
             }
             base.Dispose(disposing);
         }
+        // GET: 忘記密碼頁面
+        public ActionResult ForgetPwd()
+        {
+            return View();
+        }
+
     }
 }

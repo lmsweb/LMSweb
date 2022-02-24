@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                學生帳號
+                @Html.LabelFor(model => model.student.SID, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-5">
                     @Html.EditorFor(model => model.student.SID, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.student.SID, "", new { @class = "text-danger" })

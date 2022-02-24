@@ -1094,6 +1094,8 @@
     <Content Include="Scripts\plugins\sortable.js" />
     <Content Include="Scripts\plugins\sortable.min.js" />
     <Content Include="packages\CodeMirror.Erideon.5.65.0\coding_editor.js" />
+    <Content Include="Scripts\vue.js" />
+    <Content Include="Scripts\vue.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1110,7 +1112,7 @@
     <Content Include="Views\Teacher\Create.cshtml" />
     <Content Include="Views\Teacher\Delete.cshtml" />
     <Content Include="Views\Teacher\Details.cshtml" />
-    <Content Include="Views\Teacher\Edit.cshtml" />
+    <Content Include="Views\Teacher\SettingPage.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\Teacher\Login.cshtml" />
     <Content Include="Views\Teacher\CourseCreate.cshtml" />
@@ -1220,6 +1222,7 @@
     <Content Include="Views\PeerAssessments\Edit.cshtml" />
     <Content Include="Views\PeerAssessments\Index.cshtml" />
     <Content Include="Views\Teacher\CourseCreate1.cshtml" />
+    <Content Include="Views\Teacher\ForgetPwd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

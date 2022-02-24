@@ -11,11 +11,11 @@ namespace LMSweb.Models
     {
         [Key]
         [Required]
-        [Display(Name = "學生編號")]
+        [Display(Name = "學號")]
         public string SID { get; set; }
 
         [Required]
-        [Display(Name = "學生姓名")]
+        [Display(Name = "姓名")]
         public string SName { get; set; }
 
         [Required]
