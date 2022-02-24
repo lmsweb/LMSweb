@@ -1,52 +1,22 @@
 ﻿@model LMSweb.ViewModel.MissionViewModel
-@{
-    ViewBag.Title = "StudentCoding";
-    Layout = "~/Views/Shared/_StudentLayout.cshtml";
-}
-
-<head>
-
-    <title>CodeMirrorTest</title>
-
-    <!--下面兩個是使用Code Mirror必須引入的-->
-    <link rel="stylesheet" href="~/packages/CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/lib/codemirror.css">
-
-    <script src="~/packages/CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/lib/codemirror.js"></script>
-    <!--Java代碼高亮必須引入-->
-    <script src="~/packages/CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/mode/python/python.js"></script>
-    <!--引入css文件，用以支持主題-->
-    <link rel="stylesheet" href="~/packages/CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/theme/seti.css">
-    <!--引入js，綁定Vim-->
-    <link rel="stylesheet" href="~/packages/CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/addon/dialog/dialog.css">
-    <script src="~/packages/CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/keymap/vim.js"></script>
-    <script src="~/packages/CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/addon/search/searchcursor.js"></script>
-    <!--改善vim輸入命令時的樣式-->
-    <script src="~/packages/CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/addon/dialog/dialog.js"></script>
-    <!--全屏模式-->
-    @*<link rel="stylesheet" href="~/packages/CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/addon/display/fullscreen.css">
-    <script src="~/packages/CodeMirror.Erideon.5.65.0/content/Scripts/CodeMirror/addon/display/fullscreen.js"></script>*@
-
-
-</head>
-
-<body>
-
-</body>
+@{ ViewBag.Title = "StudentCoding";
+                Layout = "~/Views/Shared/_OnlineEditorLayout.cshtml"; }
 <div class="article">
     @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
     @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
     <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-success" />
     <h2>StudentCoding</h2>
 
-    <div  style="border-radius: 10px; border:5px; padding:20px; margin:20px">
+    <div>
         <textarea id="code"></textarea>
     </div>
-    <script src="~/packages/CodeMirror.Erideon.5.65.0/coding_editor.js"></script>
 
 </div>
 @section scripts
 {
-    <script src="~/packages/CodeMirror.Erideon.5.65.0/coding_editor.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/Coding/coding_editor.js"></script>
     <script>
 
         function myFunction() {
