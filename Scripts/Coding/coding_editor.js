@@ -12,10 +12,42 @@ const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
 });
 
 let online = $.connection.codeServiceHub;
-online.client.hello = function () {
-    $('.CodeMirror').text( "print('Hello')");
-}
+//online.client.hello = function () {
+//    editor.setValue("print(Hello);");
+//}
 
 $.connection.hub.start().done(function () {
-    online.server.hello();
+
 });
+
+
+let oldContent = "";
+let newContent = "";
+let cursor = { line : 0, ch : 0};
+
+editor.on('change', (ins, ch) => {
+
+    //console.log(editor.getCursor());
+
+    newContent = editor.getValue();
+
+    if (oldContent != newContent) {
+        cursor.line = editor.getCursor().line;
+        cursor.ch = editor.getCursor().ch;
+
+        online.server.editCode("name", editor.getValue());
+        oldContent = newContent;
+        
+        console.log(cursor);
+        editor.setCursor(cursor);
+    }
+    
+
+});
+
+
+online.client.broadcastCode = function (name, content) {
+
+    editor.setValue(content);
+
+}

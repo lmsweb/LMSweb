@@ -986,7 +986,7 @@
     <Content Include="Scripts\CodeMirror\theme\yeti.css" />
     <Content Include="Scripts\CodeMirror\theme\yonce.css" />
     <Content Include="Scripts\CodeMirror\theme\zenburn.css" />
-    <Content Include="Scripts\Coding\codeing_logs.js" />
+    <Content Include="Scripts\Coding\coding_logs.js" />
     <Content Include="Scripts\Coding\coding_editor.js" />
     <Content Include="Scripts\fileinput.js" />
     <Content Include="Scripts\fileinput.min.js" />
