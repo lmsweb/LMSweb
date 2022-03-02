@@ -178,15 +178,11 @@ namespace LMSweb.Controllers
             try
             {
                 var uploadResult = this.FileUploadHandler(file);
-                jo.Add("Result", !string.IsNullOrWhiteSpace(uploadResult));
-                jo.Add("Msg", !string.IsNullOrWhiteSpace(uploadResult) ? uploadResult : "");
-                //result = this.Import(uploadResult, cid);
-
-
                 //jo.Add("Result", !string.IsNullOrWhiteSpace(uploadResult));
                 //jo.Add("Msg", !string.IsNullOrWhiteSpace(uploadResult) ? uploadResult : "");
+                result = this.Import(uploadResult, cid);
 
-                result = JsonConvert.SerializeObject(jo);
+                //result = JsonConvert.SerializeObject(jo);
             }
             catch (Exception ex)
             {
@@ -195,7 +191,7 @@ namespace LMSweb.Controllers
                 jo.Add("error", ex.Message);
                 result = JsonConvert.SerializeObject(jo);
             }
-            return Json(result, "application/json");
+            return Content(result, "application/json");
         }
 
 
@@ -238,7 +234,7 @@ namespace LMSweb.Controllers
             return result;
         }
 
-        private ActionResult Import(string savedFileName, string cid)
+        private string Import(string savedFileName, string cid)
         {
             var jo = new JObject();
             string result;
@@ -265,7 +261,7 @@ namespace LMSweb.Controllers
                 throw ex;
             }
 
-            return Content(result, "application/json");
+            return result;
         }
         protected override void Dispose(bool disposing)
         {

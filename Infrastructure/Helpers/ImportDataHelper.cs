@@ -36,15 +36,15 @@ namespace LMSweb.Infrastructure.Helpers
             var excelFile = new ExcelQueryFactory(fileName);
 
             //欄位對映
-            excelFile.AddMapping<Student>(x => x.SID, "SID");
-            excelFile.AddMapping<Student>(x => x.SName, "SName");
-            excelFile.AddMapping<Student>(x => x.SPassword, "SPassword");
-            excelFile.AddMapping<Student>(x => x.Sex, "Sex");
-            excelFile.AddMapping<Student>(x => x.Score, "Score");
+            excelFile.AddMapping<Student>(x => x.SID, "學號");
+            excelFile.AddMapping<Student>(x => x.SName, "學生姓名");
+            excelFile.AddMapping<Student>(x => x.SPassword, "密碼");
+            excelFile.AddMapping<Student>(x => x.Sex, "性別");
+            //excelFile.AddMapping<Student>(x => x.Score, "分數");
             //excelFile.AddMapping<Student>(x => x.CID, "CID");
 
             //SheetName
-            var excelContent = excelFile.Worksheet<Student>("工作表1").Where(x => x != null);
+            var excelContent = excelFile.Worksheet<Student>("工作表1");
 
             int errorCount = 0;
             int rowIndex = 1;
@@ -63,7 +63,7 @@ namespace LMSweb.Infrastructure.Helpers
                     student.SName = row.SName;
                     student.SPassword = row.SPassword;
                     student.Sex = row.Sex;
-                    student.Score = row.Score;
+                    //student.Score = row.Score;
                     //student.CID = row.CID;
 
 
