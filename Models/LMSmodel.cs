@@ -20,6 +20,7 @@ namespace LMSweb.Models
         public DbSet<Student> Students { get; set; }
         public DbSet<StudentMission> StudentMissions { get; set; }
         public DbSet<TeacherAssessment> TeacherA { get; set; }
+        public DbSet<StudentCode> StudentCodes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -192,11 +192,13 @@ namespace LMSweb.Controllers
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).group;
+            var gid = stuG.GID;
             var gname = stuG.GName;
+            model.GID = gid.ToString();
             model.GName = gname;
             model.SID = sid;
+            //model.lbr = db.LearnB.Where(l => l.group.GID == gid).ToList();
             //ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
-
             return View(model);
         }
         protected override void Dispose(bool disposing)

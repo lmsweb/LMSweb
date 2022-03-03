@@ -4,7 +4,15 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
-
+<div class="cardArticle">
+    @*<h4>@Model.CName</h4>*@
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="https://localhost:44301/Course/StudentManagement?CID=@Model.CID">學生列表</a></li>
+            <li class="breadcrumb-item active" aria-current="page">編輯學生</li>
+        </ol>
+    </nav>
+</div>
 <div class="article">
 
     @using (Html.BeginForm())
@@ -25,7 +33,7 @@
                     @Html.ValidationMessageFor(model => model.SName, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3">   
                 @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-5">
                     <select class="form-select" id="Sex" name="Sex">

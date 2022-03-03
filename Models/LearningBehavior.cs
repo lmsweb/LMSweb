@@ -27,21 +27,6 @@ namespace LMSweb.Models
         public string Detail { get; set; }
 
         public string Time { get; set; }
-
-        ////[Key]
-        ////[Column(Order = 1)]
-        //public string MID { get; set; }
-
-        ////[Key]
-        ////[Column(Order = 2)]
-        //public string SID { get; set; }
-
-        ////[Key]
-        ////[Column(Order = 3)]
-        //public string GID { get; set; }
-
-
-        //public virtual Mission Mission { get; set; }
         public string CID { get; set; }
         public virtual Group group { get; set; }
         public virtual Student student { get; set; }

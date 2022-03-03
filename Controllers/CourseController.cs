@@ -51,26 +51,25 @@ namespace LMSweb.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StudentCreate(StudentViewModel vmodel, string cid)
+        public ActionResult StudentCreate(StudentViewModel vmodel)
         {
             
             if (ModelState.IsValid)
             {
-                vmodel.student.CID = cid;
                 db.Students.Add(vmodel.student);
                 db.SaveChanges();
-                return RedirectToAction("StudentManagement",new { cid});
+                return RedirectToAction("StudentManagement",new { cid = vmodel.student.CID } );
             }
 
-            
-            vmodel.CID = cid;
-            var course = db.Courses.Where(c => c.CID == cid).Single();
+            vmodel.CID = vmodel.student.CID;
+            var course = db.Courses.Where(c => c.CID == vmodel.student.CID).Single();
             vmodel.CName = course.CName;                                     
 
             return View(vmodel);
         }
         public ActionResult StudentEdit(string sid)
         {
+
             if (sid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -80,6 +79,11 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+            //var vmodel = new StudentViewModel();
+            //vmodel.CID = student.CID;
+            //var course = db.Courses.Where(c => c.CID == student.CID).Single();
+            //vmodel.CName = course.CName;
+
             return View(student);
         }
 
@@ -93,6 +97,11 @@ namespace LMSweb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("StudentManagement", "Course", new { student.CID});
             }
+            //var vmodel = new StudentViewModel();
+            //vmodel.CID = student.CID;
+            //var course = db.Courses.Where(c => c.CID == student.CID).Single();
+            //vmodel.CName = course.CName;
+
             return View(student);
         }
 
@@ -108,7 +117,15 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
+            //var vmodel = new StudentViewModel();
+            //var stuCID = db.Students.Find(sid).CID;
+            //vmodel.CID = stuCID;
+            //var course = db.Courses.Where(c => c.CID == stuCID).Single();
+            //vmodel.CName = course.CName;
+
             return View(student);
+
         }
         [HttpPost, ActionName("StudentDelete")]
         [ValidateAntiForgeryToken]
@@ -161,15 +178,11 @@ namespace LMSweb.Controllers
             try
             {
                 var uploadResult = this.FileUploadHandler(file);
-                jo.Add("Result", !string.IsNullOrWhiteSpace(uploadResult));
-                jo.Add("Msg", !string.IsNullOrWhiteSpace(uploadResult) ? uploadResult : "");
-                //result = this.Import(uploadResult, cid);
-
-
                 //jo.Add("Result", !string.IsNullOrWhiteSpace(uploadResult));
                 //jo.Add("Msg", !string.IsNullOrWhiteSpace(uploadResult) ? uploadResult : "");
+                result = this.Import(uploadResult, cid);
 
-                result = JsonConvert.SerializeObject(jo);
+                //result = JsonConvert.SerializeObject(jo);
             }
             catch (Exception ex)
             {
@@ -178,7 +191,7 @@ namespace LMSweb.Controllers
                 jo.Add("error", ex.Message);
                 result = JsonConvert.SerializeObject(jo);
             }
-            return Json(result, "application/json");
+            return Content(result, "application/json");
         }
 
 
@@ -221,7 +234,7 @@ namespace LMSweb.Controllers
             return result;
         }
 
-        private ActionResult Import(string savedFileName, string cid)
+        private string Import(string savedFileName, string cid)
         {
             var jo = new JObject();
             string result;
@@ -248,7 +261,7 @@ namespace LMSweb.Controllers
                 throw ex;
             }
 
-            return Content(result, "application/json");
+            return result;
         }
         protected override void Dispose(bool disposing)
         {

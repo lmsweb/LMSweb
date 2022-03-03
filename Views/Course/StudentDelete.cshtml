@@ -5,6 +5,15 @@
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 
 }
+<div class="cardArticle">
+    @*<h4>@Model.CName</h4>*@
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="https://localhost:44301/Course/StudentManagement?CID=@Model.CID">學生列表</a></li>
+            <li class="breadcrumb-item active" aria-current="page">刪除學生</li>
+        </ol>
+    </nav>
+</div>
 <div class="article">
     <h4><b>刪除學生</b></h4>
 

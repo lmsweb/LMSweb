@@ -307,6 +307,10 @@
     <Compile Include="Migrations\202202231559436_studentLBmission.Designer.cs">
       <DependentUpon>202202231559436_studentLBmission.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203020239527_addStudentCode.cs" />
+    <Compile Include="Migrations\202203020239527_addStudentCode.designer.cs">
+      <DependentUpon>202203020239527_addStudentCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Group.cs" />
@@ -318,6 +322,7 @@
     <Compile Include="Models\PeerAssessment.cs" />
     <Compile Include="Models\SelfAssessment.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\StudentCode.cs" />
     <Compile Include="Models\StudentMission.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeacherAssessment.cs" />
@@ -1151,7 +1156,7 @@
     <Content Include="Views\Teacher\Create.cshtml" />
     <Content Include="Views\Teacher\Delete.cshtml" />
     <Content Include="Views\Teacher\Details.cshtml" />
-    <Content Include="Views\Teacher\Edit.cshtml" />
+    <Content Include="Views\Teacher\SettingPage.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\Teacher\Login.cshtml" />
     <Content Include="Views\Teacher\CourseCreate.cshtml" />
@@ -1358,6 +1363,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202202231559436_studentLBmission.resx">
       <DependentUpon>202202231559436_studentLBmission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203020239527_addStudentCode.resx">
+      <DependentUpon>202203020239527_addStudentCode.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
