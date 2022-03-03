@@ -161,9 +161,17 @@ namespace LMSweb.Controllers
         }
         public ActionResult StudentCoding(string mid, string cid)
         {
+
             MissionViewModel model = new MissionViewModel();
             model.CID = cid;
             model.MID = mid;
+
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var group = db.Students.Find(sid).group;
+            model.GID = group.GID;
+
             return View(model);
         }
         public ActionResult StudentDrawing(string mid, string cid)
