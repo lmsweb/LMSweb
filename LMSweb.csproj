@@ -350,6 +350,7 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
     <Compile Include="ViewModel\MissionViewModel.cs" />
+    <Compile Include="ViewModel\StudentHomePageViewModel.cs" />
     <Compile Include="ViewModel\StudentViewModel.cs" />
     <Compile Include="ViewModel\SurveyViewModel.cs" />
   </ItemGroup>

@@ -72,10 +72,13 @@ namespace LMSweb.Controllers
             var sid = claimData[0].Value; //取值(因為只有一筆)
 
             var studentCourse = db.Students.Where(s => s.SID == sid);
+            StudentHomePageViewModel vmodel = new StudentHomePageViewModel();
+            var course = db.Students.Find(sid).CID;
+            vmodel.CID = course;
+            vmodel.CName = db.Courses.Find(course).CName;
+            vmodel.TName = db.Courses.Find(course).teacher.TName;
 
-
-            return View(studentCourse);
-            //return View(db.Students.ToList());
+            return View(vmodel);
         }
         public ActionResult StudentCourse(string cid)
         {
