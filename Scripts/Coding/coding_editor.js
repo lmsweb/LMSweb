@@ -8,7 +8,7 @@ const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     lineNumbers: true,
     theme: "seti",
     fullScreen: true,    //全屏模式
-    keyMap: "vim",    //綁定Vim
+    //keyMap: "vim",    //綁定Vim
 });
 
 let online = $.connection.codeServiceHub;

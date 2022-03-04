@@ -194,7 +194,7 @@ namespace LMSweb.Controllers
             var stuG = db.Students.Find(sid).group;
             var gid = stuG.GID;
             var gname = stuG.GName;
-            model.GID = gid.ToString();
+            model.GID = gid;
             model.GName = gname;
             model.SID = sid;
             //model.lbr = db.LearnB.Where(l => l.group.GID == gid).ToList();
