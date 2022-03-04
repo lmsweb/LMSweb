@@ -96,7 +96,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="row">
-                           合作學習權重 :
+                            討論次數權重 :
                             <div class="col-5">
                                 <input type="text" class="form-control" placeholder="請填0~100" id="mission_discuss_k" name="mission.discuss_k" />
                             </div>%
@@ -104,7 +104,7 @@
                     </div>
                     <div class="col">
                         <div class="row">
-                            個人表現權重 :
+                            個人分數權重 :
                             <div class="col-5">
                                 <input type="text" class="form-control" placeholder="請填0~100" id="mission_per_k" name="mission.per_k" />
                             </div>%
@@ -112,7 +112,7 @@
                     </div>
                     <div class="col">
                         <div class="row">
-                            小組成果權重 :
+                            小組分數權重 :
                             <div class="col-5">
                                 <input type="text" class="form-control" placeholder="請填0~100" id="mission_group_k" name="mission.group_k" />
                             </div>%
@@ -127,7 +127,6 @@
                         @Html.EditorFor(model => model.mission.AddMetacognition)
                         @Html.ValidationMessageFor(model => model.mission.AddMetacognition, "", new { @class = "text-danger" })加入後設認知
                     </div>
-                    @*<input type="submit" value="設定題目" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Questions" , new { cid = Model.CID, mid = Model.mission.MID })'"/>*@
                 </div>
             </div>
             <div class="mb-3">

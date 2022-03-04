@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LMSweb.Models.Student>
+﻿@model LMSweb.ViewModel.StudentHomePageViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -17,10 +17,7 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.CID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.course.CName)
+                    @Html.DisplayNameFor(model => model.CName)
                 </th>
                 <th>
                    授課老師
@@ -28,23 +25,20 @@
                 <th></th>
             </tr>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.course.CName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.course.teacher.TName)
-                    </td>
-                    <td>
-                        @Html.ActionLink("進入我的課程", "StudentMission", new { cid = item.CID })
-                    </td>
-                </tr>
-            }
+
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(model => model.CName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.TName)
+                </td>
+                <td>
+                    @Html.ActionLink("進入我的課程", "StudentMission", new { cid = Model.CID })
+                </td>
+            </tr>
+
 
         </table>
     </div>
