@@ -93,17 +93,6 @@ namespace LMSweb.Models
             model.mission.relatedKP = kp_str;
             model.mission.CID = model.CID;
 
-            //var m1 = model.mission.discuss_k;
-            //var m2 = model.mission.per_k;
-            //var m3 = model.mission.group_k;
-            //var m = m1 + m2 + m3;
-            //var m1Score = (int)(((decimal)m1 / m) * 100);
-            //var m2Score = (int)(((decimal)m2 / m) * 100);
-            //var m3Score = (int)(((decimal)m3 / m) * 100);
-            //model.mission.discuss_k = m1Score;
-            //model.mission.per_k = m2Score;
-            //model.mission.group_k = m3Score;
-
             if (ModelState.IsValid)
             {
                 db.Missions.Add(model.mission);
@@ -265,17 +254,15 @@ namespace LMSweb.Models
             model.mission.group_k = mission.group_k;
             model.KnowledgeList = GetKnowledge(cid);
 
-
             model.mission.CID = cid;
             model.CID = cid;
             model.CName = mission.course.CName;
             //model.mission.CID = db.Courses.Find(cid);
-
-            
-            
+           
             //db.SaveChanges();
 
             return View(model);
         }
+
     }
 }

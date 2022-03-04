@@ -289,14 +289,9 @@ namespace LMSweb.Controllers
 
             vmodel.groups = db.Groups.Where(g =>g.CID == cid).ToList();
 
-            //var result = from g in db.Groups
-            //             from s in db.Students
-            //             where g.GID == s.@group.GID
-            //             select new { s.SName, s.@group.GName };
-
             return View(vmodel);
         }
-
+        
         [HttpPost]
         public ActionResult StudentGroup(string GName, List<string> StudentList, string cid)
         {
@@ -315,7 +310,43 @@ namespace LMSweb.Controllers
 
             return View(vmodel);
         }
-        
+        //public ActionResult EditGname(int? gid)
+        //{
+
+        //    if (gid == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Group group = db.Groups.Find(gid);
+        //    if (group == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    //var vmodel = new StudentViewModel();
+        //    //vmodel.CID = student.CID;
+        //    //var course = db.Courses.Where(c => c.CID == student.CID).Single();
+        //    //vmodel.CName = course.CName;
+
+        //    return View(group);
+
+
+        //}
+        [HttpPost]
+        public ActionResult EditGname(int gid, string gName)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                Group group = db.Groups.Find(gid);
+                group.GName = gName;
+                db.Entry(group).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("StudentGroup", "Course", new { group.CID });
+            }
+
+            return View();
+        }
+
 
         public ActionResult StudentManagement(string cid)
         {
