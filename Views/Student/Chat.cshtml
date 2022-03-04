@@ -5,8 +5,9 @@
 }
 
 <h2>@Model.MID</h2>
-<h2>@Model.GName</h2>
+<h2>@Model.GID</h2>
 <h2>@Model.SID</h2>
+<h2>@Model.GName</h2>
 
 
 <div class="container">
@@ -21,7 +22,7 @@
                     @*<textarea id="message" placeholder="想說的話" style="width:400px; height:74px; border:0; border-bottom-left-radius:10px; resize:none;"></textarea>*@
                 </div>
                 <div class="col-auto">
-                    <input type="button" value="Send" class="btn btn-primary" style="width:106px; height:74px;border:0; border-bottom-right-radius:10px; resize:none;" />
+                    <input type="button" value="Send" class="btn btn-primary sendM" style="width:106px; height:74px;border:0; border-bottom-right-radius:10px; resize:none;" />
                     <input type="hidden" id="displayname" />
                     <input type="hidden" id="sid" />
                     <input type="hidden" id="mid" />
@@ -36,14 +37,15 @@
 
 
 @section scripts {
-    <script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
     <script src="~/signalr/hubs"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             var chat = $.connection.chatHub;
             $('#displayname').val('@User.Identity.Name');
-            $('#groupname').val('@Model.GName');
+            $('#groupname').val('@Model.GID');
             $('#sid').val('@Model.SID');
             $('#mid').val('@Model.MID');
             $('#cid').val('@Model.CID');
@@ -62,15 +64,19 @@
                                 <label>' + groupname + '</label>房間\
                                             聊天記錄如下:<ul>\
                                             </ul>\</table>'
+                
                 $("#messages").append(html);
-
-                chat.server.historySend($('#groupname').val(), $('#displayname').val(), $('#cid').val(), $('#mid').val())
-                    .done(function () {
-                        console.log("send suc");
-                    })
-                    .fail(function (e) {
-                        console.varn(e);
-                    })                               
+                console.log("group suc");
+                for(let i = 0; i < 10; i++) {
+                    chat.server.historySend($('#groupname').val(), $('#displayname').val(), $('#cid').val(), $('#mid').val())
+                        .done(function () {
+                            console.log("send suc");
+                        })
+                        .fail(function (e) {
+                            console.varn(e);
+                        })
+                }
+                                               
             };
             //訊息格式
             chat.client.groupMessage = function (groupname, name, time, message) {
@@ -81,32 +87,32 @@
             //chat.client.receiveMessage = function (name, time, message) {
             //    write_msg(name, time, message);
             //};
-            $(".btn-primary").click(function () {
+            $(".sendM").click(function () {
                 //chat.server.send($('#displayname').val(), $('#message').val())
                 chat.server.send($('#groupname').val(), $('#displayname').val(), $('#message').val())
                     .done(function () {
-                        fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                ActionType: "D",
-                                subAction: "R",
-                                Detail: $('#message').val(),
-                                Time: currentDateTime,
-                                CID: $('#cid').val(),
-                                SID: $('#sid').val(),
-                                MID: $('#mid').val()
-                            })
+                        //fetch(url, {
+                        //    method: 'POST',
+                        //    headers: {
+                        //        'Content-Type': 'application/json'
+                        //    },
+                        //    body: JSON.stringify({
+                        //        ActionType: "D",
+                        //        subAction: "R",
+                        //        Detail: $('#message').val(),
+                        //        Time: currentDateTime,
+                        //        CID: $('#cid').val(),
+                        //        SID: $('#sid').val(),
+                        //        MID: $('#mid').val()
+                        //    })
 
-                        }).then((response) => {
-                            return response.json();
-                        }).then((jsonData) => {
-                            console.log(jsonData);
-                        }).catch((err) => {
-                            console.log('錯誤:', err);
-                        })
+                        //}).then((response) => {
+                        //    return response.json();
+                        //}).then((jsonData) => {
+                        //    console.log(jsonData);
+                        //}).catch((err) => {
+                        //    console.log('錯誤:', err);
+                        //})
                         console.log('send suc');
                         $('#message').val("");
                     })

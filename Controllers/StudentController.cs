@@ -161,9 +161,17 @@ namespace LMSweb.Controllers
         }
         public ActionResult StudentCoding(string mid, string cid)
         {
+
             MissionViewModel model = new MissionViewModel();
             model.CID = cid;
             model.MID = mid;
+
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var group = db.Students.Find(sid).group;
+            model.GID = group.GID;
+
             return View(model);
         }
         public ActionResult StudentDrawing(string mid, string cid)
@@ -184,11 +192,13 @@ namespace LMSweb.Controllers
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
             var stuG = db.Students.Find(sid).group;
+            var gid = stuG.GID;
             var gname = stuG.GName;
+            model.GID = gid;
             model.GName = gname;
             model.SID = sid;
+            //model.lbr = db.LearnB.Where(l => l.group.GID == gid).ToList();
             //ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
-
             return View(model);
         }
         protected override void Dispose(bool disposing)

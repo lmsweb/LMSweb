@@ -30,8 +30,6 @@ namespace LMSweb.Controllers
             vm.CID = CID;
             return View(vm);
         }
-
-
         public ActionResult GroupJourney(string CID)
         {
             vm.student = db.Students.Where(g => g.group.GID == 2).ToList();
@@ -39,7 +37,6 @@ namespace LMSweb.Controllers
             vm.CID = CID;
             return View(vm);
         }
-
         public ActionResult PersonalJourney(string CID)
         {
             //var results = db.LearnB.Where(j => j.StudentMissions.SID == "S001");
@@ -50,11 +47,9 @@ namespace LMSweb.Controllers
             return View(vm);
         }
         public ActionResult Chat()
-        {
-           
+        {         
             return View();
         }
-
         public ActionResult DownloadExcelDocument()
         {
             string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -86,7 +81,5 @@ namespace LMSweb.Controllers
             var content = stream.ToArray();
             return File(content, contentType, fileName);
         }
-
-
     }
 }

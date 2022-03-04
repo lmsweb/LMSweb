@@ -8,46 +8,40 @@ const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     lineNumbers: true,
     theme: "seti",
     fullScreen: true,    //全屏模式
-    keyMap: "vim",    //綁定Vim
+    //keyMap: "vim",    //綁定Vim
 });
 
 let online = $.connection.codeServiceHub;
 //online.client.hello = function () {
 //    editor.setValue("print(Hello);");
 //}
-
-$.connection.hub.start().done(function () {
-
-});
+console.log(document.getElementById("gid").value);
 
 
 let oldContent = "";
 let newContent = "";
-let cursor = { line : 0, ch : 0};
+let cursor = { line: 0, ch: 0 };
+
+$.connection.hub.start().done(function () {
+    editor.setValue("");
+    editor.setCursor(cursor);
+});
 
 editor.on('change', (ins, ch) => {
 
-    //console.log(editor.getCursor());
+    cursor.line = editor.getCursor().line;
+    cursor.ch = editor.getCursor().ch;
 
-    newContent = editor.getValue();
 
-    if (oldContent != newContent) {
-        cursor.line = editor.getCursor().line;
-        cursor.ch = editor.getCursor().ch;
-
-        online.server.editCode("name", editor.getValue());
-        oldContent = newContent;
-        
-        console.log(cursor);
-        editor.setCursor(cursor);
+    if (ch.origin == "+input" || ch.origin == "+delete") {
+        online.server.editCode(editor.getValue(), cursor.line, cursor.ch);
     }
-    
 
 });
 
 
-online.client.broadcastCode = function (name, content) {
+online.client.broadcastCode = function (content, line , ch) {
 
     editor.setValue(content);
-
+    editor.setCursor(line, ch);
 }

@@ -13,9 +13,14 @@ namespace LMSweb
             Clients.All.hello();
         }
 
-        public void editCode(string name, string content)
+        public void editCode(string content, int line, int ch)
         {
-            Clients.All.broadcastCode(name, content);
+            Clients.All.broadcastCode(content, line, ch);
+        }
+
+        public void saveCode(string content)
+        {
+
         }
     }
 }
