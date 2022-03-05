@@ -92,7 +92,7 @@
             });
             //Start
             $.connection.hub.start().done(function () {
-                chat.server.creatRoom($("#groupname").val());                
+                chat.server.creatRoom($('#groupname').val(), $('#mid').val());
             })
         });
         function write_msg(groupname, sid, time, message) {

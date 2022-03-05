@@ -20,16 +20,16 @@ namespace LMSweb
         private LMSmodel db = new LMSmodel();
 
         protected static List<Student> userInfoList = new List<Student>();
-       
+
         public void AddToRoom(string GroupId)
         {
             Groups.Add(Context.ConnectionId, GroupId);
             Clients.Client(Context.ConnectionId).addRoom(GroupId);
         }
-        public void CreatRoom(string GroupId)
+        public void CreatRoom(string GroupId,string mid)
         {
             AddToRoom(GroupId);
-            GetChatHistory(GroupId);
+            GetChatHistory(GroupId,mid);
         }
         public void Send(string GroupId, string name, string message,string cid,string sid,string mid)
         {
@@ -43,12 +43,13 @@ namespace LMSweb
             Clients.Group(GroupId, new string[0]).groupMessage(GroupId, sid, time, message);
         }
 
-        public void GetChatHistory(string GroupId)
+        public void GetChatHistory(string GroupId,string mid)
         {
             int GID = Convert.ToInt32(GroupId);
+            string MID = mid;
             List<DiscussViewModel> histories = new List<DiscussViewModel>();
 
-            var chathistory = db.LearnB.Where(h => h.group.GID == GID && h.ActionType == "D").ToList();
+            var chathistory = db.LearnB.Where(h => h.group.GID == GID && h.ActionType == "D" && h.mission.MID == mid).ToList();
             foreach (var item in chathistory)
             {
                 DiscussViewModel history = new DiscussViewModel
