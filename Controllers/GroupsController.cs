@@ -164,8 +164,6 @@ namespace LMSweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            
-
             Group group = db.Groups.Find(id);
             db.Groups.Remove(group);
             db.SaveChanges();

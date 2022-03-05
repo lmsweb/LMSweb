@@ -7,8 +7,8 @@
     <h4>@Model.CName</h4>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="https://localhost:44301/Missions?CID=@Model.CID">任務列表</a></li>
-            <li class="breadcrumb-item"><a href=" https://localhost:44301/Missions/SelectMissions?CID=@Model.CID">複製任務</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("SelectMissions", "Missions", new { CID = Model.CID})">複製任務</a></li>
             <li class="breadcrumb-item active" aria-current="page">複製任務內容</li>
         </ol>
     </nav>

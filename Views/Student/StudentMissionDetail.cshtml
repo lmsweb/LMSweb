@@ -54,9 +54,8 @@
             <h5><b>@Html.DisplayFor(model => model.mis.MName)</b></h5>
         </div>
         <div class="col-4 align-self-end">
-            @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
             @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-            
+            @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
             @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
             @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
         </div>

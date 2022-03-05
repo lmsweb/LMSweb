@@ -21,6 +21,11 @@ namespace LMSweb.Models
         public DbSet<StudentMission> StudentMissions { get; set; }
         public DbSet<TeacherAssessment> TeacherA { get; set; }
         public DbSet<StudentCode> StudentCodes { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Option> Options { get; set;}
+        public DbSet<DefaultQuestion> DefaultQuestions { get; set; }
+        public DbSet<DefaultOption> DefaultOptions { get; set; }
+        public DbSet<Response> Responses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

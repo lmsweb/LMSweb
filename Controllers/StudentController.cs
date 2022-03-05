@@ -72,10 +72,13 @@ namespace LMSweb.Controllers
             var sid = claimData[0].Value; //取值(因為只有一筆)
 
             var studentCourse = db.Students.Where(s => s.SID == sid);
+            StudentHomePageViewModel vmodel = new StudentHomePageViewModel();
+            var course = db.Students.Find(sid).CID;
+            vmodel.CID = course;
+            vmodel.CName = db.Courses.Find(course).CName;
+            vmodel.TName = db.Courses.Find(course).teacher.TName;
 
-
-            return View(studentCourse);
-            //return View(db.Students.ToList());
+            return View(vmodel);
         }
         public ActionResult StudentCourse(string cid)
         {
@@ -159,11 +162,42 @@ namespace LMSweb.Controllers
 
             return View(model);
         }
+        [HttpGet]
         public ActionResult StudentCoding(string mid, string cid)
         {
-            MissionViewModel model = new MissionViewModel();
+
+            StudentCodingViewModel model = new StudentCodingViewModel();
             model.CID = cid;
             model.MID = mid;
+
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var group = db.Students.Find(sid).group;
+            model.GID = group.GID;
+            
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult StudentCoding(StudentCodingViewModel model, string mid, string cid)
+        {
+            model.CID = cid;
+            model.MID = mid;
+
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var group = db.Students.Find(sid).group;
+            model.GID = group.GID;
+
+            if (ModelState.IsValid)
+            {
+                db.StudentCodes.Add(model.studentCode);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { cid = model.CID });
+            }
+
             return View(model);
         }
         public ActionResult StudentDrawing(string mid, string cid)
@@ -186,7 +220,7 @@ namespace LMSweb.Controllers
             var stuG = db.Students.Find(sid).group;
             var gid = stuG.GID;
             var gname = stuG.GName;
-            model.GID = gid.ToString();
+            model.GID = gid;
             model.GName = gname;
             model.SID = sid;
             var Detail = db.LearnB.Where(h => h.group.GID == gid && h.ActionType == "D").ToList();
