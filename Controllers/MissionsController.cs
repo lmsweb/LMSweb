@@ -200,7 +200,12 @@ namespace LMSweb.Models
 
             Mission mission = db.Missions.Find(mid);
             var cid = mission.CID;
-              
+
+            var learningBehavior = db.LearnB.Where(l => l.mission.MID == mid);
+            var teacherA = db.TeacherA.Where(t => t.MID == mid);
+            db.LearnB.RemoveRange(learningBehavior);
+            db.TeacherA.RemoveRange(teacherA);
+
             db.Missions.Remove(mission);
             db.SaveChanges();
             return RedirectToAction("Index", new { cid = cid });
