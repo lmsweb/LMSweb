@@ -350,6 +350,7 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
     <Compile Include="ViewModel\MissionViewModel.cs" />
+    <Compile Include="ViewModel\StudentCodingViewModel.cs" />
     <Compile Include="ViewModel\StudentHomePageViewModel.cs" />
     <Compile Include="ViewModel\StudentViewModel.cs" />
     <Compile Include="ViewModel\SurveyViewModel.cs" />
@@ -1093,7 +1094,6 @@
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jasny-bootstrap.js" />
     <Content Include="Scripts\jasny-bootstrap.min.js" />
-    <None Include="Properties\PublishProfiles\LMSweb.pubxml" />
     <None Include="Scripts\jquery-3.6.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
