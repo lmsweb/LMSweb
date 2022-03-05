@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace LMSweb
@@ -13,9 +14,10 @@ namespace LMSweb
             Clients.All.hello();
         }
 
-        public void editCode(string content, int line, int ch)
+        public void editCode(string gid, string content, int line, int ch)
         {
-            Clients.All.broadcastCode(content, line, ch);
+            //Clients.All.broadcastCode(content, line, ch);
+            Clients.Group(gid).broadcastCode(content, line, ch);
         }
 
         public void saveCode(string content)
@@ -23,10 +25,14 @@ namespace LMSweb
 
         }
 
-        public void joinGroup(string gid)
+        public Task joinGroup(string gid)
         {
-            Groups.Add(Context.ConnectionId, gid);
-            Clients.Client(Context.ConnectionId).addRoom(gid);
+            return Groups.Add(Context.ConnectionId, gid);
+        }
+
+        public Task removeGroup(string gid)
+        {
+            return Groups.Remove(Context.ConnectionId, gid);
         }
     }
 }
