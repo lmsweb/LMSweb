@@ -1,16 +1,18 @@
-﻿@model LMSweb.ViewModel.MissionViewModel
+﻿@model LMSweb.ViewModel.StudentCodingViewModel
 @{ ViewBag.Title = "StudentCoding";
                 Layout = "~/Views/Shared/_OnlineEditorLayout.cshtml"; }
 <div class="article">
-    @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
     @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
     <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-success" />
     <h2>StudentCoding</h2>
-
+    <input type="button" value="儲存" id="save" class="btn btn-success" onclick="saveCode()" />
     <div>
         <textarea id="code"></textarea>
     </div>
-    <input id ="gid" type="hidden"  value="@Model.GID" />
+    <input id="gid" type="hidden" value="@Model.GID" />
+    <input id="cid" type="hidden" value="@Model.CID" />
+    <input id="mid" type="hidden" value="@Model.MID" />
 </div>
 @section scripts
 {

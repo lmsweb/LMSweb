@@ -39,9 +39,30 @@ editor.on('change', (ins, ch) => {
 
 });
 
-
 online.client.broadcastCode = function (content, line, ch) {
 
     editor.setValue(content);
     editor.setCursor(line, ch);
+}
+
+
+function saveCode() {
+    let code = editor.getValue();
+    let cid = document.getElementById("cid").value;
+    let mid = document.getElementById("mid").value;
+    let gid = document.getElementById("gid").value;
+    console.log("cid：" + cid + ", \nmid：" + mid + ", \ngid：" + gid + ", \ncode：" + code);
+    //$.ajax({
+    //    url: "@url.action("studentcoding", "stduent")",
+    //    method: "post",
+    //    contenttype: 'application/json',
+    //    data: json.stringify({ cid: cid, mid: mid, gid: gid }),
+    //    success: function (response) {
+    //        window.location.reload();
+
+    //    },
+    //    error: function (thrownerror) {
+    //        console.log(thrownerror);
+    //    }
+    //});
 }
