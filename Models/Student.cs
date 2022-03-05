@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LMSweb.Models
 {
+    [MetadataType(typeof(Student))]
     public class Student
     {
         [Key]

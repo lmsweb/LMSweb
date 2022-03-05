@@ -80,29 +80,32 @@ namespace LMSweb.Models
         [ValidateAntiForgeryToken]
         public ActionResult Create(MissionCreateViewModel model)
         {
+           
             //var inputlist = model.SelectKnowledgeList.ToList();
-            var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
-            string kp_str = "";
-            foreach (var kp in kps)
-            {
-                kp_str += kp.KID.ToString() + "," ;
-            }
 
-            //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
-
-            model.mission.relatedKP = kp_str;
-            model.mission.CID = model.CID;
 
             if (ModelState.IsValid)
             {
+                var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
+                string kp_str = "";
+                foreach (var kp in kps)
+                {
+                    kp_str += kp.KID.ToString() + ",";
+                }
+
+                //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
+
+                model.mission.relatedKP = kp_str;
+                model.mission.CID = model.CID;
                 db.Missions.Add(model.mission);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { cid = model.CID });
             }
             var vmodel = new MissionCreateViewModel();
-            vmodel.KnowledgeList = GetKnowledge(vmodel.CID);
+            vmodel.KnowledgeList = GetKnowledge(model.CID);
             vmodel.CID = model.CID;
-            vmodel.mission.MID = model.mission.MID;
+            var course = db.Courses.Single(c => c.CID == model.CID);
+            model.CName = course.CName;
 
             return View(vmodel);
         }

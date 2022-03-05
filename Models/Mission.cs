@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LMSweb.Models
 {
+    [MetadataType(typeof(Mission))]
     public class Mission
     {
         [Key]
@@ -51,6 +52,7 @@ namespace LMSweb.Models
 
         [Display(Name = "小組分數權重")]
         public int group_k { get; set; }
+
 
         [Display(Name = "知識點")]
         public string relatedKP { get; set; }
