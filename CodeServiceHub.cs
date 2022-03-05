@@ -22,5 +22,11 @@ namespace LMSweb
         {
 
         }
+
+        public void joinGroup(string gid)
+        {
+            Groups.Add(Context.ConnectionId, gid);
+            Clients.Client(Context.ConnectionId).addRoom(gid);
+        }
     }
 }
