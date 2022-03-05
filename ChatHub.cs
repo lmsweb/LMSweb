@@ -21,26 +21,26 @@ namespace LMSweb
 
         protected static List<Student> userInfoList = new List<Student>();
 
-        public void AddToRoom(string GroupId)
+        public void AddToRoom(string roomid)
         {
-            Groups.Add(Context.ConnectionId, GroupId);
-            Clients.Client(Context.ConnectionId).addRoom(GroupId);
+            Groups.Add(Context.ConnectionId, roomid);
+            Clients.Client(Context.ConnectionId).addRoom(roomid);
         }
-        public void CreatRoom(string GroupId,string mid)
+        public void CreatRoom(string roomid, string GroupId, string mid)
         {
-            AddToRoom(GroupId);
+            AddToRoom(roomid);
             GetChatHistory(GroupId,mid);
         }
-        public void Send(string GroupId, string name, string message,string cid,string sid,string mid)
+        public void Send(string roomid, string GroupId, string name, string message,string cid,string sid,string mid)
         {
-            Clients.Group(GroupId, new string[0]).groupMessage(GroupId, sid, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), message);
+            Clients.Group(roomid, new string[0]).groupMessage(roomid, sid, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), message);
 
             AddChatHistory(message, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), cid, sid, mid, GroupId);
         }
 
-        public void HistorySend(string GroupId, string sid, string time, string message)
+        public void HistorySend(string roomid, string sid, string time, string message)
         {
-            Clients.Group(GroupId, new string[0]).groupMessage(GroupId, sid, time, message);
+            Clients.Group(roomid, new string[0]).groupMessage(roomid, sid, time, message);
         }
 
         public void GetChatHistory(string GroupId,string mid)
