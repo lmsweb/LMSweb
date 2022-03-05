@@ -3,594 +3,77 @@
 
 @{
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
-    var sN = Json.Encode(Model.student.Select(x => x.SName).ToList());
-    var sP = Json.Encode(Model.student.Select(p => p.Score).ToList());
 }
 <div class="article">
-    <div class="form-group form-inline">
-        <div class="col-md-1">
-            <input type="button" class="btn btn-secondary" value="個人歷程" onclick="location.href='@Url.Action("PersonalJourney", "LearningBehaviors")'" />
-        </div>
-        <div class="col-md-1">
-            <input type="button" class="btn btn-secondary" value="小組歷程" onclick="location.href='@Url.Action("GroupJourney", "LearningBehaviors")'" />
-        </div>
-        <div class="col-md-1">
-            <input type="button" class="btn btn-secondary" value="全班歷程" onclick="location.href='@Url.Action("ClassJourney", "LearningBehaviors")'" />
-        </div>
-    </div>
-    <br />
     <table class="table">
         <thead>
             <tr>
-                <th>學生</th>
-                <th>動作類型</th>
-                <th>動作子項</th>
                 <th>動作內容</th>
                 <th>時間</th>
+                <th>學生</th>
+                <th>組別</th>
             </tr>
         </thead>
 
-        @foreach (var item in Model.student)
+        @foreach (var item in Model.learningbehavior)
         {
-            foreach (var itemL in Model.learningbehavior)
-            {
-                if (item.SID == itemL.StudentMissions.SID)
-                {
-                    <tr>
-                        <th>
-                            @itemL.StudentMissions.SID
-                        </th>
-                        <th>
-                            @itemL.ActionType
-                        </th>
-                        <th>
-                            @itemL.subAction
-                        </th>
-                        <th>
-                            @itemL.Detail
-                        </th>
-                        <th>
-                            @itemL.Time
-                        </th>
-                    </tr>
-                }
-
-            }
-
+            <tr>
+                <th>
+                    @item.Detail
+                </th>
+                <th>
+                    @item.Time
+                </th>
+                <th>
+                    @item.student.SID
+                </th>
+                <th>
+                    @item.group.GID
+                </th>
+            </tr>
         }
     </table>
-
-    <!-- One -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <script src="../Scripts/Chart.min.js"></script>
-                <canvas id="KnowledgePromptTime"></canvas>
-            </div>
-            <div class="col-md-6">
-                <script src="../Scripts/Chart.min.js"></script>
-                <canvas id="Time Scale - Combo Chart"></canvas>
-            </div>
-            @*<div class="col-md-6">
-                <script src="https://pulipulichen.github.io/blogger/posts/2016/11/r-text-mining/wordcloud2.js"></script>
-                <canvas id="word_cloud" class="word_cloud" width="400" height="400"></canvas>
-            </div>*@
-            <div class="col-md-6">
-                <script src="../Scripts/Chart.min.js"></script>
-                <canvas id="Stacked Bar Chart"></canvas>
-            </div>
-
-        </div>
-    </div>
 </div>
+<script type="text/javascript">
+    //鼠标点击
+    function picClick(obj) {
+        var hid = $(obj).parent().find("input[type='hidden']");
 
-
-<!-- 積分堆疊圖 -->
-<script>
-    var ctx = document.getElementById("Stacked Bar Chart");
-    var labels = ['盈琪', '國禎', '世楷'];
-    var jsName = @Html.Raw(sN);//學生名稱
-    var jsPoint = @Html.Raw(sP);//學生積分
-    var data = {
-        labels: jsName,
-        datasets: [
-            {
-                label: '發問',
-                data: [4, 3, 2,1],
-                backgroundColor: "#512DA8",
-                hoverBackgroundColor: "#7E57C2",
-                hoverBorderWidth: 0,
-            },
-            {
-                label: '回答',
-                data: [1, 3, 2,3],
-                backgroundColor: "#FFA000",
-                hoverBackgroundColor: "#FFCA28",
-                hoverBorderWidth: 0,
-            },
-            {
-                label: '編輯程式碼',
-                data: [5, 4, 3,5],
-                backgroundColor: "#D32F2F",
-                hoverBackgroundColor: "#EF5350",
-                hoverBorderWidth: 0,
-            },
-            {
-                label: '繪製流程圖',
-                data: [5, 4, 3,7],
-                backgroundColor: "#ffca28",
-                hoverBackgroundColor: "#ffe79e",
-                hoverBorderWidth: 1,
-            }]
-    };
-    var chart = new Chart(ctx, {
-        type: 'horizontalBar',
-        data: data,
-        options: {
-            title: {
-                display: true,
-                fontSize: 26,
-                text: '積分堆疊圖'
-            },
-            scales: {
-                xAxes: [{
-                    stacked: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: '積分',
-                        fontSize: 15
-                    },
-                }],
-                yAxes: [{
-                    stacked: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: '學生',
-                        fontSize: 15
-                    },
-                }],
-            },
-        },
-    })
-</script>
-<!-- Time Scale - Combo Chart -->
-<script>
-    var ctx = document.getElementById("Time Scale - Combo Chart");
-    var data = {
-        labels: ['任務1', '任務2', '任務3', '任務4', '任務5', '任務6',],
-        datasets: [{
-            type: 'bar',
-            label: '積分',
-            yAxisID: 'A',
-            backgroundColor: 'rgba(255,165,0,0.3)',
-            borderColor: 'rgba(255,165,0,0.3)',
-            data: [40, 35, 87, 91, 90, 71],
-        },
-        {
-            type: 'line',
-            label: '時間',
-            yAxisID: 'B',
-            backgroundColor: 'rgba(255,165,100)',
-            borderColor: 'rgba(255,165,100)',
-            fill: false,
-            data: [100, 150, 300, 75, 357, 400],
-        }]
-    };
-    var chart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: {
-            title: {
-                display: true,
-                fontSize: 26,
-                text: '時間-積分關係圖'
-            },
-            scales: {
-                xAxes: [{
-                    scaleLabel: {
-                        display: true,
-                        labelString: '任務',
-                        fontSize: 15
-                    },
-                    ticks: {
-                        beginAtZero: true
-                    },
-                }],
-                yAxes: [{
-                    id: 'A',
-                    type: 'linear',
-                    position: 'left',
-                    scaleLabel: {
-                        display: true,
-                        labelString: '積分',
-                        fontSize: 15
-                    },
-                },
-                {
-                    id: 'B',
-                    type: 'linear',
-                    position: 'right',
-                    scaleLabel: {
-                        display: true,
-                        labelString: '時間(分)',
-                        fontSize: 15
-                    },
-                }],
-            },
-        },
-    })
-</script>
-<!-- horizontalBar -->
-<script>
-    var ctx = document.getElementById("myChart");
-    var chart = new Chart(ctx, {
-        type: "horizontalBar",
-        data: {
-            labels: ['盈琪', '國禎', '小美', '大七', '小七', '大刀'],
-            //labels: jsName,
-            datasets: [{
-                label: "學生積分",
-                //label: jsPoint[0].StudentName,
-                fill: false,
-                backgroundColor: 'rgba(255,165,0,0.3)',
-                borderColor: 'rgb(255,135,20)',
-                //pointStyle: "circle",
-                //pointBackgroundColor: 'rgb(0,222,0)',
-                //pointRadius: 5,
-                //pointHoverRadius: 10,
-                //data: jsPoint
-                data: [13, 10, 13, 20, 25, 27, 31]
-            }]
-        },
-        options: {
-            responsive: true,
-            title: {
-                display: true,
-                fontSize: 26,
-                text: '學習歷程圖表'
-            },
-            tooltips: {
-                mode: 'point',
-                intersect: true,
-            },
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            },
-            scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: '積分',
-                        fontSize: 15
-                    },
-                    ticks: {
-                        fontSize: 15,
-                        beginAtZero: true
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: '學生',
-                        fontSize: 15
-                    },
-
-                    ticks: {
-                        fontSize: 15,
-                    }
-                }]
-            },
-            animation: {
-                duration: 2000
-            }
-        }
-    });
-</script>
-<!-- doughnut -->
-<script>
-
-    var ctx = document.getElementById("Doughnut");
-    var chart = new Chart(ctx, {
-        type: "doughnut",
-        data: {
-            labels: ['回答', '發問', '編輯程式碼', '繪製流程圖'],
-            datasets: [{
-                label: "My First dataset",
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                data: [24, 50, 40, 30,],
-            }],
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top'
-                }
-            },
-            title: {
-                display: true,
-                fontSize: 26,
-                text: '總積分144'
-            },
-        }
-    });
-</script>
-<!-- radar -->
-<script>
-    //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
-    var ctx = document.getElementById("Radar");
-    //var jsName = @*Model.Select(x => x.char_name)*@;//學生名稱
-    //var jsPoint = @*Model.Select(y => y.course)*@;//學生積分
-
-    //var jsName = @*Html.Raw(label)*@;//學生名稱
-    //var jsPoint = @*Html.Raw(data)*@;//學生積分
-    var chart = new Chart(ctx, {
-        //type: "horizontalBar",
-        type: "radar",
-        data: {
-            labels: ['發問', '回答討論區', '編輯程式碼','繪製流程圖'],
-            //labels: jsName,
-            datasets: [{
-                label: "次數",
-                //label: jsPoint[0].StudentName,
-                fill: true,
-                backgroundColor: 'rgba(255,165,0,0.3)',
-                borderColor: 'rgb(255,135,20)',
-                //pointStyle: "circle",
-                //pointBackgroundColor: 'rgb(0,222,0)',
-                //pointRadius: 5,
-                //pointHoverRadius: 10,
-                //data: jsPoint
-                data: [13, 5, 13, 20]
-            },
-            {
-                label: "高標",
-                fill: false,
-                borderColor: 'rgb(55,235,200)',
-                data: [25, 23, 20, 25]
-            },
-            {
-                label: "低標",
-                fill: false,
-                borderColor: 'rgb(255,35,100)',
-                data: [1, 3, 1, 3]
-            },
-            {
-                label: "平均",
-                fill: false,
-                borderColor: 'rgb(100,35,100)',
-                data: [13, 15, 14, 17]
-            }
-
-            ]
-        },
-        options: {
-            responsive: true,
-            title: {
-                display: true,
-                fontSize: 14,
-                text: '學習歷程圖表'
-            },
-            tooltips: {
-                mode: 'point',
-                intersect: true,
-            },
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            },
-            scales: {
-                xAxes: [{
-                    display: false,
-                    scaleLabel: {
-                        display: true,
-                        labelString: '學習行為',
-                        fontSize: 15
-                    },
-                    ticks: {
-                        fontSize: 15,
-                        beginAtZero: true
-                    }
-                }],
-                yAxes: [{
-                    display: false,
-                    scaleLabel: {
-                        display: true,
-                        labelString: '次數',
-                        fontSize: 15
-                    },
-
-                    ticks: {
-                        fontSize: 15,
-                    }
-                }]
-            },
-            animation: {
-                duration: 2000
-            }
-        }
-    });
-</script>
-<!-- 知識點-時間-提示-->
-<script>
-    var ctx = document.getElementById("KnowledgePromptTime");
-    var data = {
-        labels: ['任務1', '任務2', '任務3', '任務4', '任務5', '任務6',],
-        datasets: [{
-            type: 'bar',
-            label: '時間',
-            yAxisID: 'A',
-            backgroundColor: "#512DA8",
-            borderColor: "#7E57C2",
-            fill: false,
-            data: [100, 150, 300, 75, 357, 400],
-        },
-        {
-            type: 'line',
-            label: '知識點',
-            yAxisID: 'B',
-            backgroundColor: "#FFA000",
-            borderColor: "#FFCA28",
-            fill: false,
-            data: [3, 3, 2, 1, 2, 1],
-        },
-        {
-            type: 'line',
-            label: '提示',
-            yAxisID: 'B',
-            backgroundColor: "#ffca28",
-            borderColor: "#ffe79e",
-            fill: false,
-            data: [10, 15, 13, 7, 13, 14],
-        }]
-    };
-    var chart = new Chart(ctx, {
-        type: 'bar',
-        data: data,
-        options: {
-            title: {
-                display: true,
-                fontSize: 26,
-                text: '提示-知識點-完成時間組合圖'
-            },
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: '任務',
-                        fontSize: 15
-                    },
-                }],
-                yAxes: [{
-                    id: 'A',
-                    type: 'linear',
-                    position: 'left',
-                    scaleLabel: {
-                        display: true,
-                        labelString: '時間(分)',
-                        fontSize: 15
-                    },
-
-                },
-                {
-                    id: 'B',
-                    type: 'linear',
-                    position: 'right',
-                    scaleLabel: {
-                        display: true,
-                        labelString: '次數',
-                        fontSize: 15
-                    },
-                }]
-            },
-        },
-    })
-</script>
-<!--文字雲-->
-<script>
-    var db = [
-        { "word": "合作", "freq": 70 },
-        { "word": "name", "freq": 38 },
-        { "word": "false", "freq": 38 },
-        { "word": "var", "freq": 28 },
-        { "word": "rstudio", "freq": 26 },
-        { "word": "true", "freq": 22 },
-        { "word": "留言", "freq": 20 },
-        { "word": "url", "freq": 20 },
-        { "word": "server", "freq": 20 },
-        { "word": "分享", "freq": 18 },
-        { "word": "課程", "freq": 18 },
-        { "word": "連結", "freq": 18 },
-        { "word": "openvz", "freq": 17 },
-        { "word": "什麼", "freq": 16 },
-        { "word": "wordcloud", "freq": 15 },
-        { "word": "virtual", "freq": 15 },
-        { "word": "機器", "freq": 15 },
-        { "word": "虛擬", "freq": 15 },
-        { "word": "target", "freq": 14 },
-        { "word": "key", "freq": 14 },
-        { "word": "文字", "freq": 14 },
-        { "word": "sharemessage", "freq": 14 },
-        { "word": "資訊", "freq": 13 },
-        { "word": "字形", "freq": 13 },
-        { "word": "google", "freq": 13 },
-        { "word": "null", "freq": 12 },
-        { "word": "閱讀", "freq": 12 },
-        { "word": "中文", "freq": 12 },
-        { "word": "data", "freq": 12 },
-        { "word": "displaymodefull", "freq": 12 },
-        { "word": "研究", "freq": 11 },
-        { "word": "linux", "freq": 11 },
-        { "word": "程式", "freq": 10 },
-        { "word": "檔案", "freq": 10 },
-        { "word": "系統", "freq": 10 },
-        { "word": "服務", "freq": 10 },
-        { "word": "function", "freq": 10 },
-        { "word": "需要", "freq": 9 },
-        { "word": "建立", "freq": 9 },
-        { "word": "使用", "freq": 9 },
-        { "word": "管理", "freq": 9 },
-        { "word": "titlexdx", "freq": 8 },
-        { "word": "postid", "freq": 8 },
-        { "word": "httpblogpulipuliinfo", "freq": 8 },
-        { "word": "posts", "freq": 8 },
-        { "word": "twitter", "freq": 8 },
-        { "word": "pinterest", "freq": 8 },
-        { "word": "blog", "freq": 8 },
-        { "word": "環境", "freq": 8 },
-        { "word": "facebook", "freq": 8 },
-        { "word": "comments", "freq": 8 },
-        { "word": "運作", "freq": 7 },
-        { "word": "machine", "freq": 7 },
-        { "word": "怎麼", "freq": 6 },
-        { "word": "chinese", "freq": 6 },
-        { "word": "開箱", "freq": 6 },
-        { "word": "語言", "freq": 6 },
-        { "word": "httpblogpulipuliinforwordcloudwhyrswordclouddrawshtml", "freq": 5 },
-        { "word": "standalone", "freq": 5 },
-        { "word": "environment", "freq": 5 },
-        { "word": "ubuntu", "freq": 5 },
-        { "word": "password", "freq": 5 },
-        { "word": "rs", "freq": 5 },
-        { "word": "ssh", "freq": 5 },
-        { "word": "這個", "freq": 5 },
-        { "word": "密碼", "freq": 5 },
-        { "word": "設定", "freq": 5 },
-        { "word": "draws", "freq": 5 },
-        { "word": "已經", "freq": 5 },
-        { "word": "httpblogpulipuliinforrstudioserveropenvzstandalonerhtml", "freq": 5 },
-        { "word": "安裝", "freq": 4 },
-        { "word": "如下", "freq": 4 },
-        { "word": "sans", "freq": 4 },
-        { "word": "學習", "freq": 4 },
-        { "word": "網頁", "freq": 4 },
-        { "word": "撰寫", "freq": 4 },
-        { "word": "架設", "freq": 4 },
-        { "word": "mining", "freq": 4 },
-        { "word": "教學", "freq": 4 },
-        { "word": "stringnoto", "freq": 4 },
-        { "word": "作業", "freq": 4 },
-        { "word": "一樣", "freq": 4 },
-        { "word": "生活", "freq": 4 },
-        { "word": "畫面", "freq": 4 },
-        { "word": "文章", "freq": 4 }]
-
-    list = [];
-    for (var i in db) {
-        list.push([db[i]["word"], db[i]["freq"]])
+        //赋值
+        hid.val($(obj).attr("val"));
+        hid.attr("num", $(obj).attr("num"));
+        hid.attr("title", $(obj).attr("title"));
     }
 
-    WordCloud.minFontSize = "15px"
-    WordCloud(document.getElementById('word_cloud'), { list: list });
+    //鼠标移入
+    function picMouseOver(obj) {
+        $(obj).parent().find("img").attr("src", $(obj).attr("src1")); //全部置灰
+
+        //设置高亮图片
+        var currentNum = $(obj).attr("num");
+        for (var i = 0; i < currentNum; i++) {
+            $(obj).parent().find("img:eq(" + i + ")").attr("src", $(obj).attr("src2"));
+        }
+
+        //显示文本
+        $(obj).parent().find("#spanResult").text($(obj).attr("title"));
+    }
+
+    //鼠标移出
+    function picMouseOut(obj) {
+        $(obj).parent().find("img").attr("src", $(obj).attr("src1")); //全部置灰
+        $(obj).parent().find("#spanResult").text(""); //显示文本
+
+        var hid = $(obj).parent().find("input[type='hidden']");
+        if (hid.val()) {
+            //设置高亮图片
+            var currentNum = hid.attr("num");
+            for (var i = 0; i < currentNum; i++) {
+                $(obj).parent().find("img:eq(" + i + ")").attr("src", $(obj).attr("src2"));
+            }
+
+            //显示文本
+            $(obj).parent().find("#spanResult").text(hid.attr("title"));
+        }
+    }
 </script>

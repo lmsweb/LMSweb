@@ -189,7 +189,11 @@ namespace LMSweb.Controllers
             model.GID = gid.ToString();
             model.GName = gname;
             model.SID = sid;
-            //model.lbr = db.LearnB.Where(l => l.group.GID == gid).ToList();
+            var Detail = db.LearnB.Where(h => h.group.GID == gid && h.ActionType == "D").ToList();
+            var chatH = Detail[0].Detail;
+            model.learningbehaviors = db.LearnB.Where(h => h.group.GID == gid && h.ActionType == "D").ToList();
+            
+
             //ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
             return View(model);
         }

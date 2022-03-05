@@ -15,9 +15,8 @@ namespace LMSweb.ViewModel
         public string GName { get; set; }
         public IEnumerable<LMSweb.Models.Mission> missions { get; set; }
         public LMSweb.Models.Mission mis { get; set; }
+        public IEnumerable<LMSweb.Models.LearningBehavior> learningbehaviors { get; set; }
         public LMSweb.Models.LearningBehavior lbr { get; set; }
         public List<string> KContents { get; set; }
-
-
     }
 }

@@ -5,22 +5,38 @@
 @{
     ViewBag.Title = "學生歷程";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
-
 }
 
 <div class="article">
-    @*<div class="form-group form-inline">
-            <div class="col-md-1">
-                <input type="button" class="btn btn-secondary" value="個人歷程" onclick="location.href='@Url.Action("PersonalJourney", "LearningBehaviors")'" />
-            </div>
-            <div class="col-md-1">
-                <input type="button" class="btn btn-secondary" value="小組歷程" onclick="location.href='@Url.Action("GroupJourney", "LearningBehaviors")'" />
-            </div>
-            <div class="col-md-1">
-                <input type="button" class="btn btn-secondary" value="全班歷程" onclick="location.href='@Url.Action("ClassJourney", "LearningBehaviors")'" />
-            </div>
-        </div>*@
-
+    <form class="row row-cols-lg-auto g-8 align-items-center">
+        <div class="col-12">
+            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+            <select class="form-select" id="inlineFormSelectPref">
+                <option selected>請選擇任務</option>
+                <option value="1">任務一</option>
+                <option value="2">任務二</option>
+                <option value="3">任務三</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+            <select class="form-select" id="inlineFormSelectPref">
+                <option selected>請選擇組別</option>
+                <option value="1">組別一</option>
+                <option value="2">組別二</option>
+                <option value="3">組別三</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+            <select class="form-select" id="inlineFormSelectPref">
+                <option selected>請選擇學生</option>
+                <option value="1">Aaron</option>
+                <option value="2">Edam</option>
+                <option value="3">Ted</option>
+            </select>
+        </div>
+    </form>
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-bar-tab" data-bs-toggle="tab" data-bs-target="#nav-bar" type="button" role="tab" aria-controls="nav-bar" aria-selected="true">總覽</button>
@@ -42,12 +58,14 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <strong>
-                                    總分 : 95分(合作學習 : 90 分,個人表現 : 93 分, 小組成果 : 92 分)
-                                </strong>
-                                合作學習分數 低於 小組平均，低於 全班平均
-                                個人表現分數 低於 小組平均，低於 全班平均
-                                小組成果分數 高於 全班平均
+                                <strong>總分 : 95分</strong>(合作學習 : 90 分,個人表現 : 93 分, 小組成果 : 92 分)<br />
+                                <br />
+                                <strong>合作學習分數</strong><br />
+                                &emsp;&emsp;低於 小組平均，低於 全班平均<br />
+                                <strong>個人表現分數</strong><br />
+                                &emsp;&emsp;低於 小組平均，低於 全班平均<br />
+                                <strong>小組成果分數</strong><br />
+                                &emsp;&emsp;高於 全班平均<br />
                             </div>
                         </div>
                     </div>
@@ -68,16 +86,17 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                參與討論 : 90 分
-                                高於 小組平均
-                                高於 全班平均
-                                參與規劃流程圖 : 95 分
-                                低於 小組平均
-                                低於 全班平均
-                                參與撰寫程式碼: 89 分
-                                高於 小組平均
-                                高於 全班平均
-
+                                <strong>參與討論 :</strong> 90 分<br />
+                                &emsp;&emsp;高於 小組平均<br />
+                                &emsp;&emsp;高於 全班平均<br />
+                                <br />
+                                <strong>參與規劃流程圖 :</strong> 95 分<br />
+                                &emsp;&emsp;低於 小組平均<br />
+                                &emsp;&emsp;低於 全班平均<br />
+                                <br />
+                                <strong>參與撰寫程式碼:</strong> 89 分<br />
+                                &emsp;&emsp;高於 小組平均<br />
+                                &emsp;&emsp;高於 全班平均<br />
                             </div>
                         </div>
                     </div>
@@ -91,49 +110,49 @@
             <p>
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                個人表現
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                自我評價 : 95 分
-                                高於 小組平均
-                                高於 全班平均
-                                同儕互評 : 85 分
-                                低於 小組平均
-                                等於 全班平均
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
                                 自我評價
                             </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                邏輯清晰度:我覺得我進步很多
-                                合作態度:我很認真參與合作
+                                <strong>分數 :</strong> 95 分<br />
+                                &emsp;&emsp;高於 小組平均<br />
+                                &emsp;&emsp;高於 全班平均<br />
+                                <br />
+                                <strong>評語:</strong><br />
+                                &emsp;&emsp;<strong>邏輯清晰度:</strong><br />
+                                &emsp;&emsp;&emsp;&emsp;邏輯清晰度:我覺得我進步很多<br />
+                                &emsp;&emsp;<strong>合作態度:</strong><br />
+                                &emsp;&emsp;&emsp;&emsp;我很認真參與合作<br />
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
                                 同儕互評
                             </button>
                         </h2>
                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                邏輯清晰度
-                                1.我覺得你進步很多
-                                2.邏輯正確
-                                3.很棒
-
+                            <div data-bs-spy="scroll" data-bs-target="#nav-personalbar" data-bs-offset="0" tabindex="0">
+                                <div class="accordion-body">
+                                    <strong>分數 :</strong> 85 分<br />
+                                    &emsp;&emsp;低於 小組平均<br />
+                                    &emsp;&emsp;等於 全班平均<br />
+                                    <br />
+                                    <strong>評語:</strong><br />
+                                    &emsp;&emsp;<strong>邏輯清晰度:</strong><br />
+                                    &emsp;&emsp;&emsp;&emsp;1.我覺得你進步很多<br />
+                                    &emsp;&emsp;&emsp;&emsp;2.邏輯正確<br />
+                                    &emsp;&emsp;&emsp;&emsp;3.很棒<br />
+                                    <br />
+                                    &emsp;&emsp;<strong>合作態度:</strong><br />
+                                    &emsp;&emsp;&emsp;&emsp;1.會主動幫忙<br />
+                                    &emsp;&emsp;&emsp;&emsp;2.很會教人<br />
+                                    &emsp;&emsp;&emsp;&emsp;3.幫了我很多忙<br />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -154,10 +173,11 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                教師評分 : 95分
-                                高於 全班平均
-                                教師評語 :
-                                邏輯思維非常清楚,非常有效率地維持任務
+                                <strong>教師評分 :</strong> 95分<br />
+                                &emsp;&emsp;高於 全班平均<br />
+                                <br />
+                                <strong>教師評語 :</strong><br />
+                                &emsp;&emsp;邏輯思維非常清楚,非常有效率地維持任務<br />
                             </div>
                         </div>
                     </div>
@@ -167,7 +187,6 @@
             </p>
         </div>
     </div>
-
 </div>
 
 <!-- 合作學習 -->
@@ -183,7 +202,7 @@
                 label: "S002",
                 //label: jsPoint[0].StudentName,
                 fill: true,
-                backgroundColor: 'rgba(255,165,0,0.3)',
+                backgroundColor: 'rgb(255,165,0,0.3)',
                 borderColor: 'rgb(255,135,20)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
@@ -233,8 +252,12 @@
         },
         scale: {
             ticks: {
-                beginAtZero: true
-                // changes here
+                fontSize: 24,
+                beginAtZero: true,
+                min: 0,
+                pointLabels: {      //labels，軸的文字標籤(ex:攻擊)
+                    fontSize:24
+                }
             }
         }
     });
@@ -246,30 +269,31 @@
         type: "bar",
         data: {
             labels: ['合作學習', '個人貢獻', '小組成果'],
+            
             datasets: [{
                 label: "S002",
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 99, 132, 0.2)'
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 99, 132)'
                 ],
                 data: [24, 32, 0]
             },
             {
                 label: "全組平均",
                 backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
+                    'rgb(54, 162, 235)',
+                    'rgb(54, 162, 235)',
+                    'rgb(54, 162, 235)'
                 ],
                 data: [21, 33, 22]
             },
             {
                 label: "全班平均",
                 backgroundColor: [
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)'
                 ],
                 data: [26, 32, 31]
             }],
@@ -287,9 +311,15 @@
                 text: '學習表現'
             },
             scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize:24
+                    },
+                }],
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        fontSize: 24
                     },
                 }]
             }
@@ -306,24 +336,24 @@
             datasets: [{
                 label: "S002",
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 99, 132, 0.2)'
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 99, 132)'
                 ],
                 data: [24, 32]
             },
             {
                 label: "全組平均",
                 backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
+                    'rgb(54, 162, 235)',
+                    'rgb(54, 162, 235)'
                 ],
                 data: [21, 33]
             },
             {
                 label: "全班平均",
                 backgroundColor: [
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)'
                 ],
                 data: [26, 32]
             }],
@@ -341,9 +371,15 @@
                 text: '個人貢獻'
             },
             scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 24
+                    },
+                }],
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        fontSize: 24
                     },
                 }]
             }
@@ -360,14 +396,14 @@
             datasets: [{
                 label: "小組分數",
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)'
+                    'rgb(255, 99, 132)'
                 ],
                 data: [95]
             },
             {
                 label: "全班平均",
                 backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)'
+                    'rgb(54, 162, 235)'
                 ],
                 data: [93]
             }],
@@ -385,9 +421,15 @@
                 text: '小組成果'
             },
             scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 24
+                    },
+                }],
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        fontSize: 24
                     },
                 }]
             }

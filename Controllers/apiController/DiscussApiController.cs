@@ -29,8 +29,6 @@ namespace LMSweb.Controllers
                     //.Where(x => x.MID == Discussapi.MID && x.SID == Discussapi.SID)
                     //.FirstOrDefault();(因修改Model所以註解)
 
-                    lb.ActionType = Discussapi.ActionType;
-                    lb.subAction = Discussapi.subAction;
                     lb.Detail = Discussapi.Detail;
                     lb.Time = Discussapi.Time;
                     lb.CID = Discussapi.CID;

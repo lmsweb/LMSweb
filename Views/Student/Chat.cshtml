@@ -2,11 +2,9 @@
 @{
     ViewBag.Title = "Chat";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    
 }
 
-<h2>@Model.MID</h2>
-<h2>@Model.GID</h2>
-<h2>@Model.SID</h2>
 <h2>@Model.GName</h2>
 
 
@@ -28,6 +26,10 @@
                     <input type="hidden" id="mid" />
                     <input type="hidden" id="cid" />
                     <input type="hidden" id="groupname" />
+                    <input type="hidden" id="gname" />
+                    <input type="hidden" id="hisT" />
+                    <input type="hidden" id="hisS" />
+                    <input type="hidden" id="hisG" />
                 </div>
             </div>
         </div>
@@ -46,73 +48,32 @@
             var chat = $.connection.chatHub;
             $('#displayname').val('@User.Identity.Name');
             $('#groupname').val('@Model.GID');
+            $('#gname').val('@Model.GName');
             $('#sid').val('@Model.SID');
             $('#mid').val('@Model.MID');
             $('#cid').val('@Model.CID');
-            //$('#displayname').val(prompt('請輸入暱稱:'));
-            var today = new Date();
-            var currentDateTime =
-                today.getFullYear() + '/' +
-                (today.getMonth() + 1) + '/' +
-                today.getDate() + '/' +
-                today.getHours() + ':' + today.getMinutes();
 
             let url = 'https://localhost:44301/api/test/live';
             //加入群組
             chat.client.AddRoom = function (groupname) {
                 var html = '<table class="table"> <tr><td><div id="' + groupname + '" groupname="' + groupname + '">\
-                                <label>' + groupname + '</label>房間\
+                                <label>' + $('#gname').val() + '</label>房間\
                                             聊天記錄如下:<ul>\
                                             </ul>\</table>'
                 
                 $("#messages").append(html);
-                console.log("group suc");
-                for(let i = 0; i < 10; i++) {
-                    chat.server.historySend($('#groupname').val(), $('#displayname').val(), $('#cid').val(), $('#mid').val())
-                        .done(function () {
-                            console.log("send suc");
-                        })
-                        .fail(function (e) {
-                            console.varn(e);
-                        })
-                }
-                                               
+                console.log("group suc");    
             };
             //訊息格式
-            chat.client.groupMessage = function (groupname, name, time, message) {
+            chat.client.groupMessage = function (groupname, sid, time, message) {
                 $("#" + groupname).find("ul").each(function () {
-                    write_msg(groupname, name, time, message);
+                    write_msg(groupname, sid, time, message);
                 })
             };
-            //chat.client.receiveMessage = function (name, time, message) {
-            //    write_msg(name, time, message);
-            //};
-            $(".sendM").click(function () {
-                //chat.server.send($('#displayname').val(), $('#message').val())
-                chat.server.send($('#groupname').val(), $('#displayname').val(), $('#message').val())
+            //發送訊息
+            $(".sendM").click(function () {               
+                chat.server.send($('#groupname').val(), $('#displayname').val(), $('#message').val(), $('#cid').val(), $('#sid').val(), $('#mid').val())
                     .done(function () {
-                        //fetch(url, {
-                        //    method: 'POST',
-                        //    headers: {
-                        //        'Content-Type': 'application/json'
-                        //    },
-                        //    body: JSON.stringify({
-                        //        ActionType: "D",
-                        //        subAction: "R",
-                        //        Detail: $('#message').val(),
-                        //        Time: currentDateTime,
-                        //        CID: $('#cid').val(),
-                        //        SID: $('#sid').val(),
-                        //        MID: $('#mid').val()
-                        //    })
-
-                        //}).then((response) => {
-                        //    return response.json();
-                        //}).then((jsonData) => {
-                        //    console.log(jsonData);
-                        //}).catch((err) => {
-                        //    console.log('錯誤:', err);
-                        //})
                         console.log('send suc');
                         $('#message').val("");
                     })
@@ -120,37 +81,38 @@
                         console.warn(e);
                     });
             });
+            //Start
             $.connection.hub.start().done(function () {
                 chat.server.creatRoom($("#groupname").val());
             })
+            //聊天紀錄
+            chat.client.getChatHistory = function (histories) {
+                
+                for (var i = 0; i < histories.length; i++) {
+                    //console.log(histories[i])
+                    chat.server.historySend($('#groupname').val(), histories[i].SID, histories[i].Time, histories[i].Detail)
+                        .done(function () {
+                            console.log('his suc');                      
+                        })
+                        .fail(function (e) {
+                            console.warn(e);
+                        });
+                }
+            };
         });
-        function write_msg(groupname, name, time, message) {
-            var myid = name;
-            if (myid == $('#displayname').val()) {
-                $('#messages').append('<li class="me"><div><p>'+'[' + groupname + ']' + '我:' + message + '(' + time + ')' + '</p></div><li>');
+        function write_msg(groupname, sid, time, message) {
+            var myid = sid;
+            if (myid == $('#sid').val()) {
+                $('#messages').append('<li class="me"><div><p>' + '我:' + message + '(' + time + ')' + '</p></div><li>');
             }
             else {
-                $('#messages').append('<li class="you"><div><p>' + '[' + groupname + ']' + name + ':' + message + '(' + time + ')' + '</p></div><li>');
+                $('#messages').append('<li class="you"><div><p>' + sid + ':' + message + '(' + time + ')' + '</p></div><li>');
             }
         }
         function AddRoom(groupname) {
             var data = $(groupname).attr("groupname");
             chat.server.AddGroup(data);
         }
-        //function htmlEncode(value) {
-        //    var encodedValue = $('<div />').text(value).html();
-        //    return encodedValue;
-        //}
-        //function write_msg(name, time, message) {
-        //    var myid = name;
-        //    if (myid == $('#displayname').val()) {
-        //        $('#messages').append('<li class="me"><div><p>我(' + time + ')</p>' + message + '</div><li>');
-        //    }
-        //    else {
-        //        $('#messages').append('<li class="you"><div><p>' + name + '(' + time + ')</p>' + message + '</div><li>');
-        //    }
-        //}
-
     </script>
 }
 

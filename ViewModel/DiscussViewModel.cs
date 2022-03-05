@@ -12,8 +12,6 @@ namespace LMSweb.ViewModel
     {
         public string SID { get; set; }
         public string MID { get; set; }
-        public string ActionType { get; set; }
-        public string subAction { get; set; }
         public string Detail { get; set; }
         public string Time { get; set; }
         public string CID { get;  set; }

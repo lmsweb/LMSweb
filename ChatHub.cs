@@ -7,24 +7,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using LMSweb.Models;
-
+using System.Web.Mvc;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using LMSweb.ViewModel;
 
 namespace LMSweb
 {
     public class ChatHub : Hub
     {
         //全局變數
+        private LMSmodel db = new LMSmodel();
+
         protected static List<Student> userInfoList = new List<Student>();
        
-        protected static List<LearningBehavior> chatHistoryList = new List<LearningBehavior>();
 
-        //public void AddGroup(string GroupId)
-        //{
-        //    Groups.Add(Context.ConnectionId, GroupId);
 
-        //    Clients.Client(Context.ConnectionId).addGroup(GroupId);
-        //    //Clients.Group(GroupId).groupMessage("Welcome");
-        //}
+
         public void AddToRoom(string GroupId)
         {
             Groups.Add(Context.ConnectionId, GroupId);
@@ -33,64 +32,70 @@ namespace LMSweb
         public void CreatRoom(string GroupId)
         {
             AddToRoom(GroupId);
+            GetChatHistory(GroupId);
         }
-        public void Send(string GroupId, string name, string message)
+        public void Send(string GroupId, string name, string message,string cid,string sid,string mid)
         {
-            //Call the addNewMessageToPage method to update clients.           
-            //Clients.All.receiveMessage(name, DateTime.Now.ToString("HH:mm"), message);
-            Clients.Group(GroupId, new string[0]).groupMessage(GroupId, name, DateTime.Now.ToString("HH:mm"), message);
+            Clients.Group(GroupId, new string[0]).groupMessage(GroupId, sid, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), message);
 
-            //AddChatHistory(name, DateTime.Now.ToString("HH:mm"), message, GroupId);
+            AddChatHistory(message, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), cid, sid, mid, GroupId);
         }
 
-        public void HistorySend(string GroupId, string name, string time, string message)
+        public void HistorySend(string GroupId, string sid, string time, string message)
         {
-            Clients.Group(GroupId, new string[0]).groupMessage(GroupId, name, time, message);
+            Clients.Group(GroupId, new string[0]).groupMessage(GroupId, sid, time, message);
         }
 
-        //public void GroupSend(string GroupId, string name, string message)
-        //{
-        //    //Call the addNewMessageToPage method to update clients.
-        //    Clients.Group(GroupId, new string[0]).groupMessage(GroupId, name, DateTime.Now.ToString("HH:mm"), message);
-        //}
-
-        /// </summary>
-        /// <param name="chatType">消息類型0公共聊天，1好友，2群</param>
-        /// <param name="toId">接收者id</param>
-        /// <param name="frmId">發送方id</param>
-        /// <param name="roomId">房間id</param>
-        public void GetChatHistory(string GroupId, string name, string time,string message)
+        public void GetChatHistory(string GroupId)
         {
-            //var list = chatHistoryList;
+            int GID = Convert.ToInt32(GroupId);
+            List<DiscussViewModel> histories = new List<DiscussViewModel>();
 
-            var list = chatHistoryList;
-            list = chatHistoryList.ToList();
-            list = new List<LearningBehavior>();
-            //var data = JsonHelper.ToJsonString(list);
-            var data = message;
-            var Time = time;
-            var user = userInfoList.FirstOrDefault(x => x.SID == name);
-            var conid = Context.ConnectionId;
-            
-            Clients.Client(conid).initChatHistoryData(data);
+            var chathistory = db.LearnB.Where(h => h.group.GID == GID && h.ActionType == "D").ToList();
+            foreach (var item in chathistory)
+            {
+                DiscussViewModel history = new DiscussViewModel
+                {
+                    Detail = item.Detail,
+                    Time = item.Time,
+                    CID = item.CID,
+                    SID = item.student.SID,
+                    MID = item.mission.MID
+                };
+                histories.Add(history);
+            }
+            Clients.All.getChatHistory(histories);
         }
-        /// <summary>
         /// 添加歷史記錄數據
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="message"></param>
-        /// <param name="chatType">0公共聊天，1私聊，2群聊</param>
-        //public void AddChatHistory(string name, string time, string message ,string GroupId)
-        //{
-           
-        //    LearningBehavior history = new LearningBehavior()
-        //    {
-                
-        //        Time = time,
-        //        Detail = message
-                
-        //    };
-        //    chatHistoryList.Add(history);
-        //}
+        public string AddChatHistory(string message, string time, string cid, string sid, string mid,string GroupId)
+        {          
+            try
+            {
+                LearningBehavior lb = new LearningBehavior();
+               
+                lb.ActionType = "D";
+                lb.subAction = "R";
+                lb.Detail = message;
+                lb.Time = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
+                lb.CID = cid;
+                lb.student = db.Students.Find(sid);
+                lb.mission = db.Missions.Find(mid);
+                lb.group = db.Groups.Find(Convert.ToInt32(GroupId));
+
+                db.LearnB.Add(lb);
+                db.SaveChanges();
+                return "history suc";
+            }
+            catch (DbUpdateException ex)
+            {
+                //回傳HTTP Internal Server Error
+                return "server error";
+            }
+            catch (Exception ex)
+            {
+                return "error";
+            }
+
+        }
     }
 }
