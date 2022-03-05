@@ -21,9 +21,6 @@ namespace LMSweb
 
         protected static List<Student> userInfoList = new List<Student>();
        
-
-
-
         public void AddToRoom(string GroupId)
         {
             Groups.Add(Context.ConnectionId, GroupId);

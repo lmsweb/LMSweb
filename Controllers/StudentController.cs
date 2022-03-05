@@ -223,12 +223,7 @@ namespace LMSweb.Controllers
             model.GID = gid;
             model.GName = gname;
             model.SID = sid;
-            var Detail = db.LearnB.Where(h => h.group.GID == gid && h.ActionType == "D").ToList();
-            var chatH = Detail[0].Detail;
-            model.learningbehaviors = db.LearnB.Where(h => h.group.GID == gid && h.ActionType == "D").ToList();
-            
 
-            //ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
             return View(model);
         }
         protected override void Dispose(bool disposing)

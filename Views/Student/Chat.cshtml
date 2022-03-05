@@ -27,9 +27,6 @@
                     <input type="hidden" id="cid" />
                     <input type="hidden" id="groupname" />
                     <input type="hidden" id="gname" />
-                    <input type="hidden" id="hisT" />
-                    <input type="hidden" id="hisS" />
-                    <input type="hidden" id="hisG" />
                 </div>
             </div>
         </div>
@@ -53,9 +50,8 @@
             $('#mid').val('@Model.MID');
             $('#cid').val('@Model.CID');
 
-            let url = 'https://localhost:44301/api/test/live';
             //加入群組
-            chat.client.AddRoom = function (groupname) {
+            chat.client.addRoom = function (groupname) {
                 var html = '<table class="table"> <tr><td><div id="' + groupname + '" groupname="' + groupname + '">\
                                 <label>' + $('#gname').val() + '</label>房間\
                                             聊天記錄如下:<ul>\
@@ -63,6 +59,19 @@
                 
                 $("#messages").append(html);
                 console.log("group suc");    
+            };
+            //聊天紀錄
+            chat.client.getChatHistory = function (histories) {
+                console.log(histories)
+                for (var i = 0; i < histories.length; i++) {
+                    chat.server.historySend($('#groupname').val(), histories[i].SID, histories[i].Time, histories[i].Detail)
+                        .done(function () {
+                            console.log('his suc');
+                        })
+                        .fail(function (e) {
+                            console.warn(e);
+                        });
+                }
             };
             //訊息格式
             chat.client.groupMessage = function (groupname, sid, time, message) {
@@ -83,22 +92,8 @@
             });
             //Start
             $.connection.hub.start().done(function () {
-                chat.server.creatRoom($("#groupname").val());
+                chat.server.creatRoom($("#groupname").val());                
             })
-            //聊天紀錄
-            chat.client.getChatHistory = function (histories) {
-                
-                for (var i = 0; i < histories.length; i++) {
-                    //console.log(histories[i])
-                    chat.server.historySend($('#groupname').val(), histories[i].SID, histories[i].Time, histories[i].Detail)
-                        .done(function () {
-                            console.log('his suc');                      
-                        })
-                        .fail(function (e) {
-                            console.warn(e);
-                        });
-                }
-            };
         });
         function write_msg(groupname, sid, time, message) {
             var myid = sid;
