@@ -17,7 +17,7 @@ let online = $.connection.codeServiceHub;
 //}
 
 $.connection.hub.start().done(function () {
-    online.server.joinGroup($("#groupname").val());
+
 });
 
 
