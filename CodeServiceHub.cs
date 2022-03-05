@@ -16,8 +16,8 @@ namespace LMSweb
 
         public void editCode(string gid, string content, int line, int ch)
         {
-            //Clients.All.broadcastCode(content, line, ch);
-            Clients.Group(gid).broadcastCode(content, line, ch);
+            Clients.All.broadcastCode(content, line, ch);
+            //Clients.Group(gid).broadcastCode(content, line, ch);
         }
 
         public void saveCode(string content)
