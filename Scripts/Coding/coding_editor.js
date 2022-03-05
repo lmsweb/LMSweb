@@ -34,7 +34,7 @@ editor.on('change', (ins, ch) => {
 
 
     if (ch.origin == "+input" || ch.origin == "+delete") {
-        online.server.editCode(editor.getValue(), cursor.line, cursor.ch);
+        online.server.editCode(document.getElementById("gid").value, editor.getValue(), cursor.line, cursor.ch);
     }
 
 });
