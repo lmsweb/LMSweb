@@ -27,6 +27,7 @@ namespace LMSweb.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Login(LoginViewModel login)
         {
             var result = db.Teachers.Where(x => x.TID == login.ID && x.TPassword == login.Password).FirstOrDefault(); //驗證
@@ -50,8 +51,10 @@ namespace LMSweb.Controllers
             else
             {
                 ModelState.AddModelError("", "輸入的帳密可能有誤或是沒有註冊");
-                return RedirectToAction("Index", "Home");
+                //return RedirectToAction("Index", "Home");
+                return View("Login");
             }
+
         }
 
         public ActionResult Logout()

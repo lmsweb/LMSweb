@@ -54,7 +54,7 @@ namespace LMSweb.Controllers
             else
             {
                 ModelState.AddModelError("", "輸入的帳密可能有誤或是沒有註冊");
-                return RedirectToAction("Index", "Home");
+                return View("Login");
             }
         }
 

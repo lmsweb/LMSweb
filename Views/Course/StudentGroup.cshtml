@@ -74,7 +74,7 @@
                     </div>
                     <div class="card-body">
                         @*<button class="btn btn-primary" id="btn">新增組別</button>*@
-                        
+
                         <br />
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -82,9 +82,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">新增組別</h5>
                                         <button type="button" class="btn-close" aria-label="Close" aria-hidden="true" data-bs-dismiss="modal"></button>
-                                        @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>*@
+
                                     </div>
                                     <div class="modal-body">
                                         <form>
@@ -121,8 +119,11 @@
                                 <div class="card-header">
                                     <div class="row">
                                         <div class="col-8">
-                                            <p id="existedGroup_name">@Html.DisplayFor(modelItem => item.GName)</p>
+                                            @*<a id="existedGroup_name">@Html.DisplayFor(modelItem => item.GName)</a>*@
+
+                                            <a data-bs-toggle="modal" data-id="@item.GName" data-gid="@item.GID" class="open-Dialog" href="#editGnameModal">@Html.DisplayFor(modelItem => item.GName)</a>
                                         </div>
+                                        
                                         <div class="col-3">
 
                                             <button type="button" class="btn btn-primary addGbtn" id="@item.GID">
@@ -130,12 +131,17 @@
                                             </button>
 
                                         </div>
+                                        <!--<div class="col-3">-->
+                                        @*@Html.ActionLink("更改組名", "#", new { gid = @item.GID }, new { @class = "btn btn-default", @data_bs_target = "#editGnameModal", @data_bs_toggle = "modal" })*@
+                                        @*<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editGnameModal">更改組名</button>*@
+                                        @*<a data-bs-toggle="modal" data-id="@item.GName" data-gid="@item.GID" title="Add this item" class="open-Dialog btn btn-primary" href="#editGnameModal">test</a>*@
+
                                         <div class="col-1">
                                             <button type="button" class="btn-close groupclose" aria-label="btn-Close" aria-hidden="true" id="@item.GID">
                                                 @*<span >&times;</span>*@
                                             </button>
                                         </div>
-                                        
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -151,14 +157,40 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        
-                                        
+
+
                                     }
                                 </div>
 
-                            </div>
+                            
                             <br />
                         }
+                        <div class="modal  hide" id="editGnameModal" tabindex="-1" aria-labelledby="editGnameModalLabel" aria-hidden="true">
+                            <form id="EditGnameForm" action="@Url.Action("EditGname", "Course")" method="post" enctype="multipart/form-data">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editGnameModalLabel">更改組別名稱</h5>
+                                            <button type="button" class="btn-close" aria-label="Close" aria-hidden="true" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="group_name" class="col-form-label">組別名稱</label>
+                                                <input type="hidden" name="gid" id="gId" class="form-control" value="" />
+                                                <input type="text" name="gName" id="gName" class="form-control" value="" />
+                                                @*@Html.EditorFor(model => model.group.GName, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                @*<input type="text" class="form-control" id="group_name">*@
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" aria-hidden="true" data-bs-dismiss="modal">關閉</button>
+                                            <button type="submit" class="btn btn-primary">更改</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,6 +202,12 @@
         <script type="text/javascript" src="../jquery/jquery-ui.js"></script>*@
 @section scripts {
     <script>
+        $(document).on("click", ".open-Dialog", function () {
+            var gname = $(this).data('id');
+            var gid = $(this).data('gid');
+            $(".modal-body #gName").val(gname);
+            $(".modal #gId").val(gid);
+        });
     $('#exampleModal').on('show.bs.modal', function (event) {     //將選取的學生顯示在Modal上
         var button = $(event.relatedTarget) // Button that triggered the modal
         //var recipient = button.data('whatever') // Extract info from data-* attributes
