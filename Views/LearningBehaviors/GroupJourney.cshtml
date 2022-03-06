@@ -22,7 +22,24 @@
                     @item.Detail
                 </th>
                 <th>
-                    @item.Time
+                    <div class="h5 mb-0">
+                        <a href="#" class="text-decoration-none commentStar star-count-1">
+                            <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none commentStar star-count-2">
+                            <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none commentStar star-count-3">
+                            <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none commentStar star-count-4">
+                            <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none commentStar star-count-5">
+                            <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                        </a>
+                    </div>
+
                 </th>
                 <th>
                     @item.student.SID
@@ -34,46 +51,29 @@
         }
     </table>
 </div>
-<script type="text/javascript">
-    //鼠标点击
-    function picClick(obj) {
-        var hid = $(obj).parent().find("input[type='hidden']");
 
-        //赋值
-        hid.val($(obj).attr("val"));
-        hid.attr("num", $(obj).attr("num"));
-        hid.attr("title", $(obj).attr("title"));
-    }
 
-    //鼠标移入
-    function picMouseOver(obj) {
-        $(obj).parent().find("img").attr("src", $(obj).attr("src1")); //全部置灰
-
-        //设置高亮图片
-        var currentNum = $(obj).attr("num");
-        for (var i = 0; i < currentNum; i++) {
-            $(obj).parent().find("img:eq(" + i + ")").attr("src", $(obj).attr("src2"));
-        }
-
-        //显示文本
-        $(obj).parent().find("#spanResult").text($(obj).attr("title"));
-    }
-
-    //鼠标移出
-    function picMouseOut(obj) {
-        $(obj).parent().find("img").attr("src", $(obj).attr("src1")); //全部置灰
-        $(obj).parent().find("#spanResult").text(""); //显示文本
-
-        var hid = $(obj).parent().find("input[type='hidden']");
-        if (hid.val()) {
-            //设置高亮图片
-            var currentNum = hid.attr("num");
-            for (var i = 0; i < currentNum; i++) {
-                $(obj).parent().find("img:eq(" + i + ")").attr("src", $(obj).attr("src2"));
-            }
-
-            //显示文本
-            $(obj).parent().find("#spanResult").text(hid.attr("title"));
-        }
+<script>
+    let starIcon = document.querySelectorAll('.commentStar i');
+    for (let i = 0; i < starIcon.length; i++) {
+        starIcon[i].addEventListener(
+            'click',
+            function (event) {
+                event.preventDefault();
+                console.log('preventDefault will stop you from checking this checkbox!');
+                console.log(this);
+                for (let j = 0; j <= i; j++) {
+                    starIcon[j].classList.add('bg-danger');
+                    console.log('第 ' + j + ' 號星 加上紅色');
+                }
+                for (let k = 4; k > i; k--) {
+                    starIcon[k].classList.remove('bg-danger');
+                    console.log('第 ' + k + ' 號星 去除紅色');
+                }
+                var starNumber = i + 1; // starNumber = 傳到資料庫的星數
+                console.log('評論星數為 ' + starNumber);
+            },
+            false
+        );
     }
 </script>

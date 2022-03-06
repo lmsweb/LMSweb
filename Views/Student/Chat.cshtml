@@ -25,6 +25,7 @@
                     <input type="hidden" id="sid" />
                     <input type="hidden" id="mid" />
                     <input type="hidden" id="cid" />
+                    <input type="hidden" id="roomid" />
                     <input type="hidden" id="groupname" />
                     <input type="hidden" id="gname" />
                 </div>
@@ -45,26 +46,27 @@
             var chat = $.connection.chatHub;
             $('#displayname').val('@User.Identity.Name');
             $('#groupname').val('@Model.GID');
+            $('#roomid').val('@Model.MID@Model.GID');
             $('#gname').val('@Model.GName');
             $('#sid').val('@Model.SID');
             $('#mid').val('@Model.MID');
             $('#cid').val('@Model.CID');
 
             //加入群組
-            chat.client.addRoom = function (groupname) {
-                var html = '<table class="table"> <tr><td><div id="' + groupname + '" groupname="' + groupname + '">\
+            chat.client.addRoom = function (roomid) {
+                var html = '<table class="table"> <tr><td><div id="' + roomid + '" roomid="' + roomid + '">\
                                 <label>' + $('#gname').val() + '</label>房間\
                                             聊天記錄如下:<ul>\
                                             </ul>\</table>'
-                
+
                 $("#messages").append(html);
-                console.log("group suc");    
+                console.log("group suc");
             };
             //聊天紀錄
             chat.client.getChatHistory = function (histories) {
                 console.log(histories)
                 for (var i = 0; i < histories.length; i++) {
-                    chat.server.historySend($('#groupname').val(), histories[i].SID, histories[i].Time, histories[i].Detail)
+                    chat.server.historySend($('#roomid').val(), histories[i].SID, histories[i].Time, histories[i].Detail)
                         .done(function () {
                             console.log('his suc');
                         })
@@ -74,14 +76,14 @@
                 }
             };
             //訊息格式
-            chat.client.groupMessage = function (groupname, sid, time, message) {
-                $("#" + groupname).find("ul").each(function () {
-                    write_msg(groupname, sid, time, message);
+            chat.client.groupMessage = function (roomid, sid, time, message) {
+                $("#" + roomid).find("ul").each(function () {
+                    write_msg(roomid, sid, time, message);
                 })
             };
             //發送訊息
-            $(".sendM").click(function () {               
-                chat.server.send($('#groupname').val(), $('#displayname').val(), $('#message').val(), $('#cid').val(), $('#sid').val(), $('#mid').val())
+            $(".sendM").click(function () {
+                chat.server.send($('#roomid').val(), $('#groupname').val(), $('#displayname').val(), $('#message').val(), $('#cid').val(), $('#sid').val(), $('#mid').val())
                     .done(function () {
                         console.log('send suc');
                         $('#message').val("");
@@ -92,10 +94,11 @@
             });
             //Start
             $.connection.hub.start().done(function () {
-                chat.server.creatRoom($('#groupname').val(), $('#mid').val());
+                console.log(roomid)
+                chat.server.creatRoom($('#roomid').val(), $('#groupname').val(), $('#mid').val());
             })
         });
-        function write_msg(groupname, sid, time, message) {
+        function write_msg(roomid, sid, time, message) {
             var myid = sid;
             if (myid == $('#sid').val()) {
                 $('#messages').append('<li class="me"><div><p>' + '我:' + message + '(' + time + ')' + '</p></div><li>');
@@ -104,8 +107,8 @@
                 $('#messages').append('<li class="you"><div><p>' + sid + ':' + message + '(' + time + ')' + '</p></div><li>');
             }
         }
-        function AddRoom(groupname) {
-            var data = $(groupname).attr("groupname");
+        function AddRoom(roomid) {
+            var data = $(roomid).attr("roomid");
             chat.server.AddGroup(data);
         }
     </script>
