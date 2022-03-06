@@ -7,13 +7,18 @@ using System.Web.Mvc;
 
 namespace LMSweb.ViewModel
 {
+    [MetadataType(typeof(MissionCreateViewModel))]
     public class MissionCreateViewModel
     {
         [Required]
         public string CID { get; set; }
         public string CName { get; set; }
+
         public IEnumerable<SelectListItem> KnowledgeList { get; set; }
+
+
         [Required]
+        [Display(Name ="知識點")]
         public IEnumerable<int> SelectKnowledgeList { get; set; }
 
         [Required]

@@ -45,6 +45,7 @@
                     </div>*@
                 <div class="col-5">
                     <textarea class="form-control" id="mission_MDetail" name="mission.MDetail"></textarea>
+                    @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="mb-3">
@@ -54,9 +55,7 @@
                     <input type="datetime-local" data-bs-target="#Start" class = "form-control" id="mission_Start" name="mission.Start" >
                     @*@Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control datepicker-input", data_target = "#datepicker_start" } })*@
                     @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
-                    @*<div class="input-group-append" data-target="#datepicker_start" data-toggle="datepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>*@
+  
 
                 </div>
             </div>
@@ -65,11 +64,8 @@
                 @Html.LabelFor(model => model.mission.End, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-5">
                     <input type="datetime-local" class="form-control" id="mission_End" name="mission.End">
-                    @*@Html.EditorFor(model => model.mission.End, new { htmlAttributes = new { @class = "form-control datepicker-input", data_target = "#datepicker_end" } })*@
                     @Html.ValidationMessageFor(model => model.mission.End, "", new { @class = "text-danger" })
-                    @*<div class="input-group-append" data-target="#datepicker_end" data-toggle="datepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>*@
+
                 </div>
             </div>
 
@@ -81,6 +77,7 @@
                     <div class="row justify-content-between">
                         <div class="col-10">
                             @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", @data_live_search_placeholder = "輸入知識點關鍵字", title = "請選擇知識點..." })
+                            @Html.ValidationMessageFor(model => model.SelectKnowledgeList, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-2">
                             <input type="button" value="管理知識點" onclick="myFunction()" class="btn btn-primary" />
@@ -90,36 +87,39 @@
             </div>
 
             <br />
-            <label class="mb-3">總成績權重調整 : </label>
+            <label class="mb-3">總成績權重調整(權重總和應等於100) : </label>
             <div class="container">
-                
+
                 <div class="row">
                     <div class="col">
                         <div class="row">
-                            討論次數權重 :
+                            合作學習權重 :
                             <div class="col-5">
-                                <input type="text" class="form-control" placeholder="請填0~100" id="mission_discuss_k" name="mission.discuss_k" />
+                                <input type="number" class="form-control" placeholder="請填0~100" id="mission_discuss_k" name="mission.discuss_k" />
                             </div>%
                         </div>
                     </div>
                     <div class="col">
                         <div class="row">
-                            個人分數權重 :
+                            個人表現權重 :
                             <div class="col-5">
-                                <input type="text" class="form-control" placeholder="請填0~100" id="mission_per_k" name="mission.per_k" />
+                                <input type="number" class="form-control" placeholder="請填0~100" id="mission_per_k" name="mission.per_k" />
                             </div>%
                         </div>
                     </div>
                     <div class="col">
                         <div class="row">
-                            小組分數權重 :
+                            小組成果權重 :
                             <div class="col-5">
-                                <input type="text" class="form-control" placeholder="請填0~100" id="mission_group_k" name="mission.group_k" />
+                                <input type="number" class="form-control" placeholder="請填0~100" id="mission_group_k" name="mission.group_k" />
                             </div>%
                         </div>
                     </div>
+
                 </div>
+                
             </div>
+            <div id="demo" class="text-danger"></div>
             <br />
             <div class="mb-3">
                 <div class="col-5">
@@ -186,6 +186,25 @@
                 }
             });
         }
+        $("input[type='number']").change(function () {
+            var discuss = parseInt($("#mission_discuss_k").val());
+            var per = parseInt($("#mission_per_k").val());
+            var group = parseInt($("#mission_group_k").val());
+            let total = discuss + per + group;
+
+            console.log(discuss);
+            console.log(per);
+            console.log(group);
+            console.log(total);
+
+            if (total != 100) {
+                $("#demo").html("三個權重加起來必須是100");
+            }
+            else {
+                $("#demo").html("");
+            }
+
+        });
 
         $('#kpModal').on('show.bs.modal', function (event) {
             var modal = $(this)
@@ -197,6 +216,7 @@
             });
 
         });
+
         function dateFormat() {
             let Start = $('#Start').val()
             if (Start.indexOf('T') != -1) {
