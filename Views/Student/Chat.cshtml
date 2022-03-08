@@ -101,10 +101,10 @@
         function write_msg(roomid, sid, time, message) {
             var myid = sid;
             if (myid == $('#sid').val()) {
-                $('#messages').append('<li class="me"><div><p>' + '我:' + message + '(' + time + ')' + '</p></div><li>');
+                $('#messages').append('<li class="me"><div><p>' + '[' + roomid + ']' + '我:' + message + '(' + time + ')' + '</p></div><li>');
             }
             else {
-                $('#messages').append('<li class="you"><div><p>' + sid + ':' + message + '(' + time + ')' + '</p></div><li>');
+                $('#messages').append('<li class="you"><div><p>' + '[' + roomid + ']' + sid + ':' + message + '(' + time + ')' + '</p></div><li>');
             }
         }
         function AddRoom(roomid) {

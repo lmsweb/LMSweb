@@ -10,7 +10,8 @@ namespace LMSweb.ViewModel
         public string CID { get; set; }
         public string MID { get; set; }
         public int GID { get; set; }
-        public string CODE_PATH { get; set; }
-        public LMSweb.Models.StudentCode studentCode { get; set; }
+        public string CodePath { get; set; }
+        public bool IsEdit { get; set; }
+        public string CodeContent { get; set; }
     }
 }

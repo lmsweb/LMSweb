@@ -28,7 +28,7 @@ namespace LMSweb.Models
 
         public string CodePath { get; set; }
 
-        public Boolean IsEdit { get; set; }
+        public bool IsEdit { get; set; }
 
 
 

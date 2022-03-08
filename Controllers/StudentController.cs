@@ -180,30 +180,31 @@ namespace LMSweb.Controllers
             var group = db.Students.Find(sid).group;
             model.GID = group.GID;
             
-
             return View(model);
         }
         [HttpPost]
-        public ActionResult StudentCoding(StudentCodingViewModel model, string mid, string cid)
-        {
-            model.CID = cid;
-            model.MID = mid;
+        //public ActionResult StudentCoding(StudentCode model, string mid, string cid)
+        //{
+        //    model.CID = cid;
+        //    model.MID = mid;
 
-            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
-            var sid = claimData[0].Value;
-            var group = db.Students.Find(sid).group;
-            model.GID = group.GID;
+        //    ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+        //    var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+        //    var sid = claimData[0].Value;
+        //    var group = db.Students.Find(sid).group;
+        //    model.GID = group.GID;
 
-            if (ModelState.IsValid)
-            {
-                db.StudentCodes.Add(model.studentCode);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { cid = model.CID });
-            }
+        //    model.IsEdit = true;
+        //    model.CodePath = "~/FileUpload/";
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.StudentCodes.Add(model);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index", new { cid = model.CID });
+        //    }
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
         public ActionResult StudentDrawing(string mid, string cid)
         {
             MissionViewModel model = new MissionViewModel();
