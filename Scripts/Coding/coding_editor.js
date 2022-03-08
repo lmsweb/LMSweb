@@ -12,19 +12,15 @@ const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
 });
 
 let online = $.connection.codeServiceHub;
-//online.client.hello = function () {
-//    editor.setValue("print(Hello);");
-//}
-console.log(document.getElementById("gid").value);
-
-
-let oldContent = "";
-let newContent = "";
 let cursor = { line: 0, ch: 0 };
+let cid = document.getElementById("cid").value;
+let mid = document.getElementById("mid").value;
+let gid = document.getElementById("gid").value;
 
 $.connection.hub.start().done(function () {
     editor.setValue("");
     editor.setCursor(cursor);
+    online.server.readCode(cid, mid, gid);
 });
 
 editor.on('change', (ins, ch) => {
@@ -45,24 +41,13 @@ online.client.broadcastCode = function (content, line, ch) {
     editor.setCursor(line, ch);
 }
 
+document.getElementById("saveCode").addEventListener("click", saveCode);
 
 function saveCode() {
-    let code = editor.getValue();
-    let cid = document.getElementById("cid").value;
-    let mid = document.getElementById("mid").value;
-    let gid = document.getElementById("gid").value;
-    console.log("cid：" + cid + ", \nmid：" + mid + ", \ngid：" + gid + ", \ncode：" + code);
-    //$.ajax({
-    //    url: "@url.action("studentcoding", "stduent")",
-    //    method: "post",
-    //    contenttype: 'application/json',
-    //    data: json.stringify({ cid: cid, mid: mid, gid: gid }),
-    //    success: function (response) {
-    //        window.location.reload();
+    let codeContent = editor.getValue();
 
-    //    },
-    //    error: function (thrownerror) {
-    //        console.log(thrownerror);
-    //    }
-    //});
+    console.log("cid：" + cid + ", \nmid：" + mid + ", \ngid：" + gid + ", \ncode：" + code);
+
+    let model = { "cid": cid, "mid": mid, "gid": gid, "codeContent": codeContent, "IsEdit" : false};
+    online.server.saveCode(model);
 }
