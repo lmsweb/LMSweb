@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace LMSweb.ViewModel
 {
+    [MetadataType(typeof(LoginViewModel))]
     public class LoginViewModel
     {
         [Required]

@@ -7,7 +7,7 @@
 {
     @Html.AntiForgeryToken()
     <div class="container" style=" padding: 50px 30px 40px; ">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    
         <div class="row">
             <div class="col-md-4 offset-md-4">
                 <div class="card" style="width: 23rem; box-shadow: 0 2px 2px; border-radius: 15px;">
@@ -27,7 +27,9 @@
                                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <br />
+
                         <div class="row g-1 ">
                             <div class="col-auto">
                                 <input type="submit" value="登入" class="btn btn-primary" />
@@ -35,9 +37,7 @@
                             <div class="col-auto">
                                 <input type="button" class="btn btn-secondary" value="取消" onclick="location.href='@Url.Action("Index", "Home")'" />
                             </div>
-                            <div class="col-auto">
-                                @Html.ActionLink("忘記密碼", "ForgetPwd", "Teacher")
-                            </div>
+
                         </div>
                     </div>
                 </div>
