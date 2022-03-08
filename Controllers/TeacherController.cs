@@ -21,7 +21,7 @@ namespace LMSweb.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            return View();
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
