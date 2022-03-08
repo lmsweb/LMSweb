@@ -340,6 +340,10 @@
     <Compile Include="Migrations\202203071425304_QuestionModelAddClass.Designer.cs">
       <DependentUpon>202203071425304_QuestionModelAddClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203080714446_MissionAddBool.cs" />
+    <Compile Include="Migrations\202203080714446_MissionAddBool.Designer.cs">
+      <DependentUpon>202203080714446_MissionAddBool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -1438,6 +1442,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203071425304_QuestionModelAddClass.resx">
       <DependentUpon>202203071425304_QuestionModelAddClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203080714446_MissionAddBool.resx">
+      <DependentUpon>202203080714446_MissionAddBool.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

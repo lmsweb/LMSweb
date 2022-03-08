@@ -35,23 +35,24 @@ namespace LMSweb.Models
         [Display(Name = "加入後設認知")]
         public bool AddMetacognition { get; set; }
 
-        [Display(Name = "討論權重")]
+        [Display(Name = "合作學習權重")]
         public int discuss_k { get; set; }
 
-        //[Display(Name = "規劃權重")]
-        //public int chart_k { get; set; }
-
-        //[Display(Name = "撰寫權重")]
-        //public int code_k { get; set; }
-
-        //[Display(Name = "互動合作分數權重")]
-        //public int eva_k { get; set; }
-
-        [Display(Name = "個人分數權重")]
+        [Display(Name = "個人表現權重")]
         public int per_k {get;set;}
 
-        [Display(Name = "小組分數權重")]
+        [Display(Name = "小組成果權重")]
         public int group_k { get; set; }
+
+
+        [Display(Name = "流程圖是否開放")]
+        public bool IsDrawing { get; set; }
+
+        [Display(Name = "程式碼是否開放")]
+        public bool IsCoding { get; set; }
+
+        [Display(Name = "討論區是否開放")]
+        public bool IsDiscuss { get; set; }
 
 
         [Display(Name = "知識點")]
