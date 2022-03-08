@@ -201,6 +201,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KnowledgePointsController.cs" />
     <Compile Include="Controllers\LearningBehaviorsController.cs" />
+    <Compile Include="Controllers\OptionsController.cs" />
     <Compile Include="Controllers\PeerAssessmentsController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
@@ -319,6 +320,26 @@
     <Compile Include="Migrations\202203041536472_adddefaultQ.Designer.cs">
       <DependentUpon>202203041536472_adddefaultQ.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203060938280_updateDefaultQuestionKey.cs" />
+    <Compile Include="Migrations\202203060938280_updateDefaultQuestionKey.Designer.cs">
+      <DependentUpon>202203060938280_updateDefaultQuestionKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203061026148_delQuestionCID.cs" />
+    <Compile Include="Migrations\202203061026148_delQuestionCID.Designer.cs">
+      <DependentUpon>202203061026148_delQuestionCID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203061238348_QOculName.cs" />
+    <Compile Include="Migrations\202203061238348_QOculName.Designer.cs">
+      <DependentUpon>202203061238348_QOculName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203061247489_DOIDint.cs" />
+    <Compile Include="Migrations\202203061247489_DOIDint.Designer.cs">
+      <DependentUpon>202203061247489_DOIDint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203071425304_QuestionModelAddClass.cs" />
+    <Compile Include="Migrations\202203071425304_QuestionModelAddClass.Designer.cs">
+      <DependentUpon>202203071425304_QuestionModelAddClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -350,10 +371,12 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
     <Compile Include="ViewModel\MissionViewModel.cs" />
+    <Compile Include="ViewModel\QuestionViewModel.cs" />
     <Compile Include="ViewModel\StudentCodingViewModel.cs" />
     <Compile Include="ViewModel\StudentHomePageViewModel.cs" />
     <Compile Include="ViewModel\StudentViewModel.cs" />
     <Compile Include="ViewModel\SurveyViewModel.cs" />
+    <Compile Include="ViewModel\SurveyQuestionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitattributes" />
@@ -1291,11 +1314,16 @@
     <Content Include="Views\Questions\Details.cshtml" />
     <Content Include="Views\Questions\Edit.cshtml" />
     <Content Include="Views\Questions\Index.cshtml" />
+    <Content Include="Views\Questions\SelectQuestion.cshtml" />
+    <Content Include="Views\Questions\ReflectionIndex.cshtml" />
+    <Content Include="Views\Questions\SelectReflectionQuestion.cshtml" />
+    <Content Include="Views\Questions\CreateReflection.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="FileUpload\" />
     <Folder Include="packages\" />
+    <Folder Include="Views\Options\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1394,6 +1422,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203041536472_adddefaultQ.resx">
       <DependentUpon>202203041536472_adddefaultQ.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203060938280_updateDefaultQuestionKey.resx">
+      <DependentUpon>202203060938280_updateDefaultQuestionKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203061026148_delQuestionCID.resx">
+      <DependentUpon>202203061026148_delQuestionCID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203061238348_QOculName.resx">
+      <DependentUpon>202203061238348_QOculName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203061247489_DOIDint.resx">
+      <DependentUpon>202203061247489_DOIDint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203071425304_QuestionModelAddClass.resx">
+      <DependentUpon>202203071425304_QuestionModelAddClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

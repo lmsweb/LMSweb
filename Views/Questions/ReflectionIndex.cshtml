@@ -1,28 +1,27 @@
 ﻿@model LMSweb.ViewModel.SurveyViewModel
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ReflectionIndex";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 <div class="card " style="box-sizing: border-box; width: 100%; max-width: 1200px; margin: 20px auto 20px; border-radius: 5px; border: 1px solid #dee2e6; border-color: #cdcdcd;">
     <div class="card-header" style=" padding: 30px 50px 8px 50px;">
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="true" href="@Url.Action("Index","Questions",new { mid = Model.MID, cid=Model.CID })"><h5>目標設置</h5></a>
+                <a class="nav-link"  href="@Url.Action("Index","Questions",new { mid = Model.MID, cid=Model.CID })"><h5>目標設置</h5></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("ReflectionIndex", "Questions", new {  mid = Model.MID, cid=Model.CID })"><h5>自我反思</h5></a>
+                <a class="nav-link active" aria-current="true" href="@Url.Action("ReflectionIndex", "Questions", new {  mid = Model.MID, cid=Model.CID})"><h5>自我反思</h5></a>
             </li>
         </ul>
     </div>
-    
+
     <br />
     <div class="card-body" style="padding: 20px 50px 50px;">
         <div>
-            <button class="btn btn-outline-dark" value="選擇範本題目" onclick="location.href='@Url.Action("SelectQuestion", "Questions", new { Model.MID, cid = Model.CID})'">
+            <button class="btn btn-outline-dark" value="選擇範本題目" onclick="location.href='@Url.Action("SelectReflectionQuestion", "Questions", new { Model.MID, cid = Model.CID})'">
                 選擇範本題目
             </button>
-            <button class="btn btn-outline-dark" value="新增題目" onclick="location.href='@Url.Action("Create", "Questions", new { Model.MID, cid = Model.CID})'">
+            <button class="btn btn-outline-dark" value="新增題目" onclick="location.href='@Url.Action("CreateReflection", "Questions", new { Model.MID, cid = Model.CID})'">
                 新增題目
             </button>
         </div>
@@ -124,7 +123,7 @@
 
     </div>
 </div>
-   
+
 @section scripts
 {
     <script>
@@ -139,7 +138,7 @@
             $(".modal #midHidden").val(datamid);
             $(".modal #cidHidden").val(datacid);
         });
-        
+
     </script>
-    
+
 }

@@ -18,7 +18,7 @@ using LMSweb.Infrastructure.Helpers;
 
 namespace LMSweb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class StudentController : Controller
     {
         private LMSmodel db = new LMSmodel();
@@ -64,13 +64,16 @@ namespace LMSweb.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+        [Authorize(Roles = "Student")]
         // GET: Student
         public ActionResult StudentHomePage()
         {
+            
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value; //取值(因為只有一筆)
-
+           
             var studentCourse = db.Students.Where(s => s.SID == sid);
             StudentHomePageViewModel vmodel = new StudentHomePageViewModel();
             var course = db.Students.Find(sid).CID;
@@ -108,6 +111,7 @@ namespace LMSweb.Controllers
             var course = db.Courses.Single(c => c.CID == cid);
             model.missions = db.Missions.Where(m => m.CID == cid);
             model.CID = course.CID;
+            model.CName = course.CName;
           
             return View(model);
         }

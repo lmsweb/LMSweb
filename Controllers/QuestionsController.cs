@@ -15,75 +15,210 @@ namespace LMSweb.Controllers
     {
         private LMSmodel db = new LMSmodel();
 
-        // GET: Questions
-        public ActionResult Index(string cid, string mid)
+        public ActionResult SelectQuestion (string mid, string cid)
         {
-            var question = db.Questions.Where(q =>q.MID == "TEST").ToList(); 
-            SurveyViewModel surveyViewModel= new SurveyViewModel();
-            List<Question> Questions = new List<Question>();
             
+            SurveyQuestionViewModel sQvmodel = new SurveyQuestionViewModel();
+            sQvmodel.DefaultQuestions = db.DefaultQuestions.Where(dq =>dq.Class == "目標設置").Include(dq => dq.DefaultOptions).ToList();
+            sQvmodel.MID = mid;
+            sQvmodel.CID = cid;
 
-            var questions = db.Questions.Include(q => q.course).Include(q => q.mission);
-            return View(questions.ToList());
+            return View(sQvmodel);
+        }
+        public ActionResult SelectReflectionQuestion(string mid, string cid)
+        {
+
+            SurveyQuestionViewModel sQvmodel = new SurveyQuestionViewModel();
+            sQvmodel.DefaultQuestions = db.DefaultQuestions.Where(dq => dq.Class == "自我反思").Include(dq => dq.DefaultOptions).ToList();
+            sQvmodel.MID = mid;
+            sQvmodel.CID = cid;
+
+            return View(sQvmodel);
         }
 
-        // GET: Questions/Details/5
-        public ActionResult Details(string id)
+        public ActionResult AddQuestion(string mid, string cid,int dqid)
         {
-            if (id == null)
+            DefaultQuestion defaultQuestion = db.DefaultQuestions.Find(dqid); //default
+
+
+            var question = new Question();
+            question.Description = defaultQuestion.Description;
+            question.MID = mid;
+            question.Class = "目標設置";
+            db.Questions.Add(question);
+            db.SaveChanges();
+            
+            if(! (defaultQuestion.Type == "問答"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var defaultOptions = db.DefaultOptions.Where(o => o.DQID == dqid).ToList();
+                foreach(var d_option in defaultOptions)
+                {
+                    var option = new Option();
+                    option.QID = question.QID;
+                    option.Question = question;
+                    option.OptionName = d_option.DOptions;
+                    db.Options.Add(option);
+                }
+                db.SaveChanges();
             }
-            Question question = db.Questions.Find(id);
-            if (question == null)
+            return RedirectToAction("Index", new { cid = cid, mid = mid });
+        }
+        public ActionResult AddReflectionQuestion(string mid, string cid, int dqid)
+        {
+            DefaultQuestion defaultQuestion = db.DefaultQuestions.Find(dqid); //default
+
+
+            var question = new Question();
+            question.Description = defaultQuestion.Description;
+            question.MID = mid;
+            question.Class = "自我反思";
+            db.Questions.Add(question);
+            db.SaveChanges();
+
+            if (!(defaultQuestion.Type == "問答"))
             {
-                return HttpNotFound();
+                var defaultOptions = db.DefaultOptions.Where(o => o.DQID == dqid).ToList();
+                foreach (var d_option in defaultOptions)
+                {
+                    var option = new Option();
+                    option.QID = question.QID;
+                    option.Question = question;
+                    option.OptionName = d_option.DOptions;
+                    db.Options.Add(option);
+                }
+                db.SaveChanges();
             }
-            return View(question);
+            return RedirectToAction("ReflectionIndex", new { cid = cid, mid = mid });
+        }
+        // GET: Questions
+        public ActionResult Index(SurveyViewModel svmodel, string mid, string cid)
+        {
+            var questions = db.Questions.Where(q => q.MID == mid && q.Class =="目標設置").Include(q => q.Options);
+            svmodel.Questions = questions;
+            svmodel.CID = cid;
+            svmodel.MID = mid;
+
+            return View(svmodel);
+        }
+        public ActionResult ReflectionIndex(SurveyViewModel svmodel, string mid, string cid)
+        {
+            var questions = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Options);
+            svmodel.Questions = questions;
+            svmodel.CID = cid;
+            svmodel.MID = mid;
+
+            return View(svmodel);
         }
 
         // GET: Questions/Create
-        public ActionResult Create()
+        public ActionResult Create(string mid, string cid)
         {
-            ViewBag.CID = new SelectList(db.Courses, "CID", "CName");
-            ViewBag.MID = new SelectList(db.Missions, "MID", "Start");
-            return View();
+            SurveyQuestionViewModel suQvmodel = new SurveyQuestionViewModel();
+            suQvmodel.Question = new Question();
+            suQvmodel.Question.MID = mid;
+           
+            return View(suQvmodel);
         }
+        // http://localhost:56564/Questions?cid=C001&mid=M220307033113
 
         // POST: Questions/Create
         // 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "QID,Type,Description,CID,MID")] Question question)
+        public ActionResult Create(SurveyQuestionViewModel suQvmodel)
         {
+            //surveyViewModel.Question.MID = mid;
             if (ModelState.IsValid)
             {
-                db.Questions.Add(question);
+                var mission = db.Missions.Find(suQvmodel.Question.MID);
+                mission.Questions.Add(suQvmodel.Question);
+                db.Questions.Add(suQvmodel.Question);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (!(suQvmodel.Question.Type == "問答"))
+                {
+                    foreach (var s_option in suQvmodel.String_Options)
+                    {
+                        if (s_option != "")
+                        {
+                            var option = new Option();
+                            option.QID = suQvmodel.Question.QID;
+                            option.OptionName = s_option;
+                            option.Question = suQvmodel.Question;
+                            db.Options.Add(option);
+                        }
+                    }
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("Index", new { cid = suQvmodel.CID, mid = suQvmodel.MID });
             }
 
-            ViewBag.CID = new SelectList(db.Courses, "CID", "CName", question.CID);
-            ViewBag.MID = new SelectList(db.Missions, "MID", "Start", question.MID);
-            return View(question);
+           
+            
+            return View(suQvmodel);
         }
-
-        // GET: Questions/Edit/5
-        public ActionResult Edit(string id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateReflection(SurveyQuestionViewModel suQvmodel)
         {
-            if (id == null)
+            //surveyViewModel.Question.MID = mid;
+            if (ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var mission = db.Missions.Find(suQvmodel.Question.MID);
+                mission.Questions.Add(suQvmodel.Question);
+                db.Questions.Add(suQvmodel.Question);
+                db.SaveChanges();
+
+                if (!(suQvmodel.Question.Type == "問答"))
+                {
+                    foreach (var s_option in suQvmodel.String_Options)
+                    {
+                        if (s_option != "")
+                        {
+                            var option = new Option();
+                            option.QID = suQvmodel.Question.QID;
+                            option.OptionName = s_option;
+                            option.Question = suQvmodel.Question;
+                            db.Options.Add(option);
+                        }
+                    }
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("ReflectionIndex", new { cid = suQvmodel.CID, mid = suQvmodel.MID });
             }
-            Question question = db.Questions.Find(id);
+
+
+
+            return View(suQvmodel);
+        }
+        public ActionResult CreateReflection(string mid, string cid)
+        {
+            SurveyQuestionViewModel suQvmodel = new SurveyQuestionViewModel();
+            suQvmodel.Question = new Question();
+            suQvmodel.Question.MID = mid;
+
+            return View(suQvmodel);
+        }
+        // GET: Questions/Edit/5
+        public ActionResult Edit(int qid, string mid, string cid)
+        {
+           
+            Question question = db.Questions.Where(qus => qus.QID == qid).Include(qus => qus.Options).Single();
             if (question == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CID = new SelectList(db.Courses, "CID", "CName", question.CID);
-            ViewBag.MID = new SelectList(db.Missions, "MID", "Start", question.MID);
-            return View(question);
+            
+            QuestionViewModel Qvmodel= new QuestionViewModel();
+            Qvmodel.Question = question;
+            Qvmodel.CID = cid;
+
+            //Qvmodel.Question.Options = option;
+
+            return View(Qvmodel);
         }
 
         // POST: Questions/Edit/5
@@ -91,43 +226,73 @@ namespace LMSweb.Controllers
         // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "QID,Type,Description,CID,MID")] Question question)
+        public ActionResult Edit(QuestionViewModel Qvmodel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(question).State = EntityState.Modified;
+                db.Entry(Qvmodel.Question).State = EntityState.Modified;
+                var question_et = db.Questions.Where(qus => qus.QID == Qvmodel.Question.QID).Include(qus => qus.Options).Single();
+                if (question_et.Options != null)
+                {
+                    db.Options.RemoveRange(question_et.Options);
+                    question_et.Options.Clear();
+                }
+                Qvmodel.Question.mission = question_et.mission;
+                if (Qvmodel.Question.Type != "問答")
+                {
+                    foreach (var s_option in Qvmodel.String_Options)
+                    {
+                        if (s_option != "")
+                        {
+                            var option = new Option();
+                            option.QID = Qvmodel.Question.QID;
+                            option.OptionName = s_option;
+                            option.Question = Qvmodel.Question;
+                            db.Options.Add(option);
+                            Qvmodel.Question.Options.Add(option);
+                        }
+                    }
+                }
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { cid = Qvmodel.CID, mid = question_et.MID });
             }
-            ViewBag.CID = new SelectList(db.Courses, "CID", "CName", question.CID);
-            ViewBag.MID = new SelectList(db.Missions, "MID", "Start", question.MID);
-            return View(question);
+
+
+           return View();
         }
 
         // GET: Questions/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Question question = db.Questions.Find(id);
-            if (question == null)
-            {
-                return HttpNotFound();
-            }
-            return View(question);
-        }
+        //public ActionResult Delete(int qid, string mid, string cid)
+        //{
+
+        //    Question question = db.Questions.Find(qid);
+        //    if (question == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+
+        //    return View(question);
+        //}
 
         // POST: Questions/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult Delete(int qidHidden, string midHidden, string cidHidden)
         {
-            Question question = db.Questions.Find(id);
+
+            Question question = db.Questions.Find(qidHidden);
             db.Questions.Remove(question);
+
+            var option = db.Options.Where(o => o.QID == qidHidden);
+            db.Options.RemoveRange(option);
+
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            //SurveyViewModel svmodel = new SurveyViewModel();
+            //svmodel.MID = mid;
+            //svmodel.CID = cid;
+            return RedirectToAction("Index", new { cid = cidHidden, mid = midHidden });
         }
 
         protected override void Dispose(bool disposing)

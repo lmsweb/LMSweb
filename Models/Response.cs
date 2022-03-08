@@ -9,8 +9,8 @@ namespace LMSweb.Models
     public class Response
     {
         [Key]
-        public string RID { get; set; }
-        public string QID { get; set; }
+        public int RID { get; set; }
+        public int QID { get; set; }
         public virtual Question Question { get; set; }
 
         public string Answer { get; set;}

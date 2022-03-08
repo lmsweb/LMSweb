@@ -1,62 +1,148 @@
-﻿@model LMSweb.Models.Question
+﻿@model LMSweb.ViewModel.QuestionViewModel
+@using LMSweb.Models
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+
+    var opt_list = Model.Question.Options.ToList();
 }
+<div class="article">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-<h2>Edit</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
     <div class="form-horizontal">
-        <h4>Question</h4>
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.QID)
+        @Html.HiddenFor(model => model.Question.QID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Question.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-5">
+                <select class="form-select" id="Question_Type" name="Question.Type" value="@Model.Question.Type">
+                    @if (Model.Question.Type == "問答")
+                    {
+                        <option value="問答" selected>問答</option>
+                        <option value="單選">單選</option>
+                        <option value="多選">多選</option>
+                    }
+                    else if (Model.Question.Type == "單選")
+                    {
+                        <option value="問答">問答</option>
+                        <option value="單選" selected>單選</option>
+                        <option value="多選">多選</option>
+                    }
+                    else
+                    {
+                        <option value="問答">問答</option>
+                        <option value="單選">單選</option>
+                        <option value="多選" selected>多選</option>
+                    }
+
+                </select>
+                @Html.ValidationMessageFor(model => model.Question.Type, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.Question.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-5">
+                @Html.EditorFor(model => model.Question.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Question.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.Question.Class, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.HiddenFor(model => model.Question.MID, new { htmlAttributes = new { @class = "form-control" } })
+
+        <div class="mb-3">
+            <div class="col-2">
+                @if (Model.Question.Type != "問答")
+                {
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="edit_btn">編輯選項</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="edit_btn" hidden>編輯選項</button>
+                }
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">新增選項</h5>
+                        <button type="button" class="btn-close" aria-label="Close" aria-hidden="true" data-bs-dismiss="modal"></button>
+
+                    </div>
+                    <div class="modal-body">
+                        @for (int i = 1; i <= opt_list.Count; i++)
+                        {
+                            <div class="mb-3">
+                                選項 @i :  <input type="text" name="String_Options[]" class="form-control" value="@opt_list[i-1].OptionName">
+                            </div>
+                        }
+                        @for (int i = opt_list.Count + 1; i <= 5; i++)
+                        {
+                            <div class="mb-3">
+                                選項 @i :  <input type="text" name="String_Options[]" class="form-control">
+                            </div>
+                        }
+                        @*<div class="mb-3">
+                            選項1 :  <input type="text" name="String_Options[]" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            選項2 :  <input type="text" name="String_Options[]" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            選項3 :  <input type="text" name="String_Options[]" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            選項4 :  <input type="text" name="String_Options[]" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            選項5 :   <input type="text" name="String_Options[]" class="form-control">
+                        </div>*@
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" aria-hidden="true" data-bs-dismiss="modal">完成</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CID, "CID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MID, "MID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
+        <div class="mb-3">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="儲存" class="btn btn-primary" />
             </div>
         </div>
-    </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    </div>
+    }
+
 </div>
+
+@section scripts
+{
+    <script>
+        
+        $("#Question_Type").change(function () {
+            var a = $("#Question_Type").val();
+
+            console.log(a);
+            if (a != "問答") {
+                // 單選 or 多選
+                $('#edit_btn').attr('hidden', false);
+            }
+            else {
+                $('#edit_btn').attr('hidden', true);
+            }
+        });
+
+    </script>
+}
