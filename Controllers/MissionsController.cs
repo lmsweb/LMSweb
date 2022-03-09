@@ -99,7 +99,14 @@ namespace LMSweb.Models
                 model.mission.CID = model.CID;
                 db.Missions.Add(model.mission);
                 db.SaveChanges();
-                return RedirectToAction("Index", new { cid = model.CID });
+                if (model.mission.AddMetacognition)
+                {
+                    return RedirectToAction("Index","Questions", new { cid = model.CID, mid = model.mission.MID});
+                }
+                else
+                {
+                    return RedirectToAction("Index", new { cid = model.CID });
+                }
             }
             var vmodel = new MissionCreateViewModel();
             vmodel.KnowledgeList = GetKnowledge(model.CID);
@@ -235,7 +242,7 @@ namespace LMSweb.Models
         public ActionResult AddMissions(string mid, string cid)
         {
             Mission mission = db.Missions.Find(mid);  //old
-            //Mission m = new Mission();
+            
             var model = new MissionCreateViewModel();   //new
 
             model.mission = new Mission();

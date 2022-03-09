@@ -21,13 +21,12 @@ namespace LMSweb.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            return View();
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Login(LoginViewModel login)
         {
             var result = db.Teachers.Where(x => x.TID == login.ID && x.TPassword == login.Password).FirstOrDefault(); //驗證
@@ -63,25 +62,14 @@ namespace LMSweb.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
         [Authorize(Roles = "Teacher")]
-        public ActionResult TeacherHomePage(string sortOrder)
+        public ActionResult TeacherHomePage()
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
             var tid = claimData[0].Value; //取值(因為只有一筆)
             var courses = db.Courses.Where(c => c.TID == tid);
-
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-            switch (sortOrder)
-            {
-
-                case "Date":
-                    courses = courses.OrderBy(c => c.CreateTime);
-                    break;
-                case "date_desc":
-                    courses = courses.OrderByDescending(c => c.CreateTime);
-                    break;
-            }
 
             return View(courses.ToList());
         }

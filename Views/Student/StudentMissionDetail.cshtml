@@ -40,10 +40,10 @@
     }
 </style>
 <div class="cardArticle">
-      <h4>@Model.CName</h4>
+    <h4>@Model.CName</h4>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="https://localhost:44301/Student/StudentMission?CID=@Model.CID">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
             <li class="breadcrumb-item active" aria-current="page">任務內容</li>
         </ol>
     </nav>
@@ -54,9 +54,9 @@
             <h5><b>@Html.DisplayFor(model => model.mis.MName)</b></h5>
         </div>
         <div class="col-4 align-self-end">
-            @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-            @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-            @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "drawing_btn" })
+            @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "coding_btn" })
+            @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "dicsuss_btn" })
             @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
         </div>
     </div>
@@ -114,6 +114,25 @@
             </td>
         </tr>
     </table>
-   
+    
 </div>
+@section scripts
+{
+    <script>
+        //$("#mis_IsDrawing").change(function () {
+        //    var a = $("#mis_IsDrawing").val();
+
+        //    console.log(a);
+        //    if (a) {
+        //        //開啟
+        //        $('#drawing_btn').attr('hidden', false);
+        //    }
+        //    else {
+        //        $('#drawing_btn').attr('hidden', true);
+        //    }
+        //});
+    </script>
+    
+
+}
 

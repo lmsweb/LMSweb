@@ -3,6 +3,15 @@
     ViewBag.Title = "StudentMission";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">任務列表</li>
+
+        </ol>
+    </nav>
+</div>
 <div class="article">
     <h5>任務列表</h5>
     @if (Model.missions == null || Model.missions.Count() == 0)

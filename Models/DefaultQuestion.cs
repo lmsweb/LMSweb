@@ -9,12 +9,15 @@ namespace LMSweb.Models
     public class DefaultQuestion
     {
         [Key]
-        public string DQID { get; set; }
+        public int DQID { get; set; }
 
-        [Display(Name = "題型代號")]
+        [Display(Name = "題型")]
         public string Type { get; set; }
 
-        [Display(Name = "問題描述")]
+        [Display(Name = "問卷分類")]
+        public string Class { get; set; }  //目標設置、反思題目
+
+        [Display(Name = "題目")]
         public string Description { get; set; }
 
         public virtual ICollection<DefaultOption> DefaultOptions { get; set; }

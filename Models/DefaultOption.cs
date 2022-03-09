@@ -9,11 +9,11 @@ namespace LMSweb.Models
     public class DefaultOption
     {
         [Key]
-        public string DOID { get; set; }
-        public string DQID { get; set; }
+        public int DOID { get; set; }
+        public int DQID { get; set; }
 
         public virtual DefaultQuestion DefaultQuestion { get; set; }
 
-        public string DefaultOptions { get; set; }
+        public string DOptions { get; set; }
     }
 }
