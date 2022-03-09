@@ -1,0 +1,76 @@
+﻿@model LMSweb.ViewModel.LearnBViewModel
+@using System.Collections.Generic;
+
+@{
+    ViewBag.Title = "PeerEvaluation";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+}
+
+<h2>PeerEvaluation</h2>
+
+<div class="article">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>題目</th>
+                <th>評分</th>
+                <th>評語</th>
+            </tr>
+        </thead>
+        <tr>
+            <th>
+                邏輯清晰度
+            </th>
+            <th>
+                <div class="" h3 mb-3">
+                    <a href="#" class="text-decoration-none commentStar star-count-1">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-2">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-3">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-4">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-5">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+            </th>
+        </tr>
+    </table>
+</div>
+
+
+<script>
+    let starIcon = document.querySelectorAll('.commentStar i');
+    for (let i = 0; i < starIcon.length; i++) {
+        starIcon[i].addEventListener(
+            'click',
+            function (event) {
+                event.preventDefault();
+                console.log('preventDefault will stop you from checking this checkbox!');
+                console.log(this);
+                for (let j = 0; j <= i; j++) {
+                    starIcon[j].classList.add('bg-danger');
+                    console.log('第 ' + j + ' 號星 加上紅色');
+                }
+                for (let k = 4; k > i; k--) {
+                    starIcon[k].classList.remove('bg-danger');
+                    console.log('第 ' + k + ' 號星 去除紅色');
+                }
+                var starNumber = i + 1; // starNumber = 傳到資料庫的星數
+                console.log('評論星數為 ' + starNumber);
+            },
+            false
+        );
+    }
+</script>

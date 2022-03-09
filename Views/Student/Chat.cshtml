@@ -53,7 +53,7 @@
             $('#cid').val('@Model.CID');
 
             //加入群組
-            chat.client.addRoom = function (roomid) {
+            chat.client.addRoom = function (roomid,groupname,mid) {
                 var html = '<table class="table"> <tr><td><div id="' + roomid + '" roomid="' + roomid + '">\
                                 <label>' + $('#gname').val() + '</label>房間\
                                             聊天記錄如下:<ul>\
@@ -66,7 +66,7 @@
             chat.client.getChatHistory = function (histories) {
                 console.log(histories)
                 for (var i = 0; i < histories.length; i++) {
-                    chat.server.historySend($('#roomid').val(), histories[i].SID, histories[i].Time, histories[i].Detail)
+                    chat.server.historySend($('#roomid').val(), $('#groupname').val(), $('#mid').val(), histories[i].SID, histories[i].Time, histories[i].Detail)
                         .done(function () {
                             console.log('his suc');
                         })
@@ -77,6 +77,11 @@
             };
             //訊息格式
             chat.client.groupMessage = function (roomid, sid, time, message) {
+                $("#" + roomid).find("ul").each(function () {
+                    write_msg(roomid, sid, time, message);
+                })
+            };
+            chat.client.historyMessage = function (roomid, sid, time, message) {
                 $("#" + roomid).find("ul").each(function () {
                     write_msg(roomid, sid, time, message);
                 })
