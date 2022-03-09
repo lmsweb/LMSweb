@@ -36,15 +36,12 @@ namespace LMSweb
         }
         public void Send(string roomid, string GroupId, string name, string message,string cid,string sid,string mid)
         {
-            //Clients.Caller.userMessage(sid,message);
             Clients.Group(roomid, new string[0]).groupMessage(roomid, sid, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), message);
-
-            //AddChatHistory(message, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), cid, sid, mid, GroupId);
+            AddChatHistory(message, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), cid, sid, mid, GroupId);
         }
 
         public void HistorySend(string roomid,string sid, string time, string message)
         {
-            //Clients.Group(roomid, new string[0]).historyMessage(roomid, sid, time, message);
             Clients.Caller.historyMessage(roomid, sid, time, message);
         }
 
@@ -68,10 +65,7 @@ namespace LMSweb
                 };
                 histories.Add(history);
             }
-            //Clients.All.getChatHistory(histories);
-            //Clients.Group(roomid, new string[0]).getChatHistory(histories);
             Clients.Caller.getChatHistory(histories);
-
         }
         /// 添加歷史記錄數據
         public string AddChatHistory(string message, string time, string cid, string sid, string mid,string GroupId)
