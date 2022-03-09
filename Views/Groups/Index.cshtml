@@ -17,7 +17,7 @@
 <div class="article">
     @if (Model.Groups.Count == 0)
     {
-    <p>目前還沒有新增組別哦~請至<a href="https://localhost:44301/Course/StudentGroup?CID=@Model.CID">學生名單</a>進行分組</p>
+    <p>目前還沒有新增組別哦~請至<a href="@Url.Action("StudentGroup", "Course", new { CID = Model.CID})">學生名單</a>進行分組</p>
     }
     else
     {

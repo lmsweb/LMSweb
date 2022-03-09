@@ -18,7 +18,7 @@ using LMSweb.Infrastructure.Helpers;
 
 namespace LMSweb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class StudentController : Controller
     {
         private LMSmodel db = new LMSmodel();
@@ -26,7 +26,7 @@ namespace LMSweb.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            return View();
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
@@ -64,13 +64,16 @@ namespace LMSweb.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+        [Authorize(Roles = "Student")]
         // GET: Student
         public ActionResult StudentHomePage()
         {
+            
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value; //取值(因為只有一筆)
-
+           
             var studentCourse = db.Students.Where(s => s.SID == sid);
             StudentHomePageViewModel vmodel = new StudentHomePageViewModel();
             var course = db.Students.Find(sid).CID;
@@ -108,6 +111,7 @@ namespace LMSweb.Controllers
             var course = db.Courses.Single(c => c.CID == cid);
             model.missions = db.Missions.Where(m => m.CID == cid);
             model.CID = course.CID;
+            model.CName = course.CName;
           
             return View(model);
         }
@@ -176,30 +180,31 @@ namespace LMSweb.Controllers
             var group = db.Students.Find(sid).group;
             model.GID = group.GID;
             
-
             return View(model);
         }
         [HttpPost]
-        public ActionResult StudentCoding(StudentCodingViewModel model, string mid, string cid)
-        {
-            model.CID = cid;
-            model.MID = mid;
+        //public ActionResult StudentCoding(StudentCode model, string mid, string cid)
+        //{
+        //    model.CID = cid;
+        //    model.MID = mid;
 
-            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
-            var sid = claimData[0].Value;
-            var group = db.Students.Find(sid).group;
-            model.GID = group.GID;
+        //    ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+        //    var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+        //    var sid = claimData[0].Value;
+        //    var group = db.Students.Find(sid).group;
+        //    model.GID = group.GID;
 
-            if (ModelState.IsValid)
-            {
-                db.StudentCodes.Add(model.studentCode);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { cid = model.CID });
-            }
+        //    model.IsEdit = true;
+        //    model.CodePath = "~/FileUpload/";
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.StudentCodes.Add(model);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index", new { cid = model.CID });
+        //    }
 
-            return View(model);
-        }
+        //    return View(model);
+        //}
         public ActionResult StudentDrawing(string mid, string cid)
         {
             MissionViewModel model = new MissionViewModel();

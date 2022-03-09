@@ -9,8 +9,11 @@ namespace LMSweb.ViewModel
     {
         public string CID { get; set; }
         public string CName { get; set; }
+        public string MID { get; set; }
         public LMSweb.Models.Question Question { get; set; }
+        public IEnumerable<LMSweb.Models.Question> Questions { get; set; }
         public LMSweb.Models.Option Option { get; set; }
         public LMSweb.Models.Response Response{ get; set; }
+        
     }
 }

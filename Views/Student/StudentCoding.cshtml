@@ -1,12 +1,10 @@
 ﻿@model LMSweb.ViewModel.StudentCodingViewModel
 @{ ViewBag.Title = "StudentCoding";
-                Layout = "~/Views/Shared/_OnlineEditorLayout.cshtml"; }
+    Layout = "~/Views/Shared/_OnlineEditorLayout.cshtml"; }
 <div class="article">
-    @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-    @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
     <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-success" />
     <h2>StudentCoding</h2>
-    <input type="button" value="儲存" id="save" class="btn btn-success" onclick="saveCode()" />
+    <input type="button" value="儲存" id="saveCode" class="btn btn-success"/>
     <div>
         <textarea id="code"></textarea>
     </div>
@@ -24,6 +22,7 @@
         function myFunction() {
             const myWindow = window.open('@Url.Action( "StudentMDetailWindow", "Student", new { MID = Model.MID, CID = Model.CID})', "", "width=800,height=800");
         }
+
     </script>
 
 }

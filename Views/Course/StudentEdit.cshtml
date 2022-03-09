@@ -37,9 +37,17 @@
                 @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-5">
                     <select class="form-select" id="Sex" name="Sex">
-                        <option selected>請選擇性別...</option>
-                        <option value="男">男</option>
-                        <option value="女">女</option>
+                        @if (Model.Sex == "男")
+                        {
+                            <option value="男" selected>男</option>
+                            <option value="女">女</option>
+                        }
+                        else
+                        {
+                            <option value="男">男</option>
+                            <option value="女" selected>女</option>
+                        }
+                        
                     </select>
                     @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
                 </div>
