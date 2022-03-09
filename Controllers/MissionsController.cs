@@ -275,6 +275,27 @@ namespace LMSweb.Models
 
             return View(model);
         }
+        [HttpPost]
+        public ActionResult SwitchDrawing(string mid, string cid, string type, bool sw)
+        {
+            Mission mission = db.Missions.Find(mid);
+            db.Entry(mission).State = EntityState.Modified;
+            if (type == "is_Coding")
+            {
+                mission.IsCoding = sw;
+            }
+            else if(type == "is_Discuss")
+            {
+                mission.IsDiscuss = sw;
+            }
+            else if(type == "is_Drawing")
+            {
+                mission.IsDrawing = sw;
+            }
+            
+            db.SaveChanges();
+            return Json(new { Status = HttpStatusCode.OK , type = type, sw = sw});
+        }
 
     }
 }
