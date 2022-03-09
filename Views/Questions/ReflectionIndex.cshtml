@@ -3,6 +3,14 @@
     ViewBag.Title = "ReflectionIndex";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" active" aria-current="page">後設認知題目設定</li>
+        </ol>
+    </nav>
+</div>
 <div class="card " style="box-sizing: border-box; width: 100%; max-width: 1200px; margin: 20px auto 20px; border-radius: 5px; border: 1px solid #dee2e6; border-color: #cdcdcd;">
     <div class="card-header" style=" padding: 30px 50px 8px 50px;">
         <ul class="nav nav-tabs card-header-tabs">
@@ -18,10 +26,10 @@
     <br />
     <div class="card-body" style="padding: 20px 50px 50px;">
         <div>
-            <button class="btn btn-outline-dark" value="選擇範本題目" onclick="location.href='@Url.Action("SelectReflectionQuestion", "Questions", new { Model.MID, cid = Model.CID})'">
+            <button class="btn btn-outline-dark" value="選擇範本題目" onclick="location.href='@Url.Action("SelectReflectionQuestion", "Questions", new { mid = Model.MID, cid = Model.CID})'">
                 選擇範本題目
             </button>
-            <button class="btn btn-outline-dark" value="新增題目" onclick="location.href='@Url.Action("CreateReflection", "Questions", new { Model.MID, cid = Model.CID})'">
+            <button class="btn btn-outline-dark" value="新增題目" onclick="location.href='@Url.Action("CreateReflection", "Questions", new { mid = Model.MID, cid = Model.CID})'">
                 新增題目
             </button>
         </div>
@@ -36,22 +44,28 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-
+                        <th>#</th>
+                        <th>
+                            題型
+                        </th>
                         <th>
                             題目
                         </th>
                         <th>
                             選項
                         </th>
-
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="number">
                     @foreach (var item in Model.Questions)
                     {
                         <tr>
-                            <td>
+                            <td class="col-1"></td>
+                            <td class="col-2">
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td class="col-5">
                                 @Html.DisplayFor(modelItem => item.Description)
                             </td>
                             <td>
@@ -67,8 +81,7 @@
                                     }
                                 }
                             </td>
-
-                            <td>
+                            <td class="col-1">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <button type="button" class="btn btn-link" style="padding: 5px 5px 5px 5px" onclick="location.href='@Url.Action("Edit", "Questions", new { qid = item.QID, mid = item.MID, cid = Model.CID })'">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -86,9 +99,6 @@
                         </tr>
                     }
                 </tbody>
-
-
-
             </table>
             <div class="modal hide" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
                 <form id="DelQuestionForm" action="@Url.Action("Delete", "Questions")" method="post" enctype="multipart/form-data">
@@ -138,7 +148,11 @@
             $(".modal #midHidden").val(datamid);
             $(".modal #cidHidden").val(datacid);
         });
-
+        window.onload = function () {
+            var tableLine = document.getElementById("number");
+            for (var i = 0; i < tableLine.rows.length; i++) {
+                tableLine.rows[i].cells[0].innerHTML = (i + 1);
+            }
+        }
     </script>
-
 }

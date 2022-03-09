@@ -14,9 +14,13 @@
 </div>
 <div class="article">
     <h4><b>複製任務</b></h4>
+    <hr />
     <table id="table_id" class="table table-striped">
         <thead>
             <tr>
+                <th>
+                    #
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.missions.First().course.CName)
                 </th>
@@ -36,15 +40,20 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="number">
             @foreach (var item in Model.missions)
             {
                 <tr>
-                    <td>
+                    <td >
+                    </td>
+                    <td class="col-2">
                         @Html.DisplayFor(modelItem => item.course.CName)
                     </td>
-                    <td>
+                    <td class="col-2">
                         @Html.DisplayFor(modelItem => item.MName)
+                    </td>
+                    <td class="col-4">
+                        @Html.DisplayFor(modelItem => item.MDetail)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Start)
@@ -52,18 +61,12 @@
                     <td> 
                         @Html.DisplayFor(modelItem => item.End)
                     </td>
-
-                    <td class="col-5">
-                        @Html.DisplayFor(modelItem => item.MDetail)
-                    </td>
                     <td>
                         <button class="btn btn-primary" onclick="location.href='@Url.Action("AddMissions", "Missions", new { mid = item.MID, cid = Model.CID})'">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                             </svg>
-                            加入
                         </button>
-                        @*@Html.ActionLink("加入", "AddMissions", new { mid = item.MID, cid = Model.CID })*@
                     </td>
                 </tr>
             }
@@ -80,5 +83,11 @@
         $(document).ready(function () {
             $('#table_id').DataTable();
         });
+        window.onload = function () {
+            var tableLine = document.getElementById("number");
+            for (var i = 0; i < tableLine.rows.length; i++) {
+                tableLine.rows[i].cells[0].innerHTML = (i + 1);
+            }
+        }
     </script>
 }
