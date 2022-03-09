@@ -22,7 +22,7 @@ namespace LMSweb.Controllers
             sQvmodel.DefaultQuestions = db.DefaultQuestions.Where(dq =>dq.Class == "目標設置").Include(dq => dq.DefaultOptions).ToList();
             sQvmodel.MID = mid;
             sQvmodel.CID = cid;
-
+            sQvmodel.CName = db.Courses.Find(cid).CName;
             return View(sQvmodel);
         }
         public ActionResult SelectReflectionQuestion(string mid, string cid)
@@ -32,7 +32,7 @@ namespace LMSweb.Controllers
             sQvmodel.DefaultQuestions = db.DefaultQuestions.Where(dq => dq.Class == "自我反思").Include(dq => dq.DefaultOptions).ToList();
             sQvmodel.MID = mid;
             sQvmodel.CID = cid;
-
+            sQvmodel.CName = db.Courses.Find(cid).CName;
             return View(sQvmodel);
         }
 
@@ -99,6 +99,7 @@ namespace LMSweb.Controllers
             svmodel.Questions = questions;
             svmodel.CID = cid;
             svmodel.MID = mid;
+            svmodel.CName = db.Courses.Find(cid).CName;
 
             return View(svmodel);
         }
@@ -108,7 +109,7 @@ namespace LMSweb.Controllers
             svmodel.Questions = questions;
             svmodel.CID = cid;
             svmodel.MID = mid;
-
+            svmodel.CName = db.Courses.Find(cid).CName;
             return View(svmodel);
         }
 
@@ -118,7 +119,9 @@ namespace LMSweb.Controllers
             SurveyQuestionViewModel suQvmodel = new SurveyQuestionViewModel();
             suQvmodel.Question = new Question();
             suQvmodel.Question.MID = mid;
-           
+            suQvmodel.MID = mid;
+            suQvmodel.CID = cid;
+            suQvmodel.CName = db.Courses.Find(cid).CName;
             return View(suQvmodel);
         }
         // http://localhost:56564/Questions?cid=C001&mid=M220307033113
@@ -156,9 +159,6 @@ namespace LMSweb.Controllers
 
                 return RedirectToAction("Index", new { cid = suQvmodel.CID, mid = suQvmodel.MID });
             }
-
-           
-            
             return View(suQvmodel);
         }
         [HttpPost]
@@ -191,9 +191,6 @@ namespace LMSweb.Controllers
 
                 return RedirectToAction("ReflectionIndex", new { cid = suQvmodel.CID, mid = suQvmodel.MID });
             }
-
-
-
             return View(suQvmodel);
         }
         public ActionResult CreateReflection(string mid, string cid)
@@ -201,7 +198,9 @@ namespace LMSweb.Controllers
             SurveyQuestionViewModel suQvmodel = new SurveyQuestionViewModel();
             suQvmodel.Question = new Question();
             suQvmodel.Question.MID = mid;
-
+            suQvmodel.CID = cid;
+            suQvmodel.MID = mid;
+            suQvmodel.CName = db.Courses.Find(cid).CName;
             return View(suQvmodel);
         }
         // GET: Questions/Edit/5
@@ -217,7 +216,7 @@ namespace LMSweb.Controllers
             QuestionViewModel Qvmodel= new QuestionViewModel();
             Qvmodel.Question = question;
             Qvmodel.CID = cid;
-
+            Qvmodel.CName = db.Courses.Find(cid).CName;
             //Qvmodel.Question.Options = option;
 
             return View(Qvmodel);

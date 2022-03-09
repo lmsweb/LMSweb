@@ -14,6 +14,7 @@
 
     <div class="form-horizontal">
 
+        <h5>編輯題目</h5>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Question.QID)
@@ -54,9 +55,6 @@
                 @Html.ValidationMessageFor(model => model.Question.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-        @Html.HiddenFor(model => model.Question.Class, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.HiddenFor(model => model.Question.MID, new { htmlAttributes = new { @class = "form-control" } })
-
         <div class="mb-3">
             <div class="col-2">
                 @if (Model.Question.Type != "問答")
@@ -69,6 +67,21 @@
                 }
             </div>
         </div>
+        <div class="mb-3">
+            <div class="col-5">
+                @for (int i = 1; i <= opt_list.Count; i++)
+                {
+                    <div class="mb-3">
+                        <p name="String_Options[]">選項 @i : @opt_list[i - 1].OptionName</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.Question.Class, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.HiddenFor(model => model.Question.MID, new { htmlAttributes = new { @class = "form-control" } })
+
+
 
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -92,11 +105,11 @@
                                 選項 @i :  <input type="text" name="String_Options[]" class="form-control">
                             </div>
                         }
-                       
+
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" aria-hidden="true" data-bs-dismiss="modal">完成</button>
+                        <button type="button" class="btn btn-primary" aria-hidden="true" data-bs-dismiss="modal" id="optionchage">完成</button>
                     </div>
                 </div>
             </div>
@@ -116,7 +129,9 @@
 @section scripts
 {
     <script>
-        
+        $("#optionchage").click(function () {
+            
+        });
         $("#Question_Type").change(function () {
             var a = $("#Question_Type").val();
 

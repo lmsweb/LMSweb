@@ -80,10 +80,6 @@ namespace LMSweb.Models
         [ValidateAntiForgeryToken]
         public ActionResult Create(MissionCreateViewModel model)
         {
-           
-            //var inputlist = model.SelectKnowledgeList.ToList();
-
-
             if (ModelState.IsValid)
             {
                 var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
@@ -193,7 +189,8 @@ namespace LMSweb.Models
             }
             var model = new MissionViewModel();
             //model.mis.CID = mission.CID;
-            //model.CName = mission.course.CName;
+            model.CID = cid;
+            model.CName = db.Courses.Find(cid).CName;
             model.mis = mission;
 
             return View(model);

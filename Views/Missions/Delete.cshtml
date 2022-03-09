@@ -6,6 +6,15 @@
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
     
 }
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { cid = Model.CID})">任務列表</a></li>
+            <li class="breadcrumb-item" active" aria-current="page">任務列表</li>
+        </ol>
+    </nav>
+</div>
 <div class="article">
     <h4><b>刪除任務</b></h4>
     <div>
