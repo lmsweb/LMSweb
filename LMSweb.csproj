@@ -1297,6 +1297,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="FileUpload\" />
     <Folder Include="packages\" />
+    <Folder Include="UploadCode\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
