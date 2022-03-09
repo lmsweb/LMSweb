@@ -66,7 +66,7 @@
             chat.client.getChatHistory = function (histories) {
                 console.log(histories)
                 for (var i = 0; i < histories.length; i++) {
-                    chat.server.historySend($('#roomid').val(), $('#groupname').val(), $('#mid').val(), histories[i].SID, histories[i].Time, histories[i].Detail)
+                    chat.server.historySend($('#roomid').val(), histories[i].SID, histories[i].Time, histories[i].Detail)
                         .done(function () {
                             console.log('his suc');
                         })
@@ -86,6 +86,11 @@
                     write_msg(roomid, sid, time, message);
                 })
             };
+            //chat.client.userMessage = function (sid, message) {
+            //    $("#" + sid).find("ul").each(function () {
+            //        self_msg(sid, message);
+            //    })
+            //};
             //發送訊息
             $(".sendM").click(function () {
                 chat.server.send($('#roomid').val(), $('#groupname').val(), $('#displayname').val(), $('#message').val(), $('#cid').val(), $('#sid').val(), $('#mid').val())
@@ -97,21 +102,34 @@
                         console.warn(e);
                     });
             });
+
+            //$(".sendM").click(function () {
+            //    chat.server.send($('#roomid').val(), $('#groupname').val(), $('#displayname').val(), $('#message').val(), $('#cid').val(), $('#sid').val(), $('#mid').val())
+            //        .done(function () {
+            //            console.log('send suc');
+            //            $('#message').val("");
+            //        })
+            //        .fail(function (e) {
+            //            console.warn(e);
+            //        });
+            //});
             //Start
             $.connection.hub.start().done(function () {
-                console.log(roomid)
-                chat.server.creatRoom($('#roomid').val(), $('#groupname').val(), $('#mid').val());
+                chat.server.creatRoom($('#roomid').val(), $('#groupname').val(), $('#mid').val(), $('#sid').val());
             })
         });
         function write_msg(roomid, sid, time, message) {
             var myid = sid;
             if (myid == $('#sid').val()) {
-                $('#messages').append('<li class="me"><div><p>' + '[' + roomid + ']' + '我:' + message + '(' + time + ')' + '</p></div><li>');
+                $('#messages').append('<li class="me"><div><p>' + '我:' + message + '(' + time + ')' + '</p></div><li>');
             }
             else {
-                $('#messages').append('<li class="you"><div><p>' + '[' + roomid + ']' + sid + ':' + message + '(' + time + ')' + '</p></div><li>');
+                $('#messages').append('<li class="you"><div><p>' + sid + ':' + message + '(' + time + ')' + '</p></div><li>');
             }
         }
+        //function self_msg(sid, message) {
+        //    $('#messages').append('<li class="I"><div><p>' + sid + ':' + message + '</p></div><li>');
+        //}
         function AddRoom(roomid) {
             var data = $(roomid).attr("roomid");
             chat.server.AddGroup(data);

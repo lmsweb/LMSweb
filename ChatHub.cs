@@ -25,26 +25,30 @@ namespace LMSweb
         {
             Groups.Add(Context.ConnectionId, roomid);
             Clients.Client(Context.ConnectionId).addRoom(roomid);
-            GetChatHistory(roomid, GroupId, mid);
-        }
-        public void CreatRoom(string roomid, string GroupId, string mid)
-        {
-            AddToRoom(roomid,GroupId,mid);
             
+        }
+        public void CreatRoom(string roomid, string GroupId, string mid,string sid)
+        {
+            
+            AddToRoom(roomid,GroupId,mid);
+            GetChatHistory(roomid, GroupId, mid, sid);
+
         }
         public void Send(string roomid, string GroupId, string name, string message,string cid,string sid,string mid)
         {
+            //Clients.Caller.userMessage(sid,message);
             Clients.Group(roomid, new string[0]).groupMessage(roomid, sid, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), message);
 
             //AddChatHistory(message, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), cid, sid, mid, GroupId);
         }
 
-        public void HistorySend(string roomid, string GroupId, string mid,string sid, string time, string message)
+        public void HistorySend(string roomid,string sid, string time, string message)
         {
-            Clients.Group(roomid, new string[0]).historyMessage(roomid, sid, time, message);
+            //Clients.Group(roomid, new string[0]).historyMessage(roomid, sid, time, message);
+            Clients.Caller.historyMessage(roomid, sid, time, message);
         }
 
-        public void GetChatHistory(string roomid,string GroupId,string mid)
+        public void GetChatHistory(string roomid,string GroupId,string mid,string sid)
         {
             int GID = Convert.ToInt32(GroupId);
             string MID = mid;
@@ -65,7 +69,8 @@ namespace LMSweb
                 histories.Add(history);
             }
             //Clients.All.getChatHistory(histories);
-            Clients.Group(roomid, new string[0]).getChatHistory(histories);
+            //Clients.Group(roomid, new string[0]).getChatHistory(histories);
+            Clients.Caller.getChatHistory(histories);
 
         }
         /// 添加歷史記錄數據
