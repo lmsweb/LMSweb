@@ -1291,6 +1291,8 @@
     <Content Include="Views\Questions\Details.cshtml" />
     <Content Include="Views\Questions\Edit.cshtml" />
     <Content Include="Views\Questions\Index.cshtml" />
+    <Content Include="Views\PeerAssessments\SelfEvaluation.cshtml" />
+    <Content Include="Views\PeerAssessments\PeerEvaluation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

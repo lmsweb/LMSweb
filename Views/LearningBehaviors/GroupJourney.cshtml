@@ -4,51 +4,192 @@
 @{
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
+
 <div class="article">
+    <h2>同儕互評</h2>
+    <h2>組員:Aaron</h2>
     <table class="table">
         <thead>
             <tr>
-                <th>動作內容</th>
-                <th>時間</th>
-                <th>學生</th>
-                <th>組別</th>
+                <th>題目</th>
+                <th>評分</th>
+                <th>評語</th>
             </tr>
         </thead>
-
-        @foreach (var item in Model.learningbehavior)
-        {
-            <tr>
-                <th>
-                    @item.Detail
-                </th>
-                <th>
-                    <div class="h5 mb-0">
-                        <a href="#" class="text-decoration-none commentStar star-count-1">
-                            <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" class="text-decoration-none commentStar star-count-2">
-                            <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" class="text-decoration-none commentStar star-count-3">
-                            <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" class="text-decoration-none commentStar star-count-4">
-                            <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
-                        </a>
-                        <a href="#" class="text-decoration-none commentStar star-count-5">
-                            <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
-                        </a>
-                    </div>
-
-                </th>
-                <th>
-                    @item.student.SID
-                </th>
-                <th>
-                    @item.group.GID
-                </th>
-            </tr>
-        }
+        <tr>
+            <th>
+                邏輯清晰度
+            </th>
+            <th>
+                <div class="" h3 mb-3">
+                    <a href="#" class="text-decoration-none commentStar star-count-1">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-2">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-3">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-4">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-5">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                邏輯清晰度
+            </th>
+            <th>
+                <div class="" h3 mb-3">
+                    <a href="#" class="text-decoration-none commentStar star-count-1">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-2">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-3">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-4">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-5">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                資料查閱能力
+            </th>
+            <th>
+                <div class="" h3 mb-3">
+                    <a href="#" class="text-decoration-none commentStar star-count-1">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-2">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-3">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-4">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-5">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                解決問題能力
+            </th>
+            <th>
+                <div class="" h3 mb-3">
+                    <a href="#" class="text-decoration-none commentStar star-count-1">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-2">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-3">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-4">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-5">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                溝通交流能力
+            </th>
+            <th>
+                <div class="" h3 mb-3">
+                    <a href="#" class="text-decoration-none commentStar star-count-1">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-2">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-3">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-4">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-5">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                任務完成度
+            </th>
+            <th>
+                <div class="" h3 mb-3">
+                    <a href="#" class="text-decoration-none commentStar star-count-1">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-2">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-3">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-4">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                    <a href="#" class="text-decoration-none commentStar star-count-5">
+                        <i class="fa fa-star text-light p-1 bg-secondary" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </th>
+            <th>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+            </th>
+        </tr>
     </table>
 </div>
 

@@ -153,5 +153,15 @@ namespace LMSweb.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult SelfEvaluation()
+        {
+            return View();
+        }
+
+        public ActionResult PeerEvaluation()
+        {
+            return View();
+        }
     }
 }

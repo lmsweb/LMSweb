@@ -21,35 +21,37 @@ namespace LMSweb
 
         protected static List<Student> userInfoList = new List<Student>();
 
-        public void AddToRoom(string roomid)
+        public void AddToRoom(string roomid,string GroupId, string mid)
         {
             Groups.Add(Context.ConnectionId, roomid);
             Clients.Client(Context.ConnectionId).addRoom(roomid);
+            GetChatHistory(roomid, GroupId, mid);
         }
         public void CreatRoom(string roomid, string GroupId, string mid)
         {
-            AddToRoom(roomid);
-            GetChatHistory(GroupId,mid);
+            AddToRoom(roomid,GroupId,mid);
+            
         }
         public void Send(string roomid, string GroupId, string name, string message,string cid,string sid,string mid)
         {
             Clients.Group(roomid, new string[0]).groupMessage(roomid, sid, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), message);
 
-            AddChatHistory(message, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), cid, sid, mid, GroupId);
+            //AddChatHistory(message, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), cid, sid, mid, GroupId);
         }
 
-        public void HistorySend(string roomid, string sid, string time, string message)
+        public void HistorySend(string roomid, string GroupId, string mid,string sid, string time, string message)
         {
-            Clients.Group(roomid, new string[0]).groupMessage(roomid, sid, time, message);
+            Clients.Group(roomid, new string[0]).historyMessage(roomid, sid, time, message);
         }
 
-        public void GetChatHistory(string GroupId,string mid)
+        public void GetChatHistory(string roomid,string GroupId,string mid)
         {
             int GID = Convert.ToInt32(GroupId);
             string MID = mid;
             List<DiscussViewModel> histories = new List<DiscussViewModel>();
 
             var chathistory = db.LearnB.Where(h => h.group.GID == GID && h.ActionType == "D" && h.mission.MID == mid).ToList();
+            
             foreach (var item in chathistory)
             {
                 DiscussViewModel history = new DiscussViewModel
@@ -62,7 +64,9 @@ namespace LMSweb
                 };
                 histories.Add(history);
             }
-            Clients.All.getChatHistory(histories);
+            //Clients.All.getChatHistory(histories);
+            Clients.Group(roomid, new string[0]).getChatHistory(histories);
+
         }
         /// 添加歷史記錄數據
         public string AddChatHistory(string message, string time, string cid, string sid, string mid,string GroupId)
