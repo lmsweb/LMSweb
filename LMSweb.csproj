@@ -1329,6 +1329,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="FileUpload\" />
     <Folder Include="packages\" />
+    <Folder Include="UploadCode\" />
     <Folder Include="Views\Options\" />
   </ItemGroup>
   <ItemGroup>
