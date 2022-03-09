@@ -45,6 +45,7 @@ namespace LMSweb.Controllers
             question.Description = defaultQuestion.Description;
             question.MID = mid;
             question.Class = "目標設置";
+            question.Type = defaultQuestion.Type;
             db.Questions.Add(question);
             db.SaveChanges();
             
@@ -72,6 +73,7 @@ namespace LMSweb.Controllers
             question.Description = defaultQuestion.Description;
             question.MID = mid;
             question.Class = "自我反思";
+            question.Type = defaultQuestion.Type;
             db.Questions.Add(question);
             db.SaveChanges();
 

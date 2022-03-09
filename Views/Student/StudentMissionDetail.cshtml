@@ -49,17 +49,18 @@
     </nav>
 </div>
 <div class="MissionDetailArticle">
-    <div class="row">
-        <div class="col">
-            <h5><b>@Html.DisplayFor(model => model.mis.MName)</b></h5>
-        </div>
-        <div class="col-4 align-self-end">
-            @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "drawing_btn" })
-            @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "coding_btn" })
-            @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "dicsuss_btn" })
-            @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-        </div>
+    <div class="mb-3">
+        <h5><b>@Html.DisplayFor(model => model.mis.MName)</b></h5>
     </div>
+    <div class="mb-3">
+        @Html.ActionLink("目標設置", "StudentGoalSetting", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "goal_btn" })
+        @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "drawing_btn" })
+        @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "coding_btn" })
+        @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "dicsuss_btn" })
+        @Html.ActionLink("自我反思", "StudentReflection", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "reflec_btn" })
+        @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
+    </div>
+
     <table>
         <tr>
             <th>

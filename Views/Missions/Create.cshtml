@@ -23,7 +23,7 @@
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="mb-3">
-                @*@Html.LabelFor(model => model.mission.MID, htmlAttributes: new { @class = "control-label col-md-2" })*@
+
                 <div class="col-7">
                     @Html.HiddenFor(model => model.mission.MID, new { @class = "form-control", @Value = "M" + DateTime.Now.ToString("yyMMddHHmmss") })
                     @Html.ValidationMessageFor(model => model.mission.MID, "", new { @class = "text-danger" })

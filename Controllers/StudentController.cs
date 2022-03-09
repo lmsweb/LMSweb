@@ -239,5 +239,27 @@ namespace LMSweb.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult StudentGoalSetting(string mid, string cid)
+        {
+            GoalSettingViewModel goalSetVM = new GoalSettingViewModel();
+            var Qclass = db.Questions.Where(q => q.MID == mid && q.Class == "目標設置").Include(q => q.Options);
+            goalSetVM.Questions = Qclass;
+            goalSetVM.MID = mid;
+            goalSetVM.CID = cid;
+
+            return View(goalSetVM);
+        }
+
+        public ActionResult StudentReflection(string mid, string cid)
+        {
+            ReflectionViewModel reflecVM = new ReflectionViewModel();
+            var Qclass = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Options);
+            reflecVM.Questions = Qclass;
+            reflecVM.MID = mid;
+            reflecVM.CID = cid;
+
+            return View(reflecVM);
+        }
     }
 }
