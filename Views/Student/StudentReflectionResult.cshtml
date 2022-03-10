@@ -1,6 +1,6 @@
 ﻿@model LMSweb.ViewModel.GoalSettingViewModel
 @{
-    ViewBag.Title = "StudentGoal";
+    ViewBag.Title = "StudentReflectionResult";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
 <div class="article">
@@ -10,7 +10,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h5>目標設置</h5>
+            <h5>自我反思</h5>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)
@@ -53,10 +53,10 @@
                 </tbody>
             </table>
             @*<div class="mb-3">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
-                </div>
-            </div>*@
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+                    </div>
+                </div>*@
         </div>
     }
 

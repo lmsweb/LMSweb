@@ -1329,8 +1329,6 @@
     <Content Include="Scripts\moment-with-locales.min.js.map" />
     <Content Include="Views\Shared\_OnlineEditorLayout.cshtml" />
     <Content Include="Views\Questions\Create.cshtml" />
-    <Content Include="Views\Questions\Delete.cshtml" />
-    <Content Include="Views\Questions\Details.cshtml" />
     <Content Include="Views\Questions\Edit.cshtml" />
     <Content Include="Views\Questions\Index.cshtml" />
     <Content Include="Views\Questions\SelectQuestion.cshtml" />
@@ -1357,6 +1355,7 @@
     <Content Include="Views\Questions\TeamworkECreate.cshtml" />
     <Content Include="Views\Questions\EvalutionEdit.cshtml" />
     <Content Include="Views\Questions\EvalutionDelete.cshtml" />
+    <Content Include="Views\Student\StudentReflectionResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
