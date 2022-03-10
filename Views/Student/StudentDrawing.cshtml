@@ -4,10 +4,15 @@
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
 <div class="article">
-    @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
-    @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
     <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-success" />
     <h2>StudentDrawing</h2>
+
+    <form action="@Url.Action("StudentDrawing", "Student")" method="post" enctype="multipart/form-data">
+
+        <input type="file" accept=".png, .jpg, .jpeg" name="File" id="File" />
+        <input type="submit" value="上傳" />
+
+    </form>
 </div>
 @section scripts
 {

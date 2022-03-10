@@ -1332,6 +1332,7 @@
     <Folder Include="FileUpload\" />
     <Folder Include="packages\" />
     <Folder Include="UploadCode\" />
+    <Folder Include="UploadImages\" />
     <Folder Include="Views\Options\" />
   </ItemGroup>
   <ItemGroup>
