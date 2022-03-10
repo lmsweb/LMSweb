@@ -33,5 +33,6 @@ namespace LMSweb.Models
         [Display(Name = "選項")]
         public virtual ICollection<Option> Options { get; set; }
         public virtual ICollection<Response> Responses { get; set; }
+        public virtual ICollection<EvalutionResponse> EvalutionResponses { get; set; }
     }
 }

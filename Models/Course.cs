@@ -40,5 +40,6 @@ namespace LMSweb.Models
 
         public virtual ICollection<StudentCode> StudentCode { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
+
     }
 }

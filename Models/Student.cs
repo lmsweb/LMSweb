@@ -41,5 +41,6 @@ namespace LMSweb.Models
         public virtual ICollection<StudentMission> StudentMissions { get; set; }
         public virtual ICollection<LearningBehavior> LearningBehaviors { get; set; }
         public virtual ICollection<Response> Responses { get; set; }
+        public virtual ICollection<EvalutionResponse> EvalutionResponses { get; set; }
     }
 }
