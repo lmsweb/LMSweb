@@ -12,6 +12,7 @@ using LMSweb.ViewModel;
 
 namespace LMSweb.Models
 {
+    [Authorize(Roles = "Teacher")]
     public class MissionsController : Controller
     {
         private LMSmodel db = new LMSmodel();

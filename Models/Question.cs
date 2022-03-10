@@ -7,6 +7,7 @@ using System.Web;
 
 namespace LMSweb.Models
 {
+    [MetadataType(typeof(Question))]
     public class Question
     {
         [Key]
@@ -19,6 +20,7 @@ namespace LMSweb.Models
         [Display(Name = "問卷分類")]
         public string Class { get; set; }  //目標設置、反思題目
 
+        [Required]
         [Display(Name = "題目")]
         public string Description { get; set; }
         

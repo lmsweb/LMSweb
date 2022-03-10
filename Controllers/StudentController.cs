@@ -17,7 +17,7 @@ using LMSweb.Infrastructure.Helpers;
 
 namespace LMSweb.Controllers
 {
-    //[Authorize]
+    [Authorize(Roles = "Student")]
     public class StudentController : Controller
     {
         private LMSmodel db = new LMSmodel();
@@ -309,7 +309,7 @@ namespace LMSweb.Controllers
             goalSetting.CID = cid;
 
 
-            return View(goalSetting);
+            //return View(goalSetting);
 
             return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
         }

@@ -18,7 +18,7 @@ using LMSweb.Infrastructure.Helpers;
 namespace LMSweb.Controllers
 {
     [RoutePrefix("Teacher")]
-
+    [Authorize(Roles = "Teacher")]
     public class CourseController : Controller
     {
         private LMSmodel db = new LMSmodel();

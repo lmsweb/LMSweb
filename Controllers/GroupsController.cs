@@ -11,6 +11,7 @@ using LMSweb.ViewModel;
 
 namespace LMSweb.Controllers
 {
+    [Authorize(Roles = "Teacher")]
     public class GroupsController : Controller
     {
         private LMSmodel db = new LMSmodel();

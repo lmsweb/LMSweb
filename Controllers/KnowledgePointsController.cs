@@ -12,6 +12,7 @@ using LMSweb.ViewModel;
 
 namespace LMSweb.Controllers
 {
+    [Authorize(Roles = "Teacher")]
     public class KnowledgePointsController : Controller
     {
         private LMSmodel db = new LMSmodel();

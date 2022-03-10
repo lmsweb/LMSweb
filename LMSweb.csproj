@@ -356,6 +356,10 @@
     <Compile Include="Migrations\202203100535535_MissionAddIsAssess.Designer.cs">
       <DependentUpon>202203100535535_MissionAddIsAssess.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203100950481_update.cs" />
+    <Compile Include="Migrations\202203100950481_update.Designer.cs">
+      <DependentUpon>202203100950481_update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -1485,6 +1489,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203100535535_MissionAddIsAssess.resx">
       <DependentUpon>202203100535535_MissionAddIsAssess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203100950481_update.resx">
+      <DependentUpon>202203100950481_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

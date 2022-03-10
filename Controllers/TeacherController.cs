@@ -12,7 +12,7 @@ using System.Security.Claims;
 
 namespace LMSweb.Controllers
 {
-    //[Authorize]
+    [Authorize(Roles = "Teacher")]
     public class TeacherController : Controller
     {
         private LMSmodel db = new LMSmodel();

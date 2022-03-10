@@ -20,51 +20,70 @@
     }
     else
     {
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.missions.First().MName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.missions.First().MDetail)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.missions.First().Start)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.missions.First().End)
-                </th>
-
-
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model.missions)
-            {
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MName)
-                    </td>
-                     <td class="col-5">
-                        @Html.DisplayFor(modelItem => item.MDetail)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Start)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.End)
-                    </td>
-                    
-                   
-                    <td class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new { mid = item.MID, cid = item.CID})'">
-                            進入任務
-                        </button>
-                        @*@Html.ActionLink("進入任務", "StudentMissionDetail", new { mid = item.MID, cid = item.CID })*@
-                    </td>
+                    <th>#</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.missions.First().MName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.missions.First().MDetail)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.missions.First().Start)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.missions.First().End)
+                    </th>
+
+
+                    <th></th>
                 </tr>
-            }
+            </thead>
+            <tbody id="number">
+                @foreach (var item in Model.missions)
+                {
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MName)
+                        </td>
+                        <td class="col-4">
+                            @Html.DisplayFor(modelItem => item.MDetail)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Start)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.End)
+                        </td>
+                        <td class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new { mid = item.MID, cid = item.CID})'">
+                                進入任務
+                            </button>
+                           
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+            
 
         </table>
     }
 </div>
+@section scripts
+{
+    <script>
+        window.onload = function () {
+            var tableLine = document.getElementById("number");
+            for (var i = 0; i < tableLine.rows.length; i++) {
+                tableLine.rows[i].cells[0].innerHTML = (i + 1);
+            }
+        }
+    </script>
+
+}
