@@ -80,10 +80,6 @@ namespace LMSweb.Models
         [ValidateAntiForgeryToken]
         public ActionResult Create(MissionCreateViewModel model)
         {
-           
-            //var inputlist = model.SelectKnowledgeList.ToList();
-
-
             if (ModelState.IsValid)
             {
                 var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
@@ -193,7 +189,8 @@ namespace LMSweb.Models
             }
             var model = new MissionViewModel();
             //model.mis.CID = mission.CID;
-            //model.CName = mission.course.CName;
+            model.CID = cid;
+            model.CName = db.Courses.Find(cid).CName;
             model.mis = mission;
 
             return View(model);
@@ -277,6 +274,27 @@ namespace LMSweb.Models
             //db.SaveChanges();
 
             return View(model);
+        }
+        [HttpPost]
+        public ActionResult SwitchDrawing(string mid, string cid, string type, bool sw)
+        {
+            Mission mission = db.Missions.Find(mid);
+            db.Entry(mission).State = EntityState.Modified;
+            if (type == "is_Coding")
+            {
+                mission.IsCoding = sw;
+            }
+            else if(type == "is_Discuss")
+            {
+                mission.IsDiscuss = sw;
+            }
+            else if(type == "is_Drawing")
+            {
+                mission.IsDrawing = sw;
+            }
+            
+            db.SaveChanges();
+            return Json(new { Status = HttpStatusCode.OK , type = type, sw = sw});
         }
 
     }

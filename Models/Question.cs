@@ -26,6 +26,7 @@ namespace LMSweb.Models
 
         public virtual Mission mission { get; set; }
 
+        [Display(Name = "選項")]
         public virtual ICollection<Option> Options { get; set; }
         public virtual ICollection<Response> Responses { get; set; }
     }

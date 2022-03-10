@@ -1,19 +1,19 @@
 ﻿@model LMSweb.ViewModel.SurveyQuestionViewModel
 @{
-    ViewBag.Title = "SelectReflectionQuestion";
+    ViewBag.Title = "SelectTeamworkE";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
 }
 <div class="cardArticle">
     <h4>@Model.CName</h4>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="@Url.Action("ReflectionIndex", "Questions", new { MID=Model.MID, cid = Model.CID})">後設認知題目設定</a></li>
-            <li class="breadcrumb-item" active" aria-current="page">選擇自我反思題目</li>
+            <li class="breadcrumb-item"><a href="@Url.Action("TeamworkAbility", "Questions", new { MID=Model.MID, cid = Model.CID})">自評互評題目設定</a></li>
+            <li class="breadcrumb-item" active" aria-current="page">選擇合作能力題目</li>
         </ol>
     </nav>
 </div>
 <div class="article">
-    <h4><b>選擇自我反思題目</b></h4>
+    <h4><b>選擇合作能力題目</b></h4>
     <table id="table_id" class="table table-striped">
         <thead>
             <tr>
@@ -52,7 +52,7 @@
                         }
                     </td>
                     <td class="col-1">
-                        <button class="btn btn-primary" onclick="location.href='@Url.Action("AddReflectionQuestion", "Questions", new { dqid = item.DQID, mid = Model.MID, cid = Model.CID})'">
+                        <button class="btn btn-primary" onclick="location.href='@Url.Action("AddTeamworkE", "Questions", new { dqid = item.DQID, mid = Model.MID, cid = Model.CID})'">
                             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                             </svg>

@@ -202,9 +202,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KnowledgePointsController.cs" />
     <Compile Include="Controllers\LearningBehaviorsController.cs" />
-    <Compile Include="Controllers\OptionsController.cs" />
     <Compile Include="Controllers\PeerAssessmentsController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Controllers\ResponsesController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TeacherAssessmentsController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
@@ -350,6 +350,7 @@
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\DefaultOption.cs" />
     <Compile Include="Models\DefaultQuestion.cs" />
+    <Compile Include="Models\EnableFunction.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\KnowledgePoint.cs" />
     <Compile Include="Models\LearningBehavior.cs" />
@@ -371,6 +372,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\DiscussViewModel.cs" />
+    <Compile Include="ViewModel\EvalutionViewModel.cs" />
+    <Compile Include="ViewModel\GoalSettingViewModel.cs" />
     <Compile Include="ViewModel\GroupCreateViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModel.cs" />
     <Compile Include="ViewModel\LearnBViewModel.cs" />
@@ -378,6 +381,7 @@
     <Compile Include="ViewModel\MissionCreateViewModel.cs" />
     <Compile Include="ViewModel\MissionViewModel.cs" />
     <Compile Include="ViewModel\QuestionViewModel.cs" />
+    <Compile Include="ViewModel\ReflectionViewModel.cs" />
     <Compile Include="ViewModel\StudentCodingViewModel.cs" />
     <Compile Include="ViewModel\StudentHomePageViewModel.cs" />
     <Compile Include="ViewModel\StudentViewModel.cs" />
@@ -1326,13 +1330,29 @@
     <Content Include="Views\Questions\CreateReflection.cshtml" />
     <Content Include="Views\PeerAssessments\SelfEvaluation.cshtml" />
     <Content Include="Views\PeerAssessments\PeerEvaluation.cshtml" />
+    <Content Include="Views\Responses\Create.cshtml" />
+    <Content Include="Views\Responses\Delete.cshtml" />
+    <Content Include="Views\Responses\Details.cshtml" />
+    <Content Include="Views\Responses\Edit.cshtml" />
+    <Content Include="Views\Responses\Index.cshtml" />
+    <Content Include="Views\Student\StudentGoalSetting.cshtml" />
+    <Content Include="Views\Student\StudentReflection.cshtml" />
+    <Content Include="Views\Student\StudentSelfEvalution.cshtml" />
+    <Content Include="Views\Student\StudentPeerEvalution.cshtml" />
+    <Content Include="Views\Questions\PersonalAbility.cshtml" />
+    <Content Include="Views\Questions\TeamworkAbility.cshtml" />
+    <Content Include="Views\Questions\SelectPersonalE.cshtml" />
+    <Content Include="Views\Questions\SelectTeamworkE.cshtml" />
+    <Content Include="Views\Questions\PersonalECreate.cshtml" />
+    <Content Include="Views\Questions\TeamworkECreate.cshtml" />
+    <Content Include="Views\Questions\EvalutionEdit.cshtml" />
+    <Content Include="Views\Questions\EvalutionDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="FileUpload\" />
     <Folder Include="packages\" />
     <Folder Include="UploadCode\" />
-    <Folder Include="UploadImages\" />
     <Folder Include="Views\Options\" />
   </ItemGroup>
   <ItemGroup>

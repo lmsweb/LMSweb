@@ -15,7 +15,6 @@ using System.Web.Configuration;
 using Newtonsoft.Json.Linq;
 using LMSweb.Infrastructure.Helpers;
 
-
 namespace LMSweb.Controllers
 {
     //[Authorize]
@@ -255,6 +254,73 @@ namespace LMSweb.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        
+        [HttpGet]
+        public ActionResult StudentGoalSetting(string mid, string cid)
+        {
+            GoalSettingViewModel goalSetVM = new GoalSettingViewModel();
+            goalSetVM.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "目標設置").Include(q => q.Options);
+            goalSetVM.MID = mid;
+            goalSetVM.CID = cid;
+
+            return View(goalSetVM);
+        }
+
+        [HttpPost]
+        public ActionResult StudentGoalSetting([System.Web.Http.FromBody] GoalSettingViewModel goalSetting)
+        {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            
+            foreach (var qr in goalSetting.QRs)
+            {
+                var sidQ = db.Responses.Where(r => r.QID == qr.qid && r.SID == SID);
+                var response = new Response();
+                //if(sidQ != null)
+                //{
+                //    return ()
+                //}
+                response.QID = qr.qid;
+                response.Answer = qr.response;
+                response.SID = SID;
+                db.Responses.Add(response);
+            }
+            db.SaveChanges();
+            //return RedirectToAction("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID });
+            return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID })});
+            //return Redirect("Index", );
+        }
+
+        public ActionResult StudentReflection(string mid, string cid)
+        {
+            ReflectionViewModel reflecVM = new ReflectionViewModel();
+            var Qclass = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Options);
+            reflecVM.Questions = Qclass;
+            reflecVM.MID = mid;
+            reflecVM.CID = cid;
+
+            return View(reflecVM);
+        }
+        public ActionResult StudentSelfEvalution(string mid, string cid)
+        {
+            EvalutionViewModel selfEVM = new EvalutionViewModel();
+            var Qclass = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.Options);
+            selfEVM.Questions = Qclass;
+            selfEVM.MID = mid;
+            selfEVM.CID = cid;
+
+            return View(selfEVM);
+        }
+        public ActionResult StudentPeerEvalution(string mid, string cid)
+        {
+            EvalutionViewModel peerEVM = new EvalutionViewModel();
+            var Qclass = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.Options);
+            peerEVM.Questions = Qclass;
+            peerEVM.MID = mid;
+            peerEVM.CID = cid;
+
+            return View(peerEVM);
         }
     }
 }

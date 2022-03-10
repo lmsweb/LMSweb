@@ -61,7 +61,7 @@ namespace LMSweb.Infrastructure.Helpers
 
                     student.SID = row.SID;
                     student.SName = row.SName;
-                    student.SPassword = row.SPassword;
+                    //student.SPassword = row.SPassword;
                     student.Sex = row.Sex;
                     //student.Score = row.Score;
                     //student.CID = row.CID;
@@ -71,10 +71,11 @@ namespace LMSweb.Infrastructure.Helpers
                     {
                         errorMessage.Append("學生ID - 不可空白. ");
                     }
-                    //if(db_students.Any(x => x.SID == student.SID))
-                    //{
-                    //    errorMessage.Append("學生ID - 已重複. ");
-                    //}
+                    
+                    if (db_students.Any(x => x.SID == student.SID))
+                    {
+                        errorMessage.Append("學生ID - 已重複. ");
+                    }
                     student.SID = row.SID;
 
                     if (string.IsNullOrWhiteSpace(row.SName))
@@ -84,11 +85,11 @@ namespace LMSweb.Infrastructure.Helpers
                     student.SName = row.SName;
 
 
-                    if (string.IsNullOrWhiteSpace(row.SPassword))
-                    {
-                        errorMessage.Append("學生密碼 - 不可空白. ");
-                    }
-                    student.SPassword = row.SPassword;
+                    //if (string.IsNullOrWhiteSpace(row.SPassword))
+                    //{
+                    //    errorMessage.Append("學生密碼 - 不可空白. ");
+                    //}
+                    student.SPassword = row.SID;
 
                     //=============================================================================
                     if (errorMessage.Length > 0)
@@ -102,6 +103,7 @@ namespace LMSweb.Infrastructure.Helpers
                     }
                     else
                     {
+                       // student.SPassword = row.SID;
                         importStudent.Add(student);
                     }
                     rowIndex += 1;

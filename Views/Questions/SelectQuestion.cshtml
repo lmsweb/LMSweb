@@ -5,34 +5,43 @@
 }
 
 <div class="cardArticle">
-   @* <h4>@Model.CName</h4>*@
-    @*<nav aria-label="breadcrumb">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item active" aria-current="page">複製任務</li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Questions", new { mid = Model.MID, cid = Model.CID})">後設認知題目設定</a></li>
+            <li class="breadcrumb-item" active" aria-current="page">選擇目標設置題目</li>
         </ol>
-    </nav>*@
+    </nav>
 </div>
 <div class="article">
-    <h4><b>選擇目標設置題目</b></h4>
+    <h4><b>目標設置參考題目</b></h4>
     <table id="table_id" class="table table-striped">
         <thead>
             <tr>
                 <th>
+                    #
+                </th>
+                <th>
+                    題型
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.DefaultQuestion.Description)
                 </th>
                 <th>
-                   選項
+                    選項
                 </th>
-                
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="number">
             @foreach (var item in Model.DefaultQuestions)
             {
                 <tr>
-                    <td>
+                    <td class="col-1"></td>
+                    <td class="col-2">
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td class="col-5">
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
@@ -45,17 +54,16 @@
                             }
                         }
                     </td>
-                    <td>
+                    <td class="col-1">
                         <button class="btn btn-primary" onclick="location.href='@Url.Action("AddQuestion", "Questions", new { dqid = item.DQID, mid = Model.MID, cid = Model.CID})'">
                             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                             </svg>
                             加入
                         </button>
-
                     </td>
                 </tr>
-            }
+             }
         </tbody>
 
 
@@ -69,5 +77,11 @@
         $(document).ready(function () {
             $('#table_id').DataTable();
         });
+        window.onload = function () {
+            var tableLine = document.getElementById("number");
+            for (var i = 0; i < tableLine.rows.length; i++) {
+                tableLine.rows[i].cells[0].innerHTML = (i + 1);
+            }
+        }
     </script>
 }

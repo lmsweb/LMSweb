@@ -67,7 +67,7 @@ namespace LMSweb.Controllers
 
             return View(vmodel);
         }
-        public ActionResult StudentEdit(string sid)
+        public ActionResult StudentEdit(string sid, string cid)
         {
 
             if (sid == null)
@@ -79,10 +79,7 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
-            //var vmodel = new StudentViewModel();
-            //vmodel.CID = student.CID;
-            //var course = db.Courses.Where(c => c.CID == student.CID).Single();
-            //vmodel.CName = course.CName;
+           
 
             return View(student);
         }
@@ -127,7 +124,7 @@ namespace LMSweb.Controllers
             return View(student);
 
         }
-        [HttpPost, ActionName("StudentDelete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult StudentDeleteConfirmed(string sid)
         {

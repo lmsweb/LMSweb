@@ -8,18 +8,16 @@
                     <button type="button" class="btn-close" aria-hidden="true" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
+                    <p class="mb-3">第一步 :</p>
+                    <a class="mb-3 btn btn-outline-primary" href="~/FileDownload/Example.xlsx" download>下載範例檔      <i class="bi bi-download"></i></a>
+                    <br />
+                    <p class="mb-3">第二步 :</p>
                     <div class="file-loading">
                         <input id="file" name="file" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
                     </div>
-                    @*<input id="CID" name="CID" type="hidden" value="@ViewBag.CID" />*@
-                <a href="~/FileDownload/Example.xlsx" download>下載範例檔</a>
+
                 </div>
-                
-                @*<div class="modal-footer">
-            <input type="button" id="ButtonCancel" class="btn btn-secondary" data-dismiss="modal" value="取消">
-            <input type="submit" id="ButtonSubmit" name="ButtonSubmit" class="btn btn-primary" value="上傳檔案">
-        </div>*@
+
             </div>
         </div>
     </form>
