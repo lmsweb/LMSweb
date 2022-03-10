@@ -55,44 +55,12 @@
                 @Html.ValidationMessageFor(model => model.Question.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="mb-3">
-            <div class="col-2">
-                @if (Model.Question.Type != "問答")
-                {
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="edit_btn">編輯選項</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="edit_btn" hidden>編輯選項</button>
-                }
-            </div>
-        </div>
-        <div class="mb-3">
-            <div class="col-5">
-                @for (int i = 1; i <= opt_list.Count; i++)
-                {
-                    <div class="mb-3">
-                        <p name="String_Options[]">選項 @i : @opt_list[i - 1].OptionName</p>
-                    </div>
-                }
-            </div>
-        </div>
 
-        @Html.HiddenFor(model => model.Question.Class, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.HiddenFor(model => model.Question.MID, new { htmlAttributes = new { @class = "form-control" } })
-
-
-
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">新增選項</h5>
-                        <button type="button" class="btn-close" aria-label="Close" aria-hidden="true" data-bs-dismiss="modal"></button>
-
-                    </div>
-                    <div class="modal-body">
+        @if (Model.Question.Type != "問答")
+        {
+            <div class="mb-3" id="edit_block">
+                <div class="col-5">
+                    <div>
                         @for (int i = 1; i <= opt_list.Count; i++)
                         {
                             <div class="mb-3">
@@ -107,13 +75,35 @@
                         }
 
                     </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="mb-3" id="edit_block" hidden>
+                <div class="col-5">
+                    <div>
+                        @for (int i = 1; i <= opt_list.Count; i++)
+                        {
+                            <div class="mb-3">
+                                選項 @i :  <input type="text" name="String_Options[]" class="form-control" value="@opt_list[i-1].OptionName">
+                            </div>
+                        }
+                        @for (int i = opt_list.Count + 1; i <= 5; i++)
+                        {
+                            <div class="mb-3">
+                                選項 @i :  <input type="text" name="String_Options[]" class="form-control">
+                            </div>
+                        }
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" aria-hidden="true" data-bs-dismiss="modal" id="optionchage">完成</button>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+
+        @Html.HiddenFor(model => model.Question.Class, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.HiddenFor(model => model.Question.MID, new { htmlAttributes = new { @class = "form-control" } })
+
 
         <div class="mb-3">
             <div class="col-md-offset-2 col-md-10">
@@ -129,21 +119,17 @@
 @section scripts
 {
     <script>
-        $("#optionchage").click(function () {
-            
-        });
         $("#Question_Type").change(function () {
             var a = $("#Question_Type").val();
 
             console.log(a);
             if (a != "問答") {
                 // 單選 or 多選
-                $('#edit_btn').attr('hidden', false);
+                $('#edit_block').attr('hidden', false);
             }
             else {
-                $('#edit_btn').attr('hidden', true);
+                $('#edit_block').attr('hidden', true);
             }
         });
-
     </script>
 }
