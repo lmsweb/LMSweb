@@ -44,7 +44,7 @@ namespace LMSweb.Infrastructure.Helpers
             //excelFile.AddMapping<Student>(x => x.CID, "CID");
 
             //SheetName
-            var excelContent = excelFile.Worksheet<Student>("工作表1");
+            var excelContent = excelFile.Worksheet<Student>("工作表1").Where(s =>s.SID != "");
 
             int errorCount = 0;
             int rowIndex = 1;
@@ -72,7 +72,7 @@ namespace LMSweb.Infrastructure.Helpers
                         errorMessage.Append("學生ID - 不可空白. ");
                     }
                     
-                    if (db_students.Any(x => x.SID == student.SID))
+                    if (db_students.Find(row.SID) != null)
                     {
                         errorMessage.Append("學生ID - 已重複. ");
                     }

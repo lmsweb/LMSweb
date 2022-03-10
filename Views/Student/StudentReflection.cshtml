@@ -1,4 +1,4 @@
-﻿@model LMSweb.ViewModel.ReflectionViewModel
+﻿@model LMSweb.ViewModel.GoalSettingViewModel
 @{
     ViewBag.Title = "StudentReflection";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
@@ -44,27 +44,27 @@
                                 {
                                     foreach (var qo in Q.Options)
                                     {
-                                        if (qo.QID == Q.QID)
-                                        {
-                                            <input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName
 
-                                        }
+                                        
+                                        @Html.RadioButton(Q.QID.ToString(), qo.OptionName, new { @class = "form-check-input" })
+                                        @Html.Label(qo.OptionName, new { @class = "form-check-label", @for = Q.QID })
+
                                     }
                                 }
                                 else if (Q.Type == "多選")
                                 {
                                     foreach (var qo in Q.Options)
                                     {
-                                        if (qo.QID == Q.QID)
-                                        {
-                                            <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1">@qo.OptionName
+                                        
+                                       
+                                        @Html.CheckBox(Q.QID.ToString(), new { @class = "form-check-input", @value = qo.OptionName })
+                                        @Html.Label(qo.OptionName, new { @class = "form-check-label" })
 
-                                        }
                                     }
                                 }
                                 else
                                 {
-                                    <input class="form-control" type="text" />
+                                    @Html.TextArea(Q.QID.ToString(), new { @class = "form-control", @rows = "3" })
                                 }
                             </td>
                         </tr>
@@ -72,6 +72,29 @@
 
                 </tbody>
             </table>
+            <div class="mb-3">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">送出確認</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            送出後無法做修改，確定要送出嗎?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">再想想</button>
+                            <input type="submit" value="送出" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     }
 
@@ -79,6 +102,7 @@
 @section scripts
 {
     <script>
+        var questions_qid = @Html.Raw(@Json.Encode(Model.Questions.Select(q => q.QID).ToList()));
         window.onload = function () {
             var tableLine = document.getElementById("number");
             for (var i = 0; i < tableLine.rows.length; i++) {
@@ -86,5 +110,46 @@
 
             }
         }
+        $("form").submit(function () {
+            var sumbit_data = {};
+            sumbit_data["CID"] = "@Model.CID";
+            sumbit_data["MID"] = "@Model.MID";
+            sumbit_data["QRs"] = [];
+            for (var i = 0; i < questions_qid.length; i++) {
+                var Question_Response = {};
+                var type = $('input[name="' + questions_qid[i] + '"]').attr('type');
+                //console.log(questions_qid[i]);
+                response = "";
+                if (type == "radio") {
+                    response = $('input[name="' + questions_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                } else if (type == "checkbox") {
+                    response = $('input[name="' + questions_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                } else {
+                    selector = $('textarea[name="' + questions_qid[i] + '"]');
+                    response = selector.val();
+                }
+                //console.log(response);
+                Question_Response["qid"] = questions_qid[i];
+                Question_Response["response"] = response;
+                sumbit_data["QRs"].push(Question_Response);
+            }
+            console.log(sumbit_data);
+            $.ajax({
+                url: '@Url.Action("StudentGoalSetting")',
+                type: 'post',
+                dataType: 'json',
+                data: sumbit_data,
+                success: function (response) {
+                    // ... do something with the data...
+                    window.location.href = response.redirectToUrl;
+
+                }
+            });
+            return false;
+        });
     </script>
 }

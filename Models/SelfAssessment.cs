@@ -35,5 +35,6 @@ namespace LMSweb.Models
 
         //public virtual Student student { get; set; }
         public virtual StudentMission StudentMission { get; set; }
+
     }
 }

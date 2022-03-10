@@ -78,7 +78,6 @@ namespace LMSweb.Controllers
         public ActionResult CourseCreate()
         {
             Course course = new Course();
-            //ViewBag.TID = new SelectList(db.Teachers, "TID", "TName");
             return View(course);
         }
 
@@ -101,9 +100,6 @@ namespace LMSweb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("TeacherHomePage", "Teacher");
             }
-
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
-
             return View(course);
         }
 
@@ -118,7 +114,6 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
             return View(course);
         }
 
@@ -132,7 +127,6 @@ namespace LMSweb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("TeacherHomePage", "Teacher", null);
             }
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
             return View(course);
         }
 
@@ -156,6 +150,32 @@ namespace LMSweb.Controllers
         {
             Course course = db.Courses.Find(cid);
             db.Courses.Remove(course);
+
+            var mission = db.Missions.Where(m => m.CID == cid);
+            var learningBehavior = db.LearnB.Where(l => l.CID == cid);
+            var teacherA = db.TeacherA.Where(ta => ta.CID == cid);
+            var group = db.Groups.Where(g => g.CID == cid);
+            var kp = db.KnowledgePoints.Where(k => k.CID == cid);
+            var peerA = db.PeerA.Where(p => p.CID == cid);
+            var question = db.Questions.Where(q => q.mission.CID == cid);
+            var option = db.Options.Where(o => o.Question.CID == cid);
+            var student = db.Students.Where(s => s.CID == cid);
+            var response = db.Responses.Where(r => r.Student.CID == cid);
+            
+            db.Missions.RemoveRange(mission);
+            db.LearnB.RemoveRange(learningBehavior);
+            db.TeacherA.RemoveRange(teacherA);
+            db.Groups.RemoveRange(group);
+            db.KnowledgePoints.RemoveRange(kp);
+            db.PeerA.RemoveRange(peerA);
+            db.Questions.RemoveRange(question);
+            db.Responses.RemoveRange(response);
+            db.Students.RemoveRange(student);
+            db.Options.RemoveRange(option);
+
+
+
+
             db.SaveChanges();
             return RedirectToAction("TeacherHomePage", "Teacher", null);
         }
@@ -199,9 +219,7 @@ namespace LMSweb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("TeacherHomePage");
             }
-
-            ViewBag.TID = new SelectList(db.Teachers, "TID", "TName", course.TID);
-            return View(course);
+             return View(course);
         }
        
         

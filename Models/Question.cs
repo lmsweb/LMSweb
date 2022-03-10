@@ -25,6 +25,8 @@ namespace LMSweb.Models
         public string MID { get; set; }
 
         public virtual Mission mission { get; set; }
+        public string CID { get; set; }
+        public virtual Course Course { get; set; }
 
         [Display(Name = "選項")]
         public virtual ICollection<Option> Options { get; set; }

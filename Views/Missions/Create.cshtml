@@ -136,35 +136,6 @@
                 </div>
                 
             </div>
-             <div class="mb-3">
-                <div class="col-5">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.mission.IsDrawing)
-                        @Html.ValidationMessageFor(model => model.mission.IsDrawing, "", new { @class = "text-danger" })開啟流程圖
-                    </div>
-                </div>
-                
-            </div>
-             <div class="mb-3">
-                <div class="col-5">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.mission.IsCoding)
-                        @Html.ValidationMessageFor(model => model.mission.IsCoding, "", new { @class = "text-danger" })開啟程式碼
-                    </div>
-                </div>
-                
-            </div>
-             <div class="mb-3">
-                <div class="col-5">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.mission.IsDiscuss)
-                        @Html.ValidationMessageFor(model => model.mission.IsDiscuss, "", new { @class = "text-danger" })開啟討論區
-                    </div>
-                </div>
-                
-            </div>
-            
-
             <div class="mb-3">
                 <div class="col">
                     <input type="submit" value="送出" class="btn btn-primary" />

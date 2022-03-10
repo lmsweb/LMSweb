@@ -35,7 +35,7 @@
          <div class="mb-3">
              @Html.LabelFor(model => model.mission.MDetail, htmlAttributes: new { @class = "control-label col-md-2" })
              <div class="col-5">
-                 @Html.TextAreaFor(model => model.mission.MDetail, 10, 53, new { htmlAttributes = new { @class = "form-control", rows = "20" } })
+                 @Html.TextAreaFor(model => model.mission.MDetail, 10, 53, new { htmlAttributes = new { @class = "form-control" } })
                  @Html.ValidationMessageFor(model => model.mission.MDetail, "", new { @class = "text-danger" })
              </div>
          </div>
@@ -62,40 +62,52 @@
          </div>
 
          <div class="mb-3">
-             @Html.LabelFor(model => model.mission.relatedKP, htmlAttributes: new { @class = "control-label col-md-2" })
+             @Html.LabelFor(model => model.KnowledgeList, htmlAttributes: new { @class = "control-label col-md-2" })
              <div class="col-5">
                  @Html.ListBoxFor(model => model.SelectKnowledgeList, Model.KnowledgeList, htmlAttributes: new { @class = "form-control selectpicker", multiple = "", @data_live_search = "true", title = "請選擇知識點..." })
              </div>
          </div>
-         <label class="mb-3">總成績權重調整 : </label>
-         <div class="container">
-             <div class="row">
-                 <div class="col">
-                     <div class="row">
-                         討論次數權重 :
-                         <div class="col-5">
-                             @Html.EditorFor(model => model.mission.discuss_k, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
-                         </div>%
-                     </div>
-                 </div>
-                 <div class="col">
-                     <div class="row">
-                         個人分數權重 :
-                         <div class="col-5">
-                             @Html.EditorFor(model => model.mission.per_k, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
-                         </div>%
-                     </div>
-                 </div>
-                 <div class="col">
-                     <div class="row">
-                         小組分數權重 :
-                         <div class="col-5">
-                             @Html.EditorFor(model => model.mission.group_k, new { htmlAttributes = new { @class = "form-control", @type = "text" } })
-                         </div>%
-                     </div>
-                 </div>
-             </div>
-         </div>
+         
+         <label class="mb-3">總成績權重調整(權重總和應等於100) : </label>
+            <div class="container">
+
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            合作學習權重 :
+                            <div class="col-5">
+                                @Html.EditorFor(model => model.mission.discuss_k, new { htmlAttributes = new { @class = "form-control", @type = "number", @id = "mission_discuss_k" } })
+                                @*<input type="number" class="form-control" id="mission_discuss_k" name="mission.discuss_k" />*@
+                            </div>%
+                            @Html.ValidationMessageFor(model => model.mission.discuss_k, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            個人表現權重 :
+                            <div class="col-5">
+                                @Html.EditorFor(model => model.mission.per_k, new { htmlAttributes = new { @class = "form-control", @type = "number", @id = "mission_per_k" } })
+                                @*<input type="number" class="form-control" id="mission_per_k" name="mission.per_k" />*@
+                            </div>%
+                            @Html.ValidationMessageFor(model => model.mission.per_k, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            小組成果權重 :
+                            <div class="col-5">
+                                @Html.EditorFor(model => model.mission.group_k, new { htmlAttributes = new { @class = "form-control", @type = "number", @id = "mission_group_k" } })
+                                @*<input type="number" class="form-control"  id="mission_group_k" name="mission.group_k" />*@
+                            </div>%
+                            @Html.ValidationMessageFor(model => model.mission.group_k, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+                
+            </div>
+         <div id="demo" class="text-danger"></div>
+            <br />
          @Html.HiddenFor(model => model.CID, htmlAttributes: new { @value = Model.CID })
          <br />
          <div class="mb-3">
@@ -107,7 +119,30 @@
      </div>
      }
 </div>
+@section scripts
+{
+    <script>
+        $("input[type='number']").change(function () {
+            var discuss = parseInt($("#mission_discuss_k").val());
+            var per = parseInt($("#mission_per_k").val());
+            var group = parseInt($("#mission_group_k").val());
+            let total = discuss + per + group;
 
+            console.log(discuss);
+            console.log(per);
+            console.log(group);
+            console.log(total);
+
+            if (total != 100) {
+                $("#demo").html("三個權重加起來必須是100");
+            }
+            else {
+                $("#demo").html("");
+            }
+
+        });
+    </script>
+}
 @*<script type="text/javascript">
     var check_start_Exist = setInterval(function () {
         if ($('#datetimepicker_start').length) {

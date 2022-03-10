@@ -124,11 +124,9 @@ namespace LMSweb.Models
             {
                 return HttpNotFound();
             }
-            //ViewBag.CID = new SelectList(db.Courses, "CID", "CName", mission.CID);
-
-
             var vmodel = new MissionCreateViewModel();
             vmodel.mission = mission;
+            
             vmodel.KnowledgeList = GetKnowledge(cid, db.KnowledgePoints.Where(kp => kp.CID == mission.CID).Select(kp => kp.KID));
             
             vmodel.CID = mission.CID;
@@ -150,10 +148,6 @@ namespace LMSweb.Models
             {
                 db.Entry(mission).State = EntityState.Modified;
                 db.SaveChanges();
-
-                //db.Entry(mission).State = EntityState.Modified;
-
-                //mission = db.Missions.Include(kp => kp.KnowledgePoints).Single(m => m.MID == mission.MID);
 
                 var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
                 string kp_str = "";
@@ -207,8 +201,17 @@ namespace LMSweb.Models
 
             var learningBehavior = db.LearnB.Where(l => l.mission.MID == mid);
             var teacherA = db.TeacherA.Where(t => t.MID == mid);
+            var question = db.Questions.Where(q => q.MID == mid);
+            var peerA = db.PeerA.Where(p => p.MID == mid);
+            var option = db.Options.Where(o => o.Question.MID == mid);
+            var response = db.Responses.Where(r => r.Question.MID == mid);
+
+            db.Questions.RemoveRange(question);
             db.LearnB.RemoveRange(learningBehavior);
             db.TeacherA.RemoveRange(teacherA);
+            db.PeerA.RemoveRange(peerA);
+            db.Responses.RemoveRange(response);
+            db.Options.RemoveRange(option);
 
             db.Missions.Remove(mission);
             db.SaveChanges();
@@ -292,7 +295,11 @@ namespace LMSweb.Models
             {
                 mission.IsDrawing = sw;
             }
-            
+            else if (type == "is_Assess")
+            {
+                mission.IsAssess = sw;
+            }
+
             db.SaveChanges();
             return Json(new { Status = HttpStatusCode.OK , type = type, sw = sw});
         }

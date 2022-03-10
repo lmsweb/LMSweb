@@ -67,6 +67,7 @@ namespace LMSweb.Controllers
             {
                 groupVM.TeacherAssessment.GID = gid;
                 groupVM.TeacherAssessment.MID = mid;
+                groupVM.TeacherAssessment.CID = cid;
                 db.TeacherA.Add(groupVM.TeacherAssessment);
 
                 db.SaveChanges();
@@ -129,6 +130,7 @@ namespace LMSweb.Controllers
             var teacherAssessment = groupVM.TeacherAssessment;
             teacherAssessment.MID = mid;
             teacherAssessment.GID = gid;
+            teacherAssessment.CID = cid;
             if (ModelState.IsValid)
             {
 

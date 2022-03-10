@@ -22,20 +22,6 @@ namespace LMSweb.Controllers
     public class CourseController : Controller
     {
         private LMSmodel db = new LMSmodel();
-        
-        public ActionResult StudentDetails(string sid,string cid)
-        {
-            if (sid == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Student student = db.Students.Find(sid, cid);
-            if (student == null)
-            {
-                return HttpNotFound();
-            }
-            return View(student);
-        }
 
         // GET: Student/Create
         public ActionResult StudentCreate(string cid)
@@ -94,11 +80,6 @@ namespace LMSweb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("StudentManagement", "Course", new { student.CID});
             }
-            //var vmodel = new StudentViewModel();
-            //vmodel.CID = student.CID;
-            //var course = db.Courses.Where(c => c.CID == student.CID).Single();
-            //vmodel.CName = course.CName;
-
             return View(student);
         }
 
@@ -114,24 +95,19 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
-
-            //var vmodel = new StudentViewModel();
-            //var stuCID = db.Students.Find(sid).CID;
-            //vmodel.CID = stuCID;
-            //var course = db.Courses.Where(c => c.CID == stuCID).Single();
-            //vmodel.CName = course.CName;
-
             return View(student);
 
         }
-        [HttpPost]
+        [HttpPost, ActionName("StudentDelete")]
         [ValidateAntiForgeryToken]
-        public ActionResult StudentDeleteConfirmed(string sid)
+        public ActionResult StudentDeleteConfirmed(string sid, string cid)
         {
             Student student = db.Students.Find(sid);
             db.Students.Remove(student);
             db.SaveChanges();
-            return RedirectToAction("StudentManagement", "Course", new { student.CID });
+            
+
+            return RedirectToAction("StudentManagement", "Course", new { cid });
         }
 
         private string fileSavedPath = WebConfigurationManager.AppSettings["UploadPath"];
@@ -190,7 +166,6 @@ namespace LMSweb.Controllers
             }
             return Content(result, "application/json");
         }
-
 
         private string FileUploadHandler(HttpPostedFileBase file)
         {
@@ -307,27 +282,7 @@ namespace LMSweb.Controllers
 
             return View(vmodel);
         }
-        //public ActionResult EditGname(int? gid)
-        //{
-
-        //    if (gid == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Group group = db.Groups.Find(gid);
-        //    if (group == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    //var vmodel = new StudentViewModel();
-        //    //vmodel.CID = student.CID;
-        //    //var course = db.Courses.Where(c => c.CID == student.CID).Single();
-        //    //vmodel.CName = course.CName;
-
-        //    return View(group);
-
-
-        //}
+        
         [HttpPost]
         public ActionResult EditGname(int gid, string gName)
         {

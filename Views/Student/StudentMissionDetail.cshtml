@@ -68,9 +68,11 @@
             @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "dicsuss_btn" })
         }
         @Html.ActionLink("自我反思", "StudentReflection", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "reflec_btn" })
-        @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
+        @if (Model.mis.IsAssess)
+        {
+            @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary" })
+        }
     </div>
-
     <table>
         <tr>
             <th>

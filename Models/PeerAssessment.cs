@@ -26,7 +26,8 @@ namespace LMSweb.Models
         public string AssessedSID { get; set; }
 
         public string MID { get; set; }
-
+        public string CID { get; set; }
+        public virtual Course Course { get; set; }
         public virtual StudentMission StudentMissions { get; set; }
 
     }

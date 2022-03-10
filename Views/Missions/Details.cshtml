@@ -76,27 +76,35 @@
                 </button>
                 @if (Model.mis.IsDrawing)
                 {
-                    <button type="button" class="btn btn-secondary" id="is_Drawing">關閉流程圖</button>
+                    <button type="button" class="btn btn-primary" id="is_Drawing">關閉流程圖</button>
                 }
                 else
                 {
-                    <button type="button" class="btn btn-primary" id="is_Drawing">開啟流程圖</button>
+                    <button type="button" class="btn btn-secondary" id="is_Drawing">開啟流程圖</button>
                 }
                 @if (Model.mis.IsCoding)
                 {
-                    <button type="button" class="btn btn-secondary" id="is_Coding">關閉程式碼</button>
+                    <button type="button" class="btn btn-primary" id="is_Coding">關閉程式碼</button>
                 }
                 else
                 {
-                    <button type="button" class="btn btn-primary" id="is_Coding">開啟程式碼</button>
+                    <button type="button" class="btn btn-secondary" id="is_Coding">開啟程式碼</button>
                 }
                 @if (Model.mis.IsDiscuss)
                 {
-                    <button type="button" class="btn btn-secondary" id="is_Discuss">關閉討論區</button>
+                    <button type="button" class="btn btn-primary" id="is_Discuss">關閉討論區</button>
                 }
                 else
                 {
-                    <button type="button" class="btn btn-primary" id="is_Discuss">開啟討論區</button>
+                    <button type="button" class="btn btn-secondary" id="is_Discuss">開啟討論區</button>
+                }
+                @if (Model.mis.IsAssess)
+                {
+                    <button type="button" class="btn btn-primary" id="is_Assess">關閉評分</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary" id="is_Assess">開啟評分</button>
                 }
             </div>
         </div>
@@ -164,10 +172,12 @@
 
                         if (response_data['sw'] == false) {
                             $("#is_Drawing").text("開啟流程圖");
-                            $("#is_Drawing").addClass("btn btn-primary");
+                            $("#is_Drawing").addClass("btn btn-secondary");
+
                         } else {
                             $("#is_Drawing").text("關閉流程圖");
-                            $("#is_Drawing").addClass("btn btn-secondary");
+                            $("#is_Drawing").addClass("btn btn-primary");
+
                         }
                     }
                 }
@@ -193,10 +203,10 @@
 
                         if (response_data['sw'] == false) {
                             $("#is_Coding").text("開啟程式碼");
-                            $("#is_Coding").addClass("btn btn-primary");
+                            $("#is_Coding").addClass("btn btn-secondary");
                         } else {
                             $("#is_Coding").text("關閉程式碼");
-                            $("#is_Coding").addClass("btn btn-secondary");
+                            $("#is_Coding").addClass("btn btn-primary");
                         }
                     }
                 }
@@ -222,10 +232,39 @@
 
                         if (response_data['sw'] == false) {
                             $("#is_Discuss").text("開啟討論區");
-                            $("#is_Discuss").addClass("btn btn-primary");
-                        } else {
-                            $("#is_Discuss").text("關閉討論區");
                             $("#is_Discuss").addClass("btn btn-secondary");
+                        } else {
+                            $("#is_Discuss").text("關閉討論區");   //狀態為開啟
+                            $("#is_Discuss").addClass("btn btn-primary");
+                        }
+                    }
+                }
+            });
+        });
+        $("#is_Assess").click(function () {
+            var data = {};
+            data['mid'] = '@Model.MID';
+            data['cid'] = '@Model.CID';
+            data['type'] = "is_Assess";
+            data['sw'] = $("#is_Assess").text().trim() == "開啟評論" ? true : false;
+            //console.log(data);
+            $.ajax({
+                url: '@Url.Action("SwitchDrawing")',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (response_data) {
+                    // ... do something with the data...
+                    console.log(response_data);
+                    if (response_data['Status'] == 200) {
+                        $("#is_Assess").removeClass();
+
+                        if (response_data['sw'] == false) {
+                            $("#is_Assess").text("開啟評論");
+                            $("#is_Assess").addClass("btn btn-secondary");
+                        } else {
+                            $("#is_Assess").text("關閉評論");   //狀態為開啟
+                            $("#is_Assess").addClass("btn btn-primary");
                         }
                     }
                 }

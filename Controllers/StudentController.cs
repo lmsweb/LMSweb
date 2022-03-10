@@ -242,12 +242,24 @@ namespace LMSweb.Controllers
         [HttpGet]
         public ActionResult StudentGoalSetting(string mid, string cid)
         {
-            GoalSettingViewModel goalSetVM = new GoalSettingViewModel();
-            goalSetVM.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "目標設置").Include(q => q.Options);
-            goalSetVM.MID = mid;
-            goalSetVM.CID = cid;
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
 
-            return View(goalSetVM);
+            var mission = db.Questions.Where(mq => mq.MID == mid && mq.Class == "目標設置").Include(mq => mq.Responses.Where(r =>r.SID == SID));
+            if(mission != null)
+            {
+                return RedirectToAction("StudentGoal", "Student", new { cid , mid });
+            }
+            else
+            {
+                GoalSettingViewModel goalSetVM = new GoalSettingViewModel();
+                goalSetVM.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "目標設置").Include(q => q.Options);
+                goalSetVM.MID = mid;
+                goalSetVM.CID = cid;
+
+                return View(goalSetVM);
+            }
+           
         }
 
         [HttpPost]
@@ -258,12 +270,7 @@ namespace LMSweb.Controllers
             
             foreach (var qr in goalSetting.QRs)
             {
-                var sidQ = db.Responses.Where(r => r.QID == qr.qid && r.SID == SID);
                 var response = new Response();
-                //if(sidQ != null)
-                //{
-                //    return ()
-                //}
                 response.QID = qr.qid;
                 response.Answer = qr.response;
                 response.SID = SID;
@@ -275,15 +282,30 @@ namespace LMSweb.Controllers
             //return Redirect("Index", );
         }
 
+        public ActionResult StudentGoal(GoalSettingViewModel goalSetting , string cid, string mid)
+        {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            
+            goalSetting.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "目標設置").Include(q => q.Options);
+            goalSetting.MID = mid;
+            goalSetting.CID = cid;
+
+
+            return View(goalSetting);
+
+            return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
+        }
+
+        [HttpGet]
         public ActionResult StudentReflection(string mid, string cid)
         {
-            ReflectionViewModel reflecVM = new ReflectionViewModel();
-            var Qclass = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Options);
-            reflecVM.Questions = Qclass;
-            reflecVM.MID = mid;
-            reflecVM.CID = cid;
+            GoalSettingViewModel goalSetVM = new GoalSettingViewModel();
+            goalSetVM.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Options);
+            goalSetVM.MID = mid;
+            goalSetVM.CID = cid;
 
-            return View(reflecVM);
+            return View(goalSetVM);
         }
     }
 }
