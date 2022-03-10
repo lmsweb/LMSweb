@@ -182,6 +182,23 @@ namespace LMSweb.Controllers
             return View(model);
         }
         [HttpPost]
+        public ActionResult StudentDrawing(HttpPostedFileBase file, string cid, string mid)
+        {
+            MissionViewModel model = new MissionViewModel();
+            model.CID = cid;
+            model.MID = mid;
+
+            if (file != null && file.ContentLength > 0)
+            {
+                string FileName = Path.GetFileName(file.FileName);
+                string FilePath = Path.Combine(Server.MapPath(WebConfigurationManager.AppSettings["ImagesPath"]), FileName);
+                //string FilePath = @"H:\Microsoft Visual Studio\newLMS\LMSweb\UploadImages\";
+                file.SaveAs(FilePath);
+            }
+
+            return View(model);
+        }
+        //[HttpPost]
         //public ActionResult StudentCoding(StudentCode model, string mid, string cid)
         //{
         //    model.CID = cid;
@@ -306,6 +323,26 @@ namespace LMSweb.Controllers
             goalSetVM.CID = cid;
 
             return View(goalSetVM);
+        }
+        public ActionResult StudentSelfEvalution(string mid, string cid)
+        {
+            EvalutionViewModel selfEVM = new EvalutionViewModel();
+            var Qclass = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.Options);
+            selfEVM.Questions = Qclass;
+            selfEVM.MID = mid;
+            selfEVM.CID = cid;
+
+            return View(selfEVM);
+        }
+        public ActionResult StudentPeerEvalution(string mid, string cid)
+        {
+            EvalutionViewModel peerEVM = new EvalutionViewModel();
+            var Qclass = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.Options);
+            peerEVM.Questions = Qclass;
+            peerEVM.MID = mid;
+            peerEVM.CID = cid;
+
+            return View(peerEVM);
         }
     }
 }

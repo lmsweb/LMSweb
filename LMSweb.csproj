@@ -383,6 +383,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\DiscussViewModel.cs" />
+    <Compile Include="ViewModel\EvalutionViewModel.cs" />
     <Compile Include="ViewModel\GoalSettingViewModel.cs" />
     <Compile Include="ViewModel\GroupCreateViewModel.cs" />
     <Compile Include="ViewModel\GroupViewModel.cs" />
@@ -1342,11 +1343,23 @@
     <Content Include="Views\Student\StudentGoalSetting.cshtml" />
     <Content Include="Views\Student\StudentReflection.cshtml" />
     <Content Include="Views\Student\StudentGoal.cshtml" />
+    <Content Include="Views\Student\StudentSelfEvalution.cshtml" />
+    <Content Include="Views\Student\StudentPeerEvalution.cshtml" />
+    <Content Include="Views\Questions\PersonalAbility.cshtml" />
+    <Content Include="Views\Questions\TeamworkAbility.cshtml" />
+    <Content Include="Views\Questions\SelectPersonalE.cshtml" />
+    <Content Include="Views\Questions\SelectTeamworkE.cshtml" />
+    <Content Include="Views\Questions\PersonalECreate.cshtml" />
+    <Content Include="Views\Questions\TeamworkECreate.cshtml" />
+    <Content Include="Views\Questions\EvalutionEdit.cshtml" />
+    <Content Include="Views\Questions\EvalutionDelete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="FileUpload\" />
     <Folder Include="packages\" />
+    <Folder Include="UploadCode\" />
+    <Folder Include="Views\Options\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
