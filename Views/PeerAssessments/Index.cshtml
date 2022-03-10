@@ -21,7 +21,7 @@
     <div class="article">
         <table class="table">
             <thead>
-                @Html.ActionLink("自我評價", "ClassJourney", "LearningBehaviors", new { }, new { @class = "" })
+                @Html.ActionLink("自我評價", "StudentSelfEvalution", "Student", new { sid = Model.SID, mid = Model.MID, gid = Model.GID }, new { @class = "" })
             </thead>
             <thead>
                 <tr>
@@ -40,7 +40,7 @@
                                 if (s.group.GID == item.GID)
                                 {
                                     
-                                    @Html.ActionLink(s.SName, "GroupJourney", "LearningBehaviors", new { sid = s.SID, mid = Model.MID, gid = Model.GID }, new { @class = "" })
+                                    @Html.ActionLink(s.SName, "StudentPeerEvalution", "Student", new { sid = s.SID, mid = Model.MID, gid = Model.GID }, new { @class = "" })
                                     <br />
                                 }
                             }

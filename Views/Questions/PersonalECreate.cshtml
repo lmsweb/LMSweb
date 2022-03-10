@@ -1,0 +1,142 @@
+﻿@model LMSweb.ViewModel.SurveyQuestionViewModel
+@{
+    ViewBag.Title = "PersonalECreate";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+}
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("PersonalAbility", "Questions", new { MID = Model.MID, cid = Model.CID})">自評互評題目設定</a></li>
+            <li class="breadcrumb-item" active" aria-current="page">新增個人能力題目</li>
+        </ol>
+    </nav>
+</div>
+<div class="article">
+    <h4><b>新增個人能力題目</b></h4>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @*<div class="mb-3">
+                    @Html.LabelFor(model => model.Question.QID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Question.QID, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Question.QID, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.Question.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-5">
+                    <div class="col-5">
+                        <select class="form-select" id="Question_Type" name="Question.Type"value="單選">單選>
+                            <option value="單選">單選</option>
+                        </select>
+                        @Html.ValidationMessageFor(model => model.Question.Type, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(model => model.Question.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-5">
+                    @Html.EditorFor(model => model.Question.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Question.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="col-5">
+                    @Html.EditorFor(model => model.Question.Class, new { htmlAttributes = new { @class = "form-control", @Value = "個人能力", @hidden = true } })
+                    @Html.ValidationMessageFor(model => model.Question.Class, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @Html.EditorFor(model => model.Question.MID, new { htmlAttributes = new { @class = "form-control", @hidden = true } })
+            @Html.ValidationMessageFor(model => model.Question.MID, "", new { @class = "text-danger" })
+
+            <div class="mb-3">
+                <div class="col-2">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" hidden id="create_btn">新增選項</button>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">新增選項</h5>
+                            <button type="button" class="btn-close" aria-label="Close" aria-hidden="true" data-bs-dismiss="modal"></button>
+
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                選項1 :  <input type="text" name="String_Options[]" id="String_Options" class="form-control" value="1">
+                            </div>
+                            <div class="mb-3">
+                                選項2 :  <input type="text" name="String_Options[]" id="String_Options" class="form-control" value="2">
+                            </div>
+                            <div class="mb-3">
+                                選項3 :  <input type="text" name="String_Options[]" id="String_Options" class="form-control" value="3">
+                            </div>
+                            <div class="mb-3">
+                                選項4 :  <input type="text" name="String_Options[]" id="String_Options" class="form-control" value="4">
+                            </div>
+                            <div class="mb-3">
+                                選項5 :  <input type="text" name="String_Options[]" id="String_Options" class="form-control" value="5">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" aria-hidden="true" data-bs-dismiss="modal" id="addfinish">完成</button>
+                            @*<button type="button" class="btn btn-primary" id="alert">創建</button>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="新增" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@section scripts
+{
+    <script>
+
+        $("#Question_Type").change(function () {
+            var a = $("#Question_Type").val();
+            
+            console.log(a);
+            if (!(a == "問答")) {
+                // 單選 or 多選
+                $('#create_btn').attr('hidden', false);
+            }
+            else {
+                $('#create_btn').attr('hidden', false);
+            }
+        });
+        $("#addfinish").click(function () {
+            var optioins = [];
+            $("#String_Options").each(function () {
+                if ($(this).prop("checked")) {
+                    optioins.push($(this).val());
+                }
+            });
+            console.log(optioins);
+        });
+    </script>
+}
+

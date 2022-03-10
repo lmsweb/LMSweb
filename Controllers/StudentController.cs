@@ -261,5 +261,25 @@ namespace LMSweb.Controllers
 
             return View(reflecVM);
         }
+        public ActionResult StudentSelfEvalution(string mid, string cid)
+        {
+            EvalutionViewModel selfEVM = new EvalutionViewModel();
+            var Qclass = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.Options);
+            selfEVM.Questions = Qclass;
+            selfEVM.MID = mid;
+            selfEVM.CID = cid;
+
+            return View(selfEVM);
+        }
+        public ActionResult StudentPeerEvalution(string mid, string cid)
+        {
+            EvalutionViewModel peerEVM = new EvalutionViewModel();
+            var Qclass = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.Options);
+            peerEVM.Questions = Qclass;
+            peerEVM.MID = mid;
+            peerEVM.CID = cid;
+
+            return View(peerEVM);
+        }
     }
 }
