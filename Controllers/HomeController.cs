@@ -29,10 +29,10 @@ namespace LMSweb.Controllers
             try
             {
                 ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-                var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
-                var tid = claimData[0].Value; //取值(因為只有一筆)
-                if (tid != null)
-                    return RedirectToAction("TeacherHomePage", "Teacher");
+                var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的TID
+                var sid = claimData[0].Value; //取值(因為只有一筆)
+                if (sid != null)
+                    return RedirectToAction("StudentHomePage", "Student");
             }
             catch
             {
