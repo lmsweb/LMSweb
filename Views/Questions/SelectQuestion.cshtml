@@ -63,13 +63,15 @@
                         </button>
                     </td>
                 </tr>
-             }
+            }
         </tbody>
 
 
 
     </table>
-
+    <div class="col">
+        <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("ReflectionIndex", "Questions" , new { cid = Model.CID, mid = Model.MID })'" />
+    </div>
 </div>
 @section scripts
 {
