@@ -1236,7 +1236,6 @@
     <Content Include="Views\Shared\_TeacherLayout.cshtml" />
     <Content Include="Views\Course\StudentCreate.cshtml" />
     <Content Include="Views\Course\StudentDelete.cshtml" />
-    <Content Include="Views\Course\StudentDetails.cshtml" />
     <Content Include="Views\Course\StudentEdit.cshtml" />
     <Content Include="Views\Student\StudentHomePage.cshtml" />
     <Content Include="Views\Student\Login.cshtml" />
@@ -1250,9 +1249,6 @@
     <Content Include="Views\Course\_UploadFile.cshtml" />
     <Content Include="Views\Course\StudentManagement.cshtml" />
     <Content Include="Views\Course\StudentGroup.cshtml" />
-    <Content Include="Views\Groups\Create.cshtml" />
-    <Content Include="Views\Groups\Delete.cshtml" />
-    <Content Include="Views\Groups\Details.cshtml" />
     <Content Include="Views\Groups\Edit.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
     <Content Include="Views\Missions\AddMissions.cshtml" />
@@ -1346,11 +1342,6 @@
     <Content Include="Views\Questions\CreateReflection.cshtml" />
     <Content Include="Views\PeerAssessments\SelfEvaluation.cshtml" />
     <Content Include="Views\PeerAssessments\PeerEvaluation.cshtml" />
-    <Content Include="Views\Responses\Create.cshtml" />
-    <Content Include="Views\Responses\Delete.cshtml" />
-    <Content Include="Views\Responses\Details.cshtml" />
-    <Content Include="Views\Responses\Edit.cshtml" />
-    <Content Include="Views\Responses\Index.cshtml" />
     <Content Include="Views\Student\StudentGoalSetting.cshtml" />
     <Content Include="Views\Student\StudentReflection.cshtml" />
     <Content Include="Views\Student\StudentGoal.cshtml" />
@@ -1371,6 +1362,7 @@
     <Folder Include="FileUpload\" />
     <Folder Include="packages\" />
     <Folder Include="UploadCode\" />
+    <Folder Include="Views\Responses\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
