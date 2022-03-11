@@ -99,13 +99,13 @@
             <div>
 
             </div>
-
-
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+                <div class="col">
                     <input type="submit" value="新增" class="btn btn-primary" />
+                    <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("ReflectionIndex", "Questions" , new { cid = Model.CID, mid = Model.MID })'" />
                 </div>
             </div>
+
         </div>
     }
 

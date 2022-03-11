@@ -364,6 +364,10 @@
     <Compile Include="Migrations\202203101158528_addEvaluationModel.Designer.cs">
       <DependentUpon>202203101158528_addEvaluationModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203101542016_addBool.cs" />
+    <Compile Include="Migrations\202203101542016_addBool.Designer.cs">
+      <DependentUpon>202203101542016_addBool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -1498,6 +1502,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203101158528_addEvaluationModel.resx">
       <DependentUpon>202203101158528_addEvaluationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203101542016_addBool.resx">
+      <DependentUpon>202203101542016_addBool.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

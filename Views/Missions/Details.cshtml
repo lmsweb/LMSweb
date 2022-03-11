@@ -62,13 +62,16 @@
                     </svg>
                     學生作業
                 </button>
-                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index","Questions",new { mid = Model.MID, cid=Model.CID })'">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
-                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                        <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                    </svg>
-                    後設認知題目
-                </button>
+              
+                    <button type="button" class="btn btn-primary" id="question" onclick="location.href='@Url.Action("Index","Questions",new { mid = Model.MID, cid=Model.CID })'" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
+                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                            <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                        </svg>
+                        後設認知題目
+                    </button>
+
+                
                 <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("PersonalAbility","Questions",new { mid = Model.MID, cid=Model.CID })'">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
                         <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
@@ -128,8 +131,41 @@
             </tr>
         </table>
         <br />
-        <div >
-            功能開啟/關閉 : 
+        <div>
+            @if (Model.mis.AddMetacognition)  //true
+            {
+                <button type="button" class="btn btn-primary" id="is_AddMeta">後設認知狀態 : 開啟</button>
+            }
+            else   //false
+            {
+                <button type="button" class="btn btn-secondary" id="is_AddMeta">後設認知狀態 : 關閉</button>
+            }
+            <br />
+            功能開啟/關閉 :
+            @if (Model.mis.AddMetacognition)
+            {
+                if (Model.mis.IsGoalSetting)
+                {
+                    <button type="button" class="btn btn-primary" id="is_Goalsetting">目標設定狀態 : 開啟</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary" id="is_Goalsetting">目標設定狀態 : 關閉</button>
+                }
+            }
+            else
+            {
+                <button type="button" class="btn btn-primary" id="is_Goalsetting" hidden>目標設定狀態 : 開啟</button>
+            }
+
+            @if (Model.mis.IsDiscuss)
+            {
+                <button type="button" class="btn btn-primary" id="is_Discuss">討論區狀態 : 開啟</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-secondary" id="is_Discuss">討論區狀態 : 關閉</button>
+            }
             @if (Model.mis.IsDrawing)
             {
                 <button type="button" class="btn btn-primary" id="is_Drawing">流程圖狀態 : 開啟</button>
@@ -146,22 +182,30 @@
             {
                 <button type="button" class="btn btn-secondary" id="is_Coding">程式碼狀態 : 關閉</button>
             }
-            @if (Model.mis.IsDiscuss)
-            {
-                <button type="button" class="btn btn-primary" id="is_Discuss">討論區狀態 : 開啟</button>
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_Discuss">討論區狀態 : 關閉</button>
-            }
             @if (Model.mis.IsAssess)
             {
-                <button type="button" class="btn btn-primary" id="is_Assess">評論狀態 : 開啟</button>
+                <button type="button" class="btn btn-primary" id="is_Assess">評價狀態 : 開啟</button>
             }
             else
             {
-                <button type="button" class="btn btn-secondary" id="is_Assess">評論狀態 : 關閉</button>
+                <button type="button" class="btn btn-secondary" id="is_Assess">評價狀態 : 關閉</button>
             }
+            @if (Model.mis.AddMetacognition)
+            {
+                if (Model.mis.IsReflect)
+                {
+                    <button type="button" class="btn btn-primary" id="is_Reflect">自我反思狀態 : 開啟</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary" id="is_Reflect">自我反思狀態 : 關閉</button>
+                }
+            }
+            else
+            {
+                <button type="button" class="btn btn-secondary" id="is_Reflect" hidden>自我反思狀態 : 關閉</button>
+            }
+
         </div>
     </div>
 </div>
@@ -263,7 +307,7 @@
             data['mid'] = '@Model.MID';
             data['cid'] = '@Model.CID';
             data['type'] = "is_Assess";
-            data['sw'] = $("#is_Assess").text().trim() == "評論狀態 : 關閉" ? true : false;
+            data['sw'] = $("#is_Assess").text().trim() == "評價狀態 : 關閉" ? true : false;
             //console.log(data);
             $.ajax({
                 url: '@Url.Action("SwitchDrawing")',
@@ -277,11 +321,104 @@
                         $("#is_Assess").removeClass();
 
                         if (response_data['sw'] == false) {
-                            $("#is_Assess").text("評論狀態 : 關閉");
+                            $("#is_Assess").text("評價狀態 : 關閉");
                             $("#is_Assess").addClass("btn btn-secondary");
                         } else {
-                            $("#is_Assess").text("評論狀態 : 開啟");   //狀態為開啟
+                            $("#is_Assess").text("評價狀態 : 開啟");   //狀態為開啟
                             $("#is_Assess").addClass("btn btn-primary");
+                        }
+                    }
+                }
+            });
+        });
+        $("#is_Goalsetting").click(function () {
+            var data = {};
+            data['mid'] = '@Model.MID';
+            data['cid'] = '@Model.CID';
+            data['type'] = "is_Goalsetting";
+            data['sw'] = $("#is_Goalsetting").text().trim() == "目標設定狀態 : 關閉" ? true : false;
+            //console.log(data);
+            $.ajax({
+                url: '@Url.Action("SwitchDrawing")',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (response_data) {
+                    // ... do something with the data...
+                    console.log(response_data);
+                    if (response_data['Status'] == 200) {
+                        $("#is_Goalsetting").removeClass();
+
+                        if (response_data['sw'] == false) {
+                            $("#is_Goalsetting").text("目標設定狀態 : 關閉");
+                            $("#is_Goalsetting").addClass("btn btn-secondary");
+                        } else {
+                            $("#is_Goalsetting").text("目標設定狀態 : 開啟");   //狀態為開啟
+                            $("#is_Goalsetting").addClass("btn btn-primary");
+                        }
+                    }
+                }
+            });
+        });
+        $("#is_Reflect").click(function () {
+            var data = {};
+            data['mid'] = '@Model.MID';
+            data['cid'] = '@Model.CID';
+            data['type'] = "is_Reflect";
+            data['sw'] = $("#is_Reflect").text().trim() == "自我反思狀態 : 關閉" ? true : false;
+            //console.log(data);
+            $.ajax({
+                url: '@Url.Action("SwitchDrawing")',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (response_data) {
+                    // ... do something with the data...
+                    console.log(response_data);
+                    if (response_data['Status'] == 200) {
+                        $("#is_Reflect").removeClass();
+
+                        if (response_data['sw'] == false) {
+                            $("#is_Reflect").text("自我反思狀態 : 關閉");
+                            $("#is_Reflect").addClass("btn btn-secondary");
+                        } else {
+                            $("#is_Reflect").text("自我反思狀態 : 開啟");   //狀態為開啟
+                            $("#is_Reflect").addClass("btn btn-primary");
+                        }
+                    }
+                }
+            });
+        });
+        $("#is_AddMeta").click(function () {
+            var data = {};
+            data['mid'] = '@Model.MID';
+            data['cid'] = '@Model.CID';
+            data['type'] = "is_AddMeta";
+            data['sw'] = $("#is_AddMeta").text().trim() == "後設認知狀態 : 關閉" ? true : false;
+            //console.log(data);
+            $.ajax({
+                url: '@Url.Action("SwitchDrawing")',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (response_data) {
+                    // ... do something with the data...
+                    console.log(response_data);
+                    if (response_data['Status'] == 200) {
+                        $("#is_AddMeta").removeClass();
+
+                        if (response_data['sw'] == false) {
+                            $("#is_AddMeta").text("後設認知狀態 : 關閉");
+                            $("#is_AddMeta").addClass("btn btn-secondary");
+                            $("#question").attr('hidden', true);
+                            $("#is_Goalsetting").attr('hidden', true);
+                            $("#is_Reflect").attr('hidden', true);
+                        } else {
+                            $("#is_AddMeta").text("後設認知狀態 : 開啟");   //狀態為開啟
+                            $("#is_AddMeta").addClass("btn btn-primary");
+                            $("#question").attr('hidden', false);
+                            $("#is_Goalsetting").attr('hidden', false);
+                            $("#is_Reflect").attr('hidden', false);
                         }
                     }
                 }

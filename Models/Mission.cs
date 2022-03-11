@@ -57,6 +57,12 @@ namespace LMSweb.Models
         [Display(Name = "自評與互評是否開放")]
         public bool IsAssess { get; set; }
 
+        [Display(Name = "目標設置是否開放")]
+        public bool IsGoalSetting { get; set; }
+
+        [Display(Name = "自我反思是否開放")]
+        public bool IsReflect { get; set; }
+
         [Display(Name = "知識點")]
         public string relatedKP { get; set; }
 
