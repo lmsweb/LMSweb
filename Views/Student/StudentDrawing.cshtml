@@ -4,20 +4,12 @@
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
 <div class="article">
-    @if (Model.mis.IsDrawing)
-    {
         @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "drawing_btn" })
-    }
-    @if (Model.mis.IsCoding)
-    {
+
         @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "coding_btn" })
 
-    }
-    @if (Model.mis.IsDiscuss)
-    {
         @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "dicsuss_btn" })
-    }
-   
+
     <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-success" />
     <h2>StudentDrawing</h2>
 
