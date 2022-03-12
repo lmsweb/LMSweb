@@ -1361,6 +1361,8 @@
     <Content Include="Views\Questions\EvalutionEdit.cshtml" />
     <Content Include="Views\Questions\EvalutionDelete.cshtml" />
     <Content Include="Views\Student\StudentReflectionResult.cshtml" />
+    <Content Include="Views\Student\StudentSelfER.cshtml" />
+    <Content Include="Views\Student\StudentPeerER.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
