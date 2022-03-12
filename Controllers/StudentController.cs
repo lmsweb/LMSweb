@@ -198,29 +198,21 @@ namespace LMSweb.Controllers
 
             return View(model);
         }
-        //[HttpPost]
-        //public ActionResult StudentCoding(StudentCode model, string mid, string cid)
+        public ActionResult ShowImage(string id)
+        {
+            var dir = Server.MapPath("/Images");
+            var path = Path.Combine(dir, id + ".jpg");
+            return base.File(path, "image/jpg");
+        }
+
+        //[AcceptVerbs(HttpVerbs.Get)]
+        //[OutputCache(CacheProfile = "CustomerImages")]
+        //public FileResult Show(int customerId, string imageName)
         //{
-        //    model.CID = cid;
-        //    model.MID = mid;
-
-        //    ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-        //    var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
-        //    var sid = claimData[0].Value;
-        //    var group = db.Students.Find(sid).group;
-        //    model.GID = group.GID;
-
-        //    model.IsEdit = true;
-        //    model.CodePath = "~/FileUpload/";
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.StudentCodes.Add(model);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index", new { cid = model.CID });
-        //    }
-
-        //    return View(model);
+        //    var path = string.Concat(ConfigData.ImagesDirectory, customerId, @"\", imageName);
+        //    return new FileStreamResult(new FileStream(path, FileMode.Open), "image/jpeg");
         //}
+
         public ActionResult StudentDrawing(string mid, string cid)
         {
             MissionViewModel model = new MissionViewModel();

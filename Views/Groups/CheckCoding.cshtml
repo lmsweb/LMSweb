@@ -1,8 +1,26 @@
-﻿
-@{
-    ViewBag.Title = "CheckCoding";
-    Layout = "~/Views/Shared/_WindowLayoutPage.cshtml";
-}
+﻿@model LMSweb.ViewModel.GroupViewModel
+@{ ViewBag.Title = "CheckCoding";
+    Layout = "~/Views/Shared/_OnlineEditorLayout.cshtml"; }
 
-<h2>CheckCoding</h2>
+<h2>CheckCoding3333</h2>
+<div>
+    <input id="gid" type="hidden" value="@Model.GID" />
+
+    <input id="cid" type="hidden" value="@Model.CID" />
+    <p>@Html.DisplayFor(model => model.CID)</p>
+
+    <input id="mid" type="hidden" value="@Model.MID" />
+    <p>@Html.DisplayFor(model => model.MID)</p>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/Coding/coding_editor.js"></script>
+    <script>
+
+    </script>
+
+}
 

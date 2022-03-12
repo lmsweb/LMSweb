@@ -64,10 +64,10 @@
 {
     <script>
         function CodingWindow() {
-            const myWindow = window.open('@Url.Action("CheckCoding", "Groups", new { gid = Model.GID, cid = Model.CID })', "", "width=800,height=800");
+            const myWindow = window.open('@Url.Action("CheckCoding", "Groups", new { gid = Model.GID, cid = Model.CID, mid = Model.MID })',"",  "width=800,height=800");
         }
         function DrawingWindow() {
-            const myWindow = window.open('@Url.Action("CheckDrawing", "Groups", new { gid = Model.GID, cid = Model.CID })', "", "width=800,height=800");
+            const myWindow = window.open('@Url.Action("CheckDrawing", "Groups", new { gid = Model.GID, cid = Model.CID, mid = Model.MID })', "", "width=800,height=800");
         }
     </script>
     
