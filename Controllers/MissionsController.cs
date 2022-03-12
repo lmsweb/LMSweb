@@ -300,6 +300,18 @@ namespace LMSweb.Models
             {
                 mission.IsAssess = sw;
             }
+            else if (type == "is_Goalsetting")
+            {
+                mission.IsGoalSetting = sw;
+            }
+            else if (type == "is_Reflect")
+            {
+                mission.IsReflect = sw;
+            }
+            else if (type == "is_AddMeta")
+            {
+                mission.AddMetacognition = sw;
+            }
 
             db.SaveChanges();
             return Json(new { Status = HttpStatusCode.OK , type = type, sw = sw});

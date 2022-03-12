@@ -7,6 +7,7 @@
     <h4>@Model.CName</h4>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Details", "Missions", new { mid = Model.MID, cid = Model.CID})">任務內容</a></li>
             <li class="breadcrumb-item" active" aria-current="page">後設認知題目設定</li>
         </ol>
     </nav>

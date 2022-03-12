@@ -364,6 +364,10 @@
     <Compile Include="Migrations\202203101158528_addEvaluationModel.Designer.cs">
       <DependentUpon>202203101158528_addEvaluationModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203101542016_addBool.cs" />
+    <Compile Include="Migrations\202203101542016_addBool.Designer.cs">
+      <DependentUpon>202203101542016_addBool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -1232,7 +1236,6 @@
     <Content Include="Views\Shared\_TeacherLayout.cshtml" />
     <Content Include="Views\Course\StudentCreate.cshtml" />
     <Content Include="Views\Course\StudentDelete.cshtml" />
-    <Content Include="Views\Course\StudentDetails.cshtml" />
     <Content Include="Views\Course\StudentEdit.cshtml" />
     <Content Include="Views\Student\StudentHomePage.cshtml" />
     <Content Include="Views\Student\Login.cshtml" />
@@ -1246,9 +1249,6 @@
     <Content Include="Views\Course\_UploadFile.cshtml" />
     <Content Include="Views\Course\StudentManagement.cshtml" />
     <Content Include="Views\Course\StudentGroup.cshtml" />
-    <Content Include="Views\Groups\Create.cshtml" />
-    <Content Include="Views\Groups\Delete.cshtml" />
-    <Content Include="Views\Groups\Details.cshtml" />
     <Content Include="Views\Groups\Edit.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
     <Content Include="Views\Missions\AddMissions.cshtml" />
@@ -1342,11 +1342,6 @@
     <Content Include="Views\Questions\CreateReflection.cshtml" />
     <Content Include="Views\PeerAssessments\SelfEvaluation.cshtml" />
     <Content Include="Views\PeerAssessments\PeerEvaluation.cshtml" />
-    <Content Include="Views\Responses\Create.cshtml" />
-    <Content Include="Views\Responses\Delete.cshtml" />
-    <Content Include="Views\Responses\Details.cshtml" />
-    <Content Include="Views\Responses\Edit.cshtml" />
-    <Content Include="Views\Responses\Index.cshtml" />
     <Content Include="Views\Student\StudentGoalSetting.cshtml" />
     <Content Include="Views\Student\StudentReflection.cshtml" />
     <Content Include="Views\Student\StudentGoal.cshtml" />
@@ -1369,6 +1364,7 @@
     <Folder Include="FileUpload\" />
     <Folder Include="packages\" />
     <Folder Include="UploadCode\" />
+    <Folder Include="Views\Responses\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -1500,6 +1496,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203101158528_addEvaluationModel.resx">
       <DependentUpon>202203101158528_addEvaluationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203101542016_addBool.resx">
+      <DependentUpon>202203101542016_addBool.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
