@@ -44,7 +44,7 @@
                             <td>
                                 @foreach (var qo in Q.EvalutionResponses)
                                 {
-                                    if (qo.SID == Model.SID && qo.EvaluatorSID == Model.EvaluatorSID)
+                                    if (qo.SID == Model.SID )
                                     {
                                         @qo.Answer
                                     }
@@ -53,7 +53,7 @@
                             <td>
                                 @foreach (var qo in Q.EvalutionResponses)
                                 {
-                                    if (qo.SID == Model.SID && qo.EvaluatorSID == Model.EvaluatorSID)
+                                    if (qo.SID == Model.SID )
                                     {
                                         @qo.Comments
                                     }

@@ -11,6 +11,7 @@
 
         <div class="form-horizontal">
             <h5>同儕互評</h5>
+            <h5>@Model.SID</h5>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)
