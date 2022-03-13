@@ -15,9 +15,9 @@
     </nav>
 </div>
 <div class="article">
-    @*@Model.CID
+    @Model.CID
     @Model.MID
-    @Model.GID*@
+    @Model.GID
     <input type="button" value="程式碼" onclick="CodingWindow()" class="btn btn-primary" />
     <input type="button" value="流程圖" onclick="DrawingWindow()" class="btn btn-primary" />
     @using (Html.BeginForm("Create", "Groups", FormMethod.Post))
@@ -25,15 +25,15 @@
         @Html.AntiForgeryToken()
         <br />
         <div class="form-horizontal">
-             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-             <div class="mb-3">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="mb-3">
                 @Html.LabelFor(model => model.TeacherAssessment.GroupAchievementScore, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-7">
-                    @Html.EditorFor(model => model.TeacherAssessment.GroupAchievementScore, new { htmlAttributes = new { @class = "form-control", @placeholder="0分 ~ 100分" } })
+                    @Html.EditorFor(model => model.TeacherAssessment.GroupAchievementScore, new { htmlAttributes = new { @class = "form-control", @placeholder = "0分 ~ 100分" } })
                     @Html.ValidationMessageFor(model => model.TeacherAssessment.GroupAchievementScore, "", new { @class = "text-danger" })
                 </div>
             </div>
-           
+
             <div class="mb-3">
                 @Html.LabelFor(model => model.TeacherAssessment.TeacherA, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-7">
@@ -43,13 +43,16 @@
                     </div>
                 </div>
                 @*<div class="col-md-10">
-                    @Html.EditorFor(model => model.TeacherAssessment.TeacherA, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TeacherAssessment.TeacherA, "", new { @class = "text-danger" })
-                </div>*@
+                @Html.EditorFor(model => model.TeacherAssessment.TeacherA, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TeacherAssessment.TeacherA, "", new { @class = "text-danger" })
+            </div>*@
             </div>
-            @Html.HiddenFor(model => model.CID)
+            @Html.EditorFor(model => model.MID, new { htmlAttributes = new { @class = "form-control", @hidden = "true" } })
+            @Html.EditorFor(model => model.CID, new { htmlAttributes = new { @class = "form-control", @hidden = "true" } })
+            @Html.EditorFor(model => model.MID, new { htmlAttributes = new { @class = "form-control", @hidden = "true" } })
+            @*@Html.HiddenFor(model => model.CID)
             @Html.HiddenFor(model => model.GID)
-            @Html.HiddenFor(model => model.MID)
+            @Html.HiddenFor(model => model.MID)*@
             <br />
             <div class="mb-3">
                 <div class="col-md-offset-2 col-md-10">
@@ -64,10 +67,10 @@
 {
     <script>
         function CodingWindow() {
-            const myWindow = window.open('@Url.Action("CheckCoding", "Groups", new { gid = Model.GID, cid = Model.CID })', "", "width=800,height=800");
+            const myWindow = window.open('@Url.Action("CheckCoding", "Groups", new { gid = Model.GID, cid = Model.CID, mid = Model.MID })',"",  "width=800,height=800");
         }
         function DrawingWindow() {
-            const myWindow = window.open('@Url.Action("CheckDrawing", "Groups", new { gid = Model.GID, cid = Model.CID })', "", "width=800,height=800");
+            const myWindow = window.open('@Url.Action("CheckDrawing", "Groups", new { gid = Model.GID, cid = Model.CID, mid = Model.MID })', "", "width=800,height=800");
         }
     </script>
     

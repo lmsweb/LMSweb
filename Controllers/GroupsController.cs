@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using LMSweb.Models;
@@ -30,11 +31,20 @@ namespace LMSweb.Controllers
 
             return View(gmodel);
         }
-        public ActionResult CheckCoding(int gid, string cid)
+        public ActionResult CheckCoding(int gid, string cid, string mid)
         {
             GroupViewModel model = new GroupViewModel();
+            
             model.CID = cid;
             model.GID = gid;
+            model.MID = mid;
+
+            //ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            //var claimData = claims.Claims.Where(x => x.Type == "MID").ToList();   //抓出當初記載Claims陣列中的SID
+            //var sid = claimData[0].Value;
+            //var group = db.Students.Find(sid).group;
+            //model.GID = group.GID;
+
             return View(model);
         }
         public ActionResult CheckDrawing(int gid, string cid)
@@ -54,7 +64,7 @@ namespace LMSweb.Controllers
 
             var group = db.Groups.Single(g =>g.GID == gid);
 
-            model.GName = group.GName; 
+            model.GName = group.GName;  
             model.CName = mis.course.CName;
 
             return View(model);
