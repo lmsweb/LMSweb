@@ -25,5 +25,7 @@ namespace LMSweb.ViewModel
         [Required]
         public string response { get; set; }
         public string comments { get; set; }
+        public string sid { get; set; }
+
     }
 }
