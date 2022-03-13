@@ -48,17 +48,17 @@
                                 {
                                     foreach (var qo in Q.Options)
                                     {
-                                        if (qo.QID == Q.QID)
-                                        {
 
-                                            <input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName
+                                        @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
+                                        @Html.RadioButton(Q.QID.ToString(), qo.OptionName, new { @class = "form-check-input" })
+                                        @Html.Label(qo.OptionName, new { @class = "form-check-label", @for = Q.QID })                                       
 
-                                        }
                                     }
                                 }
                             </td>
                             <td>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
+                                @Html.TextArea(Q.QID.ToString(), new { @class = "form-control", @rows = "3" })
                             </td>
                         </tr>
                     }
@@ -95,13 +95,58 @@
 @section scripts
 {
     <script>
+        var evalution_qid = @Html.Raw(@Json.Encode(Model.Questions.Select(q => q.QID).ToList()));
+        //console.log(evalution_qid);
         window.onload = function () {
             var tableLine = document.getElementById("number");
             for (var i = 0; i < tableLine.rows.length; i++) {
                 tableLine.rows[i].cells[0].innerHTML = (i + 1);
-
             }
         }
+        $("form").submit(function () {
+            var sumbit_data = {};
+            sumbit_data["CID"] = "@Model.CID";
+            sumbit_data["MID"] = "@Model.MID";
+            sumbit_data["ERs"] = [];
+            for (var i = 0; i < evalution_qid.length; i++) {
+                var Evalution_Response = {};
+                var type = $('input[name="' + evalution_qid[i] + '"]').attr('type');
+                //console.log(evalution_qid[i]);
+                response = "";
+                comments = "";
+                if (type == "radio") {
+                    response = $('input[name="' + evalution_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                    selector = $('textarea[name="' + evalution_qid[i] + '"]');
+                    comments = selector.val();
+                } else if (type == "checkbox") {
+                    response = $('input[name="' + evalution_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                } else {
+                    selector = $('textarea[name="' + evalution_qid[i] + '"]');
+                    comments = selector.val();
+                }
+                //console.log(response);
+                Evalution_Response["qid"] = evalution_qid[i];
+                Evalution_Response["response"] = response;
+                Evalution_Response["comments"] = comments;
+                sumbit_data["ERs"].push(Evalution_Response);
+            }
+            console.log(sumbit_data);
+            $.ajax({
+                url: '@Url.Action("StudentSelfEvalution")',
+                type: 'post',
+                dataType: 'json',
+                data: sumbit_data,
+                success: function (response) {
+                    // ... do something with the data...
+                    window.location.href = response.redirectToUrl;
+                }
+            });
+            return false;
+        });
     </script>
 }
 

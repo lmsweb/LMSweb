@@ -22,6 +22,6 @@ namespace LMSweb.ViewModel
 
         [Required]
         public string response { get; set; }
-        public string comments { get; internal set; }
+        //public string comments { get; internal set; }
     }
 }

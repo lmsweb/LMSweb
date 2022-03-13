@@ -79,6 +79,7 @@
         {
             @Html.ActionLink("自我反思", "StudentReflection", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "reflec_btn" })
         }
+        @Html.ActionLink("組間互評", "StudentGroupEvalution", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "reflec_btn" })
 
     </div>
     <table>

@@ -1,6 +1,6 @@
 ﻿@model LMSweb.ViewModel.EvalutionViewModel
 @{
-    ViewBag.Title = "StudentPeerER";
+    ViewBag.Title = "StudentGroupEvalution";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
 <div class="article">
@@ -10,7 +10,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h5>同儕戶評</h5>
+            <h5>組間互評</h5>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)
@@ -43,22 +43,50 @@
                                 @Html.DisplayFor(modelItem => Q.Description)
                             </td>
                             <td>
-                                @foreach (var qo in Q.EvalutionResponses)
+                                @if (Q.Type == "單選")
                                 {
-                                    @qo.Answer
+                                    foreach (var qo in Q.Options)
+                                    {
+
+                                        @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
+                                        @Html.RadioButton(Q.QID.ToString(), qo.OptionName, new { @class = "form-check-input" })
+                                        @Html.Label(qo.OptionName, new { @class = "form-check-label", @for = Q.QID })
+
+                                    }
                                 }
                             </td>
                             <td>
-                                @foreach (var qo in Q.EvalutionResponses)
-                                {
-                                    @qo.Comments
-                                }
+                                @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
+                                @Html.TextArea(Q.QID.ToString(), new { @class = "form-control", @rows = "3" })
                             </td>
                         </tr>
                     }
 
                 </tbody>
             </table>
+            <div class="mb-3">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">送出確認</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            送出後無法做修改，確定要送出嗎?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">再想想</button>
+                            <input type="submit" value="送出" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     }
 
@@ -67,7 +95,7 @@
 {
     <script>
         var evalution_qid = @Html.Raw(@Json.Encode(Model.Questions.Select(q => q.QID).ToList()));
-        //console.log(questions_qid);
+        //console.log(evalution_qid);
         window.onload = function () {
             var tableLine = document.getElementById("number");
             for (var i = 0; i < tableLine.rows.length; i++) {
@@ -78,25 +106,26 @@
             var sumbit_data = {};
             sumbit_data["CID"] = "@Model.CID";
             sumbit_data["MID"] = "@Model.MID";
-            sumbit_data["QRs"] = [];
+            sumbit_data["ERs"] = [];
             for (var i = 0; i < evalution_qid.length; i++) {
                 var Evalution_Response = {};
                 var type = $('input[name="' + evalution_qid[i] + '"]').attr('type');
-                //console.log(questions_qid[i]);
+                //console.log(evalution_qid[i]);
                 response = "";
+                comments = "";
                 if (type == "radio") {
                     response = $('input[name="' + evalution_qid[i] + '"]:checked').map(function () {
                         return $(this).val();
                     }).get().join();
                     selector = $('textarea[name="' + evalution_qid[i] + '"]');
-                    response = selector.val();
+                    comments = selector.val();
                 } else if (type == "checkbox") {
                     response = $('input[name="' + evalution_qid[i] + '"]:checked').map(function () {
                         return $(this).val();
                     }).get().join();
                 } else {
                     selector = $('textarea[name="' + evalution_qid[i] + '"]');
-                    response = selector.val();
+                    comments = selector.val();
                 }
                 //console.log(response);
                 Evalution_Response["qid"] = evalution_qid[i];
@@ -106,17 +135,25 @@
             }
             console.log(sumbit_data);
             $.ajax({
-                url: '@Url.Action("StudentPeerEvalution")',
+                url: '@Url.Action("StudentSelfEvalution")',
                 type: 'post',
                 dataType: 'json',
                 data: sumbit_data,
                 success: function (response) {
                     // ... do something with the data...
                     window.location.href = response.redirectToUrl;
-
                 }
             });
             return false;
         });
+        function CodingWindow() {
+            const myWindow = window.open('@Url.Action("CheckCoding", "Groups", new { cid = Model.CID })', "", "width=800,height=800");
+        }
+        function DrawingWindow() {
+            const myWindow = window.open('@Url.Action("CheckDrawing", "Groups", new { cid = Model.CID })', "", "width=800,height=800");
+        }
     </script>
 }
+
+
+

@@ -25,12 +25,14 @@
                             @Html.DisplayNameFor(model => model.Questions.First().Description)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Questions.First().Options)
+                            不滿意--------滿意
+                        </th>
+                        <th>
+                            評語
                         </th>
                     </tr>
                 </thead>
                 <tbody id="number">
-
                     @foreach (var Q in Model.Questions)
                     {
                         <tr>
@@ -40,31 +42,28 @@
                                 @Html.DisplayFor(modelItem => Q.Description)
                             </td>
                             <td>
-
-                                @foreach (var qo in Q.Responses)
+                                @foreach (var qo in Q.EvalutionResponses)
                                 {
                                     @qo.Answer
                                 }
-
+                            </td>
+                            <td>
+                                @foreach (var qo in Q.EvalutionResponses)
+                                {
+                                    @qo.Comments
+                                }
                             </td>
                         </tr>
                     }
-
                 </tbody>
             </table>
-            @*<div class="mb-3">
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
-                    </div>
-                </div>*@
         </div>
     }
-
 </div>
 @section scripts
 {
     <script>
-        var questions_qid = @Html.Raw(@Json.Encode(Model.Questions.Select(q => q.QID).ToList()));
+        var evalution_qid = @Html.Raw(@Json.Encode(Model.Questions.Select(q => q.QID).ToList()));
         //console.log(questions_qid);
         window.onload = function () {
             var tableLine = document.getElementById("number");
@@ -77,28 +76,31 @@
             var sumbit_data = {};
             sumbit_data["CID"] = "@Model.CID";
             sumbit_data["MID"] = "@Model.MID";
-            sumbit_data["QRs"] = [];
-            for (var i = 0; i < questions_qid.length; i++) {
-                var Question_Response = {};
-                var type = $('input[name="' + questions_qid[i] + '"]').attr('type');
+            sumbit_data["ERs"] = [];
+            for (var i = 0; i < evalution_qid.length; i++) {
+                var Evalution_Response = {};
+                var type = $('input[name="' + evalution_qid[i] + '"]').attr('type');
                 //console.log(questions_qid[i]);
                 response = "";
                 if (type == "radio") {
-                    response = $('input[name="' + questions_qid[i] + '"]:checked').map(function () {
+                    response = $('input[name="' + evalution_qid[i] + '"]:checked').map(function () {
                         return $(this).val();
                     }).get().join();
+                    selector = $('textarea[name="' + evalution_qid[i] + '"]');
+                    response = selector.val();
                 } else if (type == "checkbox") {
-                    response = $('input[name="' + questions_qid[i] + '"]:checked').map(function () {
+                    response = $('input[name="' + evalution_qid[i] + '"]:checked').map(function () {
                         return $(this).val();
                     }).get().join();
                 } else {
-                    selector = $('textarea[name="' + questions_qid[i] + '"]');
+                    selector = $('textarea[name="' + evalution_qid[i] + '"]');
                     response = selector.val();
                 }
                 //console.log(response);
-                Question_Response["qid"] = questions_qid[i];
-                Question_Response["response"] = response;
-                sumbit_data["QRs"].push(Question_Response);
+                Evalution_Response["qid"] = evalution_qid[i];
+                Evalution_Response["response"] = response;
+                Evalution_Response["comments"] = comments;
+                sumbit_data["ERs"].push(Evalution_Response);
             }
             console.log(sumbit_data);
             $.ajax({
@@ -109,7 +111,6 @@
                 success: function (response) {
                     // ... do something with the data...
                     window.location.href = response.redirectToUrl;
-
                 }
             });
             return false;
