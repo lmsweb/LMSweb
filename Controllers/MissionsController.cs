@@ -30,7 +30,7 @@ namespace LMSweb.Models
             model.CName = course.CName;
             return View(model);
         }
-        public ActionResult Details(string mid)
+        public ActionResult Details(string mid,string cid)
         {
             if (mid == null)
             {

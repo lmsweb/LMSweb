@@ -131,7 +131,8 @@
             </tr>
         </table>
         <br />
-        <div>
+        <div class="mb-3">
+            後設認知開啟/關閉 : 
             @if (Model.mis.AddMetacognition)  //true
             {
                 <button type="button" class="btn btn-primary" id="is_AddMeta">後設認知狀態 : 開啟</button>
@@ -140,7 +141,8 @@
             {
                 <button type="button" class="btn btn-secondary" id="is_AddMeta">後設認知狀態 : 關閉</button>
             }
-            <br />
+        </div>
+        <div class="mb-3">
             功能開啟/關閉 :
             @if (Model.mis.AddMetacognition)
             {

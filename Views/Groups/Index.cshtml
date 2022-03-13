@@ -113,8 +113,8 @@
 {
     <script>
         function scoreFunction() {
-            console.log('@Url.Action("Assessment","Group",null)');
-            const myWindow = window.open('@Url.Action("Assessment","Group",null)', "", "width=800,height=800");
+            console.log('@Url.Action("Assessment","Group", new { cid = Model.CID, mid = Model.MID })');
+            const myWindow = window.open('@Url.Action("Assessment","Group",new { cid = Model.CID, mid = Model.MID})', "", "width=800,height=800");
         }
         //$("#btn").attr("disabled", "true");
         //$("#btn").attr("disabled", "disabled");

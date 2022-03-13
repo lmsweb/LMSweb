@@ -4,13 +4,17 @@
 
 <h2>CheckCoding3333</h2>
 <div>
-    <input id="gid" type="hidden" value="@Model.GID" />
+    <input id="gid" type="text" value="@Model.GID" />
 
-    <input id="cid" type="hidden" value="@Model.CID" />
+    <input id="cid" type="text" value="@Model.CID" />
     <p>@Html.DisplayFor(model => model.CID)</p>
 
-    <input id="mid" type="hidden" value="@Model.MID" />
+    <input id="mid" type="text" value="@Model.MID" />
     <p>@Html.DisplayFor(model => model.MID)</p>
+
+    @Model.CID
+    @Model.MID
+    @Model.GID
 </div>
 
 @section scripts

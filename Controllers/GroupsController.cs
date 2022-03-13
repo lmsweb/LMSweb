@@ -34,6 +34,7 @@ namespace LMSweb.Controllers
         public ActionResult CheckCoding(int gid, string cid, string mid)
         {
             GroupViewModel model = new GroupViewModel();
+            
             model.CID = cid;
             model.GID = gid;
             model.MID = mid;
@@ -63,7 +64,7 @@ namespace LMSweb.Controllers
 
             var group = db.Groups.Single(g =>g.GID == gid);
 
-            model.GName = group.GName; 
+            model.GName = group.GName;  
             model.CName = mis.course.CName;
 
             return View(model);
