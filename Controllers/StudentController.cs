@@ -258,7 +258,7 @@ namespace LMSweb.Controllers
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && q.Class == "目標設置" && q.MID == mid).ToList();
             if(questions.Any())
             {
-                return RedirectToAction("StudentGoal", "Student", new { cid , mid });
+                return RedirectToAction("StudentGoal", "Student", new { cid , mid, SID });
             }
             else
             {
@@ -266,6 +266,7 @@ namespace LMSweb.Controllers
                 goalSetVM.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "目標設置").Include(q => q.Options);
                 goalSetVM.MID = mid;
                 goalSetVM.CID = cid;
+                goalSetVM.SID = SID;
 
                 return View(goalSetVM);
             }
@@ -284,6 +285,7 @@ namespace LMSweb.Controllers
                 response.QID = qr.qid;
                 response.Answer = qr.response;
                 response.SID = SID;
+
                 db.Responses.Add(response);
             }
             db.SaveChanges();
@@ -292,22 +294,17 @@ namespace LMSweb.Controllers
             //return Redirect("Index", );
         }
 
-        public ActionResult StudentGoal(GoalSettingViewModel goalSetting , string cid, string mid)  ///學生已填過目標設置
+        public ActionResult StudentGoal(GoalSettingViewModel goalSetting , string cid, string mid, string SID)  ///學生已填過目標設置
         {
-            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-            
+           
             goalSetting.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "目標設置").Include(q => q.Responses);
             goalSetting.MID = mid;
             goalSetting.CID = cid;
-
+            goalSetting.SID = SID;
 
             return View(goalSetting);
 
-            //return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
         }
-
-
 
         [HttpGet]
         public ActionResult StudentReflection(string mid, string cid)
@@ -319,7 +316,7 @@ namespace LMSweb.Controllers
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && q.Class == "自我反思" && q.MID == mid).ToList();
             if (questions.Any())
             {
-                return RedirectToAction("StudentReflectionResult", "Student", new { cid, mid });
+                return RedirectToAction("StudentReflectionResult", "Student", new { cid, mid, SID });
             }
             else
             {
@@ -351,14 +348,15 @@ namespace LMSweb.Controllers
             return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
             //return Redirect("Index", );
         }
-        public ActionResult StudentReflectionResult(GoalSettingViewModel goalSetting, string cid, string mid)
+        public ActionResult StudentReflectionResult(GoalSettingViewModel goalSetting, string cid, string mid, string SID)
         {
-            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            //ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            //var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+
             goalSetting.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Responses);
             goalSetting.MID = mid;
             goalSetting.CID = cid;
-
+            goalSetting.SID = SID;
 
             return View(goalSetting);
 
@@ -384,6 +382,8 @@ namespace LMSweb.Controllers
                 SelfEVM.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.Options);
                 SelfEVM.MID = mid;
                 SelfEVM.CID = cid;
+                SelfEVM.SID = SID;
+                SelfEVM.EvaluatorSID = SID;
 
                 return View(SelfEVM);
             }
@@ -408,11 +408,12 @@ namespace LMSweb.Controllers
                 response.Answer = qr.response;
                 response.Comments = qr.comments;
                 response.SID = SID;
+                response.EvaluatorSID = SID;
                 db.EvalutionResponse.Add(response);
             }
             db.SaveChanges();
             //return RedirectToAction("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID });
-            return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = evalution.CID, mid = evalution.MID }) });
+            return Json(new { redirectToUrl = Url.Action("Index", "PeerAssessments", new { cid = evalution.CID, mid = evalution.MID }) });
             //return Redirect("Index", );
         }
         public ActionResult StudentSelfER(EvalutionViewModel evalution, string sid, string cid, string mid)  ///學生已填過目標設置
@@ -423,7 +424,8 @@ namespace LMSweb.Controllers
             evalution.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力"|| q.Class == "合作能力")).Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
-            evalution.SID = sid;
+            evalution.EvaluatorSID = SID;
+
 
             return View(evalution);
 
@@ -433,14 +435,13 @@ namespace LMSweb.Controllers
         public ActionResult StudentPeerEvalution(string sid,string mid, string cid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            //var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-            string SID = sid;
-            var evalution = db.EvalutionResponse.Where(r => r.SID == SID);
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var evalution = db.EvalutionResponse.Where(r => r.SID == sid && r.EvaluatorSID == SID);
             var qids = evalution.Select(r => r.QID).ToList();
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && (q.Class == "個人能力" || q.Class == "合作能力") && q.MID == mid).ToList();
             if (questions.Any())
             {
-                return RedirectToAction("StudentPeerER", "Student", new { sid,cid, mid });
+                return RedirectToAction("StudentPeerER", "Student", new { sid,cid, mid, evasid = SID });
             }
             else
             {
@@ -449,6 +450,7 @@ namespace LMSweb.Controllers
                 PeerEVM.MID = mid;
                 PeerEVM.CID = cid;
                 PeerEVM.SID = sid;
+                PeerEVM.EvaluatorSID = sid;
 
                 return View(PeerEVM);
             }
@@ -456,33 +458,37 @@ namespace LMSweb.Controllers
         [HttpPost]
         public ActionResult StudentPeerEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution)  //填表單送出的Post
         {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var evaSID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+
             foreach (var qr in evalution.ERs)
             {
                 var response = new EvalutionResponse();
                 response.QID = qr.qid;
                 response.Answer = qr.response;
                 response.Comments = qr.comments;
-                response.SID = qr.sid;
+                response.SID = sid;
+                response.EvaluatorSID = evaSID;
+
                 db.EvalutionResponse.Add(response);
             }
             db.SaveChanges();
-            //return RedirectToAction("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID });
-            return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = evalution.CID, mid = evalution.MID }) });
-            //return Redirect("Index", );
+            
+            return Json(new { redirectToUrl = Url.Action("Index", "PeerAssessments", new { cid = evalution.CID, mid = evalution.MID }) });
+           
         }
-        public ActionResult StudentPeerER(EvalutionViewModel evalution,string sid, string cid, string mid)  ///學生已填過目標設置
+        public ActionResult StudentPeerER(EvalutionViewModel evalution,string sid, string cid, string mid, string evasid)  ///學生已填過目標設置
         {
-            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            string SID = evalution.SID;
-            var Name = claims.Claims.Where(n => n.Type == "Name");
-
+           
             evalution.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
             evalution.SID = sid;
+            evalution.EvaluatorSID = evasid;
+
             return View(evalution);
 
-            //return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
+            
         }
         [HttpGet]
         public ActionResult StudentGroupEvalution(string mid, string cid)

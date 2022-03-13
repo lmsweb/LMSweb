@@ -12,6 +12,7 @@ namespace LMSweb.ViewModel
         public string CID { get; set; }
         public string MID { get; set; }
         public string SID { get; set; }
+        public string EvaluatorSID { get; set; }
         public IEnumerable<LMSweb.Models.Question> Questions { get; set; }
         public List<Evalution_Response> ERs { get; set; }
         public LMSweb.Models.Option Option { get; set; }
@@ -21,6 +22,7 @@ namespace LMSweb.ViewModel
     public class Evalution_Response
     {
         public int qid { get; set; }
+
 
         [Required]
         public string response { get; set; }

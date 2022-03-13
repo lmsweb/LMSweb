@@ -44,23 +44,6 @@
                                 }
                             }
                         </td>
-                        @*<td>
-                            @foreach (var s in item.Students)
-                            {
-                                if (Model.PeerAssessment != null && s.SID == Model.PeerAssessment.AssessedSID)
-                                {
-                                    @Model.PeerAssessment.PeerA
-                                }
-                                <br />
-                            }
-                        </td>
-                        <td>
-                            @foreach (var s in item.Students)
-                            {
-                                @Html.ActionLink("評分", "GroupJourney", "LearningBehaviors", new { sid = s.SID, mid = Model.MID, gid = Model.GID }, new { @class = "" })
-                                <br />
-                            }
-                        </td>*@
                     </tr>
                 }
             </tbody>

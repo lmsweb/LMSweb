@@ -10,8 +10,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h5>同儕戶評</h5>
-            <h4>@User.Identity.Name</h4>
+            <h5>同儕互評</h5>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)
@@ -34,7 +33,6 @@
                     </tr>
                 </thead>
                 <tbody id="number">
-
                     @foreach (var Q in Model.Questions)
                     {
                         <tr>
@@ -46,20 +44,20 @@
                             <td>
                                 @foreach (var qo in Q.EvalutionResponses)
                                 {
-                                    if (Model.SID == qo.SID)
+                                    if (qo.SID == Model.SID && qo.EvaluatorSID == Model.EvaluatorSID)
                                     {
                                         @qo.Answer
                                     }
-
                                 }
                             </td>
                             <td>
                                 @foreach (var qo in Q.EvalutionResponses)
                                 {
-                                    if(Model.SID == qo.SID)
+                                    if (qo.SID == Model.SID && qo.EvaluatorSID == Model.EvaluatorSID)
                                     {
                                         @qo.Comments
                                     }
+
                                 }
                             </td>
                         </tr>
