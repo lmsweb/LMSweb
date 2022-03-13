@@ -43,7 +43,10 @@
 
                                 @foreach (var qo in Q.Responses)
                                 {
-                                    @qo.Answer
+                                    if (qo.SID == Model.SID)
+                                    {
+                                        @qo.Answer
+                                    }
                                 }
 
                             </td>

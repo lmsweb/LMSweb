@@ -107,6 +107,7 @@
             var sumbit_data = {};
             sumbit_data["CID"] = "@Model.CID";
             sumbit_data["MID"] = "@Model.MID";
+            sumbit_data["SID"] = "@Model.SID";
             sumbit_data["ERs"] = [];
             for (var i = 0; i < evalution_qid.length; i++) {
                 var Evalution_Response = {};
@@ -136,7 +137,7 @@
             }
             console.log(sumbit_data);
             $.ajax({
-                url: '@Url.Action("StudentSelfEvalution")',
+                url: '@Url.Action("StudentPeerEvalution")',
                 type: 'post',
                 dataType: 'json',
                 data: sumbit_data,
@@ -150,5 +151,5 @@
     </script>
 }
 
-
+ 
 
