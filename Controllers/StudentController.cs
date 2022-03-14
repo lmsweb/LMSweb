@@ -138,6 +138,13 @@ namespace LMSweb.Controllers
             model.mis = mission;
             model.CName = mission.course.CName;
 
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var group = db.Students.Find(sid).group;
+            model.GID = group.GID;
+            model.SID = sid;
+
             return View(model);
         }
         public ActionResult StudentMDetailWindow(string cid, string mid)
@@ -178,6 +185,7 @@ namespace LMSweb.Controllers
             var sid = claimData[0].Value;
             var group = db.Students.Find(sid).group;
             model.GID = group.GID;
+            model.SID = sid;
             
             return View(model);
         }
@@ -204,15 +212,6 @@ namespace LMSweb.Controllers
             var path = Path.Combine(dir, id + ".jpg");
             return base.File(path, "image/jpg");
         }
-
-        //[AcceptVerbs(HttpVerbs.Get)]
-        //[OutputCache(CacheProfile = "CustomerImages")]
-        //public FileResult Show(int customerId, string imageName)
-        //{
-        //    var path = string.Concat(ConfigData.ImagesDirectory, customerId, @"\", imageName);
-        //    return new FileStreamResult(new FileStream(path, FileMode.Open), "image/jpeg");
-        //}
-
         public ActionResult StudentDrawing(string mid, string cid)
         {
             MissionViewModel model = new MissionViewModel();
@@ -387,13 +386,6 @@ namespace LMSweb.Controllers
 
                 return View(SelfEVM);
             }
-            //EvalutionViewModel selfEVM = new EvalutionViewModel();
-            //var Qclass = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.Options);
-            //selfEVM.Questions = Qclass;
-            //selfEVM.MID = mid;
-            //selfEVM.CID = cid;
-
-            //return View(selfEVM);
         }
         [HttpPost]
         public ActionResult StudentSelfEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution)  //填表單送出的Post
@@ -428,8 +420,6 @@ namespace LMSweb.Controllers
 
 
             return View(evalution);
-
-            //return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
         }
         [HttpGet]
         public ActionResult StudentPeerEvalution(string sid,string mid, string cid)

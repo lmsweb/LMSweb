@@ -4,7 +4,8 @@
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
 <div class="article">
-
+    <input type="button" value="程式碼" onclick="CodingWindow()" class="btn btn-primary" />
+    <input type="button" value="流程圖" onclick="DrawingWindow()" class="btn btn-primary" />
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -25,7 +26,7 @@
                             @Html.DisplayNameFor(model => model.Questions.First().Description)
                         </th>
                         <th>
-                            不滿意--------滿意
+                            分數
                         </th>
                         <th>
                             評語

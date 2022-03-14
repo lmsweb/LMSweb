@@ -12,11 +12,9 @@
             <li class="breadcrumb-item"><a href="https://localhost:44301/Student/StudentMission?CID=@Model.CID">任務列表</a></li>
             <li class="breadcrumb-item"><a href="https://localhost:44301/Student/StudentMissionDetail?mid=@Model.MID&cid=@Model.CID">任務內容</a></li>
             <li class="breadcrumb-item active" aria-current="page">自評與互評</li>
-
         </ol>
     </nav>
 </div>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -37,32 +35,14 @@
                         <td>
                             @foreach (var s in item.Students)
                             {
-                                if (s.group.GID == item.GID && s.SID != Model.SID)
+                                
+                                if (s.SID != Model.SID && s.group.GID == item.GID)
                                 {
-                                    <h5>@Model.SID</h5>
-                                    @*<h5>@s.SID</h5>*@
                                     @Html.ActionLink(s.SName, "StudentPeerEvalution", "Student", new { sid = s.SID, mid = Model.MID, gid = Model.GID }, new { @class = "" })
                                     <br />
                                 }
                             }
                         </td>
-                        @*<td>
-                            @foreach (var s in item.Students)
-                            {
-                                if (Model.PeerAssessment != null && s.SID == Model.PeerAssessment.AssessedSID)
-                                {
-                                    @Model.PeerAssessment.PeerA
-                                }
-                                <br />
-                            }
-                        </td>
-                        <td>
-                            @foreach (var s in item.Students)
-                            {
-                                @Html.ActionLink("評分", "GroupJourney", "LearningBehaviors", new { sid = s.SID, mid = Model.MID, gid = Model.GID }, new { @class = "" })
-                                <br />
-                            }
-                        </td>*@
                     </tr>
                 }
             </tbody>

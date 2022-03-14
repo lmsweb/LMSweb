@@ -61,7 +61,7 @@
                             @Html.DisplayFor(modelItem => item.End)
                         </td>
                         <td class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new { mid = item.MID, cid = item.CID})'">
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
                                 進入任務
                             </button>
                            

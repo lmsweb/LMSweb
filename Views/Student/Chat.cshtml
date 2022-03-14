@@ -1,39 +1,30 @@
 ﻿@model LMSweb.ViewModel.MissionViewModel
-@{
-    ViewBag.Title = "Chat";
-    Layout = "~/Views/Shared/_StudentLayout.cshtml";
-    
+
+@{ ViewBag.Title = "Chat";
+    Layout = "~/Views/Shared/WhiteLayout.cshtml";
 }
-
-<h2>@Model.GName</h2>
-
-
 <div class="container">
-    <div style="width:500px; height:500px; border:2px solid #eee; border-radius:10px;">
-        <div id="scroll" style="width:496px; height:420px; overflow-x:hidden; overflow-y:auto;">
+    <div style="width:350px; height:750px; border:2px solid #eee; border-radius:10px;">
+        <div id="scroll" style="width:346px; height:750px; overflow-x:hidden; overflow-y:auto;">
             <ul id="messages" style="margin:0; padding:10px; list-style-type:none; width:100%;"></ul>
         </div>
-        <div style="width:496px; height:80px; border-top:2px solid #eee;">
-            <div class="row align-items-end">
+        <div style="width:346px; height:80px; border-top:2px solid #eee;">
+            <div class="row align-items-start">
                 <div class="col-md-9">
-                    <input type="text" id="message" placeholder="想說的話" style="width:400px; height:74px; border:0; border-bottom-left-radius:10px; resize:none;" />
-                    @*<textarea id="message" placeholder="想說的話" style="width:400px; height:74px; border:0; border-bottom-left-radius:10px; resize:none;"></textarea>*@
-                </div>
-                <div class="col-auto">
-                    <input type="button" value="Send" class="btn btn-primary sendM" style="width:106px; height:74px;border:0; border-bottom-right-radius:10px; resize:none;" />
-                    <input type="hidden" id="displayname" />
-                    <input type="hidden" id="sid" />
-                    <input type="hidden" id="mid" />
-                    <input type="hidden" id="cid" />
-                    <input type="hidden" id="roomid" />
-                    <input type="hidden" id="groupname" />
-                    <input type="hidden" id="gname" />
+                    <input type="text" id="message" placeholder="想說的話" style="width:250px; height:74px; border:0; border-bottom-left-radius:10px; resize:none;" />
+                    <input type="button" value="Send" class="btn btn-primary sendM" style="width:86px; height:74px;border:0; border-bottom-right-radius:10px; resize:none;" />
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<input type="hidden" id="displayname" />
+<input type="hidden" id="sid" />
+<input type="hidden" id="mid" />
+<input type="hidden" id="cid" />
+<input type="hidden" id="roomid" />
+<input type="hidden" id="groupname" />
+<input type="hidden" id="gname" />
 
 
 @section scripts {
@@ -76,14 +67,14 @@
                 }
             };
             //訊息格式
-            chat.client.groupMessage = function (roomid, sid, time, message) {
+            chat.client.groupMessage = function (roomid, displayname, time, message) {
                 $("#" + roomid).find("ul").each(function () {
-                    write_msg(roomid, sid, time, message);
+                    write_msg(roomid, displayname, time, message);
                 })
             };
             chat.client.historyMessage = function (roomid, sid, time, message) {
                 $("#" + roomid).find("ul").each(function () {
-                    write_msg(roomid, sid, time, message);
+                    history_msg(roomid, sid, time, message);
                 })
             };
             //發送訊息
@@ -104,9 +95,18 @@
                 chat.server.creatRoom($('#roomid').val(), $('#groupname').val(), $('#mid').val(), $('#sid').val());
             })
         });
-        function write_msg(roomid, sid, time, message) {
+        function write_msg(roomid, displayname, time, message) {
+            var myname = displayname;
+            if (myname == $('#displayname').val()) {
+                $('#messages').append('<li class="me"><div><p>' + '我:' + message + '(' + time + ')' + '</p></div><li>');
+            }
+            else {
+                $('#messages').append('<li class="you"><div><p>' + displayname + ':' + message + '(' + time + ')' + '</p></div><li>');
+            }
+        }
+        function history_msg(roomid, sid, time, message) {
             var myid = sid;
-            if (myid == $('#sid').val()) {
+            if (myid == $('#displayname').val()) {
                 $('#messages').append('<li class="me"><div><p>' + '我:' + message + '(' + time + ')' + '</p></div><li>');
             }
             else {

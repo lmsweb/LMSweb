@@ -36,7 +36,7 @@ namespace LMSweb
         }
         public void Send(string roomid, string GroupId, string name, string message,string cid,string sid,string mid)
         {
-            Clients.Group(roomid, new string[0]).groupMessage(roomid, sid, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), message);
+            Clients.Group(roomid, new string[0]).groupMessage(roomid, name, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), message);
             AddChatHistory(message, DateTime.Now.ToString("yyyy/MM/dd HH:mm"), cid, sid, mid, GroupId);
         }
 
@@ -60,7 +60,7 @@ namespace LMSweb
                     Detail = item.Detail,
                     Time = item.Time,
                     CID = item.CID,
-                    SID = item.student.SID,
+                    SID = item.student.SName,
                     MID = item.mission.MID
                 };
                 histories.Add(history);
