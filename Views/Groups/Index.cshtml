@@ -1,5 +1,4 @@
 ﻿@model LMSweb.ViewModel.GroupViewModel
-
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
@@ -17,122 +16,92 @@
 <div class="article">
     @if (Model.Groups.Count == 0)
     {
-    <p>目前還沒有新增組別哦~請至<a href="@Url.Action("StudentGroup", "Course", new { CID = Model.CID})">學生名單</a>進行分組</p>
+        <p>目前還沒有新增組別哦~請至<a href="@Url.Action("StudentGroup", "Course", new { CID = Model.CID})">學生名單</a>進行分組</p>
     }
     else
     {
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Groups[0].GName)
-                </th>
-                <th>
-                    小組成員
-                </th>
-                <th>
-                    分數
-                </th>
-                <th>
-                    評語
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model.Groups)
-            {
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GName)
-                    </td>
-                    <td>
-                        @*@Html.DisplayFor(modelItem => item.Students)*@
-                        @foreach(var s in item.Students)
-                        {
-                            if(s.group.GID == item.GID)
-                            {
-                                @s.SName
-                                <br />
-                            }
-                        }
-                    </td>
-                    <td>
-                        @foreach (var ta in item.TeacherA)
-                        {
-                            if (ta.MID == Model.MID)
-                            {
-                                @ta.GroupAchievementScore
-                                <br />
-                            }
-
-                        }
-                    </td>
-                    <td>
-                        @foreach (var ta in item.TeacherA)
-                        {
-                            if (ta.MID == Model.MID)
-                            {
-                                @ta.TeacherA
-                                <br />
-                            }
-
-                        }
-                    </td>
-
-                    <td>
-                        <button type="button" class="btn btn-primary" onclick=" location.href='@Url.Action("Assessment","Groups", new { gid = item.GID, mid = Model.MID,cid = Model.CID})'">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
-                                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
-                            </svg>
-                            評分
-                        </button>
-                        @foreach (var ta in item.TeacherA)
-                        {
-                            if (ta.MID == Model.MID)
-                            {
-                                <button type="button" class="btn btn-link" style="padding: 5px 5px 5px 5px" onclick="location.href='@Url.Action("Edit", "Groups", new { id = ta.TEID, gid = item.GID, mid = Model.MID,cid = Model.CID})'">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="grey" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                    </svg>
-                                </button>
-                            }
-
-                        }
-                        
-                    </td>
-
+                    <th>#</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Groups[0].GName)
+                    </th>
+                    <th>
+                        小組成員
+                    </th>
+                    <th>
+                        分數
+                    </th>
+                    <th>
+                        評語
+                    </th>
+                    <th></th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Groups)
+                {
+                    <tr>
+                        <td></td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GName)
+                        </td>
+                        <td>
+                            @foreach (var s in item.Students)
+                            {
+                                if (s.group.GID == item.GID)
+                                {
+                                    @s.SName
+                                    <br />
+                                }
+                            }
+                        </td>
+                        <td>
+                            @foreach (var ta in item.TeacherA)
+                            {
+                                if (ta.MID == Model.MID)
+                                {
+                                    @ta.GroupAchievementScore
+                                    <br />
+                                }
+                            }
+                        </td>
+                        <td>
+                            @foreach (var ta in item.TeacherA)
+                            {
+                                if (ta.MID == Model.MID)
+                                {
+                                    @ta.TeacherA
+                                    <br />
+                                }
+                            }
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" onclick=" location.href='@Url.Action("Assessment","Groups", new { gid = item.GID, mid = Model.MID,cid = Model.CID})'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                </svg>
+                                評價
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
 
         </table>
     }
-
 </div>
 @section scripts
 {
     <script>
-        function scoreFunction() {
-            console.log('@Url.Action("Assessment","Group", new { cid = Model.CID, mid = Model.MID })');
-            const myWindow = window.open('@Url.Action("Assessment","Group",new { cid = Model.CID, mid = Model.MID})', "", "width=800,height=800");
+        window.onload = function () {
+            var tableLine = document.getElementById("number");
+            for (var i = 0; i < tableLine.rows.length; i++) {
+                tableLine.rows[i].cells[0].innerHTML = (i + 1);
+            }
         }
-        //$("#btn").attr("disabled", "true");
-        //$("#btn").attr("disabled", "disabled");
-        //$("#btn").attr("disabled", "false");
-        //$("#btn").removeAttr("disabled", "disabled");
-
-        //function btnEnable() {
-        //    var assessment = document.getElementById("a").value;
-        //    if (assessment != null) {
-        //        input.setAttribute('disabled', 'disabled');
-
-        //    }
-        //    else {
-                
-        //        input.removeAttribute('disabled');
-        //    }
-
-        //}
-
     </script>
 }

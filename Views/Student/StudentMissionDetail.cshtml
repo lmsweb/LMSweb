@@ -58,14 +58,13 @@
         {
             @Html.ActionLink("目標設置", "StudentGoalSetting", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "goal_btn" })
         }
-
         @if (Model.mis.IsDiscuss)
         {
             @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "dicsuss_btn" })
         }
         @if (Model.mis.IsDrawing)
         {
-            @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "drawing_btn" })
+            @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { mid = Model.MID, cid = Model.CID }, new { @class = "btn btn-primary", @id = "drawing_btn" })
         }
         @if (Model.mis.IsCoding)
         {

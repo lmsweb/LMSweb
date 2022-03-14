@@ -7,30 +7,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LMSweb.Models
 {
-    [MetadataType(typeof(TeacherAssessment))]
-    public class TeacherAssessment
+    public class StudentDraw
     {
         [Key]
-        //[Column(Order = 0)]
-        [Display(Name = "編號")]
-        public int TEID { get; set; }
-
-        [Required]
-        [Display(Name = "教師評語")]
-        public string TeacherA { get; set; }
-
-        [Required]
-        [Display(Name = "小組成果分數")]
-        public int GroupAchievementScore { get; set; }
-
+        [Display(Name ="流程圖編號")]
+        public int Id { get; set; }
+        public string DrawingImgPath { get; set; }
         public int GID { get; set; }
         public virtual Group Group { get; set; }
-            
         public string MID { get; set; }
         public virtual Mission Mission { get; set; }
-
         public string CID { get; set; }
         public virtual Course Course { get; set; }
-        public virtual ICollection<StudentMission> StudentMissions { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model LMSweb.ViewModel.MissionViewModel
+﻿@model LMSweb.ViewModel.DrawingViewModel
 @{
     ViewBag.Title = "StudentDrawing";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
@@ -7,11 +7,13 @@
     <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-success" />
     <h2>StudentDrawing</h2>
 
-    <form action="@Url.Action("StudentDrawing", "Student")" method="post" enctype="multipart/form-data">
-
-        <input type="file" accept=".png, .jpg, .jpeg" name="File" id="File" />
-        <input type="submit" value="上傳" />
-        <img src="~/UploadImages/01.png" />
+    @Html.HiddenFor(model => model.CID)
+    @Html.HiddenFor(model => model.GID)
+    @Html.HiddenFor(model => model.MID)
+    <form action="@Url.Action("StudentDrawing", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
+        <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
+        <input type="submit" id="File" value="上傳" />
+        <img id="demo" />
     </form>
 </div>
 @section scripts
@@ -20,6 +22,14 @@
         function myFunction() {
             const myWindow = window.open('@Url.Action( "StudentMDetailWindow", "Student", new { MID = Model.MID, CID = Model.CID})', "", "width=800,height=800");
         }
+        $('#file').change(function () {
+            var file = $('#file')[0].files[0];
+            var reader = new FileReader;
+            reader.onload = function (e) {
+                $('#demo').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        });
     </script>
 
 }

@@ -109,7 +109,7 @@ namespace LMSweb.Controllers
             }
             var course = db.Courses.Single(c => c.CID == cid);
             model.missions = db.Missions.Where(m => m.CID == cid);
-            model.CID = course.CID;
+            model.CID = cid;
             model.CName = course.CName;
           
             return View(model);
@@ -126,7 +126,7 @@ namespace LMSweb.Controllers
                 return HttpNotFound();
             }
             var model = new MissionViewModel();
-            model.CID = mission.CID;
+            model.CID = cid;
             model.MID = mid;
             //model.CName = mission.course.CName;
             var kps = mission.relatedKP.Split(',');
@@ -181,21 +181,84 @@ namespace LMSweb.Controllers
             
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult StudentDrawing(string mid, string cid)
+        {
+            DrawingViewModel model = new DrawingViewModel();
+            model.CID = cid;
+            model.MID = mid;
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var stu = db.Students.Where(s => s.SID == sid);
+            var stuG = db.Students.Find(sid).group;
+            var gid = stuG.GID;
+            var gname = stuG.GName;
+            model.GID = gid;
+            model.GName = gname;
+
+            return View(model);
+        }
+
+        private string imgfileSavedPath = WebConfigurationManager.AppSettings["ImagesPath"];
         [HttpPost]
         public ActionResult StudentDrawing(HttpPostedFileBase file, string cid, string mid)
         {
-            MissionViewModel model = new MissionViewModel();
+            DrawingViewModel model = new DrawingViewModel();
             model.CID = cid;
             model.MID = mid;
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var stu = db.Students.Where(s => s.SID == sid);
+            var stuG = db.Students.Find(sid).group;
+            var gid = stuG.GID;
+            var gname = stuG.GName;
+            model.GID = gid;
+            model.GName = gname;
 
             if (file != null && file.ContentLength > 0)
             {
-                string FileName = Path.GetFileName(file.FileName);
-                string FilePath = Path.Combine(Server.MapPath(WebConfigurationManager.AppSettings["ImagesPath"]), FileName);
-                //string FilePath = @"H:\Microsoft Visual Studio\newLMS\LMSweb\UploadImages\";
-                file.SaveAs(FilePath);
-            }
+                StudentDraw studentDraw = new StudentDraw();
+                //string FileName = string.Concat(
+                //    (model.GName + "-" + model.MID),
+                //    Path.GetExtension(file.FileName).ToLower());
+                ////Path.GetFileName(file.FileName);
 
+                //string virtualBaseFilePath = Url.Content(imgfileSavedPath);
+                //string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+
+                ////string FilePath = Path.Combine(Server.MapPath(WebConfigurationManager.AppSettings["ImagesPath"]), FileName);
+                //////string FilePath = @"H:\Microsoft Visual Studio\newLMS\LMSweb\UploadImages\";
+                ////file.SaveAs(FilePath);
+                //string fullFilePath = Path.Combine(Server.MapPath(imgfileSavedPath), FileName);
+                //file.SaveAs(fullFilePath);
+                string virtualBaseFilePath = Url.Content(imgfileSavedPath);
+                string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+
+                string newFileName = string.Concat(
+                    (model.GName + "-" + model.MID),
+                    Path.GetExtension(file.FileName).ToLower());
+
+                string fullFilePath = Path.Combine(Server.MapPath(imgfileSavedPath), newFileName);
+                file.SaveAs(fullFilePath);
+
+                studentDraw.DrawingImgPath = newFileName;
+                studentDraw.CID = cid;
+                studentDraw.MID = mid;
+                studentDraw.GID = gid;
+
+                db.StudentDraws.Add(studentDraw);
+                db.SaveChanges();
+            }
+                
+                
             return View(model);
         }
         public ActionResult ShowImage(string id)
@@ -213,13 +276,7 @@ namespace LMSweb.Controllers
         //    return new FileStreamResult(new FileStream(path, FileMode.Open), "image/jpeg");
         //}
 
-        public ActionResult StudentDrawing(string mid, string cid)
-        {
-            MissionViewModel model = new MissionViewModel();
-            model.CID = cid;
-            model.MID = mid;
-            return View(model);
-        }
+        
         public ActionResult Chat(string cid, string mid)
         {
             MissionViewModel model = new MissionViewModel();
@@ -346,21 +403,15 @@ namespace LMSweb.Controllers
             db.SaveChanges();
             //return RedirectToAction("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID });
             return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
-            //return Redirect("Index", );
         }
         public ActionResult StudentReflectionResult(GoalSettingViewModel goalSetting, string cid, string mid, string SID)
         {
-            //ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            //var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-
             goalSetting.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Responses);
             goalSetting.MID = mid;
             goalSetting.CID = cid;
             goalSetting.SID = SID;
 
             return View(goalSetting);
-
-            //return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
         }
 
         //以下自評互評
@@ -387,13 +438,6 @@ namespace LMSweb.Controllers
 
                 return View(SelfEVM);
             }
-            //EvalutionViewModel selfEVM = new EvalutionViewModel();
-            //var Qclass = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.Options);
-            //selfEVM.Questions = Qclass;
-            //selfEVM.MID = mid;
-            //selfEVM.CID = cid;
-
-            //return View(selfEVM);
         }
         [HttpPost]
         public ActionResult StudentSelfEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution)  //填表單送出的Post

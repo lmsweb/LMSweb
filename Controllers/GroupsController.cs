@@ -33,19 +33,15 @@ namespace LMSweb.Controllers
         }
         public ActionResult CheckCoding(int gid, string cid, string mid)
         {
-            GroupViewModel model = new GroupViewModel();
-            
-            model.CID = cid;
-            model.GID = gid;
-            model.MID = mid;
+            DrawingViewModel dvmodel = new DrawingViewModel();
 
-            //ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            //var claimData = claims.Claims.Where(x => x.Type == "MID").ToList();   //抓出當初記載Claims陣列中的SID
-            //var sid = claimData[0].Value;
-            //var group = db.Students.Find(sid).group;
-            //model.GID = group.GID;
+            dvmodel.CID = cid;
+            dvmodel.GID = gid;
+            dvmodel.MID = mid;
+            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+            dvmodel.DrawingImgPath = pt;
 
-            return View(model);
+            return View(dvmodel);
         }
         public ActionResult CheckDrawing(int gid, string cid)
         {
@@ -56,18 +52,30 @@ namespace LMSweb.Controllers
         }
         public ActionResult Assessment(int gid, string mid, string cid)
         {
-            GroupViewModel model = new GroupViewModel();
-            var mis = db.Missions.Find(mid);
-            model.MID = mid;
-            model.GID = gid;
-            model.CID = cid;
+            var ta = db.TeacherA.Where(t => t.GID == gid && t.MID == mid).SingleOrDefault();
+            
+            if (ta != null)
+            {
+                var id = ta.TEID;
+                return RedirectToAction("Edit", "Groups", new { id, cid, gid, mid });
+            }
+            else
+            {
+                GroupViewModel model = new GroupViewModel();
+                var mis = db.Missions.Find(mid);
+                model.MID = mid;
+                model.GID = gid;
+                model.CID = cid;
 
-            var group = db.Groups.Single(g =>g.GID == gid);
+                var group = db.Groups.Single(g =>g.GID == gid);
+                model.GName = group.GName;  
+                model.CName = mis.course.CName;
+                var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+                model.DrawingImgPath = pt;
 
-            model.GName = group.GName;  
-            model.CName = mis.course.CName;
-
-            return View(model);
+                return View(model);
+            }
+            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -82,8 +90,11 @@ namespace LMSweb.Controllers
                 db.TeacherA.Add(groupVM.TeacherAssessment);
 
                 db.SaveChanges();
-                groupVM.CID = cid;
 
+                groupVM.CID = cid;
+                groupVM.MID = mid;
+                var course = db.Courses.Find(cid).CName;
+                groupVM.CName = course;
                 groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
 
                 return View("Index", groupVM);
@@ -92,27 +103,6 @@ namespace LMSweb.Controllers
            
             return View(groupVM);
         }
-        // GET: Groups/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Group group = db.Groups.Find(id);
-            if (group == null)
-            {
-                return HttpNotFound();
-            }
-            return View(group);
-        }
-
-        // GET: Groups/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-       
         public ActionResult Edit(int? id, string cid, int gid, string mid)
         {
             if (id == null)
@@ -130,6 +120,12 @@ namespace LMSweb.Controllers
             groupVM.CID = cid;
             groupVM.MID = mid;
             groupVM.GID = gid;
+            var course = db.Courses.Find(cid).CName;
+            groupVM.CName = course;
+            var gname = db.Groups.Find(gid).GName;
+            groupVM.GName = gname;
+            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+            groupVM.DrawingImgPath = pt;
 
             return View(groupVM);
         }
@@ -156,32 +152,32 @@ namespace LMSweb.Controllers
             return View(groupVM);
         }
 
-        // GET: Groups/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Group group = db.Groups.Find(id);
-            if (group == null)
-            {
-                return HttpNotFound();
-            }
+        //// GET: Groups/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Group group = db.Groups.Find(id);
+        //    if (group == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
             
-            return View(group);
-        }
+        //    return View(group);
+        //}
 
-        // POST: Groups/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Group group = db.Groups.Find(id);
-            db.Groups.Remove(group);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //// POST: Groups/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Group group = db.Groups.Find(id);
+        //    db.Groups.Remove(group);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {
