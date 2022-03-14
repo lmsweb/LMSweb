@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 using LMSweb.Models;
+using LMSweb.Service;
 using LMSweb.ViewModel;
 
 namespace LMSweb.Controllers
@@ -50,6 +53,7 @@ namespace LMSweb.Controllers
             model.GID = gid;
             return View(model);
         }
+        private string codefileSavedPath = WebConfigurationManager.AppSettings["CodePath"];
         public ActionResult Assessment(int gid, string mid, string cid)
         {
             var ta = db.TeacherA.Where(t => t.GID == gid && t.MID == mid).SingleOrDefault();
@@ -62,18 +66,38 @@ namespace LMSweb.Controllers
             else
             {
                 GroupViewModel model = new GroupViewModel();
-                var mis = db.Missions.Find(mid);
                 model.MID = mid;
                 model.GID = gid;
                 model.CID = cid;
 
-                var group = db.Groups.Single(g =>g.GID == gid);
-                model.GName = group.GName;  
-                model.CName = mis.course.CName;
+                var group = db.Groups.Single(g => g.GID == gid);
                 var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
-                model.DrawingImgPath = pt;
+                var code = db.StudentCodes.Find(cid, mid, gid);
+                var course = db.Courses.Find(cid);
+                var gname = db.Groups.Find(gid);
+                var readcode = new TextIO();
 
+                if (code != null)
+                {
+                    string virtualBaseFilePath = Url.Content(codefileSavedPath);
+                    string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+                    if (!Directory.Exists(filePath))
+                    {
+                        Directory.CreateDirectory(filePath);
+                    }
+                    string readcodepath = $"{filePath}/{code.CodePath}.txt";
+                    model.CodeText = readcode.readCodeText(readcodepath);
+
+                }
+                if (pt != null)
+                {
+                    model.DrawingImgPath = pt;
+
+                }
                 return View(model);
+
+
+
             }
             
         }
@@ -103,30 +127,48 @@ namespace LMSweb.Controllers
            
             return View(groupVM);
         }
+        
         public ActionResult Edit(int? id, string cid, int gid, string mid)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TeacherAssessment teacherAssessment = db.TeacherA.Find(id);
-            if (teacherAssessment == null)
-            {
-                return HttpNotFound();
-            }
 
+            TeacherAssessment teacherAssessment = db.TeacherA.Find(id);
             var groupVM = new GroupViewModel();
-            groupVM.TeacherAssessment = teacherAssessment;
             groupVM.CID = cid;
             groupVM.MID = mid;
             groupVM.GID = gid;
-            var course = db.Courses.Find(cid).CName;
-            groupVM.CName = course;
-            var gname = db.Groups.Find(gid).GName;
-            groupVM.GName = gname;
             var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
-            groupVM.DrawingImgPath = pt;
+            var code = db.StudentCodes.Find(cid, mid, gid);
+            var course = db.Courses.Find(cid);
+            var gname = db.Groups.Find(gid);
+            groupVM.CName = course.CName;
+            groupVM.GName = gname.GName;
 
+            var readcode = new TextIO();
+            if (teacherAssessment != null)
+            {
+                groupVM.TeacherAssessment = teacherAssessment;
+            }
+            if (code != null )
+            {
+                string virtualBaseFilePath = Url.Content(codefileSavedPath);
+                string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                string readcodepath = $"{filePath}/{code.CodePath}.txt";
+                groupVM.CodeText = readcode.readCodeText(readcodepath);
+
+            }
+            if(pt != null) 
+            {
+                groupVM.DrawingImgPath = pt;
+                
+            }
             return View(groupVM);
         }
 
