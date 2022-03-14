@@ -85,7 +85,7 @@ namespace LMSweb.Controllers
                     {
                         Directory.CreateDirectory(filePath);
                     }
-                    string readcodepath = $"{filePath}/{code.CodePath}.txt";
+                    string readcodepath = $"{filePath}{code.CodePath}.txt";
                     model.CodeText = readcode.readCodeText(readcodepath);
 
                 }
