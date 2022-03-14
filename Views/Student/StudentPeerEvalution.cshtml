@@ -3,6 +3,16 @@
     ViewBag.Title = "StudentPeerEvalution";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail", "Student", new { cid = Model.CID,mid = Model.MID})">任務內容</a></li>
+            <li class="breadcrumb-item active" aria-current="page">同儕互評</li>
+        </ol>
+    </nav>
+</div>
 <div class="article">
 
     @using (Html.BeginForm())

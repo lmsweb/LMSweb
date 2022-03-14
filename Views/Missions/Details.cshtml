@@ -144,16 +144,16 @@
             {
                 if (Model.mis.IsGoalSetting)
                 {
-                    <button type="button" class="btn btn-primary" id="is_Goalsetting">目標設定狀態 : 開啟</button>
+                    <button type="button" class="btn btn-primary" id="is_Goalsetting">目標設置狀態 : 開啟</button>
                 }
                 else
                 {
-                    <button type="button" class="btn btn-secondary" id="is_Goalsetting">目標設定狀態 : 關閉</button>
+                    <button type="button" class="btn btn-secondary" id="is_Goalsetting">目標設置狀態 : 關閉</button>
                 }
             }
             else
             {
-                <button type="button" class="btn btn-primary" id="is_Goalsetting" hidden>目標設定狀態 : 開啟</button>
+                <button type="button" class="btn btn-primary" id="is_Goalsetting" hidden>目標設置狀態 : 開啟</button>
             }
 
             @if (Model.mis.IsDiscuss)
@@ -334,7 +334,7 @@
             data['mid'] = '@Model.MID';
             data['cid'] = '@Model.CID';
             data['type'] = "is_Goalsetting";
-            data['sw'] = $("#is_Goalsetting").text().trim() == "目標設定狀態 : 關閉" ? true : false;
+            data['sw'] = $("#is_Goalsetting").text().trim() == "目標設置狀態 : 關閉" ? true : false;
             //console.log(data);
             $.ajax({
                 url: '@Url.Action("SwitchDrawing")',
@@ -348,10 +348,10 @@
                         $("#is_Goalsetting").removeClass();
 
                         if (response_data['sw'] == false) {
-                            $("#is_Goalsetting").text("目標設定狀態 : 關閉");
+                            $("#is_Goalsetting").text("目標設置狀態 : 關閉");
                             $("#is_Goalsetting").addClass("btn btn-secondary");
                         } else {
-                            $("#is_Goalsetting").text("目標設定狀態 : 開啟");   //狀態為開啟
+                            $("#is_Goalsetting").text("目標設置狀態 : 開啟");   //狀態為開啟
                             $("#is_Goalsetting").addClass("btn btn-primary");
                         }
                     }

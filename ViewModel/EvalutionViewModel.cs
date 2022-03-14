@@ -10,6 +10,7 @@ namespace LMSweb.ViewModel
     public class EvalutionViewModel
     {
         public string CID { get; set; }
+        public string CName { get; set; }
         public string MID { get; set; }
         public string SID { get; set; }
         public string EvaluatorSID { get; set; }
