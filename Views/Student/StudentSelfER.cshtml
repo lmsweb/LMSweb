@@ -25,7 +25,7 @@
                             @Html.DisplayNameFor(model => model.Questions.First().Description)
                         </th>
                         <th>
-                            不滿意--------滿意
+                            分數
                         </th>
                         <th>
                             評語
@@ -44,7 +44,7 @@
                             <td>
                                 @foreach (var qo in Q.EvalutionResponses)
                                 {
-                                    if (qo.SID == Model.SID && qo.EvaluatorSID == Model.EvaluatorSID)
+                                    if (qo.SID == Model.SID )
                                     {
                                         @qo.Answer
                                     }
@@ -53,7 +53,7 @@
                             <td>
                                 @foreach (var qo in Q.EvalutionResponses)
                                 {
-                                    if (qo.SID == Model.SID && qo.EvaluatorSID == Model.EvaluatorSID)
+                                    if (qo.SID == Model.SID )
                                     {
                                         @qo.Comments
                                     }
@@ -106,6 +106,7 @@
                 Evalution_Response["qid"] = evalution_qid[i];
                 Evalution_Response["response"] = response;
                 Evalution_Response["comments"] = comments;
+                Evalution_Response["sid"] = "@Model.SID";
                 sumbit_data["ERs"].push(Evalution_Response);
             }
             console.log(sumbit_data);

@@ -72,7 +72,7 @@
         }
         @if (Model.mis.IsAssess)
         {
-            @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "assess_btn" })
+            @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "assess_btn" })
         }
         @if (Model.mis.IsReflect)
         {
