@@ -163,12 +163,14 @@ namespace LMSweb.Controllers
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
 
+            var stuC = db.Students.Find(sid).course;
             var stuG = db.Students.Find(sid).group;
-
-            gmodel.Groups = db.Groups.Where(g => g.GID == stuG.GID).ToList();
+            gmodel.Courses = db.Courses.Where(c => c.CID == stuC.CID).ToList();
+            gmodel.Groups = db.Groups.Where(g => g.GID != stuG.GID && g.CID == cid).ToList();
             var pa = db.PeerA.SingleOrDefault(p => p.AssessedSID == sid && p.MID == mid);
             gmodel.PeerAssessment = pa;
             var course = db.Courses.Single(c => c.CID == cid);
+            gmodel.CID = cid;
             gmodel.CName = course.CName;
 
             return View(gmodel);

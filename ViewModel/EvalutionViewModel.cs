@@ -14,6 +14,8 @@ namespace LMSweb.ViewModel
         public string MID { get; set; }
         public string SID { get; set; }
         public string EvaluatorSID { get; set; }
+        public string DrawingImgPath { get; set; }
+        public string CodeText { get; set; }
         public IEnumerable<LMSweb.Models.Question> Questions { get; set; }
         public List<Evalution_Response> ERs { get; set; }
         public LMSweb.Models.Option Option { get; set; }

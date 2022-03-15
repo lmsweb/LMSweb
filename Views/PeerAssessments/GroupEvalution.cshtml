@@ -5,7 +5,6 @@
 }
 <div class="cardArticle">
     <h4>@Model.CName</h4>
-    <h4>@Model.SID</h4>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("StudentMission", "Student", new { cid = Model.CID})">任務列表</a></li>
@@ -25,20 +24,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Course)
+                @foreach (var item in Model.Groups)
                 {
                      <tr>
-                        <td>
-                            @foreach (var s in item.Group)
-                            {
-                                
-                                if (Model.GID != item.GID)
-                                {
-                                    @Html.ActionLink(s.GName, "StudentGroupEvalution", "Student", new { sid = Model.SID, mid = Model.MID, gid = s.GID, cid = Model.CID}, new { @class = "" })
-                                    <br />
-                                }
-                            }
-                        </td>
+                         <td>
+                             @Html.ActionLink(item.GName, "StudentGroupEvalution", "Student", new { sid = Model.SID, mid = Model.MID, gid = item.GID, cid = Model.CID }, new { @class = "" })
+                             <br />
+                         </td>
                     </tr>
                         <br />
                     @*if (item.GID != Model.GID)
