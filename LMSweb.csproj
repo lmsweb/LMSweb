@@ -383,6 +383,10 @@
     <Compile Include="Migrations\202203140436086_addID.Designer.cs">
       <DependentUpon>202203140436086_addID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203150352048_GroupERModel.cs" />
+    <Compile Include="Migrations\202203150352048_GroupERModel.Designer.cs">
+      <DependentUpon>202203150352048_GroupERModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -391,6 +395,7 @@
     <Compile Include="Models\EnableFunction.cs" />
     <Compile Include="Models\EvalutionResponse.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\GroupER.cs" />
     <Compile Include="Models\KnowledgePoint.cs" />
     <Compile Include="Models\LearningBehavior.cs" />
     <Compile Include="Models\LMSmodel.cs" />
@@ -1529,6 +1534,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203140436086_addID.resx">
       <DependentUpon>202203140436086_addID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203150352048_GroupERModel.resx">
+      <DependentUpon>202203150352048_GroupERModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
