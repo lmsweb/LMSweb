@@ -136,14 +136,7 @@ namespace LMSweb.Controllers
                 model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
             }
             model.mis = mission;
-            model.CName = mission.course.CName;
-
-            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
-            var sid = claimData[0].Value;
-            var group = db.Students.Find(sid).group;
-            model.GID = group.GID;
-            model.SID = sid;
+            model.CName = mission.course.CName;          
 
             return View(model);
         }
@@ -194,11 +187,19 @@ namespace LMSweb.Controllers
         {
             DrawingViewModel model = new DrawingViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList(); //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
-            var group = db.Students.Find(sid).group;
-            model.GID = group.GID;
-            
+            var stu = db.Students.Where(s => s.SID == sid);
+            var stuG = db.Students.Find(sid).group;
+            var gid = stuG.GID;
+            var gname = stuG.GName;
+            var cname = db.Courses.Find(cid).CName;
+            model.CID = cid;
+            model.MID = mid;
+            model.GID = gid;
+            model.GName = gname;
+            model.CName = cname;
+
             return View(model);
         }
 
@@ -277,13 +278,7 @@ namespace LMSweb.Controllers
         //    return new FileStreamResult(new FileStream(path, FileMode.Open), "image/jpeg");
         //}
 
-        public ActionResult StudentDrawing(string mid, string cid)
-        {
-            MissionViewModel model = new MissionViewModel();
-            model.CID = cid;
-            model.MID = mid;
-            return View(model);
-        }
+ 
         public ActionResult Chat(string cid, string mid)
         {
             MissionViewModel model = new MissionViewModel();
