@@ -13,6 +13,8 @@ namespace LMSweb.ViewModel
         public string SID { get; set; }
         public string CName { get; set; }
         public string GName { get; set; }
+        public string DrawingImgPath { get; set; }
+        public string CodeText { get; set; }
         public List<LMSweb.Models.Group> Groups { get; set; }
         public LMSweb.Models.TeacherAssessment TeacherAssessment { get; set; }
 

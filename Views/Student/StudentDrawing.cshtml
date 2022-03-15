@@ -1,18 +1,34 @@
-﻿@model LMSweb.ViewModel.MissionViewModel
+﻿@model LMSweb.ViewModel.DrawingViewModel
 @{
     ViewBag.Title = "StudentDrawing";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail","Student",new { CID = Model.CID, MID = Model.MID})">任務內容</a></li>
+            <li class="breadcrumb-item active" aria-current="page">上傳流程圖</li>
+        </ol>
+    </nav>
+</div>
 <div class="article">
-    <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-success" />
-    <h2>StudentDrawing</h2>
+    @*<div class="mb-3">
+            <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
+        </div>*@
+    <div class="mb-3">
+        <form action="@Url.Action("StudentDrawing", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
+            <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
+            <input type="submit" id="File" value="上傳" class="btn btn-primary" />
 
-    <form action="@Url.Action("StudentDrawing", "Student")" method="post" enctype="multipart/form-data">
+        </form>
+    </div>
+    <img id="demo" width="1060" />
+    @Html.HiddenFor(model => model.CID)
+    @Html.HiddenFor(model => model.GID)
+    @Html.HiddenFor(model => model.MID)
 
-        <input type="file" accept=".png, .jpg, .jpeg" name="File" id="File" />
-        <input type="submit" value="上傳" />
-        <img src="~/UploadImages/01.png" />
-    </form>
 </div>
 @section scripts
 {
@@ -20,6 +36,14 @@
         function myFunction() {
             const myWindow = window.open('@Url.Action( "StudentMDetailWindow", "Student", new { MID = Model.MID, CID = Model.CID})', "", "width=800,height=800");
         }
+        $('#file').change(function () {
+            var file = $('#file')[0].files[0];
+            var reader = new FileReader;
+            reader.onload = function (e) {
+                $('#demo').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        });
     </script>
 
 }

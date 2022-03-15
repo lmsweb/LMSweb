@@ -15,20 +15,16 @@
     </nav>
 </div>
 <div class="article">
-    @Model.CID
-    @Model.MID
-    @Model.GID
-    <input type="button" value="程式碼" onclick="CodingWindow()" class="btn btn-primary" />
-    <input type="button" value="流程圖" onclick="DrawingWindow()" class="btn btn-primary" />
     @using (Html.BeginForm("Create", "Groups", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <br />
+        <h4><b>小組評價</b></h4>
+        <hr />
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="mb-3">
                 @Html.LabelFor(model => model.TeacherAssessment.GroupAchievementScore, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-7">
+                <div class="col-5">
                     @Html.EditorFor(model => model.TeacherAssessment.GroupAchievementScore, new { htmlAttributes = new { @class = "form-control", @placeholder = "0分 ~ 100分" } })
                     @Html.ValidationMessageFor(model => model.TeacherAssessment.GroupAchievementScore, "", new { @class = "text-danger" })
                 </div>
@@ -36,28 +32,62 @@
 
             <div class="mb-3">
                 @Html.LabelFor(model => model.TeacherAssessment.TeacherA, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-7">
+                <div class="col-5">
                     <div class="form-floating">
                         <textarea class="form-control" placeholder="Leave a comment here" id="TeacherAssessment_TeacherA" name="TeacherAssessment.TeacherA" style="height: 100px"></textarea>
-                        <label for="floatingTextarea">請寫下對小組成果的評語...</label>
+                        <label for="floatingTextarea">請寫下對小組成果的評價...</label>
                     </div>
                 </div>
-                @*<div class="col-md-10">
-                @Html.EditorFor(model => model.TeacherAssessment.TeacherA, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TeacherAssessment.TeacherA, "", new { @class = "text-danger" })
-            </div>*@
             </div>
-            @Html.EditorFor(model => model.MID, new { htmlAttributes = new { @class = "form-control", @hidden = "true" } })
-            @Html.EditorFor(model => model.CID, new { htmlAttributes = new { @class = "form-control", @hidden = "true" } })
-            @Html.EditorFor(model => model.MID, new { htmlAttributes = new { @class = "form-control", @hidden = "true" } })
-            @*@Html.HiddenFor(model => model.CID)
+            @Html.HiddenFor(model => model.CID)
             @Html.HiddenFor(model => model.GID)
-            @Html.HiddenFor(model => model.MID)*@
-            <br />
+            @Html.HiddenFor(model => model.MID)
+
+            小組成果 :
+            <div class="accordion mb-3">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            流程圖
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            @if (Model.DrawingImgPath == null)
+                            {
+                                <p>學生尚未上傳流程圖</p>
+                            }
+                            else
+                            {
+                                <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                            程式碼
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
+                            @if (Model.CodeText == null)
+                            {
+                                <p>學生尚未上傳程式碼</p>
+                            }
+                            else
+                            {
+                                <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="mb-3">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="確定送出" class="btn btn-primary" />
-
+                    <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Groups" , new {mid = Model.MID, cid = Model.CID })'" />
                 </div>
             </div>
         </div>

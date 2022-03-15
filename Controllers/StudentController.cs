@@ -109,7 +109,7 @@ namespace LMSweb.Controllers
             }
             var course = db.Courses.Single(c => c.CID == cid);
             model.missions = db.Missions.Where(m => m.CID == cid);
-            model.CID = course.CID;
+            model.CID = cid;
             model.CName = course.CName;
           
             return View(model);
@@ -126,7 +126,7 @@ namespace LMSweb.Controllers
                 return HttpNotFound();
             }
             var model = new MissionViewModel();
-            model.CID = mission.CID;
+            model.CID = cid;
             model.MID = mid;
             //model.CName = mission.course.CName;
             var kps = mission.relatedKP.Split(',');
@@ -175,35 +175,91 @@ namespace LMSweb.Controllers
         [HttpGet]
         public ActionResult StudentCoding(string mid, string cid)
         {
-
             StudentCodingViewModel model = new StudentCodingViewModel();
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var group = db.Students.Find(sid).group;
+            var cname = db.Courses.Find(cid).CName;
             model.CID = cid;
             model.MID = mid;
+            model.CName = cname;
+            model.GID = group.GID;
+            
+            return View(model);
+        }
 
+        [HttpGet]
+        public ActionResult StudentDrawing(string mid, string cid)
+        {
+            DrawingViewModel model = new DrawingViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var group = db.Students.Find(sid).group;
             model.GID = group.GID;
-            model.SID = sid;
             
             return View(model);
         }
+
+        private string imgfileSavedPath = WebConfigurationManager.AppSettings["ImagesPath"];
         [HttpPost]
         public ActionResult StudentDrawing(HttpPostedFileBase file, string cid, string mid)
         {
-            MissionViewModel model = new MissionViewModel();
+            DrawingViewModel model = new DrawingViewModel();
             model.CID = cid;
             model.MID = mid;
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var stu = db.Students.Where(s => s.SID == sid);
+            var stuG = db.Students.Find(sid).group;
+            var gid = stuG.GID;
+            var gname = stuG.GName;
+            model.GID = gid;
+            model.GName = gname;
 
             if (file != null && file.ContentLength > 0)
             {
-                string FileName = Path.GetFileName(file.FileName);
-                string FilePath = Path.Combine(Server.MapPath(WebConfigurationManager.AppSettings["ImagesPath"]), FileName);
-                //string FilePath = @"H:\Microsoft Visual Studio\newLMS\LMSweb\UploadImages\";
-                file.SaveAs(FilePath);
-            }
+                StudentDraw studentDraw = new StudentDraw();
+                //string FileName = string.Concat(
+                //    (model.GName + "-" + model.MID),
+                //    Path.GetExtension(file.FileName).ToLower());
+                ////Path.GetFileName(file.FileName);
 
+                //string virtualBaseFilePath = Url.Content(imgfileSavedPath);
+                //string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+
+                ////string FilePath = Path.Combine(Server.MapPath(WebConfigurationManager.AppSettings["ImagesPath"]), FileName);
+                //////string FilePath = @"H:\Microsoft Visual Studio\newLMS\LMSweb\UploadImages\";
+                ////file.SaveAs(FilePath);
+                //string fullFilePath = Path.Combine(Server.MapPath(imgfileSavedPath), FileName);
+                //file.SaveAs(fullFilePath);
+                string virtualBaseFilePath = Url.Content(imgfileSavedPath);
+                string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+
+                string newFileName = string.Concat(
+                    (model.GName + "-" + model.MID),
+                    Path.GetExtension(file.FileName).ToLower());
+
+                string fullFilePath = Path.Combine(Server.MapPath(imgfileSavedPath), newFileName);
+                file.SaveAs(fullFilePath);
+
+                studentDraw.DrawingImgPath = newFileName;
+                studentDraw.CID = cid;
+                studentDraw.MID = mid;
+                studentDraw.GID = gid;
+
+                db.StudentDraws.Add(studentDraw);
+                db.SaveChanges();
+            }
+                
+                
             return View(model);
         }
         public ActionResult ShowImage(string id)
@@ -212,6 +268,15 @@ namespace LMSweb.Controllers
             var path = Path.Combine(dir, id + ".jpg");
             return base.File(path, "image/jpg");
         }
+
+        //[AcceptVerbs(HttpVerbs.Get)]
+        //[OutputCache(CacheProfile = "CustomerImages")]
+        //public FileResult Show(int customerId, string imageName)
+        //{
+        //    var path = string.Concat(ConfigData.ImagesDirectory, customerId, @"\", imageName);
+        //    return new FileStreamResult(new FileStream(path, FileMode.Open), "image/jpeg");
+        //}
+
         public ActionResult StudentDrawing(string mid, string cid)
         {
             MissionViewModel model = new MissionViewModel();
@@ -255,6 +320,7 @@ namespace LMSweb.Controllers
             var response = db.Responses.Where(r => r.SID == SID);
             var qids = response.Select(r => r.QID).ToList();
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && q.Class == "目標設置" && q.MID == mid).ToList();
+            var cname = db.Courses.Find(cid).CName;
             if(questions.Any())
             {
                 return RedirectToAction("StudentGoal", "Student", new { cid , mid, SID });
@@ -266,6 +332,7 @@ namespace LMSweb.Controllers
                 goalSetVM.MID = mid;
                 goalSetVM.CID = cid;
                 goalSetVM.SID = SID;
+                goalSetVM.CName = cname;
 
                 return View(goalSetVM);
             }
@@ -295,11 +362,12 @@ namespace LMSweb.Controllers
 
         public ActionResult StudentGoal(GoalSettingViewModel goalSetting , string cid, string mid, string SID)  ///學生已填過目標設置
         {
-           
+            var cname = db.Courses.Find(cid).CName;
             goalSetting.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "目標設置").Include(q => q.Responses);
             goalSetting.MID = mid;
             goalSetting.CID = cid;
             goalSetting.SID = SID;
+            goalSetting.CName = cname;
 
             return View(goalSetting);
 
@@ -313,6 +381,7 @@ namespace LMSweb.Controllers
             var response = db.Responses.Where(r => r.SID == SID);
             var qids = response.Select(r => r.QID).ToList();
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && q.Class == "自我反思" && q.MID == mid).ToList();
+            var cname = db.Courses.Find(cid).CName;
             if (questions.Any())
             {
                 return RedirectToAction("StudentReflectionResult", "Student", new { cid, mid, SID });
@@ -323,6 +392,7 @@ namespace LMSweb.Controllers
                 goalSetVM.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Options);
                 goalSetVM.MID = mid;
                 goalSetVM.CID = cid;
+                goalSetVM.CName = cname;
 
                 return View(goalSetVM);
             }
@@ -345,21 +415,16 @@ namespace LMSweb.Controllers
             db.SaveChanges();
             //return RedirectToAction("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID });
             return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
-            //return Redirect("Index", );
         }
         public ActionResult StudentReflectionResult(GoalSettingViewModel goalSetting, string cid, string mid, string SID)
         {
-            //ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            //var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-
+            var cname = db.Courses.Find(cid).CName;
             goalSetting.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Responses);
             goalSetting.MID = mid;
             goalSetting.CID = cid;
             goalSetting.SID = SID;
-
+            goalSetting.CName = cname;
             return View(goalSetting);
-
-            //return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
         }
 
         //以下自評互評
@@ -368,9 +433,10 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-            var evalution = db.EvalutionResponse.Where(r => r.SID == SID);
+            var evalution = db.EvalutionResponse.Where(r => r.SID == SID && r.EvaluatorSID == SID );
             var qids = evalution.Select(r => r.QID).ToList();
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && (q.Class == "個人能力"||q.Class == "合作能力") && q.MID == mid).ToList();
+            var cname = db.Courses.Find(cid).CName;
             if (questions.Any())
             {
                 return RedirectToAction("StudentSelfER", "Student", new { SID, cid, mid });
@@ -383,6 +449,7 @@ namespace LMSweb.Controllers
                 SelfEVM.CID = cid;
                 SelfEVM.SID = SID;
                 SelfEVM.EvaluatorSID = SID;
+                SelfEVM.CName = cname;
 
                 return View(SelfEVM);
             }
@@ -411,24 +478,27 @@ namespace LMSweb.Controllers
         public ActionResult StudentSelfER(EvalutionViewModel evalution, string sid, string cid, string mid)  ///學生已填過目標設置
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            string SID = evalution.SID;
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var cname = db.Courses.Find(cid).CName;
 
             evalution.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力"|| q.Class == "合作能力")).Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
             evalution.EvaluatorSID = SID;
-
+            evalution.CName = cname;
+            evalution.SID = SID;
 
             return View(evalution);
         }
         [HttpGet]
-        public ActionResult StudentPeerEvalution(string sid,string mid, string cid)
+        public ActionResult StudentPeerEvalution(string sid,string mid, string cid, string gid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = sid;
-            var evalution = db.EvalutionResponse.Where(r => r.SID == sid);
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value; ;
+            var evalution = db.EvalutionResponse.Where(r => r.SID == sid && r.EvaluatorSID == SID);
             var qids = evalution.Select(r => r.QID).ToList();
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && (q.Class == "個人能力" || q.Class == "合作能力") && q.MID == mid).ToList();
+            var cname = db.Courses.Find(cid).CName;
             if (questions.Any())
             {
                 return RedirectToAction("StudentPeerER", "Student", new { sid,cid, mid, evasid = SID });
@@ -440,7 +510,8 @@ namespace LMSweb.Controllers
                 PeerEVM.MID = mid;
                 PeerEVM.CID = cid;
                 PeerEVM.SID = sid;
-                PeerEVM.EvaluatorSID = sid;
+                PeerEVM.EvaluatorSID = SID;
+                PeerEVM.CName = cname;
 
                 return View(PeerEVM);
             }
@@ -463,17 +534,19 @@ namespace LMSweb.Controllers
                 db.EvalutionResponse.Add(response);
             }
             db.SaveChanges();
-            
-            return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = evalution.CID, mid = evalution.MID }) });
-           
+
+            return Json(new { redirectToUrl = Url.Action("Index", "PeerAssessments", new { cid = evalution.CID, mid = evalution.MID }) });
+
         }
         public ActionResult StudentPeerER(EvalutionViewModel evalution,string sid, string cid, string mid, string evasid)  ///學生已填過目標設置
-        {         
+        {
+            var cname = db.Courses.Find(cid).CName;
             evalution.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
             evalution.SID = sid;
             evalution.EvaluatorSID = evasid;
+            evalution.CName = cname;
             return View(evalution);           
         }
         [HttpGet]
@@ -484,6 +557,7 @@ namespace LMSweb.Controllers
             var evalution = db.EvalutionResponse.Where(r => r.SID == SID);
             var qids = evalution.Select(r => r.QID).ToList();
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && q.Class == "組間互評" && q.MID == mid).ToList();
+            var cname = db.Courses.Find(cid).CName;
             if (questions.Any())
             {
                 return RedirectToAction("StudentGroupER", "Student", new { cid, mid });
@@ -494,7 +568,7 @@ namespace LMSweb.Controllers
                 PeerEVM.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "組間互評").Include(q => q.Options);
                 PeerEVM.MID = mid;
                 PeerEVM.CID = cid;
-
+                PeerEVM.CName = cname;
                 return View(PeerEVM);
             }
         }
@@ -522,11 +596,11 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-
+            var cname = db.Courses.Find(cid).CName;
             evalution.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "組間互評").Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
-
+            evalution.CName = cname;
             return View(evalution);
 
             //return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });

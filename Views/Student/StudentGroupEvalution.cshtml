@@ -3,9 +3,60 @@
     ViewBag.Title = "StudentGroupEvalution";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail", "Student", new { cid = Model.CID,mid = Model.MID})">任務內容</a></li>
+            <li class="breadcrumb-item active" aria-current="page">組間互評</li>
+        </ol>
+    </nav>
+</div>
 <div class="article">
-    <input type="button" value="程式碼" onclick="CodingWindow()" class="btn btn-primary" />
-    <input type="button" value="流程圖" onclick="DrawingWindow()" class="btn btn-primary" />
+    <!--流程圖&程式碼顯示-->
+    小組成果 :
+    <div class="accordion mb-3">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    流程圖
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    @if (Model.DrawingImgPath == null)
+                    {
+                        <p>學生尚未上傳流程圖</p>
+                    }
+                    else
+                    {
+                        <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                    程式碼
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
+                    @if (Model.CodeText == null)
+                    {
+                        <p>學生尚未上傳程式碼</p>
+                    }
+                    else
+                    {
+                        <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--評論-->
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()

@@ -9,6 +9,7 @@ namespace LMSweb.ViewModel
     {
         public string SID { get; set; }
         public string CID { get; set; }
+        public string CName { get; set; }
         public string MID { get; set; }
         public int GID { get; set; }
         public string GName { get; set; }

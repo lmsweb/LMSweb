@@ -3,6 +3,16 @@
     ViewBag.Title = "StudentPeerER";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail", "Student", new { cid = Model.CID,mid = Model.MID})">任務內容</a></li>
+            <li class="breadcrumb-item active" aria-current="page">同儕互評</li>
+        </ol>
+    </nav>
+</div>
 <div class="article">
 
     @using (Html.BeginForm())
@@ -11,7 +21,6 @@
 
         <div class="form-horizontal">
             <h5>同儕互評</h5>
-            <h5>@Model.SID</h5>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)
@@ -45,7 +54,7 @@
                             <td>
                                 @foreach (var qo in Q.EvalutionResponses)
                                 {
-                                    if (qo.SID == Model.SID)
+                                    if (qo.SID == Model.SID && qo.EvaluatorSID == Model.EvaluatorSID)
                                     {
                                         @qo.Answer
                                     }
@@ -54,7 +63,7 @@
                             <td>
                                 @foreach (var qo in Q.EvalutionResponses)
                                 {
-                                    if (qo.SID == Model.SID)
+                                    if (qo.SID == Model.SID && qo.EvaluatorSID == Model.EvaluatorSID)
                                     {
                                         @qo.Comments
                                     }

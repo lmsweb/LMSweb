@@ -1,8 +1,8 @@
-﻿
+﻿@model LMSweb.ViewModel.DrawingViewModel
 @{
     ViewBag.Title = "CheckDrawing";
     Layout = "~/Views/Shared/_WindowLayoutPage.cshtml";
 }
 
 <h2>CheckDrawing</h2>
-
+<img src="@Model.DrawingImgPath" runat="server" />

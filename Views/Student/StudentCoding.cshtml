@@ -11,13 +11,29 @@
         bottom: 50px;
     }
 </style>
+@{ 
+    ViewBag.Title = "StudentCoding";
+    Layout = "~/Views/Shared/_OnlineEditorLayout.cshtml";
+}
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail","Student",new { CID = Model.CID, MID = Model.MID})">任務內容</a></li>
+            <li class="breadcrumb-item active" aria-current="page">合作撰寫程式碼</li>
+        </ol>
+    </nav>
+</div>
 <div class="article">
-    <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-success" />
-    <h2>StudentCoding</h2>
-    <input type="button" value="儲存" id="saveCode" class="btn btn-success" />
-    <div>
+    <div class="mb-3">
+        <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
+    </div>
+    <div class="mb-3">
         <textarea id="code"></textarea>
     </div>
+    <input type="button" value="上傳成果" id="saveCode" class="btn btn-primary" onClick="window.alert('上傳成功!');" />
+
     <input id="gid" type="hidden" value="@Model.GID" />
     <input id="cid" type="hidden" value="@Model.CID" />
     <input id="mid" type="hidden" value="@Model.MID" />
@@ -57,11 +73,9 @@
     <script src="~/signalr/hubs"></script>
     <script src="~/Scripts/Coding/coding_editor.js"></script>
     <script>
-
         function myFunction() {
             const myWindow = window.open('@Url.Action( "StudentMDetailWindow", "Student", new { MID = Model.MID, CID = Model.CID})', "", "width=800,height=800");
         }
-
     </script>
 
 }
