@@ -51,7 +51,7 @@
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <iframe src="http://localhost:56564/Student/Chat?MID=@Model.MID&CID=@Model.CID" width="365px" height="830px" frameborder="0" scrolling="no"></iframe>
+            <iframe src="@Url.Action("Chat","Student",new { MID = @Model.MID, CID = @Model.CID})" width="365" height="830" frameborder="0" scrolling="no"></iframe>
         </div>
     </div>
 
