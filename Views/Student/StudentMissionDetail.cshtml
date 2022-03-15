@@ -86,7 +86,10 @@
         {
             @Html.ActionLink("自我反思", "StudentReflection", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "reflec_btn" })
         }
-        @Html.ActionLink("組間互評", "GroupEvalution", "PeerAssessments", new { GID = Model.GID,SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "gassess_btn" })
+        @if (Model.mis.IsGReflect)
+        {
+            @Html.ActionLink("組間互評", "GroupEvalution", "PeerAssessments", new { GID = Model.GID, SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "gassess_btn" })
+        }
 
     </div>
     <table>
@@ -147,10 +150,13 @@
 
 <!-- 懸浮聊天室 -->
 <body>
+   @if (Model.mis.IsDiscuss)
+    {
     <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
             data-bs-target="#messageBox" aria-controls="messageBox">
         討論區
     </button>
+    }
     <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="messageBox" aria-labelledby="messageBoxLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="messageBoxLabel">聊天室</h5>

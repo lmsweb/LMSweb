@@ -174,11 +174,12 @@ namespace LMSweb.Controllers
             var sid = claimData[0].Value;
             var group = db.Students.Find(sid).group;
             var cname = db.Courses.Find(cid).CName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
             model.CID = cid;
             model.MID = mid;
             model.CName = cname;
             model.GID = group.GID;
-            
+            model.IsDiscuss = misChat;
             return View(model);
         }
 

@@ -16,7 +16,7 @@ namespace LMSweb.ViewModel
         public string CodePath { get; set; }
         public bool IsEdit { get; set; }
         public string CodeContent { get; set; }
-
+        public bool IsDiscuss { get; set; }
         public IEnumerable<LMSweb.Models.LearningBehavior> learningbehaviors { get; set; }
         public LMSweb.Models.LearningBehavior lbr { get; set; }
     }
