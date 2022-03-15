@@ -27,7 +27,7 @@ namespace LMSweb.Models
         public DbSet<DefaultQuestion> DefaultQuestions { get; set; }
         public DbSet<DefaultOption> DefaultOptions { get; set; }
         public DbSet<Response> Responses { get; set; }
-
+        public DbSet<GroupER> GroupERs { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
