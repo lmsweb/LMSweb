@@ -312,6 +312,10 @@ namespace LMSweb.Models
             {
                 mission.AddMetacognition = sw;
             }
+            else if (type == "is_GReflect")
+            {
+                mission.IsGReflect = sw;
+            }
 
             db.SaveChanges();
             return Json(new { Status = HttpStatusCode.OK , type = type, sw = sw});

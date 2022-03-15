@@ -140,6 +140,8 @@
         </div>
         <div class="mb-3">
             功能開啟/關閉 :
+        </div>
+        <div class="mb-3">
             @if (Model.mis.AddMetacognition)
             {
                 if (Model.mis.IsGoalSetting)
@@ -203,7 +205,14 @@
             {
                 <button type="button" class="btn btn-secondary" id="is_Reflect" hidden>自我反思狀態 : 關閉</button>
             }
-
+            @if (Model.mis.IsGReflect)
+            {
+                <button type="button" class="btn btn-primary" id="is_GReflect">組間互評狀態 : 開啟</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-secondary" id="is_GReflect">組間互評狀態 : 關閉</button>
+            }
         </div>
     </div>
 </div>
@@ -417,6 +426,35 @@
                             $("#question").attr('hidden', false);
                             $("#is_Goalsetting").attr('hidden', false);
                             $("#is_Reflect").attr('hidden', false);
+                        }
+                    }
+                }
+            });
+        });
+        $("#is_GReflect").click(function () {
+            var data = {};
+            data['mid'] = '@Model.MID';
+            data['cid'] = '@Model.CID';
+            data['type'] = "is_GReflect";
+            data['sw'] = $("#is_GReflect").text().trim() == "組間互評狀態 : 關閉" ? true : false;
+            //console.log(data);
+            $.ajax({
+                url: '@Url.Action("SwitchDrawing")',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (response_data) {
+                    // ... do something with the data...
+                    console.log(response_data);
+                    if (response_data['Status'] == 200) {
+                        $("#is_GReflect").removeClass();
+
+                        if (response_data['sw'] == false) {
+                            $("#is_GReflect").text("組間互評狀態 : 關閉");
+                            $("#is_GReflect").addClass("btn btn-secondary");
+                        } else {
+                            $("#is_GReflect").text("組間互評狀態 : 開啟");   //狀態為開啟
+                            $("#is_GReflect").addClass("btn btn-primary");
                         }
                     }
                 }

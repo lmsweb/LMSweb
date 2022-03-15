@@ -387,6 +387,10 @@
     <Compile Include="Migrations\202203150352048_GroupERModel.Designer.cs">
       <DependentUpon>202203150352048_GroupERModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203150908406_missionIsGrflect.cs" />
+    <Compile Include="Migrations\202203150908406_missionIsGrflect.Designer.cs">
+      <DependentUpon>202203150908406_missionIsGrflect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -1537,6 +1541,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203150352048_GroupERModel.resx">
       <DependentUpon>202203150352048_GroupERModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203150908406_missionIsGrflect.resx">
+      <DependentUpon>202203150908406_missionIsGrflect.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
