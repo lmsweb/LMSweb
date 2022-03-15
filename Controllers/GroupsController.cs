@@ -76,7 +76,7 @@ namespace LMSweb.Controllers
                 var course = db.Courses.Find(cid);
                 var gname = db.Groups.Find(gid);
                 var readcode = new TextIO();
-
+                
                 if (code != null)
                 {
                     string virtualBaseFilePath = Url.Content(codefileSavedPath);
