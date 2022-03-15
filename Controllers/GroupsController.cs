@@ -73,10 +73,11 @@ namespace LMSweb.Controllers
                 var group = db.Groups.Single(g => g.GID == gid);
                 var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
                 var code = db.StudentCodes.Find(cid, mid, gid);
-                var course = db.Courses.Find(cid);
-                var gname = db.Groups.Find(gid);
+                var cname = db.Courses.Find(cid).CName;
+                var gname = db.Groups.Find(gid).GName;
                 var readcode = new TextIO();
-                
+                model.CName = cname;
+                model.GName = gname;
                 if (code != null)
                 {
                     string virtualBaseFilePath = Url.Content(codefileSavedPath);
