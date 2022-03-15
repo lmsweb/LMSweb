@@ -33,6 +33,7 @@ namespace LMSweb.Controllers
             gmodel.CName = cname;
             gmodel.CID = cid;
             gmodel.MID = mid;
+            gmodel.SID = sid;
             return View(gmodel);
         }
 
@@ -151,9 +152,26 @@ namespace LMSweb.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult SelfEvaluation()
+        public ActionResult GroupEvalution(int gid, string mid, string cid)
         {
-            return View();
+            var gmodel = new GroupViewModel();
+            gmodel.MID = mid;
+            var mis = db.Missions.Find(mid);
+
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var stu = db.Students.Where(s => s.SID == sid);
+
+            var stuG = db.Students.Find(sid).group;
+
+            gmodel.Groups = db.Groups.Where(g => g.GID == stuG.GID).ToList();
+            var pa = db.PeerA.SingleOrDefault(p => p.AssessedSID == sid && p.MID == mid);
+            gmodel.PeerAssessment = pa;
+            var course = db.Courses.Single(c => c.CID == cid);
+            gmodel.CName = course.CName;
+
+            return View(gmodel);
         }
 
         public ActionResult PeerEvaluation()

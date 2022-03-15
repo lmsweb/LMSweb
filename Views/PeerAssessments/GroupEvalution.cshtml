@@ -1,15 +1,16 @@
 ﻿@model LMSweb.ViewModel.GroupViewModel
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+    ViewBag.Title = "GroupEvalution";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
 <div class="cardArticle">
     <h4>@Model.CName</h4>
+    <h4>@Model.SID</h4>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("StudentMission", "Student", new { cid = Model.CID})">任務列表</a></li>
             <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail", "Student", new { cid = Model.CID,mid = Model.MID})">任務內容</a></li>
-            <li class="breadcrumb-item active" aria-current="page">自評與互評</li>
+            <li class="breadcrumb-item active" aria-current="page">組間互評</li>
         </ol>
     </nav>
 </div>
@@ -17,34 +18,37 @@
 {
     @Html.AntiForgeryToken()
     <div class="article">
-        <h5>
-            @Html.ActionLink("自我評價", "StudentSelfEvalution", "Student", new { sid = Model.SID, mid = Model.MID, cid = Model.CID, gid = Model.GID}, new { @class = "btn btn-primary" })
-        </h5>
         <table class="table">
             <thead>
                 <tr>
-                    同儕互評
+                    組間互評
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Groups)
+                @foreach (var item in Model.Course)
                 {
-                    <tr>
+                     <tr>
                         <td>
-                            @foreach (var s in item.Students)
+                            @foreach (var s in item.Group)
                             {
                                 
-                                if (s.SID != Model.SID && s.group.GID == item.GID)
+                                if (Model.GID != item.GID)
                                 {
-                                    @Html.ActionLink(s.SName, "StudentPeerEvalution", "Student", new { sid = s.SID, mid = Model.MID, gid = Model.GID, cid = Model.CID}, new { @class = "" })
+                                    @Html.ActionLink(s.GName, "StudentGroupEvalution", "Student", new { sid = Model.SID, mid = Model.MID, gid = s.GID, cid = Model.CID}, new { @class = "" })
                                     <br />
                                 }
                             }
                         </td>
                     </tr>
+                        <br />
+                    @*if (item.GID != Model.GID)
+                    {
+                        @Html.ActionLink(item.GName, "StudentPeerEvalution", "Student", new { sid = Model.SID, mid = Model.MID, gid = Model.GID, cid = Model.CID }, new { @class = "" })
+                        <br />
+                    }*@
                 }
             </tbody>
         </table>
-      
+
     </div>
 }

@@ -1362,7 +1362,7 @@
     <Content Include="Views\Questions\ReflectionIndex.cshtml" />
     <Content Include="Views\Questions\SelectReflectionQuestion.cshtml" />
     <Content Include="Views\Questions\CreateReflection.cshtml" />
-    <Content Include="Views\PeerAssessments\SelfEvaluation.cshtml" />
+    <Content Include="Views\PeerAssessments\GroupEvalution.cshtml" />
     <Content Include="Views\PeerAssessments\PeerEvaluation.cshtml" />
     <Content Include="Views\Student\StudentGoalSetting.cshtml" />
     <Content Include="Views\Student\StudentReflection.cshtml" />
@@ -1382,6 +1382,7 @@
     <Content Include="Views\Student\StudentPeerER.cshtml" />
     <Content Include="Views\Student\StudentGroupEvalution.cshtml" />
     <Content Include="Views\Student\StudentGroupER.cshtml" />
+    <Content Include="Views\Shared\WhiteLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
