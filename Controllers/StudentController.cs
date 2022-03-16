@@ -610,14 +610,13 @@ namespace LMSweb.Controllers
             return View(evalution);
         }
         [HttpGet]
-        [Authorize(Roles = "Student")]
-        public ActionResult StudentGroupEvalution(string mid, string cid)
+        public ActionResult StudentGroupEvalution(string mid, string cid, int gid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-            var evalution = db.EvalutionResponse.Where(r => r.SID == SID);
+            var evalution = db.GroupERs.Where(r => r.GID == gid);
             var qids = evalution.Select(r => r.QID).ToList();
-            var questions = db.Questions.Where(q => qids.Contains(q.QID) && q.Class == "組間互評" && q.MID == mid).ToList();
+            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "組間互評").ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             if (questions.Any())
@@ -626,36 +625,35 @@ namespace LMSweb.Controllers
             }
             else
             {
-                EvalutionViewModel PeerEVM = new EvalutionViewModel();
-                PeerEVM.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "組間互評").Include(q => q.Options);
-                PeerEVM.MID = mid;
-                PeerEVM.CID = cid;
-                PeerEVM.CName = cname;
-                PeerEVM.MName = mname;
-                return View(PeerEVM);
+                EvalutionViewModel GroupEVM = new EvalutionViewModel();
+                GroupEVM.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "組間互評").Include(q => q.DefaultOptions);
+                GroupEVM.MID = mid;
+                GroupEVM.CID = cid;
+                GroupEVM.CName = cname;
+
+                return View(GroupEVM);
             }
         }
         [HttpPost]
-        public ActionResult StudentGroupEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution)  //填表單送出的Post
+        public ActionResult StudentGroupEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution, int gid)  //填表單送出的Post
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
             foreach (var qr in evalution.ERs)
             {
-                var response = new EvalutionResponse();
+                var response = new GroupER();
                 response.QID = qr.qid;
                 response.Answer = qr.response;
                 response.Comments = qr.comments;
-                response.SID = SID;
-                db.EvalutionResponse.Add(response);
+                response.GID = gid;
+                response.EvaluatorSID = SID;
+                db.GroupERs.Add(response);
             }
             db.SaveChanges();
 
             return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = evalution.CID, mid = evalution.MID }) });
         }
-        [HttpGet]
-        [Authorize(Roles = "Student")]
-        public ActionResult StudentGroupER(EvalutionViewModel evalution, string cid, string mid)  ///學生已填過目標設置
+        public ActionResult StudentGroupER(EvalutionViewModel evalution, string cid, string mid, int gid)  ///學生已填過目標設置
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;

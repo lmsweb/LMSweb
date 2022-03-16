@@ -19,9 +19,11 @@ namespace LMSweb.ViewModel
         public List<LMSweb.Models.StudentCode> IsUploadCode { get; set; }
         public List<LMSweb.Models.StudentDraw> IsUploadDraw { get; set; }
         public List<LMSweb.Models.Group> Groups { get; set; }
+        public List<LMSweb.Models.Course> Courses { get; set; }
         public LMSweb.Models.TeacherAssessment TeacherAssessment { get; set; }
         public LMSweb.Models.PeerAssessment PeerAssessment { get; set; }
         public LMSweb.Models.Group Group { get; set; }
+        public LMSweb.Models.Course Course{ get; set; }
         public LMSweb.Models.Student Student { get; set; }
         public List<LMSweb.Models.Student> Students { get; set; }
         public List<LMSweb.Models.PeerAssessment> PeerAssessments { get; set; }
