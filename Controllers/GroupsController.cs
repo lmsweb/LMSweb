@@ -27,10 +27,14 @@ namespace LMSweb.Controllers
             var gmodel = new GroupViewModel();
             gmodel.MID = mid;
             var mis = db.Missions.Find(mid);
+            var mname = mis.MName;
             gmodel.Groups = db.Groups.Where(g => mis.CID == g.CID).ToList();
             gmodel.CID = cid;
             gmodel.CName = mis.course.CName;
+            gmodel.MName = mname;
             var stu = db.Students.Where(s => s.group.CID == cid).ToList();
+            gmodel.IsUploadDraw = db.StudentDraws.Where(sd => sd.MID == mid).ToList();
+            gmodel.IsUploadCode = db.StudentCodes.Where(sc => sc.MID == mid).ToList();
 
             return View(gmodel);
         }
@@ -75,9 +79,11 @@ namespace LMSweb.Controllers
                 var code = db.StudentCodes.Find(cid, mid, gid);
                 var cname = db.Courses.Find(cid).CName;
                 var gname = db.Groups.Find(gid).GName;
+                var mname = db.Missions.Find(mid).MName;
                 var readcode = new TextIO();
                 model.CName = cname;
                 model.GName = gname;
+                model.MName = mname;
                 if (code != null)
                 {
                     string virtualBaseFilePath = Url.Content(codefileSavedPath);
@@ -141,7 +147,7 @@ namespace LMSweb.Controllers
             groupVM.CID = cid;
             groupVM.MID = mid;
             groupVM.GID = gid;
-            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+            
             var code = db.StudentCodes.Find(cid, mid, gid);
             var course = db.Courses.Find(cid);
             var gname = db.Groups.Find(gid);
@@ -165,11 +171,7 @@ namespace LMSweb.Controllers
                 groupVM.CodeText = readcode.readCodeText(readcodepath);
 
             }
-            if(pt != null) 
-            {
-                groupVM.DrawingImgPath = pt;
-                
-            }
+            
             return View(groupVM);
         }
 

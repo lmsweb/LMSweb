@@ -10,6 +10,7 @@ namespace LMSweb.ViewModel
         public string CID { get; set; }
         public string CName { get; set; }
         public string MID { get; set; }
+        public string MName { get; set; }
         public int GID { get; set; }
         public string GName { get; set; }
         public string DrawingImgPath { get; set; }

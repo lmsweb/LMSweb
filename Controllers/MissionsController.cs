@@ -42,18 +42,19 @@ namespace LMSweb.Models
                 return HttpNotFound();
             }
             var model = new MissionViewModel();
-            model.CID = mission.CID;
-            //model.CName = mission.course.CName;
+            var mname = db.Missions.Find(mid).MName;
+            var cname = db.Courses.Find(cid).CName;
             var kps = mission.relatedKP.Split(',');
             model.KContents = new List<string>();
             for(int i = 0; i < kps.Length - 1; i++)
             {
                 model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
             }
+            model.CID = cid;
             model.mis = mission;
-            model.MID = mission.MID;
-            model.CName = mission.course.CName;
-
+            model.MID = mid;
+            model.CName = cname;
+            model.MName = mname;
             return View(model);
         }
 
@@ -70,10 +71,10 @@ namespace LMSweb.Models
         public ActionResult Create(string cid)
         {
             var model = new MissionCreateViewModel();
+            var cname = db.Courses.Find(cid).CName;
             model.KnowledgeList = GetKnowledge(cid);
             model.CID = cid;
-            var course = db.Courses.Single(c => c.CID == cid);
-            model.CName = course.CName;
+            model.CName = cname;
 
             return View(model);
         }
@@ -90,8 +91,6 @@ namespace LMSweb.Models
                     kp_str += kp.KID.ToString() + ",";
                 }
 
-                //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
-
                 model.mission.relatedKP = kp_str;
                 model.mission.CID = model.CID;
                 db.Missions.Add(model.mission);
@@ -106,14 +105,14 @@ namespace LMSweb.Models
                 }
             }
             var vmodel = new MissionCreateViewModel();
+            var cname = db.Courses.Find(model.CID).CName;
             vmodel.KnowledgeList = GetKnowledge(model.CID);
             vmodel.CID = model.CID;
-            var course = db.Courses.Single(c => c.CID == model.CID);
-            model.CName = course.CName;
+            model.CName = cname;
 
             return View(vmodel);
         }
-
+        [HttpGet]
         public ActionResult Edit(string mid, string cid)
         {
             if (mid == null)
@@ -126,19 +125,14 @@ namespace LMSweb.Models
                 return HttpNotFound();
             }
             var vmodel = new MissionCreateViewModel();
+            var cname = db.Courses.Find(cid).CName;
             vmodel.mission = mission;
-            
             vmodel.KnowledgeList = GetKnowledge(cid, db.KnowledgePoints.Where(kp => kp.CID == mission.CID).Select(kp => kp.KID));
-            
-            vmodel.CID = mission.CID;
-            vmodel.CName = mission.course.CName;
+            vmodel.CID = cid;
+            vmodel.CName = cname;
 
             return View(vmodel);
         }
-
-        // POST: Missions/Edit/5
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MissionCreateViewModel model)
@@ -164,13 +158,11 @@ namespace LMSweb.Models
                 return RedirectToAction("Index", new { cid = model.CID});
             }
 
-            //model.KnowledgeList = GetKnowledge(model.SelectKnowledgeList);
             model.CID = mission.CID;
 
             return View(model);
         }
-
-        // GET: Missions/Delete/5
+        [HttpGet]
         public ActionResult Delete(string mid, string cid)
         {
             if (mid == null)
@@ -183,15 +175,13 @@ namespace LMSweb.Models
                 return HttpNotFound();
             }
             var model = new MissionViewModel();
-            //model.mis.CID = mission.CID;
+            var cname = db.Courses.Find(cid).CName;
             model.CID = cid;
-            model.CName = db.Courses.Find(cid).CName;
+            model.CName = cname;
             model.mis = mission;
 
             return View(model);
         }
-
-        // POST: Missions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string mid)
@@ -199,7 +189,6 @@ namespace LMSweb.Models
 
             Mission mission = db.Missions.Find(mid);
             var cid = mission.CID;
-
             var learningBehavior = db.LearnB.Where(l => l.mission.MID == mid);
             var teacherA = db.TeacherA.Where(t => t.MID == mid);
             var question = db.Questions.Where(q => q.MID == mid);
@@ -216,9 +205,8 @@ namespace LMSweb.Models
 
             db.Missions.Remove(mission);
             db.SaveChanges();
-            return RedirectToAction("Index", new { cid = cid });
+            return RedirectToAction("Index", new { cid });
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -230,53 +218,32 @@ namespace LMSweb.Models
         public ActionResult SelectMissions(string cid, string missionCourse)
         {
             MissionViewModel model = new MissionViewModel();
-            
+            var cname = db.Courses.Find(cid).CName;
             model.missions = db.Missions.ToList();
             model.CID = cid;
-            var course = db.Courses.Single(c => c.CID == cid);
-            model.CName = course.CName;
+            model.CName = cname;
 
-           
             return View(model);
         }
 
         public ActionResult AddMissions(string mid, string cid)
         {
             Mission mission = db.Missions.Find(mid);  //old
-            
             var model = new MissionCreateViewModel();   //new
-
             model.mission = new Mission();
-
-            //var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
-            //string kp_str = "";
-            //foreach (var kp in kps)
-            //{
-            //    kp_str += kp.KID.ToString() + ",";
-            //}
-
-            //mission.relatedKP = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
-
-            //model.mission.relatedKP = kp_str;
             model.mission.MID = mission.MID;
             model.mission.Start = mission.Start;
             model.mission.End = mission.End;
             model.mission.MName = mission.MName;
-
-            //db.Missions.Add(model.mission);
             model.mission.MDetail = mission.MDetail;
             model.mission.discuss_k = mission.discuss_k;
             model.mission.per_k = mission.per_k;
             model.mission.group_k = mission.group_k;
             model.KnowledgeList = GetKnowledge(cid);
-
             model.mission.CID = cid;
             model.CID = cid;
             model.CName = mission.course.CName;
-            //model.mission.CID = db.Courses.Find(cid);
            
-            //db.SaveChanges();
-
             return View(model);
         }
         [HttpPost]

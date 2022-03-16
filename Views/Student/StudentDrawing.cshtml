@@ -8,23 +8,29 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail","Student",new { CID = Model.CID, MID = Model.MID})">任務內容</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail","Student",new { CID = Model.CID, MID = Model.MID})">@Model.MName</a></li>
             <li class="breadcrumb-item active" aria-current="page">上傳流程圖</li>
         </ol>
     </nav>
 </div>
 <div class="article">
-    @*<div class="mb-3">
-            <input type="button" value="任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
-        </div>*@
     <div class="mb-3">
+        <h5>@Model.MName</h5>
+        <hr />
         <form action="@Url.Action("StudentDrawing", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
             <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
-            <input type="submit" id="File" value="上傳" class="btn btn-primary" />
-
+            <input type="submit" id="File" value="上傳" class="btn btn-primary"  />
         </form>
     </div>
     <img id="demo" width="1060" />
+    @if (Model.DrawingImgPath == null)
+    {
+        <p>尚未上傳流程圖</p>
+    }
+    else
+    {
+        <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+    }
     @Html.HiddenFor(model => model.CID)
     @Html.HiddenFor(model => model.GID)
     @Html.HiddenFor(model => model.MID)
@@ -44,6 +50,10 @@
             };
             reader.readAsDataURL(file);
         });
+
+        //$('#File').click(function () {
+        //    window.location.reload();
+        //});
     </script>
 
 }

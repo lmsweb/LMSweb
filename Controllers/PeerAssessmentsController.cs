@@ -16,24 +16,29 @@ namespace LMSweb.Controllers
     {
         private LMSmodel db = new LMSmodel();
 
-        // GET: PeerAssessments
+        [HttpGet]
+        [Authorize(Roles = "Student")]
         public ActionResult Index(string mid, string cid)
         {
-            var gmodel = new GroupViewModel();   
-            var mis = db.Missions.Find(mid);
-            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; 
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
             var sid = claimData[0].Value;
-            var stu= db.Students.Where(s => s.SID == sid);
-            var stuG = db.Students.Find(sid).group;
+            var stu = db.Students.Where(s => s.SID == sid);
+            var stuG = db.Students.Find(sid).group; 
+            var mis = db.Missions.Find(mid);
             var cname = db.Courses.Find(cid).CName;
+            var mname = db.Missions.Find(mid).MName;
             var pa = db.PeerA.SingleOrDefault(p => p.AssessedSID == sid && p.MID == mid);
+            var gmodel = new GroupViewModel();
+            
             gmodel.Groups = db.Groups.Where(g => g.GID == stuG.GID).ToList();
             gmodel.PeerAssessment = pa;
             gmodel.CName = cname;
             gmodel.CID = cid;
             gmodel.MID = mid;
             gmodel.SID = sid;
+            gmodel.MName = mname;
+           
             return View(gmodel);
         }
 

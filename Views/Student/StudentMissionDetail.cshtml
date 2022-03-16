@@ -18,7 +18,7 @@
         color: #F0F0F2;
         text-align: center;
         padding: 10px 0;
-        width: 50%;
+        
     }
 
     td {
@@ -32,7 +32,7 @@
         width: 100%;
         max-width: 1200px;
         margin: 20px auto 20px;
-        padding: 30px 0px 50px 70px;
+        padding: 30px 70px 50px 70px;
         border-radius: 5px;
         background: #F0F0F2;
         border: 1px solid #dee2e6;
@@ -52,49 +52,51 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item active" aria-current="page">任務內容</li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.MName</li>
         </ol>
     </nav>
 </div>
 <div class="MissionDetailArticle">
-    <div class="mb-3">
-        <h5><b>@Html.DisplayFor(model => model.mis.MName)</b></h5>
-    </div>
-    <div class="mb-3">
-
-        @if (Model.mis.IsGoalSetting)
-        {
-            @Html.ActionLink("目標設置", "StudentGoalSetting", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "goal_btn" })
-        }
-        @if (Model.mis.IsDiscuss)
-        {
-            @Html.ActionLink("討論區", "Chat", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "dicsuss_btn" })
-        }
-        @if (Model.mis.IsDrawing)
-        {
-            @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { mid = Model.MID, cid = Model.CID }, new { @class = "btn btn-primary", @id = "drawing_btn" })
-        }
-        @if (Model.mis.IsCoding)
-        {
-            @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "coding_btn" })
-        }
-        @if (Model.mis.IsAssess)
-        {
-            @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "assess_btn" })
-        }
-        @if (Model.mis.IsReflect)
-        {
-            @Html.ActionLink("自我反思", "StudentReflection", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "reflec_btn" })
-        }
-        @if (Model.mis.IsGReflect)
-        {
-            @Html.ActionLink("組間互評", "GroupEvalution", "PeerAssessments", new { GID = Model.GID, SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-primary", @id = "gassess_btn" })
-        }
-
+    <div class="mb-4">
+        <h5>@Model.MName</h5>
+        <hr />
+        <div>
+            @if (Model.mis.IsGoalSetting)
+            {
+                @Html.ActionLink("目標設置", "StudentGoalSetting", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-dark", @id = "goal_btn" })
+                <i class="bi bi-arrow-right"></i>
+            }
+           
+            @if (Model.mis.IsDrawing)
+            {
+                @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { mid = Model.MID, cid = Model.CID }, new { @class = "btn btn-outline-dark", @id = "drawing_btn" })
+                <i class="bi bi-arrow-right"></i>
+            }
+            @if (Model.mis.IsCoding)
+            {
+                @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-dark", @id = "coding_btn" })
+                <i class="bi bi-arrow-right"></i>
+            }
+            @if (Model.mis.IsAssess)
+            {
+                @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-dark", @id = "assess_btn" })
+                <i class="bi bi-arrow-right"></i>
+            }
+            @if (Model.mis.IsGReflect)
+            {
+                @Html.ActionLink("組間互評", "GroupEvalution", "PeerAssessments", new { GID = Model.GID, SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-dark", @id = "gassess_btn" })
+                <i class="bi bi-arrow-right"></i>
+            }
+            @if (Model.mis.IsReflect)
+            {
+                @Html.ActionLink("自我反思", "StudentReflection", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-dark", @id = "reflec_btn" })
+            }
+        </div>
+       
     </div>
     <table>
         <tr>
-            <th>
+            <th class="col-6">
                 @Html.DisplayNameFor(model => model.mis.course.CName)
             </th>
             <td>
@@ -102,7 +104,7 @@
             </td>
         </tr>
         <tr>
-            <th>
+            <th class="col-6">
                 @Html.DisplayNameFor(model => model.mis.Start)
             </th>
             <td>
@@ -110,7 +112,7 @@
             </td>
         </tr>
         <tr>
-            <th>
+            <th class="col-6">
                 @Html.DisplayNameFor(model => model.mis.End)
             </th>
             <td>
@@ -118,7 +120,7 @@
             </td>
         </tr>
         <tr>
-            <th>
+            <th class="col-6">
                 @Html.DisplayNameFor(model => model.mis.MName)
             </th>
             <td>
@@ -126,7 +128,7 @@
             </td>
         </tr>
         <tr>
-            <th>
+            <th class="col-6">
                 @Html.DisplayNameFor(model => model.mis.MDetail)
             </th>
             <td>
@@ -134,7 +136,7 @@
             </td>
         </tr>
         <tr>
-            <th>
+            <th class="col-6">
                 @Html.DisplayNameFor(model => model.mis.relatedKP)
             </th>
             <td>

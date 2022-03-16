@@ -12,6 +12,7 @@ namespace LMSweb.ViewModel
         public string CID { get; set; }
         public string CName { get; set; }
         public string MID { get; set; }
+        public string MName { get; set; }
         public string SID { get; set; }
         public List<Question_Response> QRs { get; set; }
 
