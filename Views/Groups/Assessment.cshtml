@@ -18,7 +18,7 @@
     @using (Html.BeginForm("Create", "Groups", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <h5>小組評價</h5>
+        <h5>@Model.GName 評價</h5>
         <hr />
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })

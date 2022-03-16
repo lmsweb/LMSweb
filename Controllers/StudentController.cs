@@ -125,9 +125,11 @@ namespace LMSweb.Controllers
                 return View(model);
             }
             var cname = db.Courses.Find(cid).CName;
+            
             model.missions = db.Missions.Where(m => m.CID == cid);
             model.CID = cid;
             model.CName = cname;
+           
 
             return View(model);
         }
@@ -631,6 +633,7 @@ namespace LMSweb.Controllers
                 GroupEVM.MID = mid;
                 GroupEVM.CID = cid;
                 GroupEVM.CName = cname;
+                GroupEVM.MName = mname;
 
                 return View(GroupEVM);
             }
