@@ -3,8 +3,11 @@
     ViewBag.Title = "StudentGroupER";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
+
 <div class="cardArticle">
     <h4>@Model.CName</h4>
+    <h4>@Model.GName</h4>
+
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
@@ -13,6 +16,7 @@
         </ol>
     </nav>
 </div>
+
 <div class="article">
     <input type="button" value="程式碼" onclick="CodingWindow()" class="btn btn-primary" />
     <input type="button" value="流程圖" onclick="DrawingWindow()" class="btn btn-primary" />
@@ -34,7 +38,7 @@
                             #
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Questions.First().Description)
+                            @Html.DisplayNameFor(model => model.DefaultQuestions.First().Description)
                         </th>
                         <th>
                             分數
@@ -72,6 +76,7 @@
         </div>
     }
 </div>
+
 @section scripts
 {
     <script>
@@ -88,9 +93,10 @@
             var sumbit_data = {};
             sumbit_data["CID"] = "@Model.CID";
             sumbit_data["MID"] = "@Model.MID";
-            sumbit_data["ERs"] = [];
+            sumbit_data["GID"] = "@Model.GID";
+            sumbit_data["GRs"] = [];
             for (var i = 0; i < evalution_qid.length; i++) {
-                var Evalution_Response = {};
+                var Group_Response = {};
                 var type = $('input[name="' + evalution_qid[i] + '"]').attr('type');
                 //console.log(questions_qid[i]);
                 response = "";
@@ -109,10 +115,11 @@
                     response = selector.val();
                 }
                 //console.log(response);
-                Evalution_Response["qid"] = evalution_qid[i];
-                Evalution_Response["response"] = response;
-                Evalution_Response["comments"] = comments;
-                sumbit_data["ERs"].push(Evalution_Response);
+                Group_Response["qid"] = evalution_qid[i];
+                Group_Response["response"] = response;
+                Group_Response["comments"] = comments;
+                Group_Response["gid"] = @Model.GID;
+                sumbit_data["GRs"].push(Group_Response);
             }
             console.log(sumbit_data);
             $.ajax({
@@ -127,17 +134,11 @@
             });
             return false;
         });
-        @*function CodingWindow() {
+        function CodingWindow() {
             const myWindow = window.open('@Url.Action("CheckCoding", "Groups", new { gid = Model.GID, cid = Model.CID })', "", "width=800,height=800");
         }
         function DrawingWindow() {
             const myWindow = window.open('@Url.Action("CheckDrawing", "Groups", new { gid = Model.GID, cid = Model.CID })', "", "width=800,height=800");
-        }*@
-        function CodingWindow() {
-            const myWindow = window.open('@Url.Action("CheckCoding", "Groups", new {  cid = Model.CID })', "", "width=800,height=800");
-        }
-        function DrawingWindow() {
-            const myWindow = window.open('@Url.Action("CheckDrawing", "Groups", new {  cid = Model.CID })', "", "width=800,height=800");
         }
     </script>
 }
