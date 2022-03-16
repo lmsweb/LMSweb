@@ -14,6 +14,7 @@ namespace LMSweb.ViewModel
         public string MID { get; set; }
         public string MName { get; set; }
         public string SID { get; set; }
+        public string SName { get; set; }
         public int GID { get; set; }
         public string GName { get; set; }
         public string EvaluatorSID { get; set; }

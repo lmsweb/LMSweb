@@ -23,6 +23,7 @@
 
         <div class="form-horizontal">
             <h5>自我評價</h5>
+            <h4>@Model.SName</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)

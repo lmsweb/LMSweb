@@ -5,6 +5,7 @@
 }
 <div class="cardArticle">
     <h4>@Model.CName</h4>
+    
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
@@ -22,6 +23,7 @@
 
         <div class="form-horizontal">
             <h5>自我評價</h5>
+            <h4>@Model.SName</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)

@@ -484,6 +484,7 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var sname = db.Students.Find(sid).SName;
             var evalution = db.EvalutionResponse.Where(r => r.SID == SID && r.EvaluatorSID == SID);
             var qids = evalution.Select(r => r.QID).ToList();
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && (q.Class == "個人能力" || q.Class == "合作能力") && q.MID == mid).ToList();
@@ -503,6 +504,7 @@ namespace LMSweb.Controllers
                 SelfEVM.EvaluatorSID = SID;
                 SelfEVM.CName = cname;
                 SelfEVM.MName = mname;
+                SelfEVM.SName = sname;
 
                 return View(SelfEVM);
             }
@@ -525,8 +527,8 @@ namespace LMSweb.Controllers
             }
             db.SaveChanges();
             //return RedirectToAction("StudentMissionDetail", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID });
-            return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = evalution.CID, mid = evalution.MID }) });
-            //return Redirect("Index", );
+            //return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = evalution.CID, mid = evalution.MID }) });
+            return Json(new { redirectToUrl = Url.Action("Index", "PeerAssessments", new { cid = evalution.CID, mid = evalution.MID }) });
         }
         [HttpGet]
         [Authorize(Roles = "Student")]
@@ -534,6 +536,7 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var sname = db.Students.Find(sid).SName;
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             evalution.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.EvalutionResponses);
@@ -543,6 +546,7 @@ namespace LMSweb.Controllers
             evalution.CName = cname;
             evalution.SID = SID;
             evalution.MName = mname;
+            evalution.SName = sname;
             return View(evalution);
         }
         [HttpGet]
@@ -550,7 +554,8 @@ namespace LMSweb.Controllers
         public ActionResult StudentPeerEvalution(string sid, string mid, string cid, string gid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
-            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value; ;
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var sname = db.Students.Find(sid).SName;
             var evalution = db.EvalutionResponse.Where(r => r.SID == sid && r.EvaluatorSID == SID);
             var qids = evalution.Select(r => r.QID).ToList();
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && (q.Class == "個人能力" || q.Class == "合作能力") && q.MID == mid).ToList();
@@ -570,6 +575,7 @@ namespace LMSweb.Controllers
                 PeerEVM.EvaluatorSID = SID;
                 PeerEVM.CName = cname;
                 PeerEVM.MName = mname;
+                PeerEVM.SName = sname;
 
                 return View(PeerEVM);
             }
@@ -602,6 +608,7 @@ namespace LMSweb.Controllers
         {
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
+            var sname = db.Students.Find(sid).SName;
             evalution.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
@@ -609,6 +616,7 @@ namespace LMSweb.Controllers
             evalution.EvaluatorSID = evasid;
             evalution.CName = cname;
             evalution.MName = mname;
+            evalution.SName = sname;
             return View(evalution);
         }
         [HttpGet]
@@ -622,6 +630,7 @@ namespace LMSweb.Controllers
             var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "組間互評").ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
+            var gname = db.Groups.Find(gid).GName;
             if (questions.Any())
             {
                 return RedirectToAction("StudentGroupER", "Student", new { cid, mid, gid });
@@ -635,16 +644,16 @@ namespace LMSweb.Controllers
                 GroupEVM.CID = cid;
                 GroupEVM.CName = cname;
                 GroupEVM.MName = mname;
+                GroupEVM.GName = gname;
 
                 return View(GroupEVM);
             }
         }
         [HttpPost]
-        public ActionResult StudentGroupEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution, string cid,int gid)  //填表單送出的Post
+        public ActionResult StudentGroupEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution, string mid,string cid,int gid)  //填表單送出的Post
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-            foreach (var qr in evalution.ERs)
 
             foreach (var qr in evalution.GRs)
             {
@@ -659,7 +668,7 @@ namespace LMSweb.Controllers
             }
             db.SaveChanges();
 
-            return Json(new { redirectToUrl = Url.Action("StudentMissionDetail", "Student", new { cid = evalution.CID, mid = evalution.MID }) });
+            return Json(new { redirectToUrl = Url.Action("GroupEvalution", "PeerAssessments", new { gid = evalution.GID, cid = evalution.CID, mid = evalution.MID }) });
         }
         public ActionResult StudentGroupER(EvalutionViewModel evalution, string cid, string mid, int gid)  ///學生已填過目標設置
         {
@@ -667,7 +676,8 @@ namespace LMSweb.Controllers
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
-            evalution.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "組間互評").Include(q => q.EvalutionResponses);
+            var gname = db.Groups.Find(gid).GName;
+            //evalution.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "組間互評").Include(q => q.EvalutionResponses);
             evalution.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "組間互評").Include(q => q.GroupER);//我組間互評的的資料是用預設問題的這張表格(因為每個任務都需要),那這樣的話是不是必須得要改model去關聯GroupER這張表,還是改ViewModel就好?
             evalution.SID = SID;
             evalution.MID = mid;
@@ -675,6 +685,7 @@ namespace LMSweb.Controllers
             evalution.GID = gid;
             evalution.CName = cname;
             evalution.MName = mname;
+            evalution.GName = gname;
             return View(evalution);
         }
     }
