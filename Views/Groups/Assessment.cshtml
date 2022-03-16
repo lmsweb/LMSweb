@@ -8,8 +8,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item"><a href="@Url.Action("Details", "Missions", new { mid = Model.MID})">任務內容</a></li>
-            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Groups", new { mid = Model.MID, cid = Model.CID})">作業評分</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Details", "Missions", new { mid = Model.MID, cid = Model.CID})">@Model.MName</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Groups", new { mid = Model.MID, cid = Model.CID})">作業評價</a></li>
             <li class="breadcrumb-item" active" aria-current="page">@Model.GName</li>
         </ol>
     </nav>
@@ -18,7 +18,7 @@
     @using (Html.BeginForm("Create", "Groups", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <h4><b>小組評價</b></h4>
+        <h5>@Model.GName 評價</h5>
         <hr />
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -43,7 +43,8 @@
             @Html.HiddenFor(model => model.GID)
             @Html.HiddenFor(model => model.MID)
 
-            小組成果 :
+
+            小組成果
             <div class="accordion mb-3">
                 <div class="accordion-item">
                     <h2 class="accordion-header">

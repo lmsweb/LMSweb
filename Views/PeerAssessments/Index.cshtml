@@ -8,7 +8,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("StudentMission", "Student", new { cid = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail", "Student", new { cid = Model.CID,mid = Model.MID})">任務內容</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail", "Student", new { cid = Model.CID,mid = Model.MID})">@Model.MName</a></li>
             <li class="breadcrumb-item active" aria-current="page">自評與互評</li>
         </ol>
     </nav>
@@ -17,34 +17,50 @@
 {
     @Html.AntiForgeryToken()
     <div class="article">
-        <h5>
-            @Html.ActionLink("自我評價", "StudentSelfEvalution", "Student", new { sid = Model.SID, mid = Model.MID, cid = Model.CID, gid = Model.GID}, new { @class = "btn btn-primary" })
-        </h5>
-        <table class="table">
-            <thead>
-                <tr>
-                    同儕互評
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Groups)
-                {
+        <div class="mb-5">
+            <h5>自評</h5>
+            <hr />
+            <table class="table table-borderless">
+                <tbody>
                     <tr>
-                        <td>
-                            @foreach (var s in item.Students)
-                            {
-                                
-                                if (s.SID != Model.SID && s.group.GID == item.GID)
-                                {
-                                    @Html.ActionLink(s.SName, "StudentPeerEvalution", "Student", new { sid = s.SID, mid = Model.MID, gid = Model.GID, cid = Model.CID}, new { @class = "" })
-                                    <br />
-                                }
-                            }
-                        </td>
+
+                        <th class="col-1">
+                            自我評價
+                        </th>
+                        <th>
+                            @Html.ActionLink("評價", "StudentSelfEvalution", "Student", new { sid = Model.SID, mid = Model.MID, cid = Model.CID, gid = Model.GID }, new { @class = "btn btn-primary btn-sm" })
+                        </th>
                     </tr>
-                }
-            </tbody>
-        </table>
-      
+                </tbody>
+                
+            </table>
+        </div>
+        <div>
+            <h5>互評</h5>
+            <hr />
+            <table class="table table-borderless">
+                <tbody>
+                    @foreach (var item in Model.Groups)
+                    {
+                        foreach (var s in item.Students)
+                        {
+                            if (s.SID != Model.SID && s.group.GID == item.GID)
+                            {
+                                <tr>
+                                    <th class="col-1">
+                                        @s.SName
+                                    </th>
+                                    <th>
+                                        @Html.ActionLink("評價", "StudentPeerEvalution", "Student", new { sid = s.SID, mid = Model.MID, gid = Model.GID, cid = Model.CID }, new { @class = "btn btn-primary btn-sm" })
+                                    </th>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        
     </div>
 }
+

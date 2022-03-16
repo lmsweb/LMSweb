@@ -18,7 +18,7 @@
         color: #F0F0F2;
         text-align: center;
         padding: 10px 0;
-        width: 50%;
+
     }
 
     td {
@@ -44,7 +44,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item active" aria-current="page">任務內容</li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.MName</li>
         </ol>
     </nav>
 </div>
@@ -52,7 +52,7 @@
     <div>
         <div class="row">
             <div class="col-8">
-                <h5><b>@Html.DisplayFor(model => model.mis.MName)</b></h5>
+                <h4><b>@Model.MName</b></h4>
             </div>
             <div class="col">
                 <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index","Groups",new { mid = Model.MID, cid=Model.CID })'">
@@ -73,7 +73,7 @@
         <br />
         <table>
             <tr>
-                <th>
+                <th class="col-6">
                     @Html.DisplayNameFor(model => model.mis.MDetail)
                 </th>
                 <td>
@@ -81,7 +81,7 @@
                 </td>
             </tr>
             <tr>
-                <th>
+                <th class="col-6">
                     @Html.DisplayNameFor(model => model.mis.Start)
                 </th>
                 <td>
@@ -89,7 +89,7 @@
                 </td>
             </tr>
             <tr>
-                <th>
+                <th class="col-6">
                     @Html.DisplayNameFor(model => model.mis.End)
                 </th>
                 <td>
@@ -97,7 +97,7 @@
                 </td>
             </tr>
             <tr>
-                <th>
+                <th class="col-6">
                     @Html.DisplayNameFor(model => model.mis.relatedKP)
                 </th>
                 <td>
@@ -146,7 +146,7 @@
             {
                 if (Model.mis.IsGoalSetting)
                 {
-                    <button type="button" class="btn btn-primary" id="is_Goalsetting">目標設置狀態 : 開啟</button>
+                    <button type="button" class="btn btn-success" id="is_Goalsetting">目標設置狀態 : 開啟</button>
                 }
                 else
                 {
@@ -155,12 +155,12 @@
             }
             else
             {
-                <button type="button" class="btn btn-primary" id="is_Goalsetting" hidden>目標設置狀態 : 開啟</button>
+                <button type="button" class="btn btn-secondary" id="is_Goalsetting" hidden>目標設置狀態 : 關閉</button>
             }
 
             @if (Model.mis.IsDiscuss)
             {
-                <button type="button" class="btn btn-primary" id="is_Discuss">討論區狀態 : 開啟</button>
+                <button type="button" class="btn btn-success" id="is_Discuss">討論區狀態 : 開啟</button>
             }
             else
             {
@@ -168,7 +168,7 @@
             }
             @if (Model.mis.IsDrawing)
             {
-                <button type="button" class="btn btn-primary" id="is_Drawing">流程圖狀態 : 開啟</button>
+                <button type="button" class="btn btn-success" id="is_Drawing">流程圖狀態 : 開啟</button>
             }
             else
             {
@@ -176,7 +176,7 @@
             }
             @if (Model.mis.IsCoding)
             {
-                <button type="button" class="btn btn-primary" id="is_Coding">程式碼狀態 : 開啟</button>
+                <button type="button" class="btn btn-success" id="is_Coding">程式碼狀態 : 開啟</button>
             }
             else
             {
@@ -184,17 +184,26 @@
             }
             @if (Model.mis.IsAssess)
             {
-                <button type="button" class="btn btn-primary" id="is_Assess">評價狀態 : 開啟</button>
+                <button type="button" class="btn btn-success" id="is_Assess">評價狀態 : 開啟</button>
             }
             else
             {
                 <button type="button" class="btn btn-secondary" id="is_Assess">評價狀態 : 關閉</button>
             }
+
+            @if (Model.mis.IsGReflect)
+            {
+                <button type="button" class="btn btn-success" id="is_GReflect">組間互評狀態 : 開啟</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-secondary" id="is_GReflect">組間互評狀態 : 關閉</button>
+            }
             @if (Model.mis.AddMetacognition)
             {
                 if (Model.mis.IsReflect)
                 {
-                    <button type="button" class="btn btn-primary" id="is_Reflect">自我反思狀態 : 開啟</button>
+                    <button type="button" class="btn btn-success" id="is_Reflect">自我反思狀態 : 開啟</button>
                 }
                 else
                 {
@@ -204,14 +213,6 @@
             else
             {
                 <button type="button" class="btn btn-secondary" id="is_Reflect" hidden>自我反思狀態 : 關閉</button>
-            }
-            @if (Model.mis.IsGReflect)
-            {
-                <button type="button" class="btn btn-primary" id="is_GReflect">組間互評狀態 : 開啟</button>
-            }
-            else
-            {
-                <button type="button" class="btn btn-secondary" id="is_GReflect">組間互評狀態 : 關閉</button>
             }
         </div>
     </div>
@@ -244,7 +245,7 @@
 
                         } else {
                             $("#is_Drawing").text("流程圖狀態 : 開啟");
-                            $("#is_Drawing").addClass("btn btn-primary");
+                            $("#is_Drawing").addClass("btn btn-success");
 
                         }
                     }
@@ -274,7 +275,7 @@
                             $("#is_Coding").addClass("btn btn-secondary");
                         } else {
                             $("#is_Coding").text("程式碼狀態 : 開啟");
-                            $("#is_Coding").addClass("btn btn-primary");
+                            $("#is_Coding").addClass("btn btn-success");
                         }
                     }
                 }
@@ -303,7 +304,7 @@
                             $("#is_Discuss").addClass("btn btn-secondary");
                         } else {
                             $("#is_Discuss").text("討論區狀態 : 開啟");   //狀態為開啟
-                            $("#is_Discuss").addClass("btn btn-primary");
+                            $("#is_Discuss").addClass("btn btn-success");
                         }
                     }
                 }
@@ -332,7 +333,7 @@
                             $("#is_Assess").addClass("btn btn-secondary");
                         } else {
                             $("#is_Assess").text("評價狀態 : 開啟");   //狀態為開啟
-                            $("#is_Assess").addClass("btn btn-primary");
+                            $("#is_Assess").addClass("btn btn-success");
                         }
                     }
                 }
@@ -361,7 +362,7 @@
                             $("#is_Goalsetting").addClass("btn btn-secondary");
                         } else {
                             $("#is_Goalsetting").text("目標設置狀態 : 開啟");   //狀態為開啟
-                            $("#is_Goalsetting").addClass("btn btn-primary");
+                            $("#is_Goalsetting").addClass("btn btn-success");
                         }
                     }
                 }
@@ -390,7 +391,7 @@
                             $("#is_Reflect").addClass("btn btn-secondary");
                         } else {
                             $("#is_Reflect").text("自我反思狀態 : 開啟");   //狀態為開啟
-                            $("#is_Reflect").addClass("btn btn-primary");
+                            $("#is_Reflect").addClass("btn btn-success");
                         }
                     }
                 }
@@ -422,7 +423,7 @@
                             $("#is_Reflect").attr('hidden', true);
                         } else {
                             $("#is_AddMeta").text("後設認知狀態 : 開啟");   //狀態為開啟
-                            $("#is_AddMeta").addClass("btn btn-primary");
+                            $("#is_AddMeta").addClass("btn btn-success");
                             $("#question").attr('hidden', false);
                             $("#is_Goalsetting").attr('hidden', false);
                             $("#is_Reflect").attr('hidden', false);
@@ -454,7 +455,7 @@
                             $("#is_GReflect").addClass("btn btn-secondary");
                         } else {
                             $("#is_GReflect").text("組間互評狀態 : 開啟");   //狀態為開啟
-                            $("#is_GReflect").addClass("btn btn-primary");
+                            $("#is_GReflect").addClass("btn btn-success");
                         }
                     }
                 }
