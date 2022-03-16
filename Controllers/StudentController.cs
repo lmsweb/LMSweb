@@ -610,6 +610,7 @@ namespace LMSweb.Controllers
             return View(evalution);
         }
         [HttpGet]
+        [Authorize(Roles = "Student")]
         public ActionResult StudentGroupEvalution(string mid, string cid, int gid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
