@@ -286,8 +286,8 @@ namespace LMSweb.Controllers
 
                 string fullFilePath = Path.Combine(Server.MapPath(imgfileSavedPath), newFileName);
                 file.SaveAs(fullFilePath);
-
-                studentDraw.DrawingImgPath = newFileName + "?c=" + DateTime.Now.Ticks.ToString();
+                //+"?c=" + DateTime.Now.Ticks.ToString()
+                studentDraw.DrawingImgPath = newFileName;
                 studentDraw.CID = cid;
                 studentDraw.MID = mid;
                 studentDraw.GID = gid;
