@@ -60,6 +60,8 @@ namespace LMSweb.Controllers
         private string codefileSavedPath = WebConfigurationManager.AppSettings["CodePath"];
         public ActionResult Assessment(int gid, string mid, string cid)
         {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
             var ta = db.TeacherA.Where(t => t.GID == gid && t.MID == mid).SingleOrDefault();
             
             if (ta != null)
@@ -69,7 +71,7 @@ namespace LMSweb.Controllers
             }
             else
             {
-                GroupViewModel model = new GroupViewModel();
+                EvalutionViewModel model = new EvalutionViewModel();
                 model.MID = mid;
                 model.GID = gid;
                 model.CID = cid;
@@ -80,10 +82,17 @@ namespace LMSweb.Controllers
                 var cname = db.Courses.Find(cid).CName;
                 var gname = db.Groups.Find(gid).GName;
                 var mname = db.Missions.Find(mid).MName;
+                var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID);
+                var qids = evalution.Select(r => r.GQID).ToList();
+                var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
                 var readcode = new TextIO();
+                model.GroupQuestion = db.GroupQuestions.Include(q => q.GroupOptions);
+                model.MID = mid;
+                model.GID = gid;
+                model.CID = cid;
                 model.CName = cname;
-                model.GName = gname;
                 model.MName = mname;
+                model.GName = gname;
                 if (code != null)
                 {
                     string virtualBaseFilePath = Url.Content(codefileSavedPath);
@@ -94,19 +103,13 @@ namespace LMSweb.Controllers
                     }
                     string readcodepath = $"{filePath}{code.CodePath}.txt";
                     model.CodeText = readcode.readCodeText(readcodepath);
-
                 }
                 if (pt != null)
                 {
                     model.DrawingImgPath = pt;
-
                 }
                 return View(model);
-
-
-
             }
-            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

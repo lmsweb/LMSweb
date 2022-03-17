@@ -21,14 +21,28 @@ namespace LMSweb.ViewModel
         public string DrawingImgPath { get; set; }
         public string CodeText { get; set; }
         public bool IsDiscuss { get; set; }
+        public string TID { get; set; }
         public IEnumerable<LMSweb.Models.Question> Questions { get; set; }
         public IEnumerable<LMSweb.Models.GroupQuestion> GroupQuestion { get; set; }
         public List<Evalution_Response> ERs { get; set; }
         public List<Group_Response> GRs { get; set; }
+        public List<Teacher_Response> TRs { get; set; }
+
         public LMSweb.Models.Option Option { get; set; }
         public LMSweb.Models.GroupER GroupER { get; set; }
         public LMSweb.Models.EvalutionResponse Response { get; set; }
         public LMSweb.Models.GroupOption GroupOption { get; set; }
+        public List<LMSweb.Models.StudentCode> IsUploadCode { get; set; }
+        public List<LMSweb.Models.StudentDraw> IsUploadDraw { get; set; }
+        public List<LMSweb.Models.Group> Groups { get; set; }
+        public List<LMSweb.Models.Course> Courses { get; set; }
+        public LMSweb.Models.TeacherAssessment TeacherAssessment { get; set; }
+        public LMSweb.Models.PeerAssessment PeerAssessment { get; set; }
+        public LMSweb.Models.Group Group { get; set; }
+        public LMSweb.Models.Course Course { get; set; }
+        public LMSweb.Models.Student Student { get; set; }
+        public List<LMSweb.Models.Student> Students { get; set; }
+        public List<LMSweb.Models.PeerAssessment> PeerAssessments { get; set; }
 
     }
     public class Evalution_Response
@@ -52,6 +66,17 @@ namespace LMSweb.ViewModel
         public string response { get; set; }
         public string comments { get; set; }
         public string gid { get; set; }
+
+    }
+    public class Teacher_Response
+    {
+        public int qid { get; set; }
+
+
+        [Required]
+        public string response { get; set; }
+        public string comments { get; set; }
+        public string tid { get; set; }
 
     }
 }

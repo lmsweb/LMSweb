@@ -1,4 +1,4 @@
-﻿@model LMSweb.ViewModel.GroupViewModel
+﻿@model LMSweb.ViewModel.EvalutionViewModel
 @{
     ViewBag.Title = "Assessment";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
@@ -85,6 +85,58 @@
                     </div>
                 </div>
             </div>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <table id="table_id" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.GroupQuestion.First().Description)
+                        </th>
+                        <th>
+                            分數
+                        </th>
+                        <th>
+                            評語
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="number">
+
+                    @foreach (var Q in Model.GroupQuestion)
+                    {
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Q.Description)
+                            </td>
+                            <td>
+                                @if (Q.Type == "單選")
+                                {
+                                    foreach (var qo in Q.GroupOptions)
+                                    {
+
+                                        @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
+                                        @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input" })
+                                        @Html.Label(qo.OptionNum, new { @class = "form-check-label", @for = Q.GQID })
+
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
+                                @Html.TextArea(Q.GQID.ToString(), new { @class = "form-control", @rows = "3" })
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
             <div class="mb-3">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="確定送出" class="btn btn-primary" />
