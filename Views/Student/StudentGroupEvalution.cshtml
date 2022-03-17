@@ -141,7 +141,7 @@
                             #
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.DefaultQuestions.First().Description)
+                            @Html.DisplayNameFor(model => model.GroupQuestion.First().Description)
                         </th>
                         <th>
                             分數
@@ -153,7 +153,7 @@
                 </thead>
                 <tbody id="number">
 
-                    @foreach (var Q in Model.DefaultQuestions)
+                    @foreach (var Q in Model.GroupQuestion)
                     {
                         <tr>
                             <td>
@@ -164,19 +164,19 @@
                             <td>
                                 @if (Q.Type == "單選")
                                 {
-                                    foreach (var qo in Q.DefaultOptions)
+                                    foreach (var qo in Q.GroupOptions)
                                     {
 
                                         @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
-                                        @Html.RadioButton(Q.DQID.ToString(), qo.DOptions, new { @class = "form-check-input" })
-                                        @Html.Label(qo.DOptions, new { @class = "form-check-label", @for = Q.DQID })
+                                        @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input" })
+                                        @Html.Label(qo.OptionNum, new { @class = "form-check-label", @for = Q.GQID })
 
                                     }
                                 }
                             </td>
                             <td>
                                 @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                                @Html.TextArea(Q.DQID.ToString(), new { @class = "form-control", @rows = "3" })
+                                @Html.TextArea(Q.GQID.ToString(), new { @class = "form-control", @rows = "3" })
                             </td>
                         </tr>
                     }
@@ -245,7 +245,7 @@
 @section scripts
 {
     <script>
-        var groupevalution_qid = @Html.Raw(@Json.Encode(Model.DefaultQuestions.Select(q => q.DQID).ToList()));
+        var groupevalution_qid = @Html.Raw(@Json.Encode(Model.GroupQuestion.Select(q => q.GQID).ToList()));
         //console.log(evalution_qid);
         window.onload = function () {
             var tableLine = document.getElementById("number");

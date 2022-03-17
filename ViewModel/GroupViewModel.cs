@@ -16,6 +16,7 @@ namespace LMSweb.ViewModel
         public string GName { get; set; }
         public string DrawingImgPath { get; set; }
         public string CodeText { get; set; }
+        public bool IsDiscuss { get; set; }
         public List<LMSweb.Models.StudentCode> IsUploadCode { get; set; }
         public List<LMSweb.Models.StudentDraw> IsUploadDraw { get; set; }
         public List<LMSweb.Models.Group> Groups { get; set; }
