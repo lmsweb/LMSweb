@@ -15,7 +15,7 @@
     </nav>
 </div>
 <div class="article">
-    @using (Html.BeginForm("Create", "Groups", FormMethod.Post))
+    @using (Html.BeginForm("Assessment", "Groups", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         <h5>@Model.GName 評價</h5>
@@ -149,6 +149,60 @@
 @section scripts
 {
     <script>
+        var Tevalution_qid = @Html.Raw(@Json.Encode(Model.GroupQuestion.Select(q => q.GQID).ToList()));
+        //console.log(evalution_qid);
+        window.onload = function () {
+            var tableLine = document.getElementById("number");
+            for (var i = 0; i < tableLine.rows.length; i++) {
+                tableLine.rows[i].cells[0].innerHTML = (i + 1);
+            }
+        }
+        $("form").submit(function () {
+            var sumbit_data = {};
+            sumbit_data["CID"] = "@Model.CID";
+            sumbit_data["MID"] = "@Model.MID";
+            sumbit_data["GID"] = "@Model.GID";
+            sumbit_data["TID"] = "@Model.TID"
+            sumbit_data["TRs"] = [];
+            for (var i = 0; i < Tevalution_qid.length; i++) {
+                var Teacher_Response = {};
+                var type = $('input[name="' + Tevalution_qid[i] + '"]').attr('type');
+                //console.log(evalution_qid[i]);
+                response = "";
+                comments = "";
+                if (type == "radio") {
+                    response = $('input[name="' + Tevalution_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                    selector = $('textarea[name="' + Tevalution_qid[i] + '"]');
+                    comments = selector.val();
+                } else if (type == "checkbox") {
+                    response = $('input[name="' + Tevalution_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                } else {
+                    selector = $('textarea[name="' + Tevalution_qid[i] + '"]');
+                    comments = selector.val();
+                }
+                //console.log(response);
+                Teacher_Response["qid"] = Tevalution_qid[i];
+                Teacher_Response["response"] = response;
+                Teacher_Response["comments"] = comments;
+                sumbit_data["TRs"].push(Teacher_Response);
+            }
+            console.log(sumbit_data);
+            $.ajax({
+                url: '@Url.Action("Assessment")',
+                type: 'post',
+                dataType: 'json',
+                data: sumbit_data,
+                success: function (response) {
+                    // ... do something with the data...
+                    window.location.href = response.redirectToUrl;
+                }
+            });
+            return false;
+        });
         function CodingWindow() {
             const myWindow = window.open('@Url.Action("CheckCoding", "Groups", new { gid = Model.GID, cid = Model.CID, mid = Model.MID })',"",  "width=800,height=800");
         }

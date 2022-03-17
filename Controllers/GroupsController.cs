@@ -58,6 +58,7 @@ namespace LMSweb.Controllers
             return View(model);
         }
         private string codefileSavedPath = WebConfigurationManager.AppSettings["CodePath"];
+        [HttpGet]
         public ActionResult Assessment(int gid, string mid, string cid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
@@ -90,6 +91,7 @@ namespace LMSweb.Controllers
                 model.MID = mid;
                 model.GID = gid;
                 model.CID = cid;
+                model.TID = TID;
                 model.CName = cname;
                 model.MName = mname;
                 model.GName = gname;
@@ -113,15 +115,30 @@ namespace LMSweb.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(GroupViewModel groupVM, string cid, int gid, string mid)
+        public ActionResult Assessment([System.Web.Http.FromBody] EvalutionViewModel groupVM, string cid, int gid, string mid)
         {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
 
             if (ModelState.IsValid)
             {
                 groupVM.TeacherAssessment.GID = gid;
                 groupVM.TeacherAssessment.MID = mid;
                 groupVM.TeacherAssessment.CID = cid;
+                foreach (var qr in groupVM.TRs)
+                {
+                    var response = new GroupER();
+                    response.GQID = qr.qid;
+                    response.Answer = qr.response;
+                    response.Comments = qr.comments;
+                    response.GID = gid;
+                    response.EvaluatorSID = TID;
+                    response.CID = cid;
+                    response.MID = mid;
+                    db.GroupERs.Add(response);
+                }
                 db.TeacherA.Add(groupVM.TeacherAssessment);
+
 
                 db.SaveChanges();
                 var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
@@ -161,12 +178,10 @@ namespace LMSweb.Controllers
                 var course = db.Courses.Find(cid).CName;
                 groupVM.CName = course;
                 groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
-
-
                 return View("Index", groupVM);
             }
+
             
-           
             return View(groupVM);
         }
         
