@@ -14,6 +14,7 @@ namespace LMSweb.ViewModel
         public int GID { get; set; }
         public string GName { get; set; }
         public string DrawingImgPath { get; set; }
+        public bool IsDiscuss { get; set; }
         //public LMSweb.Models.StudentDraw StudentDraw { get; set; }
     }
 }

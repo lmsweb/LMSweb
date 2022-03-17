@@ -3,6 +3,15 @@
     ViewBag.Title = "StudentGroupEvalution";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
+<style>
+    .message-btn {
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        right: 50px;
+        bottom: 50px;
+    }
+</style>
 <div class="cardArticle">
     <h4>@Model.CName</h4>
     <h4>@Model.GName</h4>
@@ -132,7 +141,7 @@
                             #
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.DefaultQuestions.First().Description)
+                            @Html.DisplayNameFor(model => model.GroupQuestion.First().Description)
                         </th>
                         <th>
                             分數
@@ -144,7 +153,7 @@
                 </thead>
                 <tbody id="number">
 
-                    @foreach (var Q in Model.DefaultQuestions)
+                    @foreach (var Q in Model.GroupQuestion)
                     {
                         <tr>
                             <td>
@@ -155,19 +164,19 @@
                             <td>
                                 @if (Q.Type == "單選")
                                 {
-                                    foreach (var qo in Q.DefaultOptions)
+                                    foreach (var qo in Q.GroupOptions)
                                     {
 
                                         @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
-                                        @Html.RadioButton(Q.DQID.ToString(), qo.DOptions, new { @class = "form-check-input" })
-                                        @Html.Label(qo.DOptions, new { @class = "form-check-label", @for = Q.DQID })
+                                        @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input" })
+                                        @Html.Label(qo.OptionNum, new { @class = "form-check-label", @for = Q.GQID })
 
                                     }
                                 }
                             </td>
                             <td>
                                 @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                                @Html.TextArea(Q.DQID.ToString(), new { @class = "form-control", @rows = "3" })
+                                @Html.TextArea(Q.GQID.ToString(), new { @class = "form-control", @rows = "3" })
                             </td>
                         </tr>
                     }
@@ -201,10 +210,42 @@
     }
 
 </div>
+<!-- 懸浮聊天室 -->
+<body>
+    @if (Model.IsDiscuss)
+    {
+        <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
+                data-bs-target="#messageBox" aria-controls="messageBox">
+            討論區
+        </button>
+    }
+
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="messageBox" aria-labelledby="messageBoxLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="messageBoxLabel">聊天室</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <iframe src="@Url.Action("Chat","Student",new { MID = @Model.MID, CID = @Model.CID})" width="365" height="830" frameborder="0" scrolling="no"></iframe>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+</body>
 @section scripts
 {
     <script>
-        var groupevalution_qid = @Html.Raw(@Json.Encode(Model.DefaultQuestions.Select(q => q.DQID).ToList()));
+        var groupevalution_qid = @Html.Raw(@Json.Encode(Model.GroupQuestion.Select(q => q.GQID).ToList()));
         //console.log(evalution_qid);
         window.onload = function () {
             var tableLine = document.getElementById("number");

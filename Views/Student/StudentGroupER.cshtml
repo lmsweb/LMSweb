@@ -3,23 +3,127 @@
     ViewBag.Title = "StudentGroupER";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
+<style>
+    .message-btn {
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        right: 50px;
+        bottom: 50px;
+    }
+</style>
 
 <div class="cardArticle">
     <h4>@Model.CName</h4>
     <h4>@Model.GName</h4>
-
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
-            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail", "Student", new { cid = Model.CID,mid = Model.MID})" @Model.MName</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail", "Student", new { cid = Model.CID,mid = Model.MID})">@Model.MName</a></li>
             <li class="breadcrumb-item active" aria-current="page">組間互評</li>
         </ol>
     </nav>
 </div>
 
 <div class="article">
-    <input type="button" value="程式碼" onclick="CodingWindow()" class="btn btn-primary" />
-    <input type="button" value="流程圖" onclick="DrawingWindow()" class="btn btn-primary" />
+    <!--流程圖&程式碼顯示-->
+    <h5>小組成果</h5>
+    <div class="accordion mb-3">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    流程圖
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    @if (Model.DrawingImgPath == null)
+                    {
+                        <p>學生尚未上傳流程圖</p>
+                    }
+                    else
+                    {
+                        <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                    程式碼
+                </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                <div class="accordion-body">
+                    @if (Model.CodeText == null)
+                    {
+                        <p>學生尚未上傳程式碼</p>
+                    }
+                    else
+                    {
+                        <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--評量尺規-->
+    <h5>評量尺規</h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>評價指標</th>
+                <th>好(4-5)</th>
+                <th>一般(3)</th>
+                <th>待改進(1-2)</th>
+            </tr>
+        </thead>
+        <tbody style="background-color : white">
+            <tr>
+                <td>
+                    學習及參與態度
+                </td>
+                <td>
+                    積極參與活動 主動提出合力建議 盡責 不缺席
+                </td>
+                <td>
+                    主動參與活動 不缺席
+                </td>
+                <td>
+                    只關心自己工作進展
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    學習目標完成情況
+                </td>
+                <td>
+                    能夠較好的完成學習目標
+                </td>
+                <td>
+                    能夠完成學習目標 但還有點小問題
+                </td>
+                <td>
+                    能完成大部分的學習目標
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    學習小組合作
+                </td>
+                <td>
+                    有較強的合作意識能力
+                </td>
+                <td>
+                    有一定的合作意識和能力
+                </td>
+                <td>
+                    有合作意識但不積極
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
     @using (Html.BeginForm())
     {
@@ -38,7 +142,7 @@
                             #
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.DefaultQuestions.First().Description)
+                            @Html.DisplayNameFor(model => model.GroupQuestion.First().Description)
                         </th>
                         <th>
                             分數
@@ -49,7 +153,7 @@
                     </tr>
                 </thead>
                 <tbody id="number">
-                    @foreach (var Q in Model.Questions)
+                    @foreach (var Q in Model.GroupQuestion)
                     {
                         <tr>
                             <td>
@@ -58,15 +162,23 @@
                                 @Html.DisplayFor(modelItem => Q.Description)
                             </td>
                             <td>
-                                @foreach (var qo in Q.EvalutionResponses)
+                                @foreach (var qo in Q.GroupERs)
                                 {
-                                    @qo.Answer
+                                    if (qo.GID == Model.GID && qo.MID == Model.MID)
+                                    {
+                                        @qo.Answer
+                                    }
+
                                 }
                             </td>
                             <td>
-                                @foreach (var qo in Q.EvalutionResponses)
+                                @foreach (var qo in Q.GroupERs)
                                 {
-                                    @qo.Comments
+                                    if (qo.GID == Model.GID && qo.MID == Model.MID)
+                                    {
+                                        @qo.Comments
+                                    }
+
                                 }
                             </td>
                         </tr>
@@ -76,17 +188,47 @@
         </div>
     }
 </div>
+<!-- 懸浮聊天室 -->
+<body>
+    @if (Model.IsDiscuss)
+    {
+        <button type="button" class="btn btn-primary rounded-circle message-btn" data-bs-toggle="offcanvas"
+                data-bs-target="#messageBox" aria-controls="messageBox">
+            討論區
+        </button>
+    }
 
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="messageBox" aria-labelledby="messageBoxLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="messageBoxLabel">聊天室</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <iframe src="@Url.Action("Chat","Student",new { MID = @Model.MID, CID = @Model.CID})" width="365" height="830" frameborder="0" scrolling="no"></iframe>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+</body>
 @section scripts
 {
     <script>
-        var evalution_qid = @Html.Raw(@Json.Encode(Model.Questions.Select(q => q.QID).ToList()));
+        var groupevalution_qid = @Html.Raw(@Json.Encode(Model.GroupQuestion.Select(q => q.GQID).ToList()));
         //console.log(questions_qid);
         window.onload = function () {
             var tableLine = document.getElementById("number");
             for (var i = 0; i < tableLine.rows.length; i++) {
                 tableLine.rows[i].cells[0].innerHTML = (i + 1);
-
             }
         }
         $("form").submit(function () {
@@ -95,23 +237,23 @@
             sumbit_data["MID"] = "@Model.MID";
             sumbit_data["GID"] = "@Model.GID";
             sumbit_data["GRs"] = [];
-            for (var i = 0; i < evalution_qid.length; i++) {
+            for (var i = 0; i < groupevalution_qid.length; i++) {
                 var Group_Response = {};
-                var type = $('input[name="' + evalution_qid[i] + '"]').attr('type');
+                var type = $('input[name="' + groupevalution_qid[i] + '"]').attr('type');
                 //console.log(questions_qid[i]);
                 response = "";
                 if (type == "radio") {
-                    response = $('input[name="' + evalution_qid[i] + '"]:checked').map(function () {
+                    response = $('input[name="' + groupevalution_qid[i] + '"]:checked').map(function () {
                         return $(this).val();
                     }).get().join();
-                    selector = $('textarea[name="' + evalution_qid[i] + '"]');
+                    selector = $('textarea[name="' + groupevalution_qid[i] + '"]');
                     response = selector.val();
                 } else if (type == "checkbox") {
-                    response = $('input[name="' + evalution_qid[i] + '"]:checked').map(function () {
+                    response = $('input[name="' + groupevalution_qid[i] + '"]:checked').map(function () {
                         return $(this).val();
                     }).get().join();
                 } else {
-                    selector = $('textarea[name="' + evalution_qid[i] + '"]');
+                    selector = $('textarea[name="' + groupevalution_qid[i] + '"]');
                     response = selector.val();
                 }
                 //console.log(response);
@@ -135,10 +277,10 @@
             return false;
         });
         function CodingWindow() {
-            const myWindow = window.open('@Url.Action("CheckCoding", "Groups", new { gid = Model.GID, cid = Model.CID })', "", "width=800,height=800");
+            const myWindow = window.open('@Url.Action("CheckCoding", "Groups", new { cid = Model.CID })', "", "width=800,height=800");
         }
         function DrawingWindow() {
-            const myWindow = window.open('@Url.Action("CheckDrawing", "Groups", new { gid = Model.GID, cid = Model.CID })', "", "width=800,height=800");
+            const myWindow = window.open('@Url.Action("CheckDrawing", "Groups", new { cid = Model.CID })', "", "width=800,height=800");
         }
     </script>
 }
