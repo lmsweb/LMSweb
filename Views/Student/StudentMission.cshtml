@@ -61,7 +61,7 @@
                             @Html.DisplayFor(modelItem => item.End)
                         </td>
                         <td class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            @if (DateTime.Compare(DateTime.Parse(item.End), DateTime.Now) > 0)
+                            @*@if (DateTime.Compare(DateTime.Parse(item.End), DateTime.Now) > 0)
                             {
                                 <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
                                     進入任務<i class="bi bi-arrow-right"></i>
@@ -72,8 +72,10 @@
                                 <button type="button" class="btn btn-secondary" disabled="disabled" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
                                     任務已到期
                                 </button>
-                            }
-
+                            }*@
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("StudentMissionDetail","Student", new {sid = Model.SID, mid = item.MID, cid = item.CID, gid = Model.GID})'">
+                                進入任務<i class="bi bi-arrow-right"></i>
+                            </button>
                         </td>
                     </tr>
                 }
