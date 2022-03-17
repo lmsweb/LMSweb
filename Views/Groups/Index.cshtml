@@ -30,12 +30,12 @@
                     <th>
                         小組成員
                     </th>
-                    <th>
+                    @*<th>
                         分數
                     </th>
                     <th>
                         評語
-                    </th>
+                    </th>*@
                     <th>
                         流程圖
                     </th>
@@ -63,7 +63,7 @@
                                 }
                             }
                         </td>
-                        <td>
+                        @*<td>
                             @foreach (var ta in item.TeacherA)
                             {
                                 if (ta.MID == Model.MID)
@@ -82,7 +82,7 @@
                                     <br />
                                 }
                             }
-                        </td>
+                        </td>*@
                         <td>
                             @if (Model.IsUploadDraw != null)
                             {

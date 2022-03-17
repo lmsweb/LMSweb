@@ -22,23 +22,23 @@
         <hr />
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="mb-3">
-                @Html.LabelFor(model => model.TeacherAssessment.GroupAchievementScore, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-5">
-                    @Html.EditorFor(model => model.TeacherAssessment.GroupAchievementScore, new { htmlAttributes = new { @class = "form-control", @placeholder = "0分 ~ 100分" } })
-                    @Html.ValidationMessageFor(model => model.TeacherAssessment.GroupAchievementScore, "", new { @class = "text-danger" })
-                </div>
+            @*<div class="mb-3">
+            @Html.LabelFor(model => model.TeacherAssessment.GroupAchievementScore, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-5">
+                @Html.EditorFor(model => model.TeacherAssessment.GroupAchievementScore, new { htmlAttributes = new { @class = "form-control", @placeholder = "0分 ~ 100分" } })
+                @Html.ValidationMessageFor(model => model.TeacherAssessment.GroupAchievementScore, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="mb-3">
-                @Html.LabelFor(model => model.TeacherAssessment.TeacherA, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-5">
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="TeacherAssessment_TeacherA" name="TeacherAssessment.TeacherA" style="height: 100px"></textarea>
-                        <label for="floatingTextarea">請寫下對小組成果的評價...</label>
-                    </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.TeacherAssessment.TeacherA, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-5">
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="TeacherAssessment_TeacherA" name="TeacherAssessment.TeacherA" style="height: 100px"></textarea>
+                    <label for="floatingTextarea">請寫下對小組成果的評價...</label>
                 </div>
             </div>
+        </div>*@
             @Html.HiddenFor(model => model.CID)
             @Html.HiddenFor(model => model.GID)
             @Html.HiddenFor(model => model.MID)
@@ -85,6 +85,60 @@
                     </div>
                 </div>
             </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>評價指標</th>
+                        <th>好(4-5)</th>
+                        <th>一般(3)</th>
+                        <th>待改進(1-2)</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color : white">
+                    <tr>
+                        <td>
+                            學習及參與態度
+                        </td>
+                        <td>
+                            積極參與活動 主動提出合力建議 盡責 不缺席
+                        </td>
+                        <td>
+                            主動參與活動 不缺席
+                        </td>
+                        <td>
+                            只關心自己工作進展
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            學習目標完成情況
+                        </td>
+                        <td>
+                            能夠較好的完成學習目標
+                        </td>
+                        <td>
+                            能夠完成學習目標 但還有點小問題
+                        </td>
+                        <td>
+                            能完成大部分的學習目標
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            學習小組合作
+                        </td>
+                        <td>
+                            有較強的合作意識能力
+                        </td>
+                        <td>
+                            有一定的合作意識和能力
+                        </td>
+                        <td>
+                            有合作意識但不積極
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -209,5 +263,4 @@
             const myWindow = window.open('@Url.Action("CheckDrawing", "Groups", new { gid = Model.GID, cid = Model.CID, mid = Model.MID })', "", "width=800,height=800");
         }
     </script>
-    
 }

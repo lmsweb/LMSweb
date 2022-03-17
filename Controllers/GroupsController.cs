@@ -63,12 +63,19 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
-            var ta = db.TeacherA.Where(t => t.GID == gid && t.MID == mid).SingleOrDefault();
-            
-            if (ta != null)
+            var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID);
+            var qids = evalution.Select(r => r.GQID).ToList();
+            var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
+            //var ta = db.TeacherA.Where(t => t.GID == gid && t.MID == mid).SingleOrDefault();
+
+            //if (ta != null)
+            //{
+            //    var id = ta.TEID;
+            //    return RedirectToAction("Edit", "Groups", new { id, cid, gid, mid });
+            //}
+            if (questions.Any())
             {
-                var id = ta.TEID;
-                return RedirectToAction("Edit", "Groups", new { id, cid, gid, mid });
+                return RedirectToAction("StudentTeacherER", "Groups", new { cid, mid, gid });
             }
             else
             {
@@ -83,9 +90,9 @@ namespace LMSweb.Controllers
                 var cname = db.Courses.Find(cid).CName;
                 var gname = db.Groups.Find(gid).GName;
                 var mname = db.Missions.Find(mid).MName;
-                var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID);
-                var qids = evalution.Select(r => r.GQID).ToList();
-                var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
+                //var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID);
+                //var qids = evalution.Select(r => r.GQID).ToList();
+                //var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
                 var readcode = new TextIO();
                 model.GroupQuestion = db.GroupQuestions.Include(q => q.GroupOptions);
                 model.MID = mid;
@@ -137,12 +144,11 @@ namespace LMSweb.Controllers
             db.SaveChanges();
             if (ModelState.IsValid)
             {
-                
-                groupVM.TeacherAssessment.GID = GID;
-                groupVM.TeacherAssessment.MID = MID;
-                groupVM.TeacherAssessment.CID = CID;
-                db.TeacherA.Add(groupVM.TeacherAssessment);
-                db.SaveChanges();
+                //groupVM.TeacherAssessment.GID = GID;
+                //groupVM.TeacherAssessment.MID = MID;
+                //groupVM.TeacherAssessment.CID = CID;
+                //db.TeacherA.Add(groupVM.TeacherAssessment);
+                //db.SaveChanges();
                 var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
                 var code = db.StudentCodes.Find(cid, mid, gid);
                 var readcode = new TextIO();
@@ -174,16 +180,14 @@ namespace LMSweb.Controllers
                     groupVM.IsUploadDraw = null;
                 }
 
-
                 groupVM.CID = cid;
                 groupVM.MID = mid;
                 var course = db.Courses.Find(cid).CName;
                 groupVM.CName = course;
                 groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
-                return View("Index", groupVM);
+                //return View("Index", groupVM);
+                return Json(new { redirectToUrl = Url.Action("Index", "Groups", new { gid = groupVM.GID, cid = groupVM.CID, mid = groupVM.MID }) });
             }
-
-            
             return View(groupVM);
         }
         
@@ -289,6 +293,49 @@ namespace LMSweb.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult StudentTeacherER(EvalutionViewModel evalution, string cid, string mid, int gid)  ///學生已填過組間評價
+        {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
+            var cname = db.Courses.Find(cid).CName;
+            var mname = db.Missions.Find(mid).MName;
+            var gname = db.Groups.Find(gid).GName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+            var code = db.StudentCodes.Find(cid, mid, gid);
+            var readcode = new TextIO();
+            if (code != null)
+            {
+                string virtualBaseFilePath = Url.Content(codefileSavedPath);
+                string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                string readcodepath = $"{filePath}{code.CodePath}.txt";
+                evalution.CodeText = readcode.readCodeText(readcodepath);
+            }
+            if (pt != null)
+            {
+                evalution.DrawingImgPath = pt;
+            }
+            evalution.IsDiscuss = misChat;
+            //evalution.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "組間互評").Include(q => q.EvalutionResponses);
+            ////evalution.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "組間互評").Include(q => q.GroupER);//我組間互評的的資料是用預設問題的這張表格(因為每個任務都需要),那這樣的話是不是必須得要改model去關聯GroupER這張表,還是改ViewModel就好?
+            evalution.GroupQuestion = db.GroupQuestions.Include(q => q.GroupERs);
+            //evalution.SID = SID;
+            evalution.MID = mid;
+            evalution.CID = cid;
+            evalution.GID = gid;
+            evalution.CName = cname;
+            evalution.MName = mname;
+            evalution.GName = gname;
+            evalution.TID = TID;
+
+            return View(evalution);
         }
     }
 }
