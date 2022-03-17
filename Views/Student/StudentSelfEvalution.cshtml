@@ -3,6 +3,7 @@
     ViewBag.Title = "StudentSelfEvalution";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
+
 <div class="cardArticle">
     <h4>@Model.CName</h4>
     <nav aria-label="breadcrumb">
@@ -22,6 +23,7 @@
 
         <div class="form-horizontal">
             <h5>自我評價</h5>
+            <h4>@Model.SName</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)
@@ -61,7 +63,7 @@
 
                                         @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
                                         @Html.RadioButton(Q.QID.ToString(), qo.OptionName, new { @class = "form-check-input" })
-                                        @Html.Label(qo.OptionName, new { @class = "form-check-label", @for = Q.QID })                                       
+                                        @Html.Label(qo.OptionName, new { @class = "form-check-label", @for = Q.QID })
 
                                     }
                                 }
@@ -102,6 +104,8 @@
     }
 
 </div>
+
+
 @section scripts
 {
     <script>
