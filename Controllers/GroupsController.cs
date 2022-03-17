@@ -114,32 +114,34 @@ namespace LMSweb.Controllers
             }
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Assessment([System.Web.Http.FromBody] EvalutionViewModel groupVM, string cid, int gid, string mid)
+       // [ValidateAntiForgeryToken]
+        public ActionResult Assessment([System.Web.Http.FromBody] EvalutionViewModel groupVM, int gid, string mid, string cid)
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
-
+            int GID = gid;
+            var MID = mid;
+            var CID = cid;
+            foreach (var qr in groupVM.TRs)
+            {
+                var response = new GroupER();
+                response.GQID = qr.qid;
+                response.Answer = qr.response;
+                response.Comments = qr.comments;
+                response.GID = GID;
+                response.EvaluatorSID = TID;
+                response.CID = CID;
+                response.MID = MID;
+                db.GroupERs.Add(response);
+            }
+            db.SaveChanges();
             if (ModelState.IsValid)
             {
-                groupVM.TeacherAssessment.GID = gid;
-                groupVM.TeacherAssessment.MID = mid;
-                groupVM.TeacherAssessment.CID = cid;
-                foreach (var qr in groupVM.TRs)
-                {
-                    var response = new GroupER();
-                    response.GQID = qr.qid;
-                    response.Answer = qr.response;
-                    response.Comments = qr.comments;
-                    response.GID = gid;
-                    response.EvaluatorSID = TID;
-                    response.CID = cid;
-                    response.MID = mid;
-                    db.GroupERs.Add(response);
-                }
+                
+                groupVM.TeacherAssessment.GID = GID;
+                groupVM.TeacherAssessment.MID = MID;
+                groupVM.TeacherAssessment.CID = CID;
                 db.TeacherA.Add(groupVM.TeacherAssessment);
-
-
                 db.SaveChanges();
                 var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
                 var code = db.StudentCodes.Find(cid, mid, gid);

@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 using System.Web.Configuration;
 using Newtonsoft.Json.Linq;
 using LMSweb.Infrastructure.Helpers;
+using LMSweb.Service;
 
 namespace LMSweb.Controllers
 {
@@ -637,7 +638,7 @@ namespace LMSweb.Controllers
             evalution.SName = sname;
             return View(evalution);
         }
-
+        private string codefileSavedPath = WebConfigurationManager.AppSettings["CodePath"];
         [HttpGet]
         [Authorize(Roles = "Student")]
         public ActionResult StudentGroupEvalution(string mid, string cid, int gid)
@@ -651,13 +652,33 @@ namespace LMSweb.Controllers
             var mname = db.Missions.Find(mid).MName;
             var gname = db.Groups.Find(gid).GName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
+            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+            var code = db.StudentCodes.Find(cid, mid, gid);
+            var readcode = new TextIO();
+            EvalutionViewModel GroupEVM = new EvalutionViewModel();
+            if (code != null)
+            {
+                string virtualBaseFilePath = Url.Content(codefileSavedPath);
+                string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+                
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                string readcodepath = $"{filePath}{code.CodePath}.txt";
+                GroupEVM.CodeText = readcode.readCodeText(readcodepath);
+            }
+            if (pt != null)
+            {
+                GroupEVM.DrawingImgPath = pt;
+            }
             if (questions.Any())
             {
                 return RedirectToAction("StudentGroupER", "Student", new { cid, mid, gid });
             }        
             else
             {
-                EvalutionViewModel GroupEVM = new EvalutionViewModel();
+                
                 GroupEVM.GroupQuestion = db.GroupQuestions.Include(q => q.GroupOptions);
                 GroupEVM.MID = mid;
                 GroupEVM.GID = gid;
@@ -700,6 +721,25 @@ namespace LMSweb.Controllers
             var mname = db.Missions.Find(mid).MName;
             var gname = db.Groups.Find(gid).GName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
+            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+            var code = db.StudentCodes.Find(cid, mid, gid);
+            var readcode = new TextIO();
+            if (code != null)
+            {
+                string virtualBaseFilePath = Url.Content(codefileSavedPath);
+                string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                string readcodepath = $"{filePath}{code.CodePath}.txt";
+                evalution.CodeText = readcode.readCodeText(readcodepath);
+            }
+            if (pt != null)
+            {
+                evalution.DrawingImgPath = pt;
+            }
             evalution.IsDiscuss = misChat;
             //evalution.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "組間互評").Include(q => q.EvalutionResponses);
             ////evalution.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "組間互評").Include(q => q.GroupER);//我組間互評的的資料是用預設問題的這張表格(因為每個任務都需要),那這樣的話是不是必須得要改model去關聯GroupER這張表,還是改ViewModel就好?

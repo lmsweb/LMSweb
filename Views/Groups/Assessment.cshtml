@@ -120,11 +120,9 @@
                                 {
                                     foreach (var qo in Q.GroupOptions)
                                     {
-
                                         @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
                                         @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input" })
                                         @Html.Label(qo.OptionNum, new { @class = "form-check-label", @for = Q.GQID })
-
                                     }
                                 }
                             </td>
@@ -188,6 +186,7 @@
                 Teacher_Response["qid"] = Tevalution_qid[i];
                 Teacher_Response["response"] = response;
                 Teacher_Response["comments"] = comments;
+                Teacher_Response["tid"] = "@Model.TID";
                 sumbit_data["TRs"].push(Teacher_Response);
             }
             console.log(sumbit_data);

@@ -164,7 +164,7 @@
                             <td>
                                 @foreach (var qo in Q.GroupERs)
                                 {
-                                    if (qo.GID == Model.GID && qo.MID == Model.MID)
+                                    if (qo.GID == Model.GID && qo.MID == Model.MID && qo.EvaluatorSID == Model.SID)
                                     {
                                         @qo.Answer
                                     }
@@ -174,7 +174,7 @@
                             <td>
                                 @foreach (var qo in Q.GroupERs)
                                 {
-                                    if (qo.GID == Model.GID && qo.MID == Model.MID)
+                                    if (qo.GID == Model.GID && qo.MID == Model.MID && qo.EvaluatorSID == Model.SID)
                                     {
                                         @qo.Comments
                                     }
