@@ -178,9 +178,11 @@ namespace LMSweb.Controllers
             var pa = db.PeerA.SingleOrDefault(p => p.AssessedSID == sid && p.MID == mid);
             gmodel.PeerAssessment = pa;
             var course = db.Courses.Single(c => c.CID == cid);
+            var mname = db.Missions.Find(mid).MName;
             gmodel.CID = cid;
             gmodel.CName = course.CName;
             gmodel.IsDiscuss = misChat;
+            gmodel.MName = mname;
             return View(gmodel);
         }
 
