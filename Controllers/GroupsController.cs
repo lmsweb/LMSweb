@@ -121,12 +121,44 @@ namespace LMSweb.Controllers
                 db.TeacherA.Add(groupVM.TeacherAssessment);
 
                 db.SaveChanges();
+                var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+                var code = db.StudentCodes.Find(cid, mid, gid);
+                var readcode = new TextIO();
+                if (code != null)
+                {
+                    string virtualBaseFilePath = Url.Content(codefileSavedPath);
+                    string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+                    if (!Directory.Exists(filePath))
+                    {
+                        Directory.CreateDirectory(filePath);
+                    }
+                    string readcodepath = $"{filePath}{code.CodePath}.txt";
+                    groupVM.CodeText = readcode.readCodeText(readcodepath);
+                    groupVM.IsUploadCode = db.StudentCodes.Where(sc => sc.MID == mid).ToList();
+
+                }
+                else
+                {
+                    groupVM.IsUploadCode = null;
+                }
+                if (pt != null)
+                {
+                    groupVM.DrawingImgPath = pt;
+                    groupVM.IsUploadDraw = db.StudentDraws.Where(sd => sd.MID == mid).ToList();
+
+                }
+                else
+                {
+                    groupVM.IsUploadDraw = null;
+                }
+
 
                 groupVM.CID = cid;
                 groupVM.MID = mid;
                 var course = db.Courses.Find(cid).CName;
                 groupVM.CName = course;
                 groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+
 
                 return View("Index", groupVM);
             }
@@ -153,7 +185,7 @@ namespace LMSweb.Controllers
             var gname = db.Groups.Find(gid);
             groupVM.CName = course.CName;
             groupVM.GName = gname.GName;
-
+            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
             var readcode = new TextIO();
             if (teacherAssessment != null)
             {
@@ -169,9 +201,15 @@ namespace LMSweb.Controllers
                 }
                 string readcodepath = $"{filePath}/{code.CodePath}.txt";
                 groupVM.CodeText = readcode.readCodeText(readcodepath);
+                groupVM.IsUploadCode = db.StudentCodes.Where(sc => sc.MID == mid).ToList();
 
             }
-            
+            if (pt != null)
+            {
+                groupVM.DrawingImgPath = pt;
+                groupVM.IsUploadDraw = db.StudentDraws.Where(sd => sd.MID == mid).ToList();
+
+            }
             return View(groupVM);
         }
 
