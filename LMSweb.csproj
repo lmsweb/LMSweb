@@ -391,6 +391,10 @@
     <Compile Include="Migrations\202203150908406_missionIsGrflect.Designer.cs">
       <DependentUpon>202203150908406_missionIsGrflect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203170214230_addGroupQ.cs" />
+    <Compile Include="Migrations\202203170214230_addGroupQ.Designer.cs">
+      <DependentUpon>202203170214230_addGroupQ.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -400,6 +404,8 @@
     <Compile Include="Models\EvalutionResponse.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\GroupER.cs" />
+    <Compile Include="Models\GroupOption.cs" />
+    <Compile Include="Models\GroupQuestion.cs" />
     <Compile Include="Models\KnowledgePoint.cs" />
     <Compile Include="Models\LearningBehavior.cs" />
     <Compile Include="Models\LMSmodel.cs" />
@@ -1544,6 +1550,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203150908406_missionIsGrflect.resx">
       <DependentUpon>202203150908406_missionIsGrflect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203170214230_addGroupQ.resx">
+      <DependentUpon>202203170214230_addGroupQ.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

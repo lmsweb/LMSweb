@@ -637,6 +637,7 @@ namespace LMSweb.Controllers
             evalution.SName = sname;
             return View(evalution);
         }
+
         [HttpGet]
         [Authorize(Roles = "Student")]
         public ActionResult StudentGroupEvalution(string mid, string cid, int gid)
@@ -644,11 +645,16 @@ namespace LMSweb.Controllers
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
             var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == SID);
-            var qids = evalution.Select(r => r.QID).ToList();
-            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "組間互評").ToList();
+            ////var qids = evalution.Select(r => r.QID).ToList();
+            ////var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "組間互評").ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var gname = db.Groups.Find(gid).GName;
+            ////if (questions.Any())
+            ////{
+                ////return RedirectToAction("StudentGroupER", "Student", new { cid, mid, gid });
+            ////}
+            ////else
             var misChat = db.Missions.Find(mid).IsDiscuss;
             if (questions.Any())
             {
@@ -678,7 +684,7 @@ namespace LMSweb.Controllers
             foreach (var qr in evalution.GRs)
             {
                 var response = new GroupER();
-                response.QID = qr.qid;
+                ////response.QID = qr.qid;
                 response.Answer = qr.response;
                 response.Comments = qr.comments;
                 response.GID = gid;
@@ -690,7 +696,7 @@ namespace LMSweb.Controllers
 
             return Json(new { redirectToUrl = Url.Action("GroupEvalution", "PeerAssessments", new { gid = evalution.GID, cid = evalution.CID, mid = evalution.MID }) });
         }
-        public ActionResult StudentGroupER(EvalutionViewModel evalution, string cid, string mid, int gid)  ///學生已填過目標設置
+        public ActionResult StudentGroupER(EvalutionViewModel evalution, string cid, string mid, int gid)  ///學生已填過組間評價
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
@@ -700,6 +706,7 @@ namespace LMSweb.Controllers
             var misChat = db.Missions.Find(mid).IsDiscuss;
             evalution.IsDiscuss = misChat;
             //evalution.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "組間互評").Include(q => q.EvalutionResponses);
+            ////evalution.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "組間互評").Include(q => q.GroupER);//我組間互評的的資料是用預設問題的這張表格(因為每個任務都需要),那這樣的話是不是必須得要改model去關聯GroupER這張表,還是改ViewModel就好?
             evalution.Questions = db.Questions.Where(q => q.Class == "組間互評").Include(q => q.EvalutionResponses);
             evalution.SID = SID;
             evalution.MID = mid;
