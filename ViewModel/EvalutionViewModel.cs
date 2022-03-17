@@ -20,6 +20,7 @@ namespace LMSweb.ViewModel
         public string EvaluatorSID { get; set; }
         public string DrawingImgPath { get; set; }
         public string CodeText { get; set; }
+        public bool IsDiscuss { get; set; }
         public IEnumerable<LMSweb.Models.Question> Questions { get; set; }
         public IEnumerable<LMSweb.Models.DefaultQuestion> DefaultQuestions { get; set; }
         public List<Evalution_Response> ERs { get; set; }

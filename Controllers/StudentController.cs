@@ -225,6 +225,8 @@ namespace LMSweb.Controllers
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).FirstOrDefault();
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            model.IsDiscuss = misChat;
            //string fullFilePath = Path.Combine(Server.MapPath(imgfileSavedPath), pt.DrawingImgPath);
             model.CID = cid;
             model.MID = mid;
@@ -360,6 +362,8 @@ namespace LMSweb.Controllers
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && q.Class == "目標設置" && q.MID == mid).ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            
             if (questions.Any())
             {
                 return RedirectToAction("StudentGoal", "Student", new { cid, mid, SID });
@@ -373,6 +377,7 @@ namespace LMSweb.Controllers
                 goalSetVM.SID = SID;
                 goalSetVM.CName = cname;
                 goalSetVM.MName = mname;
+                goalSetVM.IsDiscuss = misChat;
 
                 return View(goalSetVM);
             }
@@ -405,6 +410,8 @@ namespace LMSweb.Controllers
         {
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            goalSetting.IsDiscuss = misChat;
             goalSetting.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "目標設置").Include(q => q.Responses);
             goalSetting.MID = mid;
             goalSetting.CID = cid;
@@ -427,6 +434,7 @@ namespace LMSweb.Controllers
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && q.Class == "自我反思" && q.MID == mid).ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
             if (questions.Any())
             {
                 return RedirectToAction("StudentReflectionResult", "Student", new { cid, mid, SID });
@@ -439,7 +447,7 @@ namespace LMSweb.Controllers
                 goalSetVM.CID = cid;
                 goalSetVM.CName = cname;
                 goalSetVM.MName = mname;
-
+                goalSetVM.IsDiscuss = misChat;
                 return View(goalSetVM);
             }
 
@@ -468,6 +476,8 @@ namespace LMSweb.Controllers
         {
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            goalSetting.IsDiscuss = misChat;
             goalSetting.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Responses);
             goalSetting.MID = mid;
             goalSetting.CID = cid;
@@ -490,6 +500,7 @@ namespace LMSweb.Controllers
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && (q.Class == "個人能力" || q.Class == "合作能力") && q.MID == mid).ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
             if (questions.Any())
             {
                 return RedirectToAction("StudentSelfER", "Student", new { SID, cid, mid });
@@ -505,6 +516,7 @@ namespace LMSweb.Controllers
                 SelfEVM.CName = cname;
                 SelfEVM.MName = mname;
                 SelfEVM.SName = sname;
+                SelfEVM.IsDiscuss = misChat;
 
                 return View(SelfEVM);
             }
@@ -539,6 +551,8 @@ namespace LMSweb.Controllers
             var sname = db.Students.Find(sid).SName;
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            evalution.IsDiscuss = misChat;
             evalution.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
@@ -561,6 +575,7 @@ namespace LMSweb.Controllers
             var questions = db.Questions.Where(q => qids.Contains(q.QID) && (q.Class == "個人能力" || q.Class == "合作能力") && q.MID == mid).ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
             if (questions.Any())
             {
                 return RedirectToAction("StudentPeerER", "Student", new { sid, cid, mid, evasid = SID });
@@ -576,6 +591,7 @@ namespace LMSweb.Controllers
                 PeerEVM.CName = cname;
                 PeerEVM.MName = mname;
                 PeerEVM.SName = sname;
+                PeerEVM.IsDiscuss = misChat;
 
                 return View(PeerEVM);
             }
@@ -609,6 +625,8 @@ namespace LMSweb.Controllers
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var sname = db.Students.Find(sid).SName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            evalution.IsDiscuss = misChat;
             evalution.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
@@ -631,6 +649,7 @@ namespace LMSweb.Controllers
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var gname = db.Groups.Find(gid).GName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
             if (questions.Any())
             {
                 return RedirectToAction("StudentGroupER", "Student", new { cid, mid, gid });
@@ -645,6 +664,7 @@ namespace LMSweb.Controllers
                 GroupEVM.CName = cname;
                 GroupEVM.MName = mname;
                 GroupEVM.GName = gname;
+                GroupEVM.IsDiscuss = misChat;
 
                 return View(GroupEVM);
             }
@@ -677,8 +697,10 @@ namespace LMSweb.Controllers
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var gname = db.Groups.Find(gid).GName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            evalution.IsDiscuss = misChat;
             //evalution.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "組間互評").Include(q => q.EvalutionResponses);
-            evalution.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "組間互評").Include(q => q.GroupER);//我組間互評的的資料是用預設問題的這張表格(因為每個任務都需要),那這樣的話是不是必須得要改model去關聯GroupER這張表,還是改ViewModel就好?
+            evalution.Questions = db.Questions.Where(q => q.Class == "組間互評").Include(q => q.EvalutionResponses);
             evalution.SID = SID;
             evalution.MID = mid;
             evalution.CID = cid;
