@@ -40,15 +40,24 @@
 </style>
 
 <div class="article">
-    <h5>任務內容</h5>
+    <h4><b>@Model.CName</b></h4>
+    <h5>@Model.MName</h5>
     <hr />
     <table>
         <tr>
             <th class="col-6">
-                @Html.DisplayNameFor(model => model.mis.course.CName)
+                @Html.DisplayNameFor(model => model.mis.MName)
             </th>
             <td>
-                @Html.DisplayFor(model => model.mis.course.CName)
+                @Html.DisplayFor(model => model.mis.MName)
+            </td>
+        </tr>
+        <tr>
+            <th class="col-6">
+                @Html.DisplayNameFor(model => model.mis.MDetail)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.mis.MDetail)
             </td>
         </tr>
         <tr>
@@ -67,22 +76,7 @@
                 @Html.DisplayFor(model => model.mis.End)
             </td>
         </tr>
-        <tr>
-            <th class="col-6">
-                @Html.DisplayNameFor(model => model.mis.MName)
-            </th>
-            <td>
-                @Html.DisplayFor(model => model.mis.MName)
-            </td>
-        </tr>
-        <tr>
-            <th class="col-6">
-                @Html.DisplayNameFor(model => model.mis.MDetail)
-            </th>
-            <td>
-                @Html.DisplayFor(model => model.mis.MDetail)
-            </td>
-        </tr>
+
         <tr>
             <th class="col-6">
                 @Html.DisplayNameFor(model => model.mis.relatedKP)

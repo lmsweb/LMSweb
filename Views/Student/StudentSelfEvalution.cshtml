@@ -36,78 +36,86 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)
             @Html.HiddenFor(model => model.MID)
-            <table id="table_id" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>
-                            #
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Questions.First().Description)
-                        </th>
-                        <th>
-                            分數
-                        </th>
-                        <th>
-                            評語
-                        </th>
-                    </tr>
-                </thead>
-                <tbody id="number">
-
-                    @foreach (var Q in Model.Questions)
-                    {
+            @if (Model.Questions.Any() == false)
+            {
+                <p>目前還沒有設定題目哦~</p>
+            }
+            else
+            {
+                <table id="table_id" class="table table-striped">
+                    <thead>
                         <tr>
-                            <td>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Q.Description)
-                            </td>
-                            <td>
-                                @if (Q.Type == "單選")
-                                {
-                                    foreach (var qo in Q.Options)
-                                    {
-
-                                        @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
-                                        @Html.RadioButton(Q.QID.ToString(), qo.OptionName, new { @class = "form-check-input" })
-                                        @Html.Label(qo.OptionName, new { @class = "form-check-label", @for = Q.QID })
-
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                                @Html.TextArea(Q.QID.ToString(), new { @class = "form-control", @rows = "3" })
-                            </td>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Questions.First().Description)
+                            </th>
+                            <th>
+                                分數
+                            </th>
+                            <th>
+                                評語
+                            </th>
                         </tr>
-                    }
+                    </thead>
+                    <tbody id="number">
 
-                </tbody>
-            </table>
-            <div class="mb-3">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+                        @foreach (var Q in Model.Questions)
+                        {
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Q.Description)
+                                </td>
+                                <td>
+                                    @if (Q.Type == "單選")
+                                    {
+                                        foreach (var qo in Q.Options)
+                                        {
+
+                                            @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
+                                            @Html.RadioButton(Q.QID.ToString(), qo.OptionName, new { @class = "form-check-input" })
+                                            @Html.Label(qo.OptionName, new { @class = "form-check-label", @for = Q.QID })
+
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
+                                    @Html.TextArea(Q.QID.ToString(), new { @class = "form-control", @rows = "3" })
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                <div class="mb-3">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+                    </div>
                 </div>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">送出確認</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            送出後無法做修改，確定要送出嗎?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">再想想</button>
-                            <input type="submit" value="送出" class="btn btn-primary" />
+                <!-- Modal -->
+                <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">送出確認</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                送出後無法做修改，確定要送出嗎?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">再想想</button>
+                                <input type="submit" value="送出" class="btn btn-primary" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
+
         </div>
     }
 

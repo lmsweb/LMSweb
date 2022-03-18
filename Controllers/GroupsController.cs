@@ -24,6 +24,8 @@ namespace LMSweb.Controllers
         // ET: Groups
         public ActionResult Index(string mid, string cid)
         {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
             var gmodel = new GroupViewModel();
             gmodel.MID = mid;
             var mis = db.Missions.Find(mid);
@@ -35,7 +37,7 @@ namespace LMSweb.Controllers
             var stu = db.Students.Where(s => s.group.CID == cid).ToList();
             gmodel.IsUploadDraw = db.StudentDraws.Where(sd => sd.MID == mid).ToList();
             gmodel.IsUploadCode = db.StudentCodes.Where(sc => sc.MID == mid).ToList();
-
+            
             return View(gmodel);
         }
         public ActionResult CheckCoding(int gid, string cid, string mid)

@@ -26,22 +26,20 @@
 {
     @Html.AntiForgeryToken()
     <div class="article">
-        <table class="table">
-            <thead>
-                <tr>
-                    組間互評
-                </tr>
-            </thead>
+        <h5>組間互評</h5>
+        <hr />
+        <table class="table table-borderless">
             <tbody>
                 @foreach (var item in Model.Groups)
                 {
                     <tr>
+                        <td class="col-1">
+                            @item.GName
+                        </td>
                         <td>
-                            @Html.ActionLink(item.GName, "StudentGroupEvalution", "Student", new { sid = Model.SID, mid = Model.MID, gid = item.GID, cid = Model.CID }, new { @class = "" })
-                            <br />
+                            @Html.ActionLink("評價", "StudentGroupEvalution", "Student", new { sid = Model.SID, mid = Model.MID, gid = item.GID, cid = Model.CID }, new { @class = "btn btn-primary btn-sm" })
                         </td>
                     </tr>
-                    <br />
                     @*if (item.GID != Model.GID)
                         {
                             @Html.ActionLink(item.GName, "StudentPeerEvalution", "Student", new { sid = Model.SID, mid = Model.MID, gid = Model.GID, cid = Model.CID }, new { @class = "" })

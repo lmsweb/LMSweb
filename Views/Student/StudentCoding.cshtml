@@ -23,20 +23,40 @@
     </nav>
 </div>
 <div class="article">
-    <h5>@Model.MName</h5>
-    <hr />
-    <div class="mb-3">
-        <input type="button" value="查看任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
-    </div>
-    <div class="mb-3">
-        <textarea id="code"></textarea>
-    </div>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <input type="button" value="上傳成果" id="saveCode" class="btn btn-primary" onClick="window.alert('上傳成功!');" />
-    </div>
-    <input id="gid" type="hidden" value="@Model.GID" />
-    <input id="cid" type="hidden" value="@Model.CID" />
-    <input id="mid" type="hidden" value="@Model.MID" />
+    @if (DateTime.Compare(DateTime.Parse(Model.End), DateTime.Now) <= 0)
+    {
+        if (Model.CodeText == null)
+        {
+            <p class="text-danger">任務已到期，如需補交作業請通知指導老師!</p>
+        }
+        else
+        {
+            <h5>@Model.MName</h5>
+            <hr />
+            <div class="mb-3">
+                <input type="button" value="查看任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
+            </div>
+            <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
+        }
+    }
+    else
+    {
+        <h5>@Model.MName</h5>
+        <hr />
+        <div class="mb-3">
+            <input type="button" value="查看任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
+        </div>
+        <div class="mb-3">
+            <textarea id="code"></textarea>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <input type="button" value="上傳成果" id="saveCode" class="btn btn-primary" onClick="window.alert('上傳成功!');" />
+        </div>
+        <input id="gid" type="hidden" value="@Model.GID" />
+        <input id="cid" type="hidden" value="@Model.CID" />
+        <input id="mid" type="hidden" value="@Model.MID" />
+    }
+
 </div>
 
 <!-- 懸浮聊天室 -->

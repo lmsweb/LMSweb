@@ -32,13 +32,12 @@
         <table class="table table-borderless">
             <tbody>
                 <tr>
-
-                    <th class="col-1">
+                    <td class="col-1">
                         自我評價
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @Html.ActionLink("評價", "StudentSelfEvalution", "Student", new { sid = Model.SID, mid = Model.MID, cid = Model.CID, gid = Model.GID }, new { @class = "btn btn-primary btn-sm" })
-                    </th>
+                    </td>
                 </tr>
             </tbody>
 
@@ -50,22 +49,22 @@
         <table class="table table-borderless">
             <tbody>
                 @foreach (var item in Model.Groups)
+                {
+                    foreach (var s in item.Students)
                     {
-                        foreach (var s in item.Students)
+                         if (s.SID != Model.SID && s.group.GID == item.GID)
                         {
-                            if (s.SID != Model.SID && s.group.GID == item.GID)
-                            {
-                <tr>
-                    <th class="col-1">
-                        @s.SName
-                    </th>
-                    <th>
-                        @Html.ActionLink("評價", "StudentPeerEvalution", "Student", new { sid = s.SID, mid = Model.MID, gid = Model.GID, cid = Model.CID }, new { @class = "btn btn-primary btn-sm" })
-                    </th>
-                </tr>
-                            }
+                             <tr>
+                                <td class="col-1">
+                                    @s.SName
+                                </td>
+                                <td>
+                                    @Html.ActionLink("評價", "StudentPeerEvalution", "Student", new { sid = s.SID, mid = Model.MID, gid = Model.GID, cid = Model.CID }, new { @class = "btn btn-primary btn-sm" })
+                                </td>
+                             </tr>
                         }
                     }
+                }
             </tbody>
         </table>
     </div>

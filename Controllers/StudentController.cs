@@ -177,12 +177,14 @@ namespace LMSweb.Controllers
                 return HttpNotFound();
             }
             var model = new MissionViewModel();
-            var cname = db.Courses.Find(cid).CName;
+            var CID = db.Missions.Find(mid).CID;
+            var cname = db.Courses.Find(CID).CName;
             var kps = mission.relatedKP.Split(',');
             model.mis = mission;
-            model.CID = cid;
+            model.CID = CID;
             model.MID = mid;
             model.CName = cname;
+            model.MName = db.Missions.Find(mid).MName;
             model.KContents = new List<string>();
             for (int i = 0; i < kps.Length - 1; i++)
             {
@@ -190,6 +192,7 @@ namespace LMSweb.Controllers
             }
             return View(model);
         }
+        private string codefileSavedPath = WebConfigurationManager.AppSettings["CodePath"];
         [HttpGet]
         [Authorize(Roles = "Student")]
         public ActionResult StudentCoding(string mid, string cid)
@@ -199,15 +202,30 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
             var sid = claimData[0].Value;
             var group = db.Students.Find(sid).group;
+            var gid = group.GID;
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
+            var readcode = new TextIO();
+            var code = db.StudentCodes.Find(cid, mid, gid);
+            if (code != null)
+            {
+                string virtualBaseFilePath = Url.Content(codefileSavedPath);
+                string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                string readcodepath = $"{filePath}{code.CodePath}.txt";
+                model.CodeText = readcode.readCodeText(readcodepath);
+            }
             model.CID = cid;
             model.MID = mid;
             model.MName = mname;
             model.CName = cname;
-            model.GID = group.GID;
+            model.GID = gid;
             model.IsDiscuss = misChat;
+            model.End = db.Missions.Find(mid).End;
             return View(model);
         }
         private string imgfileSavedPath = WebConfigurationManager.AppSettings["ImagesPath"];
@@ -235,6 +253,7 @@ namespace LMSweb.Controllers
             model.GName = gname;
             model.CName = cname;
             model.MName = mname;
+            model.End = db.Missions.Find(mid).End;
             if (pt != null)
             {
                 model.DrawingImgPath = pt.DrawingImgPath;
@@ -638,7 +657,7 @@ namespace LMSweb.Controllers
             evalution.SName = sname;
             return View(evalution);
         }
-        private string codefileSavedPath = WebConfigurationManager.AppSettings["CodePath"];
+        
         [HttpGet]
         [Authorize(Roles = "Student")]
         public ActionResult StudentGroupEvalution(string mid, string cid, int gid)
