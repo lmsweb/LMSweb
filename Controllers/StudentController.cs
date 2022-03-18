@@ -645,7 +645,7 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-            var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == SID);
+            var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == SID && r.MID == mid);
             var qids = evalution.Select(r => r.GQID).ToList();
             var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
             var cname = db.Courses.Find(cid).CName;
