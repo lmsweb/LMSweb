@@ -159,6 +159,7 @@ namespace LMSweb.Controllers
             base.Dispose(disposing);
         }
 
+        [Authorize(Roles = "Student")]
         public ActionResult GroupEvalution(int gid, string mid, string cid)
         {
             var gmodel = new GroupViewModel();
@@ -185,6 +186,7 @@ namespace LMSweb.Controllers
             gmodel.MName = mname;
             return View(gmodel);
         }
+
 
         public ActionResult PeerEvaluation()
         {

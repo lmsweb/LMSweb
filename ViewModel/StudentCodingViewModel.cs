@@ -14,7 +14,9 @@ namespace LMSweb.ViewModel
         public string MName { get; set; }
         public int GID { get; set; }
         public string GName { get; set; }
+        public string End { get; set; }
         public string CodePath { get; set; }
+        public string CodeText { get; set; }
         public bool IsEdit { get; set; }
         public string CodeContent { get; set; }
         public bool IsDiscuss { get; set; }

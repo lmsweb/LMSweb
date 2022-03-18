@@ -70,39 +70,18 @@
                 @Html.ActionLink("目標設置", "StudentGoalSetting", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "goal_btn" })
                 <i class="bi bi-arrow-right"></i>
             }
-            @if (DateTime.Compare(DateTime.Parse(Model.mis.End), DateTime.Now) > 0)
-            {
-                if (Model.mis.IsDrawing)
-                {
-                    @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { mid = Model.MID, cid = Model.CID }, new { @class = "btn btn-outline-primary", @id = "drawing_btn" })
-                    <i class="bi bi-arrow-right"></i>
 
-                }
-            }
-            else
+            @if (Model.mis.IsDrawing)
             {
-                if (Model.mis.IsDrawing)
-                {
-                    @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { mid = Model.MID, cid = Model.CID }, new { @class = "btn btn-outline-secondary disabled", @id = "drawing_btn" })
-                    <i class="bi bi-arrow-right"></i>
+                @Html.ActionLink("流程圖", "StudentDrawing", "Student", new { mid = Model.MID, cid = Model.CID }, new { @class = "btn btn-outline-primary", @id = "drawing_btn" })
+                <i class="bi bi-arrow-right"></i>
 
-                }
             }
-            @if (DateTime.Compare(DateTime.Parse(Model.mis.End), DateTime.Now) > 0)
+
+            @if (Model.mis.IsCoding)
             {
-                if (Model.mis.IsCoding)
-                {
-                    @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "coding_btn" })
-                    <i class="bi bi-arrow-right"></i>
-                }
-            }
-            else
-            {
-                if (Model.mis.IsCoding)
-                {
-                    @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-secondary disabled", @id = "coding_btn" })
-                    <i class="bi bi-arrow-right"></i>
-                }
+                @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "coding_btn" })
+                <i class="bi bi-arrow-right"></i>
             }
 
             @if (Model.mis.IsAssess)
@@ -125,10 +104,18 @@
     <table>
         <tr>
             <th class="col-6">
-                @Html.DisplayNameFor(model => model.mis.course.CName)
+                @Html.DisplayNameFor(model => model.mis.MName)
             </th>
             <td>
-                @Html.DisplayFor(model => model.mis.course.CName)
+                @Html.DisplayFor(model => model.mis.MName)
+            </td>
+        </tr>
+        <tr>
+            <th class="col-6">
+                @Html.DisplayNameFor(model => model.mis.MDetail)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.mis.MDetail)
             </td>
         </tr>
         <tr>
@@ -147,22 +134,7 @@
                 @Html.DisplayFor(model => model.mis.End)
             </td>
         </tr>
-        <tr>
-            <th class="col-6">
-                @Html.DisplayNameFor(model => model.mis.MName)
-            </th>
-            <td>
-                @Html.DisplayFor(model => model.mis.MName)
-            </td>
-        </tr>
-        <tr>
-            <th class="col-6">
-                @Html.DisplayNameFor(model => model.mis.MDetail)
-            </th>
-            <td>
-                @Html.DisplayFor(model => model.mis.MDetail)
-            </td>
-        </tr>
+
         <tr>
             <th class="col-6">
                 @Html.DisplayNameFor(model => model.mis.relatedKP)
