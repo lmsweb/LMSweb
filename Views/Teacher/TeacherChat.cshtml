@@ -1,0 +1,55 @@
+﻿@model LMSweb.ViewModel.GroupViewModel
+@{
+    ViewBag.Title = "TeacherChat";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+<style>
+    .message-btn {
+        position: fixed;
+        width: 100px;
+        height: 100px;
+        right: 50px;
+        bottom: 50px;
+    }
+</style>
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMission", "Student", new { cid = Model.CID})">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail", "Student", new { cid = Model.CID,mid = Model.MID})">@Model.MName</a></li>
+            <li class="breadcrumb-item active" aria-current="page">學生討論區</li>
+        </ol>
+    </nav>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="article">
+        <h5>學生討論區</h5>
+        <hr />
+        <table class="table table-borderless">
+            <tbody>
+                @foreach (var item in Model.Groups)
+                {
+                    <tr>
+                        <td class="col-1">
+                            @item.GName
+                        </td>
+                        <td>
+                            @Html.ActionLink("查看", "StuChat", "Teacher", new { mid = Model.MID, gid = item.GID, cid = Model.CID }, new { @class = "btn btn-primary btn-sm" })
+                        </td>
+                    </tr>
+                    @*if (item.GID != Model.GID)
+                        {
+                            @Html.ActionLink(item.GName, "StudentPeerEvalution", "Student", new { sid = Model.SID, mid = Model.MID, gid = Model.GID, cid = Model.CID }, new { @class = "" })
+                            <br />
+                        }*@
+                }
+            </tbody>
+        </table>
+
+    </div>
+}
+
+
