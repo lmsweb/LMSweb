@@ -152,66 +152,66 @@
             {
                 if (Model.mis.IsGoalSetting)
                 {
-                    <button type="button" class="btn btn-success" id="is_Goalsetting">目標設置</button>
+                    <button type="button" class="btn btn-success" id="is_Goalsetting">目標設置開啟</button>
                 }
                 else
                 {
-                    <button type="button" class="btn btn-secondary" id="is_Goalsetting">目標設置</button>
+                    <button type="button" class="btn btn-secondary" id="is_Goalsetting">目標設置關閉</button>
                 }
             }
             else
             {
-                <button type="button" class="btn btn-secondary" id="is_Goalsetting" hidden>目標設置</button>
+                <button type="button" class="btn btn-secondary" id="is_Goalsetting" hidden>目標設置關閉</button>
             }
 
             @if (Model.mis.IsDiscuss)
             {
-                <button type="button" class="btn btn-success" id="is_Discuss">討論區</button>
+                <button type="button" class="btn btn-success" id="is_Discuss">討論區開啟</button>
             }
             else
             {
-                <button type="button" class="btn btn-secondary" id="is_Discuss">討論區</button>
+                <button type="button" class="btn btn-secondary" id="is_Discuss">討論區關閉</button>
             }
             @if (Model.mis.IsDrawing)
             {
-                <button type="button" class="btn btn-success" id="is_Drawing">流程圖</button>
+                <button type="button" class="btn btn-success" id="is_Drawing">流程圖開啟</button>
             }
             else
             {
-                <button type="button" class="btn btn-secondary" id="is_Drawing">流程圖</button>
+                <button type="button" class="btn btn-secondary" id="is_Drawing">流程圖關閉</button>
             }
             @if (Model.mis.IsCoding)
             {
-                <button type="button" class="btn btn-success" id="is_Coding">程式碼</button>
+                <button type="button" class="btn btn-success" id="is_Coding">程式碼開啟</button>
             }
             else
             {
-                <button type="button" class="btn btn-secondary" id="is_Coding">程式碼</button>
+                <button type="button" class="btn btn-secondary" id="is_Coding">程式碼關閉</button>
             }
             @if (Model.course.IsAddPeerAssessmemt)
             {
                 if (Model.mis.IsAssess)
                 {
-                    <button type="button" class="btn btn-success" id="is_Assess">自評與互評</button>
+                    <button type="button" class="btn btn-success" id="is_Assess">自評與互評開啟</button>
                 }
                 else
                 {
-                    <button type="button" class="btn btn-secondary" id="is_Assess">自評與互評</button>
+                    <button type="button" class="btn btn-secondary" id="is_Assess">自評與互評關閉</button>
                 }
 
                 if (Model.mis.IsGReflect)
                 {
-                    <button type="button" class="btn btn-success" id="is_GReflect">組間互評</button>
+                    <button type="button" class="btn btn-success" id="is_GReflect">組間互評開啟</button>
                 }
                 else
                 {
-                    <button type="button" class="btn btn-secondary" id="is_GReflect">組間互評</button>
+                    <button type="button" class="btn btn-secondary" id="is_GReflect">組間互評關閉</button>
                 }
             }
             else
             {
-                <button type="button" class="btn btn-secondary" hidden id="is_Assess">自評與互評</button>
-                <button type="button" class="btn btn-secondary" hidden id="is_GReflect">組間互評</button>
+                <button type="button" class="btn btn-secondary" hidden id="is_Assess">自評與互評關閉</button>
+                <button type="button" class="btn btn-secondary" hidden id="is_GReflect">組間互評關閉</button>
 
             }
 
@@ -219,11 +219,11 @@
             {
                 if (Model.mis.IsReflect)
                 {
-                    <button type="button" class="btn btn-success" id="is_Reflect">自我反思</button>
+                    <button type="button" class="btn btn-success" id="is_Reflect">自我反思開啟</button>
                 }
                 else
                 {
-                    <button type="button" class="btn btn-secondary" id="is_Reflect">自我反思</button>
+                    <button type="button" class="btn btn-secondary" id="is_Reflect">自我反思關閉</button>
                 }
             }
             else
@@ -242,7 +242,7 @@
             data['mid'] = '@Model.MID';
             data['cid'] = '@Model.CID';
             data['type'] = "is_Drawing";
-            data['sw'] = $("#is_Drawing").text().trim() == "流程圖" ? true : false;
+            data['sw'] = $("#is_Drawing").text().trim() == "流程圖關閉" ? true  : false;
             //console.log(data);
             $.ajax({
                 url: '@Url.Action("SwitchDrawing")',
@@ -256,13 +256,12 @@
                         $("#is_Drawing").removeClass();
 
                         if (response_data['sw'] == false) {
-                            $("#is_Drawing").text("流程圖");
+                            $("#is_Drawing").text("流程圖關閉");
                             $("#is_Drawing").addClass("btn btn-secondary");
 
                         } else {
-                            $("#is_Drawing").text("流程圖");
+                            $("#is_Drawing").text("流程圖開啟");
                             $("#is_Drawing").addClass("btn btn-success");
-
                         }
                     }
                 }
@@ -273,7 +272,7 @@
             data['mid'] = '@Model.MID';
             data['cid'] = '@Model.CID';
             data['type'] = "is_Coding";
-            data['sw'] = $("#is_Coding").text().trim() == "程式碼" ? true : false;
+            data['sw'] = $("#is_Coding").text().trim() == "程式碼關閉" ? true : false;
             //console.log(data);
             $.ajax({
                 url: '@Url.Action("SwitchDrawing")',
@@ -287,10 +286,10 @@
                         $("#is_Coding").removeClass();
 
                         if (response_data['sw'] == false) {
-                            $("#is_Coding").text("程式碼");
+                            $("#is_Coding").text("程式碼關閉");
                             $("#is_Coding").addClass("btn btn-secondary");
                         } else {
-                            $("#is_Coding").text("程式碼");
+                            $("#is_Coding").text("程式碼開啟");
                             $("#is_Coding").addClass("btn btn-success");
                         }
                     }
@@ -302,7 +301,7 @@
             data['mid'] = '@Model.MID';
             data['cid'] = '@Model.CID';
             data['type'] = "is_Discuss";
-            data['sw'] = $("#is_Discuss").text().trim() == "討論區" ? true : false;
+            data['sw'] = $("#is_Discuss").text().trim() == "討論區關閉" ? true : false;
             //console.log(data);
             $.ajax({
                 url: '@Url.Action("SwitchDrawing")',
@@ -316,10 +315,10 @@
                         $("#is_Discuss").removeClass();
 
                         if (response_data['sw'] == false) {
-                            $("#is_Discuss").text("討論區");
+                            $("#is_Discuss").text("討論區關閉");
                             $("#is_Discuss").addClass("btn btn-secondary");
                         } else {
-                            $("#is_Discuss").text("討論區");   //狀態為開啟
+                            $("#is_Discuss").text("討論區開啟");   //狀態為開啟
                             $("#is_Discuss").addClass("btn btn-success");
                         }
                     }
@@ -331,7 +330,7 @@
             data['mid'] = '@Model.MID';
             data['cid'] = '@Model.CID';
             data['type'] = "is_Assess";
-            data['sw'] = $("#is_Assess").text().trim() == "自評與互評" ? true : false;
+            data['sw'] = $("#is_Assess").text().trim() == "自評與互評關閉" ? true : false;
             //console.log(data);
             $.ajax({
                 url: '@Url.Action("SwitchDrawing")',
@@ -345,10 +344,10 @@
                         $("#is_Assess").removeClass();
 
                         if (response_data['sw'] == false) {
-                            $("#is_Assess").text("自評與互評");
+                            $("#is_Assess").text("自評與互評關閉");
                             $("#is_Assess").addClass("btn btn-secondary");
                         } else {
-                            $("#is_Assess").text("自評與互評");   //狀態為開啟
+                            $("#is_Assess").text("自評與互評開啟");   //狀態為開啟
                             $("#is_Assess").addClass("btn btn-success");
                         }
                     }
@@ -360,7 +359,7 @@
             data['mid'] = '@Model.MID';
             data['cid'] = '@Model.CID';
             data['type'] = "is_Goalsetting";
-            data['sw'] = $("#is_Goalsetting").text().trim() == "目標設置" ? true : false;
+            data['sw'] = $("#is_Goalsetting").text().trim() == "目標設置關閉" ? true : false;
             //console.log(data);
             $.ajax({
                 url: '@Url.Action("SwitchDrawing")',
@@ -374,10 +373,10 @@
                         $("#is_Goalsetting").removeClass();
 
                         if (response_data['sw'] == false) {
-                            $("#is_Goalsetting").text("目標設置");
+                            $("#is_Goalsetting").text("目標設置關閉");
                             $("#is_Goalsetting").addClass("btn btn-secondary");
                         } else {
-                            $("#is_Goalsetting").text("目標設置");   //狀態為開啟
+                            $("#is_Goalsetting").text("目標設置開啟");   //狀態為開啟
                             $("#is_Goalsetting").addClass("btn btn-success");
                         }
                     }
@@ -389,7 +388,7 @@
             data['mid'] = '@Model.MID';
             data['cid'] = '@Model.CID';
             data['type'] = "is_Reflect";
-            data['sw'] = $("#is_Reflect").text().trim() == "自我反思" ? true : false;
+            data['sw'] = $("#is_Reflect").text().trim() == "自我反思關閉" ? true : false;
             //console.log(data);
             $.ajax({
                 url: '@Url.Action("SwitchDrawing")',
@@ -403,11 +402,40 @@
                         $("#is_Reflect").removeClass();
 
                         if (response_data['sw'] == false) {
-                            $("#is_Reflect").text("自我反思");
+                            $("#is_Reflect").text("自我反思關閉");
                             $("#is_Reflect").addClass("btn btn-secondary");
                         } else {
-                            $("#is_Reflect").text("自我反思");   //狀態為開啟
+                            $("#is_Reflect").text("自我反思開啟");   //狀態為開啟
                             $("#is_Reflect").addClass("btn btn-success");
+                        }
+                    }
+                }
+            });
+        });
+        $("#is_GReflect").click(function () {
+            var data = {};
+            data['mid'] = '@Model.MID';
+            data['cid'] = '@Model.CID';
+            data['type'] = "is_GReflect";
+            data['sw'] = $("#is_GReflect").text().trim() == "組間互評關閉" ? true : false;
+            //console.log(data);
+            $.ajax({
+                url: '@Url.Action("SwitchDrawing")',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (response_data) {
+                    // ... do something with the data...
+                    console.log(response_data);
+                    if (response_data['Status'] == 200) {
+                        $("#is_GReflect").removeClass();
+
+                        if (response_data['sw'] == false) {
+                            $("#is_GReflect").text("組間互評關閉");
+                            $("#is_GReflect").addClass("btn btn-secondary");
+                        } else {
+                            $("#is_GReflect").text("組間互評開啟");   //狀態為開啟
+                            $("#is_GReflect").addClass("btn btn-success");
                         }
                     }
                 }
@@ -448,35 +476,7 @@
                 }
             });
         });*@
-        $("#is_GReflect").click(function () {
-            var data = {};
-            data['mid'] = '@Model.MID';
-            data['cid'] = '@Model.CID';
-            data['type'] = "is_GReflect";
-            data['sw'] = $("#is_GReflect").text().trim() == "組間互評" ? true : false;
-            //console.log(data);
-            $.ajax({
-                url: '@Url.Action("SwitchDrawing")',
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (response_data) {
-                    // ... do something with the data...
-                    console.log(response_data);
-                    if (response_data['Status'] == 200) {
-                        $("#is_GReflect").removeClass();
 
-                        if (response_data['sw'] == false) {
-                            $("#is_GReflect").text("組間互評");
-                            $("#is_GReflect").addClass("btn btn-secondary");
-                        } else {
-                            $("#is_GReflect").text("組間互評");   //狀態為開啟
-                            $("#is_GReflect").addClass("btn btn-success");
-                        }
-                    }
-                }
-            });
-        });
     </script>
 }
 
