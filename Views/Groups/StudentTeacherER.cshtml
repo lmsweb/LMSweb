@@ -138,9 +138,6 @@
                         <th>
                             分數
                         </th>
-                        <th>
-                            評語
-                        </th>
                     </tr>
                 </thead>
                 <tbody id="number">
@@ -158,16 +155,6 @@
                                     if (qo.GID == Model.GID && qo.MID == Model.MID && qo.EvaluatorSID == Model.TID)
                                     {
                                         @qo.Answer
-                                    }
-
-                                }
-                            </td>
-                            <td>
-                                @foreach (var qo in Q.GroupERs)
-                                {
-                                    if (qo.GID == Model.GID && qo.MID == Model.MID && qo.EvaluatorSID == Model.TID)
-                                    {
-                                        @qo.Comments
                                     }
 
                                 }

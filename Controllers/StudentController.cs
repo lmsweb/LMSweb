@@ -414,6 +414,12 @@ namespace LMSweb.Controllers
             foreach (var qr in goalSetting.QRs)
             {
                 var response = new Response();
+                //if (qr.response == null)
+                //{
+                //    ModelState.AddModelError("", "有空直");
+
+                //    return Json(new { redirectToUrl = Url.Action("StudentGoalSetting", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
+                //}
                 response.DQID = qr.qid;
                 response.Answer = qr.response;
                 response.SID = SID;
@@ -521,7 +527,7 @@ namespace LMSweb.Controllers
             var sname = db.Students.Find(sid).SName;
             var evalution = db.EvalutionResponse.Where(r => r.SID == SID && r.EvaluatorSID == SID && r.MID == mid);
             var qids = evalution.Select(r => r.DQID).ToList();
-            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && (q.Class == "個人能力" || q.Class == "合作能力")).ToList();
+            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "自評互評").ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
@@ -532,7 +538,7 @@ namespace LMSweb.Controllers
             else
             {
                 EvalutionViewModel SelfEVM = new EvalutionViewModel();
-                SelfEVM.DefaultQuestion = db.DefaultQuestions.Where(q => q.Class == "個人能力" || q.Class == "合作能力").Include(q => q.DefaultOptions);
+                SelfEVM.DefaultQuestion = db.DefaultQuestions.Where(q => q.Class == "自評互評").Include(q => q.DefaultOptions);
                 SelfEVM.MID = mid;
                 SelfEVM.CID = cid;
                 SelfEVM.SID = SID;
@@ -546,7 +552,7 @@ namespace LMSweb.Controllers
             }
         }
         [HttpPost]
-        public ActionResult StudentSelfEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution)  //填表單送出的Post
+        public ActionResult StudentSelfEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution, string mid, string cid)  //填表單送出的Post
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
@@ -557,8 +563,10 @@ namespace LMSweb.Controllers
                 response.DQID = qr.qid;
                 response.Answer = qr.response;
                 response.SID = SID;
+                response.CID = cid;
+                response.MID = mid;
+
                 response.EvaluatorSID = SID;
-                response.MID = qr.mid;
                 db.EvalutionResponse.Add(response);
             }
             db.SaveChanges();
@@ -577,7 +585,7 @@ namespace LMSweb.Controllers
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
             evalution.IsDiscuss = misChat;
-            evalution.DefaultQuestion = db.DefaultQuestions.Where(q =>q.Class == "個人能力" || q.Class == "合作能力").Include(q => q.EvalutionResponses);
+            evalution.DefaultQuestion = db.DefaultQuestions.Where( q => q.Class == "自評互評" ).Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
             evalution.EvaluatorSID = SID;
@@ -596,7 +604,7 @@ namespace LMSweb.Controllers
             var sname = db.Students.Find(sid).SName;
             var evalution = db.EvalutionResponse.Where(r => r.SID == sid && r.EvaluatorSID == SID && r.MID == mid);
             var qids = evalution.Select(r => r.DQID).ToList();
-            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && (q.Class == "個人能力" || q.Class == "合作能力")).ToList();
+            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "自評互評").ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
@@ -607,7 +615,7 @@ namespace LMSweb.Controllers
             else
             {
                 EvalutionViewModel PeerEVM = new EvalutionViewModel();
-                PeerEVM.DefaultQuestion = db.DefaultQuestions.Where(q =>q.Class == "個人能力" || q.Class == "合作能力").Include(q => q.DefaultOptions);
+                PeerEVM.DefaultQuestion = db.DefaultQuestions.Where(q => q.Class == "自評互評").Include(q => q.DefaultOptions);
                 PeerEVM.MID = mid;
                 PeerEVM.CID = cid;
                 PeerEVM.SID = sid;
@@ -621,7 +629,7 @@ namespace LMSweb.Controllers
             }
         }
         [HttpPost]
-        public ActionResult StudentPeerEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution)  //填表單送出的Post
+        public ActionResult StudentPeerEvalution([System.Web.Http.FromBody] EvalutionViewModel evalution, string mid, string cid)  //填表單送出的Post
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var evaSID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
@@ -631,10 +639,10 @@ namespace LMSweb.Controllers
                 var response = new EvalutionResponse();
                 response.DQID = qr.qid;
                 response.Answer = qr.response;
-                response.MID = qr.mid;
                 response.SID = sid;
                 response.EvaluatorSID = evaSID;
-
+                response.MID = mid;
+                response.CID = cid;
                 db.EvalutionResponse.Add(response);
             }
             db.SaveChanges();
@@ -651,7 +659,7 @@ namespace LMSweb.Controllers
             var sname = db.Students.Find(sid).SName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
             evalution.IsDiscuss = misChat;
-            evalution.DefaultQuestion = db.DefaultQuestions.Where(q => q.Class == "個人能力" || q.Class == "合作能力").Include(q => q.EvalutionResponses);
+            evalution.DefaultQuestion = db.DefaultQuestions.Where(q => q.Class == "自評互評").Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
             evalution.SID = sid;
@@ -725,7 +733,6 @@ namespace LMSweb.Controllers
                 var response = new GroupER();
                 response.GQID = qr.qid;
                 response.Answer = qr.response;
-                response.Comments = qr.comments;
                 response.GID = gid;
                 response.EvaluatorSID = SID;
                 response.CID = cid;

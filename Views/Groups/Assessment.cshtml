@@ -156,9 +156,6 @@
                         <th>
                             分數
                         </th>
-                        <th>
-                            評語
-                        </th>
                     </tr>
                 </thead>
                 <tbody id="number">
@@ -177,14 +174,15 @@
                                     foreach (var qo in Q.GroupOptions)
                                     {
                             @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
-                            @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input" })
+                            @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input" , @required = "required"})
                             @Html.Label(qo.OptionNum, new { @class = "form-check-label", @for = Q.GQID })
                                     }
                                 }
-                        </td>
-                        <td>
+                            else
+                                {
                             @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                            @Html.TextArea(Q.GQID.ToString(), new { @class = "form-control", @rows = "3" })
+                            @Html.TextArea(Q.GQID.ToString(), new { @class = "form-control", @rows = "3", @required = "required" })
+                                }
                         </td>
                     </tr>
                     }
@@ -246,7 +244,6 @@
                 var type = $('input[name="' + Tevalution_qid[i] + '"]').attr('type');
                 //console.log(evalution_qid[i]);
                 response = "";
-                comments = "";
                 if (type == "radio") {
                     response = $('input[name="' + Tevalution_qid[i] + '"]:checked').map(function () {
                         return $(this).val();
@@ -259,12 +256,11 @@
                     }).get().join();
                 } else {
                     selector = $('textarea[name="' + Tevalution_qid[i] + '"]');
-                    comments = selector.val();
+                    response = selector.val();
                 }
                 //console.log(response);
                 Teacher_Response["qid"] = Tevalution_qid[i];
                 Teacher_Response["response"] = response;
-                Teacher_Response["comments"] = comments;
                 Teacher_Response["tid"] = "@Model.TID";
                 sumbit_data["TRs"].push(Teacher_Response);
             }

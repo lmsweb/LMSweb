@@ -54,9 +54,6 @@
                             <th>
                                 分數
                             </th>
-                            <th>
-                                評語
-                            </th>
                         </tr>
                     </thead>
                     <tbody id="number">
@@ -80,6 +77,11 @@
                                             @Html.Label(qo.DOptions, new { @class = "form-check-label", @for = Q.DQID })
 
                                         }
+                                    }
+                                    else
+                                    {
+                                        @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
+                                        @Html.TextArea(Q.DQID.ToString(), new { @class = "form-control", @rows = "3", @required = "required" })
                                     }
                                 </td>
                                 <!--<td>-->
@@ -174,7 +176,6 @@
                 var type = $('input[name="' + evalution_qid[i] + '"]').attr('type');
                 //console.log(evalution_qid[i]);
                 response = "";
-                comments = "";
                 if (type == "radio") {
                     response = $('input[name="' + evalution_qid[i] + '"]:checked').map(function () {
                         return $(this).val();
@@ -187,7 +188,7 @@
                     }).get().join();
                 } else {
                     selector = $('textarea[name="' + evalution_qid[i] + '"]');
-                    comments = selector.val();
+                    response = selector.val();
                 }
                 //console.log(response);
                 Evalution_Response["qid"] = evalution_qid[i];

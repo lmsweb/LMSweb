@@ -28,10 +28,10 @@ namespace LMSweb.ViewModel
         public List<Group_Response> GRs { get; set; }
         public List<Teacher_Response> TRs { get; set; }
 
-        public LMSweb.Models.Option Option { get; set; }
         public LMSweb.Models.GroupER GroupER { get; set; }
         public LMSweb.Models.EvalutionResponse Response { get; set; }
         public LMSweb.Models.GroupOption GroupOption { get; set; }
+
         public List<LMSweb.Models.StudentCode> IsUploadCode { get; set; }
         public List<LMSweb.Models.StudentDraw> IsUploadDraw { get; set; }
         public List<LMSweb.Models.Group> Groups { get; set; }
