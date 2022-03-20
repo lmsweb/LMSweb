@@ -43,7 +43,7 @@ namespace LMSweb.Models
             }
             var model = new MissionViewModel();
             var mname = db.Missions.Find(mid).MName;
-            var cname = db.Courses.Find(cid).CName;
+            var course = db.Courses.Find(cid);
             var kps = mission.relatedKP.Split(',');
             model.KContents = new List<string>();
             for(int i = 0; i < kps.Length - 1; i++)
@@ -53,7 +53,8 @@ namespace LMSweb.Models
             model.CID = cid;
             model.mis = mission;
             model.MID = mid;
-            model.CName = cname;
+            model.course = course;
+            model.CName = course.CName;
             model.MName = mname;
             return View(model);
         }
@@ -95,14 +96,9 @@ namespace LMSweb.Models
                 model.mission.CID = model.CID;
                 db.Missions.Add(model.mission);
                 db.SaveChanges();
-                if (model.mission.AddMetacognition)
-                {
-                    return RedirectToAction("Index","Questions", new { cid = model.CID, mid = model.mission.MID});
-                }
-                else
-                {
-                    return RedirectToAction("Index", new { cid = model.CID });
-                }
+                
+                return RedirectToAction("Index", new { cid = model.CID });
+                
             }
             var vmodel = new MissionCreateViewModel();
             var cname = db.Courses.Find(model.CID).CName;
@@ -194,7 +190,7 @@ namespace LMSweb.Models
             var question = db.Questions.Where(q => q.MID == mid);
             var peerA = db.PeerA.Where(p => p.MID == mid);
             var option = db.Options.Where(o => o.Question.MID == mid);
-            var response = db.Responses.Where(r => r.Question.MID == mid);
+            var response = db.Responses.Where(r => r.MID == mid);
 
             db.Questions.RemoveRange(question);
             db.LearnB.RemoveRange(learningBehavior);
@@ -236,9 +232,6 @@ namespace LMSweb.Models
             model.mission.End = mission.End;
             model.mission.MName = mission.MName;
             model.mission.MDetail = mission.MDetail;
-            model.mission.discuss_k = mission.discuss_k;
-            model.mission.per_k = mission.per_k;
-            model.mission.group_k = mission.group_k;
             model.KnowledgeList = GetKnowledge(cid);
             model.mission.CID = cid;
             model.CID = cid;
@@ -275,10 +268,10 @@ namespace LMSweb.Models
             {
                 mission.IsReflect = sw;
             }
-            else if (type == "is_AddMeta")
-            {
-                mission.AddMetacognition = sw;
-            }
+            //else if (type == "is_AddMeta")
+            //{
+            //    mission.AddMetacognition = sw;
+            //}
             else if (type == "is_GReflect")
             {
                 mission.IsGReflect = sw;

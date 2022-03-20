@@ -13,6 +13,13 @@ namespace LMSweb.Models
         [Key]
         [Display(Name = "任務編號")]
         public string MID { get; set; }
+        [Required]
+        [Display(Name = "任務名稱")]
+        public string MName { get; set; }
+
+        [Required]
+        [Display(Name = "任務內容")]
+        public string MDetail { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
@@ -24,26 +31,17 @@ namespace LMSweb.Models
         [Display(Name = "結束時間")]
         public string End { get; set; }
 
-        [Required]
-        [Display(Name = "任務名稱")]
-        public string MName { get; set; }
+        //[Display(Name = "合作學習權重")]
+        //public int discuss_k { get; set; }
 
-        [Required]
-        [Display(Name = "任務內容")]
-        public string MDetail { get; set; }
+        //[Display(Name = "個人表現權重")]
+        //public int per_k {get;set;}
 
-        [Display(Name = "加入後設認知")]
-        public bool AddMetacognition { get; set; }
+        //[Display(Name = "小組成果權重")]
+        //public int group_k { get; set; }
 
-        [Display(Name = "合作學習權重")]
-        public int discuss_k { get; set; }
-
-        [Display(Name = "個人表現權重")]
-        public int per_k {get;set;}
-
-        [Display(Name = "小組成果權重")]
-        public int group_k { get; set; }
-
+        [Display(Name = "目標設置是否開放")]
+        public bool IsGoalSetting { get; set; }
 
         [Display(Name = "流程圖是否開放")]
         public bool IsDrawing { get; set; }
@@ -57,13 +55,11 @@ namespace LMSweb.Models
         [Display(Name = "自評與互評是否開放")]
         public bool IsAssess { get; set; }
 
-        [Display(Name = "目標設置是否開放")]
-        public bool IsGoalSetting { get; set; }
-
-        [Display(Name = "自我反思是否開放")]
-        public bool IsReflect { get; set; }
         [Display(Name = "組間互評是否開放")]
         public bool IsGReflect { get; set; }
+
+        [Display(Name = "自我反思是否開放")]
+        public bool IsReflect { get; set; }    
 
         [Display(Name = "知識點")]
         public string relatedKP { get; set; }

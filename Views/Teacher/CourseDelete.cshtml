@@ -24,7 +24,18 @@
             <dd>
                 @Html.DisplayFor(model => model.CName)
             </dd>
-
+            <dt>
+                @Html.DisplayNameFor(model => model.IsAddMetacognition)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsAddMetacognition)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.IsAddPeerAssessmemt)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsAddPeerAssessmemt)
+            </dd>
         </dl>
 
         @using (Html.BeginForm())

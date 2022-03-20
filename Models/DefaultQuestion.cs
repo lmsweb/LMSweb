@@ -21,6 +21,7 @@ namespace LMSweb.Models
         public string Description { get; set; }
 
         public virtual ICollection<DefaultOption> DefaultOptions { get; set; }
+        public virtual ICollection<Response> Responses { get; set; }
 
     }
 }

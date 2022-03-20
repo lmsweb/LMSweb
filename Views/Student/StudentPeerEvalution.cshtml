@@ -76,7 +76,7 @@
                                         {
 
                                             @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
-                                            @Html.RadioButton(Q.QID.ToString(), qo.OptionName, new { @class = "form-check-input" })
+                                            @Html.RadioButton(Q.QID.ToString(), qo.OptionName, new { @class = "form-check-input", @required = "required" })
                                             @Html.Label(qo.OptionName, new { @class = "form-check-label", @for = Q.QID })
 
                                         }
@@ -84,7 +84,7 @@
                                 </td>
                                 <td>
                                     @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                                    @Html.TextArea(Q.QID.ToString(), new { @class = "form-control", @rows = "3" })
+                                    @Html.TextArea(Q.QID.ToString(), new { @class = "form-control", @rows = "3", @required = "required" })
                                 </td>
                             </tr>
                         }

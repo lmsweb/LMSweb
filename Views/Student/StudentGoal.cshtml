@@ -41,16 +41,16 @@
                             #
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Questions.First().Description)
+                            @Html.DisplayNameFor(model => model.DefaultQuestions.First().Description)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Questions.First().Options)
+                           作答
                         </th>
                     </tr>
                 </thead>
                 <tbody id="number">
 
-                    @foreach (var Q in Model.Questions)
+                    @foreach (var Q in Model.DefaultQuestions)
                     {
                         <tr>
                             <td>
@@ -62,7 +62,7 @@
 
                                 @foreach (var qo in Q.Responses)
                                 {
-                                    if (qo.SID == Model.SID)
+                                    if (qo.SID == Model.SID && qo.MID == Model.MID)
                                     {
                                         @qo.Answer
                                     }
@@ -120,7 +120,7 @@
 @section scripts
 {
     <script>
-        var questions_qid = @Html.Raw(@Json.Encode(Model.Questions.Select(q => q.QID).ToList()));
+        var questions_qid = @Html.Raw(@Json.Encode(Model.DefaultQuestions.Select(q => q.DQID).ToList()));
         //console.log(questions_qid);
         window.onload = function () {
             var tableLine = document.getElementById("number");

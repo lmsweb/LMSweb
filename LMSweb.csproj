@@ -395,6 +395,22 @@
     <Compile Include="Migrations\202203170214230_addGroupQ.Designer.cs">
       <DependentUpon>202203170214230_addGroupQ.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203191559572_courseAddcheckfunction.cs" />
+    <Compile Include="Migrations\202203191559572_courseAddcheckfunction.Designer.cs">
+      <DependentUpon>202203191559572_courseAddcheckfunction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203191703016_responseAddMID.cs" />
+    <Compile Include="Migrations\202203191703016_responseAddMID.Designer.cs">
+      <DependentUpon>202203191703016_responseAddMID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203191738385_DelQuestionResponse.cs" />
+    <Compile Include="Migrations\202203191738385_DelQuestionResponse.Designer.cs">
+      <DependentUpon>202203191738385_DelQuestionResponse.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203191836308_AddResponseRequired.cs" />
+    <Compile Include="Migrations\202203191836308_AddResponseRequired.Designer.cs">
+      <DependentUpon>202203191836308_AddResponseRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -1556,6 +1572,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203170214230_addGroupQ.resx">
       <DependentUpon>202203170214230_addGroupQ.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203191559572_courseAddcheckfunction.resx">
+      <DependentUpon>202203191559572_courseAddcheckfunction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203191703016_responseAddMID.resx">
+      <DependentUpon>202203191703016_responseAddMID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203191738385_DelQuestionResponse.resx">
+      <DependentUpon>202203191738385_DelQuestionResponse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203191836308_AddResponseRequired.resx">
+      <DependentUpon>202203191836308_AddResponseRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

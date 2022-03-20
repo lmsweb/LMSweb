@@ -89,7 +89,7 @@
                 </div>
             </div>
 
-            <br />
+            @*<br />
             <label class="mb-3">總成績權重調整(權重總和應等於100) : </label>
             <div class="container">
 
@@ -125,17 +125,8 @@
                 </div>
                 
             </div>
-            <div id="demo" class="text-danger"></div>
+            <div id="demo" class="text-danger"></div>*@
             <br />
-            <div class="mb-3">
-                <div class="col-5">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.mission.AddMetacognition)
-                        @Html.ValidationMessageFor(model => model.mission.AddMetacognition, "", new { @class = "text-danger" })加入後設認知
-                    </div>
-                </div>
-                
-            </div>
             <div class="mb-3">
                 <div class="col">
                     <input type="submit" value="送出" class="btn btn-primary" />
@@ -193,25 +184,25 @@
                 }
             });
         }
-        $("input[type='number']").change(function () {
-            var discuss = parseInt($("#mission_discuss_k").val());
-            var per = parseInt($("#mission_per_k").val());
-            var group = parseInt($("#mission_group_k").val());
-            let total = discuss + per + group;
+        //$("input[type='number']").change(function () {
+        //    var discuss = parseInt($("#mission_discuss_k").val());
+        //    var per = parseInt($("#mission_per_k").val());
+        //    var group = parseInt($("#mission_group_k").val());
+        //    let total = discuss + per + group;
 
-            console.log(discuss);
-            console.log(per);
-            console.log(group);
-            console.log(total);
+        //    console.log(discuss);
+        //    console.log(per);
+        //    console.log(group);
+        //    console.log(total);
 
-            if (total != 100) {
-                $("#demo").html("三個權重加起來必須是100");
-            }
-            else {
-                $("#demo").html("");
-            }
+        //    if (total != 100) {
+        //        $("#demo").html("三個權重加起來必須是100");
+        //    }
+        //    else {
+        //        $("#demo").html("");
+        //    }
 
-        });
+        //});
 
         $('#kpModal').on('show.bs.modal', function (event) {
             var modal = $(this)
@@ -223,15 +214,6 @@
             });
 
         });
-
-        function dateFormat() {
-            let Start = $('#Start').val()
-            if (Start.indexOf('T') != -1) {
-                Start = Start.replace('T', ' ')
-                $('#Start').val(Start)
-            }
-        }
-
     </script>
 
 }
