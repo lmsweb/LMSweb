@@ -26,109 +26,109 @@
 </div>
 
 <div class="article">
-    <!--流程圖&程式碼顯示-->
-    <h5>小組成果</h5>
-    <div class="accordion mb-3">
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                    流程圖
-                </button>
-            </h2>
-            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                <div class="accordion-body">
-                    @if (Model.DrawingImgPath == null)
-                    {
-                        <p>學生尚未上傳流程圖</p>
-                    }
-                    else
-                    {
-                        <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
-                    }
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                    程式碼
-                </button>
-            </h2>
-            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                <div class="accordion-body">
-                    @if (Model.CodeText == null)
-                    {
-                        <p>學生尚未上傳程式碼</p>
-                    }
-                    else
-                    {
-                        <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--評量尺規-->
-    <h5>評量尺規</h5>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>評價指標</th>
-                <th>好(4-5)</th>
-                <th>一般(3)</th>
-                <th>待改進(1-2)</th>
-            </tr>
-        </thead>
-        <tbody style="background-color : white">
-            <tr>
-                <td>
-                    學習及參與態度
-                </td>
-                <td>
-                    積極參與活動 主動提出合力建議 盡責 不缺席
-                </td>
-                <td>
-                    主動參與活動 不缺席
-                </td>
-                <td>
-                    只關心自己工作進展
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    學習目標完成情況
-                </td>
-                <td>
-                    能夠較好的完成學習目標
-                </td>
-                <td>
-                    能夠完成學習目標 但還有點小問題
-                </td>
-                <td>
-                    能完成大部分的學習目標
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    學習小組合作
-                </td>
-                <td>
-                    有較強的合作意識能力
-                </td>
-                <td>
-                    有一定的合作意識和能力
-                </td>
-                <td>
-                    有合作意識但不積極
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
+        <!--流程圖&程式碼顯示-->
+        <h5>小組成果</h5>
+        <div class="accordion mb-3">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        流程圖
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                    <div class="accordion-body">
+                        @if (Model.DrawingImgPath == null)
+                        {
+                            <p>學生尚未上傳流程圖</p>
+                        }
+                        else
+                        {
+                            <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                        程式碼
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                    <div class="accordion-body">
+                        @if (Model.CodeText == null)
+                        {
+                            <p>學生尚未上傳程式碼</p>
+                        }
+                        else
+                        {
+                            <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--評量尺規-->
+        <h5>評量尺規</h5>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>評價指標</th>
+                    <th>好(4-5)</th>
+                    <th>一般(3)</th>
+                    <th>待改進(1-2)</th>
+                </tr>
+            </thead>
+            <tbody style="background-color : white">
+                <tr>
+                    <td>
+                        學習及參與態度
+                    </td>
+                    <td>
+                        積極參與活動 主動提出合力建議 盡責 不缺席
+                    </td>
+                    <td>
+                        主動參與活動 不缺席
+                    </td>
+                    <td>
+                        只關心自己工作進展
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        學習目標完成情況
+                    </td>
+                    <td>
+                        能夠較好的完成學習目標
+                    </td>
+                    <td>
+                        能夠完成學習目標 但還有點小問題
+                    </td>
+                    <td>
+                        能完成大部分的學習目標
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        學習小組合作
+                    </td>
+                    <td>
+                        有較強的合作意識能力
+                    </td>
+                    <td>
+                        有一定的合作意識和能力
+                    </td>
+                    <td>
+                        有合作意識但不積極
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!--互評題目-->
         <div class="form-horizontal">
             <h5>組間互評</h5>
             <hr />

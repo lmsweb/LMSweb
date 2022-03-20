@@ -301,5 +301,35 @@ namespace LMSweb.Controllers
             return View();
         }
 
+        public ActionResult TeacherChat(string mid, string cid)
+        {
+            var gmodel = new GroupViewModel();
+            gmodel.MID = mid;
+            var mis = db.Missions.Find(mid);
+
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的SID
+            var tid = claimData[0].Value;            
+            var mname = db.Missions.Find(mid).MName;
+            gmodel.CID = cid;
+            gmodel.Groups = db.Groups.Where(g => g.CID == cid).ToList(); 
+            gmodel.MName = mname;
+            return View(gmodel);
+        }
+
+        public ActionResult StuChat(int gid ,string cid, string mid)
+        {
+            MissionViewModel model = new MissionViewModel();
+
+            var mission = db.Missions.Find(mid);
+            var mname = db.Missions.Find(mid).MName;
+            var gname = db.Groups.Find(gid).GName;
+            model.CID = cid;
+            model.MID = mid;
+            model.GID = gid;
+            model.GName = gname;
+            model.MName = mname;
+            return View(model);
+        }
     }
 }

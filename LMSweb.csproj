@@ -1410,6 +1410,8 @@
     <Content Include="Views\Student\StudentGroupER.cshtml" />
     <Content Include="Views\Shared\WhiteLayout.cshtml" />
     <Content Include="Views\Groups\StudentTeacherER.cshtml" />
+    <Content Include="Views\Teacher\TeacherChat.cshtml" />
+    <Content Include="Views\Teacher\StuChat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
