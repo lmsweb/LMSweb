@@ -24,7 +24,8 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
             var sid = claimData[0].Value;
             var stu = db.Students.Where(s => s.SID == sid);
-            var stuG = db.Students.Find(sid).group; 
+            var stuG = db.Students.Find(sid).group;
+            var sname = db.Students.Find(sid).SName;
             var mis = db.Missions.Find(mid);
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
@@ -40,6 +41,7 @@ namespace LMSweb.Controllers
             gmodel.SID = sid;
             gmodel.MName = mname;
             gmodel.IsDiscuss = misChat;
+            gmodel.SName = sname;
           
             return View(gmodel);
         }

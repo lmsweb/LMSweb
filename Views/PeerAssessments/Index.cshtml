@@ -27,13 +27,13 @@
 @Html.AntiForgeryToken()
 <div class="article">
     <div class="mb-5">
-        <h5>自評</h5>
+        <h5>自我評價</h5>
         <hr />
         <table class="table table-borderless">
             <tbody>
                 <tr>
                     <td class="col-1">
-                        自我評價
+                        @Model.SName
                     </td>
                     <td>
                         @Html.ActionLink("評價", "StudentSelfEvalution", "Student", new { sid = Model.SID, mid = Model.MID, cid = Model.CID, gid = Model.GID }, new { @class = "btn btn-primary btn-sm" })
@@ -44,7 +44,7 @@
         </table>
     </div>
     <div>
-        <h5>互評</h5>
+        <h5>同儕互評</h5>
         <hr />
         <table class="table table-borderless">
             <tbody>

@@ -12,6 +12,7 @@ namespace LMSweb.ViewModel
         public string MID { get; set; }
         public string MName { get; set; }
         public string SID { get; set; }
+        public string SName { get; set; }
         public string CName { get; set; }
         public string GName { get; set; }
         public string DrawingImgPath { get; set; }
@@ -21,6 +22,7 @@ namespace LMSweb.ViewModel
         public List<LMSweb.Models.StudentDraw> IsUploadDraw { get; set; }
         public List<LMSweb.Models.Group> Groups { get; set; }
         public List<LMSweb.Models.Course> Courses { get; set; }
+        public List<LMSweb.Models.GroupER> GroupER { get; set; }
         public LMSweb.Models.TeacherAssessment TeacherAssessment { get; set; }
         public LMSweb.Models.PeerAssessment PeerAssessment { get; set; }
         public LMSweb.Models.Group Group { get; set; }

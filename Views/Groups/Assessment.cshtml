@@ -56,11 +56,11 @@
                         <div class="accordion-body">
                             @if (Model.DrawingImgPath == null)
                             {
-                                <p>學生尚未上傳流程圖</p>
+                            <p>學生尚未上傳流程圖</p>
                             }
                             else
                             {
-                                <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+                            <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
                             }
                         </div>
                     </div>
@@ -75,11 +75,11 @@
                         <div class="accordion-body">
                             @if (Model.CodeText == null)
                             {
-                                <p>學生尚未上傳程式碼</p>
+                            <p>學生尚未上傳程式碼</p>
                             }
                             else
                             {
-                                <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
+                            <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
                             }
                         </div>
                     </div>
@@ -165,36 +165,59 @@
 
                     @foreach (var Q in Model.GroupQuestion)
                     {
-                        <tr>
-                            <td>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => Q.Description)
-                            </td>
-                            <td>
-                                @if (Q.Type == "單選")
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => Q.Description)
+                        </td>
+                        <td>
+                            @if (Q.Type == "單選")
                                 {
                                     foreach (var qo in Q.GroupOptions)
                                     {
-                                        @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
-                                        @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input" })
-                                        @Html.Label(qo.OptionNum, new { @class = "form-check-label", @for = Q.GQID })
+                            @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
+                            @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input" })
+                            @Html.Label(qo.OptionNum, new { @class = "form-check-label", @for = Q.GQID })
                                     }
                                 }
-                            </td>
-                            <td>
-                                @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                                @Html.TextArea(Q.GQID.ToString(), new { @class = "form-control", @rows = "3" })
-                            </td>
-                        </tr>
+                        </td>
+                        <td>
+                            @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
+                            @Html.TextArea(Q.GQID.ToString(), new { @class = "form-control", @rows = "3" })
+                        </td>
+                    </tr>
                     }
 
                 </tbody>
             </table>
+            @*<div class="mb-3">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="確定送出" class="btn btn-primary" />
+                <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Groups" , new {mid = Model.MID, cid = Model.CID })'" />
+            </div>
+        </div>*@
             <div class="mb-3">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="確定送出" class="btn btn-primary" />
-                    <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Groups" , new {mid = Model.MID, cid = Model.CID })'" />
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">送出確認</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            送出後無法做修改，確定要送出嗎?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">再想想</button>
+                            <input type="submit" value="送出" class="btn btn-primary" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
