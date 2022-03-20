@@ -23,6 +23,7 @@ namespace LMSweb.ViewModel
         public List<LMSweb.Models.Group> Groups { get; set; }
         public List<LMSweb.Models.Course> Courses { get; set; }
         public List<LMSweb.Models.GroupER> GroupER { get; set; }
+        public List<LMSweb.Models.EvalutionResponse> EvalutionResponse { get; set; }
         public LMSweb.Models.TeacherAssessment TeacherAssessment { get; set; }
         public LMSweb.Models.PeerAssessment PeerAssessment { get; set; }
         public LMSweb.Models.Group Group { get; set; }

@@ -32,6 +32,7 @@ namespace LMSweb.Controllers
             var pa = db.PeerA.SingleOrDefault(p => p.AssessedSID == sid && p.MID == mid);
             var gmodel = new GroupViewModel();
             var misChat = db.Missions.Find(mid).IsDiscuss;
+            
 
             gmodel.Groups = db.Groups.Where(g => g.GID == stuG.GID).ToList();
             gmodel.PeerAssessment = pa;
@@ -42,7 +43,8 @@ namespace LMSweb.Controllers
             gmodel.MName = mname;
             gmodel.IsDiscuss = misChat;
             gmodel.SName = sname;
-          
+            gmodel.EvalutionResponse = db.EvalutionResponse.Where(sg => sg.SID == sid && sg.EvaluatorSID == sid).ToList();
+
             return View(gmodel);
         }
 
@@ -186,6 +188,7 @@ namespace LMSweb.Controllers
             gmodel.CName = course.CName;
             gmodel.IsDiscuss = misChat;
             gmodel.MName = mname;
+            gmodel.GroupER = db.GroupERs.Where(sg => sg.MID == mid && sg.EvaluatorSID == sid).ToList();
             return View(gmodel);
         }
 
