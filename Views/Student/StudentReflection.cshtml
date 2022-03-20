@@ -34,7 +34,7 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)
             @Html.HiddenFor(model => model.MID)
-            @if (Model.Questions.Any() == false)
+            @if (Model.DefaultQuestions.Any() == false)
             {
                 <p>目前還沒有設定題目哦~</p>
             }
@@ -47,16 +47,16 @@
                                 #
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Questions.First().Description)
+                                @Html.DisplayNameFor(model => model.DefaultQuestions.First().Description)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Questions.First().Options)
+                                作答
                             </th>
                         </tr>
                     </thead>
                     <tbody id="number">
 
-                        @foreach (var Q in Model.Questions)
+                        @foreach (var Q in Model.DefaultQuestions)
                         {
                             <tr>
                                 <td>
@@ -67,29 +67,29 @@
                                 <td>
                                     @if (Q.Type == "單選")
                                     {
-                                        foreach (var qo in Q.Options)
+                                        foreach (var qo in Q.DefaultOptions)
                                         {
 
 
-                                            @Html.RadioButton(Q.QID.ToString(), qo.OptionName, new { @class = "form-check-input" })
-                                            @Html.Label(qo.OptionName, new { @class = "form-check-label", @for = Q.QID })
+                                            @Html.RadioButton(Q.DQID.ToString(), qo.DOptions, new { @class = "form-check-input", @required = "required" })
+                                            @Html.Label(qo.DOptions, new { @class = "form-check-label", @for = Q.DQID })
 
                                         }
                                     }
                                     else if (Q.Type == "多選")
                                     {
-                                        foreach (var qo in Q.Options)
+                                        foreach (var qo in Q.DefaultOptions)
                                         {
 
 
-                                            @Html.CheckBox(Q.QID.ToString(), new { @class = "form-check-input", @value = qo.OptionName })
-                                            @Html.Label(qo.OptionName, new { @class = "form-check-label" })
+                                            @Html.CheckBox(Q.DQID.ToString(), new { @class = "form-check-input", @value = qo.DOptions })
+                                            @Html.Label(qo.DOptions, new { @class = "form-check-label" })
 
                                         }
                                     }
                                     else
                                     {
-                                        @Html.TextArea(Q.QID.ToString(), new { @class = "form-control", @rows = "3" })
+                                        @Html.TextArea(Q.DQID.ToString(), new { @class = "form-control", @rows = "3", @required = "required" })
                                     }
                                 </td>
                             </tr>
@@ -161,7 +161,7 @@
 @section scripts
 {
     <script>
-        var questions_qid = @Html.Raw(@Json.Encode(Model.Questions.Select(q => q.QID).ToList()));
+        var questions_qid = @Html.Raw(@Json.Encode(Model.DefaultQuestions.Select(q => q.DQID).ToList()));
         window.onload = function () {
             var tableLine = document.getElementById("number");
             for (var i = 0; i < tableLine.rows.length; i++) {
@@ -194,6 +194,7 @@
                 //console.log(response);
                 Question_Response["qid"] = questions_qid[i];
                 Question_Response["response"] = response;
+                Question_Response["mid"] = "@Model.MID";
                 sumbit_data["QRs"].push(Question_Response);
             }
             console.log(sumbit_data);

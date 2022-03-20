@@ -17,7 +17,7 @@ namespace LMSweb.Controllers
         // GET: Responses
         public ActionResult Index()
         {
-            var responses = db.Responses.Include(r => r.Question).Include(r => r.Student);
+            var responses = db.Responses.Include(r => r.DefaultQuestion).Include(r => r.Student);
             return View(responses.ToList());
         }
 
@@ -58,7 +58,7 @@ namespace LMSweb.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.QID = new SelectList(db.Questions, "QID", "Type", response.QID);
+            ViewBag.QID = new SelectList(db.Questions, "QID", "Type", response.DQID);
             ViewBag.SID = new SelectList(db.Students, "SID", "SName", response.SID);
             return View(response);
         }
@@ -75,7 +75,7 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.QID = new SelectList(db.Questions, "QID", "Type", response.QID);
+            ViewBag.QID = new SelectList(db.Questions, "QID", "Type", response.DQID);
             ViewBag.SID = new SelectList(db.Students, "SID", "SName", response.SID);
             return View(response);
         }
@@ -93,7 +93,7 @@ namespace LMSweb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.QID = new SelectList(db.Questions, "QID", "Type", response.QID);
+            ViewBag.QID = new SelectList(db.Questions, "QID", "Type", response.DQID);
             ViewBag.SID = new SelectList(db.Students, "SID", "SName", response.SID);
             return View(response);
         }

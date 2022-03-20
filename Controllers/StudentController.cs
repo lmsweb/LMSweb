@@ -149,12 +149,13 @@ namespace LMSweb.Controllers
             }
             var model = new MissionViewModel();
             var kps = mission.relatedKP.Split(',');
-            var cname = db.Courses.Find(cid).CName;
+            var course = db.Courses.Find(cid);
             var mname = db.Missions.Find(mid).MName;
             model.CID = cid;
             model.MID = mid;
             model.mis = mission;
-            model.CName = cname;
+            model.CName = course.CName;
+            model.course = course;
             model.MName = mname;
             model.KContents = new List<string>();
             for (int i = 0; i < kps.Length - 1; i++)
@@ -377,9 +378,9 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity;
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-            var response = db.Responses.Where(r => r.SID == SID);
-            var qids = response.Select(r => r.QID).ToList();
-            var questions = db.Questions.Where(q => qids.Contains(q.QID) && q.Class == "目標設置" && q.MID == mid).ToList();
+            var response = db.Responses.Where(r => r.SID == SID && r.MID == mid);
+            var qids = response.Select(r => r.DQID ).ToList();
+            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "目標設置").ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
@@ -391,7 +392,7 @@ namespace LMSweb.Controllers
             else
             {
                 GoalSettingViewModel goalSetVM = new GoalSettingViewModel();
-                goalSetVM.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "目標設置").Include(q => q.Options);
+                goalSetVM.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "目標設置").Include(q => q.DefaultOptions);
                 goalSetVM.MID = mid;
                 goalSetVM.CID = cid;
                 goalSetVM.SID = SID;
@@ -409,13 +410,20 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-
+            
             foreach (var qr in goalSetting.QRs)
             {
                 var response = new Response();
-                response.QID = qr.qid;
+                //if (qr.response == null)
+                //{
+                //    ModelState.AddModelError("", "有空直");
+
+                //    return Json(new { redirectToUrl = Url.Action("StudentGoalSetting", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
+                //}
+                response.DQID = qr.qid;
                 response.Answer = qr.response;
                 response.SID = SID;
+                response.MID = qr.mid;
 
                 db.Responses.Add(response);
             }
@@ -431,8 +439,9 @@ namespace LMSweb.Controllers
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
+            var response = db.Responses.Where(r => r.MID == mid);
             goalSetting.IsDiscuss = misChat;
-            goalSetting.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "目標設置").Include(q => q.Responses);
+            goalSetting.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "目標設置").Include(q => q.Responses);
             goalSetting.MID = mid;
             goalSetting.CID = cid;
             goalSetting.SID = SID;
@@ -449,9 +458,9 @@ namespace LMSweb.Controllers
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
-            var response = db.Responses.Where(r => r.SID == SID);
-            var qids = response.Select(r => r.QID).ToList();
-            var questions = db.Questions.Where(q => qids.Contains(q.QID) && q.Class == "自我反思" && q.MID == mid).ToList();
+            var response = db.Responses.Where(r => r.SID == SID && r.MID == mid);
+            var qids = response.Select(r => r.DQID).ToList();
+            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "自我反思").ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
@@ -462,7 +471,7 @@ namespace LMSweb.Controllers
             else
             {
                 GoalSettingViewModel goalSetVM = new GoalSettingViewModel();
-                goalSetVM.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Options);
+                goalSetVM.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "自我反思").Include(q => q.DefaultOptions);
                 goalSetVM.MID = mid;
                 goalSetVM.CID = cid;
                 goalSetVM.CName = cname;
@@ -481,9 +490,10 @@ namespace LMSweb.Controllers
             foreach (var qr in goalSetting.QRs)
             {
                 var response = new Response();
-                response.QID = qr.qid;
+                response.DQID = qr.qid;
                 response.Answer = qr.response;
                 response.SID = SID;
+                response.MID = qr.mid;
                 db.Responses.Add(response);
             }
             db.SaveChanges();
@@ -498,7 +508,7 @@ namespace LMSweb.Controllers
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
             goalSetting.IsDiscuss = misChat;
-            goalSetting.Questions = db.Questions.Where(q => q.MID == mid && q.Class == "自我反思").Include(q => q.Responses);
+            goalSetting.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "自我反思").Include(q => q.Responses);
             goalSetting.MID = mid;
             goalSetting.CID = cid;
             goalSetting.SID = SID;

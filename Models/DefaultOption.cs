@@ -14,6 +14,7 @@ namespace LMSweb.Models
 
         public virtual DefaultQuestion DefaultQuestion { get; set; }
 
+        [Display(Name = "作答")]
         public string DOptions { get; set; }
     }
 }

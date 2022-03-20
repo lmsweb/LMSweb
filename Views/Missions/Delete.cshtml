@@ -28,7 +28,17 @@
             <dd>
                 @Html.DisplayFor(model => model.mis.course.CName)
             </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.mis.MName)
+            </dt>
 
+            <dd>
+                @Html.DisplayFor(model => model.mis.MName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.mis.MDetail)
+            </dt>
             <dt>
                 @Html.DisplayNameFor(model => model.mis.Start)
             </dt>
@@ -44,44 +54,10 @@
             <dd>
                 @Html.DisplayFor(model => model.mis.End)
             </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.mis.MName)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.mis.MName)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.mis.MDetail)
-            </dt>
-
             <dd>
                 @Html.DisplayFor(model => model.mis.MDetail)
             </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.mis.discuss_k)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.mis.discuss_k)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.mis.per_k)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.mis.per_k)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.mis.AddMetacognition)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.mis.AddMetacognition)
-            </dd>
         </dl>
 
         @using (Html.BeginForm())

@@ -27,6 +27,12 @@ namespace LMSweb.Models
         [Display(Name = "課程名稱")]
         public string CName { get; set; }
 
+        [Display(Name = "是否加入後設認知")]
+        public bool IsAddMetacognition { get; set; }
+
+        [Display(Name = "是否加入同儕互評")]
+        public bool IsAddPeerAssessmemt { get; set; }
+
         public string CreateTime { get; set; }
 
         [Required]

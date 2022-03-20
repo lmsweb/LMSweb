@@ -30,9 +30,9 @@ namespace LMSweb.Models
         public string CID { get; set; }
         public virtual Course Course { get; set; }
 
-        [Display(Name = "選項")]
+        
         public virtual ICollection<Option> Options { get; set; }
-        public virtual ICollection<Response> Responses { get; set; }
+        //public virtual ICollection<Response> Responses { get; set; }
         public virtual ICollection<EvalutionResponse> EvalutionResponses { get; set; }
     }
 }

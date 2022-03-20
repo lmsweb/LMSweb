@@ -15,11 +15,10 @@ namespace LMSweb.Controllers
     {
         private LMSmodel db = new LMSmodel();
 
-        public ActionResult SelectQuestion (string mid, string cid)
+        public ActionResult SelectQuestion(string mid, string cid)
         {
-            
             SurveyQuestionViewModel sQvmodel = new SurveyQuestionViewModel();
-            sQvmodel.DefaultQuestions = db.DefaultQuestions.Where(dq =>dq.Class == "目標設置").Include(dq => dq.DefaultOptions).ToList();
+            sQvmodel.DefaultQuestions = db.DefaultQuestions.Where(dq => dq.Class == "目標設置").Include(dq => dq.DefaultOptions).ToList();
             sQvmodel.MID = mid;
             sQvmodel.CID = cid;
             sQvmodel.CName = db.Courses.Find(cid).CName;

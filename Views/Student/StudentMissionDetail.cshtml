@@ -65,11 +65,15 @@
         }
         <hr />
         <div>
-            @if (Model.mis.IsGoalSetting)
+            @if (Model.course.IsAddMetacognition)
             {
-                @Html.ActionLink("目標設置", "StudentGoalSetting", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "goal_btn" })
-                <i class="bi bi-arrow-right"></i>
+                if (Model.mis.IsGoalSetting)
+                {
+                    @Html.ActionLink("目標設置", "StudentGoalSetting", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "goal_btn" })
+                    <i class="bi bi-arrow-right"></i>
+                }
             }
+
 
             @if (Model.mis.IsDrawing)
             {
@@ -83,21 +87,28 @@
                 @Html.ActionLink("程式碼", "StudentCoding", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "coding_btn" })
                 <i class="bi bi-arrow-right"></i>
             }
+            @if (Model.course.IsAddPeerAssessmemt)
+            {
+                if (Model.mis.IsAssess)
+                {
+                    @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "assess_btn" })
+                    <i class="bi bi-arrow-right"></i>
+                }
+                if (Model.mis.IsGReflect)
+                {
+                    @Html.ActionLink("組間互評", "GroupEvalution", "PeerAssessments", new { GID = Model.GID, SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "gassess_btn" })
+                    <i class="bi bi-arrow-right"></i>
+                }
+            }
+            @if (Model.course.IsAddMetacognition)
+            {
+                if (Model.mis.IsReflect)
+                {
+                    @Html.ActionLink("自我反思", "StudentReflection", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "reflec_btn" })
+                }
+            }
 
-            @if (Model.mis.IsAssess)
-            {
-                @Html.ActionLink("自評與互評", "Index", "PeerAssessments", new { SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "assess_btn" })
-                <i class="bi bi-arrow-right"></i>
-            }
-            @if (Model.mis.IsGReflect)
-            {
-                @Html.ActionLink("組間互評", "GroupEvalution", "PeerAssessments", new { GID = Model.GID, SID = Model.SID, MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "gassess_btn" })
-                <i class="bi bi-arrow-right"></i>
-            }
-            @if (Model.mis.IsReflect)
-            {
-                @Html.ActionLink("自我反思", "StudentReflection", "Student", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "reflec_btn" })
-            }
+
         </div>
 
     </div>
