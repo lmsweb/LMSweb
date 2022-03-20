@@ -43,7 +43,7 @@
                             #
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Questions.First().Description)
+                            @Html.DisplayNameFor(model => model.DefaultQuestion.First().Description)
                         </th>
                         <th>
                             分數
@@ -54,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody id="number">
-                    @foreach (var Q in Model.Questions)
+                    @foreach (var Q in Model.DefaultQuestion)
                     {
                         <tr>
                             <td>
@@ -65,13 +65,13 @@
                             <td>
                                 @foreach (var qo in Q.EvalutionResponses)
                                 {
-                                    if (qo.SID == Model.SID && qo.EvaluatorSID == Model.EvaluatorSID)
+                                    if (qo.SID == Model.SID && qo.EvaluatorSID == Model.EvaluatorSID && qo.MID == Model.MID)
                                     {
                                         @qo.Answer
                                     }
                                 }
                             </td>
-                            <td>
+                            @*<td>
                                 @foreach (var qo in Q.EvalutionResponses)
                                 {
                                     if (qo.SID == Model.SID && qo.EvaluatorSID == Model.EvaluatorSID)
@@ -80,7 +80,7 @@
                                     }
 
                                 }
-                            </td>
+                            </td>*@
                         </tr>
                     }
 
@@ -125,7 +125,7 @@
 @section scripts
 {
     <script>
-        var evalution_qid = @Html.Raw(@Json.Encode(Model.Questions.Select(q => q.QID).ToList()));
+        var evalution_qid = @Html.Raw(@Json.Encode(Model.DefaultQuestion.Select(q => q.DQID).ToList()));
         //console.log(questions_qid);
         window.onload = function () {
             var tableLine = document.getElementById("number");
@@ -160,8 +160,8 @@
                 //console.log(response);
                 Evalution_Response["qid"] = evalution_qid[i];
                 Evalution_Response["response"] = response;
-                Evalution_Response["comments"] = comments;
                 Evalution_Response["sid"] = "@Model.SID";
+                Question_Response["mid"] = "@Model.MID";
                 sumbit_data["ERs"].push(Evalution_Response);
             }
             console.log(sumbit_data);

@@ -22,7 +22,7 @@ namespace LMSweb.ViewModel
         public string CodeText { get; set; }
         public bool IsDiscuss { get; set; }
         public string TID { get; set; }
-        public IEnumerable<LMSweb.Models.Question> Questions { get; set; }
+        public IEnumerable<LMSweb.Models.DefaultQuestion> DefaultQuestion { get; set; }
         public IEnumerable<LMSweb.Models.GroupQuestion> GroupQuestion { get; set; }
         public List<Evalution_Response> ERs { get; set; }
         public List<Group_Response> GRs { get; set; }
@@ -54,6 +54,7 @@ namespace LMSweb.ViewModel
         public string response { get; set; }
         public string comments { get; set; }
         public string sid { get; set; }
+        public string mid { get; set; }
 
     }
 

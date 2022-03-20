@@ -36,7 +36,7 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)
             @Html.HiddenFor(model => model.MID)
-            @if (Model.Questions.Any() == false)
+            @if (Model.DefaultQuestion.Any() == false)
             {
                 <p>目前還沒有設定題目哦~</p>
             }
@@ -49,7 +49,7 @@
                                 #
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Questions.First().Description)
+                                @Html.DisplayNameFor(model => model.DefaultQuestion.First().Description)
                             </th>
                             <th>
                                 分數
@@ -61,7 +61,7 @@
                     </thead>
                     <tbody id="number">
 
-                        @foreach (var Q in Model.Questions)
+                        @foreach (var Q in Model.DefaultQuestion)
                         {
                             <tr>
                                 <td>
@@ -72,20 +72,20 @@
                                 <td>
                                     @if (Q.Type == "單選")
                                     {
-                                        foreach (var qo in Q.Options)
+                                        foreach (var qo in Q.DefaultOptions)
                                         {
 
                                             @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
-                                            @Html.RadioButton(Q.QID.ToString(), qo.OptionName, new { @class = "form-check-input", @required = "required" })
-                                            @Html.Label(qo.OptionName, new { @class = "form-check-label", @for = Q.QID })
+                                            @Html.RadioButton(Q.DQID.ToString(), qo.DOptions, new { @class = "form-check-input", @required = "required" })
+                                            @Html.Label(qo.DOptions, new { @class = "form-check-label", @for = Q.DQID })
 
                                         }
                                     }
                                 </td>
-                                <td>
+                                <!--<td>-->
                                     @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                                    @Html.TextArea(Q.QID.ToString(), new { @class = "form-control", @rows = "3" })
-                                </td>
+                                    <!--@Html.TextArea(Q.DQID.ToString(), new { @class = "form-control", @rows = "3" })
+                                </td>-->
                             </tr>
                         }
 
@@ -156,7 +156,7 @@
 @section scripts
 {
     <script>
-        var evalution_qid = @Html.Raw(@Json.Encode(Model.Questions.Select(q => q.QID).ToList()));
+        var evalution_qid = @Html.Raw(@Json.Encode(Model.DefaultQuestion.Select(q => q.DQID).ToList()));
         //console.log(evalution_qid);
         window.onload = function () {
             var tableLine = document.getElementById("number");
@@ -192,7 +192,7 @@
                 //console.log(response);
                 Evalution_Response["qid"] = evalution_qid[i];
                 Evalution_Response["response"] = response;
-                Evalution_Response["comments"] = comments;
+                Evalution_Response["mid"] = "@Model.MID";
                 sumbit_data["ERs"].push(Evalution_Response);
             }
             console.log(sumbit_data);

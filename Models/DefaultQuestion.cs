@@ -22,6 +22,7 @@ namespace LMSweb.Models
 
         public virtual ICollection<DefaultOption> DefaultOptions { get; set; }
         public virtual ICollection<Response> Responses { get; set; }
+        public virtual ICollection<EvalutionResponse> EvalutionResponses { get; set; }
 
     }
 }

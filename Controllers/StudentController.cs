@@ -414,12 +414,6 @@ namespace LMSweb.Controllers
             foreach (var qr in goalSetting.QRs)
             {
                 var response = new Response();
-                //if (qr.response == null)
-                //{
-                //    ModelState.AddModelError("", "有空直");
-
-                //    return Json(new { redirectToUrl = Url.Action("StudentGoalSetting", "Student", new { cid = goalSetting.CID, mid = goalSetting.MID }) });
-                //}
                 response.DQID = qr.qid;
                 response.Answer = qr.response;
                 response.SID = SID;
@@ -525,9 +519,9 @@ namespace LMSweb.Controllers
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
             var sname = db.Students.Find(sid).SName;
-            var evalution = db.EvalutionResponse.Where(r => r.SID == SID && r.EvaluatorSID == SID);
-            var qids = evalution.Select(r => r.QID).ToList();
-            var questions = db.Questions.Where(q => qids.Contains(q.QID) && (q.Class == "個人能力" || q.Class == "合作能力") && q.MID == mid).ToList();
+            var evalution = db.EvalutionResponse.Where(r => r.SID == SID && r.EvaluatorSID == SID && r.MID == mid);
+            var qids = evalution.Select(r => r.DQID).ToList();
+            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && (q.Class == "個人能力" || q.Class == "合作能力")).ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
@@ -538,7 +532,7 @@ namespace LMSweb.Controllers
             else
             {
                 EvalutionViewModel SelfEVM = new EvalutionViewModel();
-                SelfEVM.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.Options);
+                SelfEVM.DefaultQuestion = db.DefaultQuestions.Where(q => q.Class == "個人能力" || q.Class == "合作能力").Include(q => q.DefaultOptions);
                 SelfEVM.MID = mid;
                 SelfEVM.CID = cid;
                 SelfEVM.SID = SID;
@@ -560,11 +554,11 @@ namespace LMSweb.Controllers
             foreach (var qr in evalution.ERs)
             {
                 var response = new EvalutionResponse();
-                response.QID = qr.qid;
+                response.DQID = qr.qid;
                 response.Answer = qr.response;
-                response.Comments = qr.comments;
                 response.SID = SID;
                 response.EvaluatorSID = SID;
+                response.MID = qr.mid;
                 db.EvalutionResponse.Add(response);
             }
             db.SaveChanges();
@@ -583,7 +577,7 @@ namespace LMSweb.Controllers
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
             evalution.IsDiscuss = misChat;
-            evalution.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.EvalutionResponses);
+            evalution.DefaultQuestion = db.DefaultQuestions.Where(q =>q.Class == "個人能力" || q.Class == "合作能力").Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
             evalution.EvaluatorSID = SID;
@@ -600,9 +594,9 @@ namespace LMSweb.Controllers
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
             var sname = db.Students.Find(sid).SName;
-            var evalution = db.EvalutionResponse.Where(r => r.SID == sid && r.EvaluatorSID == SID);
-            var qids = evalution.Select(r => r.QID).ToList();
-            var questions = db.Questions.Where(q => qids.Contains(q.QID) && (q.Class == "個人能力" || q.Class == "合作能力") && q.MID == mid).ToList();
+            var evalution = db.EvalutionResponse.Where(r => r.SID == sid && r.EvaluatorSID == SID && r.MID == mid);
+            var qids = evalution.Select(r => r.DQID).ToList();
+            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && (q.Class == "個人能力" || q.Class == "合作能力")).ToList();
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
@@ -613,7 +607,7 @@ namespace LMSweb.Controllers
             else
             {
                 EvalutionViewModel PeerEVM = new EvalutionViewModel();
-                PeerEVM.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.Options);
+                PeerEVM.DefaultQuestion = db.DefaultQuestions.Where(q =>q.Class == "個人能力" || q.Class == "合作能力").Include(q => q.DefaultOptions);
                 PeerEVM.MID = mid;
                 PeerEVM.CID = cid;
                 PeerEVM.SID = sid;
@@ -635,9 +629,9 @@ namespace LMSweb.Controllers
             foreach (var qr in evalution.ERs)
             {
                 var response = new EvalutionResponse();
-                response.QID = qr.qid;
+                response.DQID = qr.qid;
                 response.Answer = qr.response;
-                response.Comments = qr.comments;
+                response.MID = qr.mid;
                 response.SID = sid;
                 response.EvaluatorSID = evaSID;
 
@@ -657,7 +651,7 @@ namespace LMSweb.Controllers
             var sname = db.Students.Find(sid).SName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
             evalution.IsDiscuss = misChat;
-            evalution.Questions = db.Questions.Where(q => q.MID == mid && (q.Class == "個人能力" || q.Class == "合作能力")).Include(q => q.EvalutionResponses);
+            evalution.DefaultQuestion = db.DefaultQuestions.Where(q => q.Class == "個人能力" || q.Class == "合作能力").Include(q => q.EvalutionResponses);
             evalution.MID = mid;
             evalution.CID = cid;
             evalution.SID = sid;
