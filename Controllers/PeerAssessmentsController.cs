@@ -43,7 +43,7 @@ namespace LMSweb.Controllers
             gmodel.MName = mname;
             gmodel.IsDiscuss = misChat;
             gmodel.SName = sname;
-            gmodel.EvalutionResponse = db.EvalutionResponse.Where(sg => sg.SID == sid && sg.EvaluatorSID == sid).ToList();
+            gmodel.EvalutionResponse = db.EvalutionResponse.Where(sg => sg.EvaluatorSID == sid && sg.MID == mid).ToList();
 
             return View(gmodel);
         }
