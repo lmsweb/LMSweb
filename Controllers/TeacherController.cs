@@ -161,7 +161,11 @@ namespace LMSweb.Controllers
             var option = db.Options.Where(o => o.Question.CID == cid);
             var student = db.Students.Where(s => s.CID == cid);
             var response = db.Responses.Where(r => r.Student.CID == cid);
-            
+            var stuDraw = db.StudentDraws.Where(sd => sd.CID == cid);
+            var stuCode = db.StudentCodes.Where(sc => sc.CID == cid);
+            var ger = db.GroupERs.Where(gr => gr.CID == cid);
+            var eresponse = db.EvalutionResponse.Where(er => er.CID == cid);
+
             db.Missions.RemoveRange(mission);
             db.LearnB.RemoveRange(learningBehavior);
             db.TeacherA.RemoveRange(teacherA);
@@ -172,7 +176,10 @@ namespace LMSweb.Controllers
             db.Responses.RemoveRange(response);
             db.Students.RemoveRange(student);
             db.Options.RemoveRange(option);
-
+            db.StudentDraws.RemoveRange(stuDraw);
+            db.StudentCodes.RemoveRange(stuCode);
+            db.GroupERs.RemoveRange(ger);
+            db.EvalutionResponse.RemoveRange(eresponse);
 
 
 

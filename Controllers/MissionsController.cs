@@ -191,6 +191,10 @@ namespace LMSweb.Models
             var peerA = db.PeerA.Where(p => p.MID == mid);
             var option = db.Options.Where(o => o.Question.MID == mid);
             var response = db.Responses.Where(r => r.MID == mid);
+            var stuDraw = db.StudentDraws.Where(sd => sd.MID == mid);
+            var stuCode = db.StudentCodes.Where(sc => sc.MID == mid);
+            var ger = db.GroupERs.Where(gr => gr.MID == mid);
+            var eresponse = db.EvalutionResponse.Where(er => er.MID == mid);
 
             db.Questions.RemoveRange(question);
             db.LearnB.RemoveRange(learningBehavior);
@@ -198,8 +202,13 @@ namespace LMSweb.Models
             db.PeerA.RemoveRange(peerA);
             db.Responses.RemoveRange(response);
             db.Options.RemoveRange(option);
+            db.StudentDraws.RemoveRange(stuDraw);
+            db.StudentCodes.RemoveRange(stuCode);
+            db.GroupERs.RemoveRange(ger);
+            db.EvalutionResponse.RemoveRange(eresponse);
 
             db.Missions.Remove(mission);
+
             db.SaveChanges();
             return RedirectToAction("Index", new { cid });
         }
