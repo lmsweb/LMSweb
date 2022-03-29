@@ -423,6 +423,10 @@
     <Compile Include="Migrations\202203201604284_erQID.Designer.cs">
       <DependentUpon>202203201604284_erQID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203290945082_missionAddIs_Journey.cs" />
+    <Compile Include="Migrations\202203290945082_missionAddIs_Journey.Designer.cs">
+      <DependentUpon>202203290945082_missionAddIs_Journey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Course.cs" />
@@ -1607,6 +1611,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203201604284_erQID.resx">
       <DependentUpon>202203201604284_erQID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203290945082_missionAddIs_Journey.resx">
+      <DependentUpon>202203290945082_missionAddIs_Journey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

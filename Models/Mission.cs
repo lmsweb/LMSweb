@@ -58,9 +58,11 @@ namespace LMSweb.Models
         [Display(Name = "組間互評是否開放")]
         public bool IsGReflect { get; set; }
 
-        [Display(Name = "自我反思是否開放")]
-        public bool IsReflect { get; set; }    
+        [Display(Name = "學習表現自評版是否開放")]
+        public bool IsReflect { get; set; }
 
+        [Display(Name = "自我反思是否開放")]
+        public bool Is_Journey { get; set; }
         [Display(Name = "知識點")]
         public string relatedKP { get; set; }
 
