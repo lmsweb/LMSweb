@@ -115,8 +115,8 @@
     var PEvalution = ((Model.PeerDraw) + (Model.PeerCode) + (Model.PeerDiscuss) + (Model.PeerContribute)) * 5;//同儕互評分數
     var GPEvalution = (peerDiscuss + peerDraw + peerCode + peerContribute) * 5; ////同儕互評分數 小組平均
     var CPEvalution = ((Model.classPeerDraw) + (Model.classPeerCode) + (Model.classPeerDiscuss) + (Model.classPeerContribute)) * 5;////同儕互評分數 全班平均
-    var gResults = ((Model.TeacherScore) + (Model.GroupScore))/2;// 小組成果分數
-    var CgResults = ((Model.classTeacherScore) + (Model.classGroupScore)) / 2;// 小組成果分數全班平均
+    var gResults = Math.Round((((Model.TeacherScore) + (Model.GroupScore)) / 2),1, MidpointRounding.ToEven);// 小組成果分數
+    var CgResults = Math.Round((((Model.classTeacherScore) + (Model.classGroupScore)) / 2),1, MidpointRounding.ToEven);// 小組成果分數全班平均
 }
 
 <div class="article">
