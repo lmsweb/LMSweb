@@ -55,6 +55,7 @@ namespace LMSweb.ViewModel
         /// 小組成果
         /// </summary>
         //教師分數
+        
         public double TeacherScore { get; set; }       
         public double classTeacherScore { get; set; }
         //組間互評分數

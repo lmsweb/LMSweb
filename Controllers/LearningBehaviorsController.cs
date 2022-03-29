@@ -41,11 +41,13 @@ namespace LMSweb.Controllers
             var TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             var TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));            
             var TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.TeacherScore = ((TeacherCor * 8) + (TeacherLogi * 8) + (TeacherRead * 4));
+            var TeacherScore = ((TeacherCor * 8) + (TeacherLogi * 8) + (TeacherRead * 4));
+            vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
             var classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             var classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             var classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.classTeacherScore = ((classTeacherCor * 8) + (classTeacherLogi * 8) + (classTeacherRead * 4));
+            var classTeacherScore = ((classTeacherCor * 8) + (classTeacherLogi * 8) + (classTeacherRead * 4));
+            vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
             return View(vm);
         }
         public ActionResult StudentEvalutionJourney(string cid, string mid)
@@ -77,39 +79,59 @@ namespace LMSweb.Controllers
             var TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             var TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             var TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.TeacherScore = ((TeacherCor * 8) + (TeacherLogi * 8) + (TeacherRead * 4));
+            var TeacherScore = ((TeacherCor * 8) + (TeacherLogi * 8) + (TeacherRead * 4));
+            vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
             var classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             var classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             var classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.classTeacherScore = ((classTeacherCor * 8) + (classTeacherLogi * 8) + (classTeacherRead * 4));
+            var classTeacherScore = ((classTeacherCor * 8) + (classTeacherLogi * 8) + (classTeacherRead * 4));
+            vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
             //小組成果 組間
             var GroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             var GroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             var GroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.GroupScore = ((GroupCor * 8) + (GroupLogi * 8) + (GroupRead * 4));
+            var GroupScore = ((GroupCor * 8) + (GroupLogi * 8) + (GroupRead * 4));
+            vm.GroupScore = Math.Round(GroupScore, 1, MidpointRounding.ToEven);
             var classGroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             var classGroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             var classGroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.classGroupScore = ((classGroupCor * 8) + (classGroupLogi * 8) + (classGroupRead * 4));
+            var classGroupScore = ((classGroupCor * 8) + (classGroupLogi * 8) + (classGroupRead * 4));
+            vm.classGroupScore = Math.Round(classGroupScore, 1, MidpointRounding.ToEven);
             vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.GID == stuG.GID && sg.MID == mid && sg.EvaluatorSID != "T001").ToList();
             //自我評價
-            vm.SelfDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.SelfDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.SelfCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.SelfContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.classSelfDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.classSelfDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID ==  p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.classSelfCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.classSelfContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            var SelfDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.SelfDiscuss = Math.Round(SelfDiscuss, 1, MidpointRounding.ToEven);
+            var SelfDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.SelfDraw = Math.Round(SelfDraw, 1, MidpointRounding.ToEven);
+            var SelfCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.SelfCode = Math.Round(SelfCode, 1, MidpointRounding.ToEven);
+            var SelfContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.SelfContribute = Math.Round(SelfContribute, 1, MidpointRounding.ToEven);
+            var classSelfDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.classSelfDiscuss = Math.Round(classSelfDiscuss, 1, MidpointRounding.ToEven);
+            var classSelfDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID ==  p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.classSelfDraw = Math.Round(classSelfDraw, 1, MidpointRounding.ToEven);
+            var classSelfCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.classSelfCode = Math.Round(classSelfCode, 1, MidpointRounding.ToEven);
+            var classSelfContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.classSelfContribute = Math.Round(classSelfContribute, 1, MidpointRounding.ToEven);
             //同儕互評
-            vm.PeerDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.PeerDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.PeerCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.PeerContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.classPeerDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.classPeerDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.classPeerCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-            vm.classPeerContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            var PeerDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.PeerDiscuss = Math.Round(PeerDiscuss, 1, MidpointRounding.ToEven);
+            var PeerDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.PeerDraw = Math.Round(PeerDraw, 1, MidpointRounding.ToEven);
+            var PeerCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.PeerCode = Math.Round(PeerCode, 1, MidpointRounding.ToEven);
+            var PeerContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.PeerContribute = Math.Round(PeerContribute, 1, MidpointRounding.ToEven);
+            var classPeerDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.classPeerDiscuss = Math.Round(classPeerDiscuss, 1, MidpointRounding.ToEven);
+            var classPeerDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.classPeerDraw = Math.Round(classPeerDraw, 1, MidpointRounding.ToEven);
+            var classPeerCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.classPeerCode = Math.Round(classPeerCode, 1, MidpointRounding.ToEven);
+            var classPeerContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            vm.classPeerContribute = Math.Round(classPeerContribute, 1, MidpointRounding.ToEven);
 
             return View(vm);
             
