@@ -50,9 +50,7 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <strong>組間評分 :</strong>
-
-                                @Model.TeacherScore 分
+                                <strong>教師評分 :</strong>@Model.TeacherScore 分
                                 <br />
                                 @if (Model.TeacherScore > Model.classTeacherScore)
                                 {
@@ -68,16 +66,15 @@
                                 }
                                 &emsp;&emsp;@s @Model.classTeacherScore 分
                                 <br />
-                                <strong>組間評語 :</strong><br />
+                                <strong>教師評語 :</strong><br />
                                 @foreach (var qo in Model.TeacherER)
                                 {
-                                    if (qo.GQID == 1002 && qo.EvaluatorSID == "T001" && qo.MID == "M220310110331")
+                                    if (qo.GQID == 4 && qo.EvaluatorSID == "T001" && qo.MID == Model.MID)
                                     {
                                         TAnser = qo.Answer;
                                     }
                                 }
                                 &emsp;&emsp;@TAnser
-
                             </div>
                         </div>
                     </div>
