@@ -59,6 +59,7 @@ namespace LMSweb.Controllers
             vm.Groups = db.Groups.Where(g => g.CID == cid).ToList();
             vm.SID = sid;
             vm.GID = stuG.GID;
+            vm.MID = mid;
             var gid = stuG.GID;
             vm.SName = sname;
             vm.TeacherER = db.GroupERs.Where(sg => sg.GID == stuG.GID).ToList();
