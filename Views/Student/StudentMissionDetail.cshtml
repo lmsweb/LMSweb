@@ -108,13 +108,16 @@
                 }
             }
 
-            @if (Model.course.IsAddPeerAssessmemt)
+            @if (Model.mis.Is_Journey)
             {
-                @Html.ActionLink("學習表現(互評版)", "StudentEvalutionJourney", "LearningBehaviors", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "ejourney_btn" })
-            }
-            else
-            {
-                @Html.ActionLink("學習表現", "StudentJourney", "LearningBehaviors", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "journey_btn" })
+                if (Model.course.IsAddPeerAssessmemt)
+                {
+                    @Html.ActionLink("學習表現(互評版)", "StudentEvalutionJourney", "LearningBehaviors", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "ejourney_btn" })
+                }
+                else
+                {
+                    @Html.ActionLink("學習表現", "StudentJourney", "LearningBehaviors", new { MID = Model.MID, CID = Model.CID }, new { @class = "btn btn-outline-primary", @id = "journey_btn" })
+                }
             }
 
 

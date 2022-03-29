@@ -18,7 +18,7 @@
 <input type="hidden" id="selectedSID" />*@
 
 <div class="article">
-    <form class="row row-cols-lg-auto g-8 align-items-center">
+    @*<form class="row row-cols-lg-auto g-8 align-items-center">
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
             <p>
@@ -30,7 +30,7 @@
                 <button id='MIDbtn'>篩選</button>
             </p>
         </div>
-    </form>
+    </form>*@
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link" id="nav-groupbar-tab" data-bs-toggle="tab" data-bs-target="#nav-groupbar" type="button" role="tab" aria-controls="nav-groupbar" aria-selected="true">小組成果</button>
@@ -79,8 +79,14 @@
                         </div>
                     </div>
                 </div>
-                <script src="../Scripts/Chart.min.js"></script>
-                <canvas id="groupbar"></canvas>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-10">
+                            <script src="../Scripts/Chart.min.js"></script>
+                            <canvas id="groupbar"></canvas>
+                        </div>
+                    </div>
+                </div>
             </p>
         </div>
     </div>
@@ -94,6 +100,7 @@
         type: "bar",
         data: {
             labels: ['教師評分'],
+
             datasets: [{
                 label: "小組分數",
                 fontSize: 24,
@@ -120,19 +127,19 @@
             },
             title: {
                 display: true,
-                fontSize: 26,
+                fontSize: 24,
                 text: '小組成果'
             },
             scales: {
                 xAxes: [{
                     ticks: {
-                        fontSize: 24
+                        fontSize: 18
                     },
                 }],
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        fontSize: 24
+                        fontSize: 14
                     },
                 }]
             }

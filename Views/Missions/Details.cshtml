@@ -230,6 +230,29 @@
             {
                 <button type="button" class="btn btn-secondary" id="is_Reflect" hidden>自我反思</button>
             }
+
+            @if (Model.mis.Is_Journey)
+            {
+                if (Model.course.IsAddPeerAssessmemt)
+                {
+                    <button type="button" class="btn btn-success" id="is_ejourney">學習表現(互評版)開啟</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-success" id="is_journey">學習表現開啟</button>
+                }
+            }
+            else
+            {
+                if (Model.course.IsAddPeerAssessmemt)
+                {
+                    <button type="button" class="btn btn-secondary" id="is_ejourney">學習表現(互評版)關閉</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary" id="is_journey">學習表現關閉</button>
+                }
+            }
         </div>
     </div>
 </div>
@@ -436,6 +459,64 @@
                         } else {
                             $("#is_GReflect").text("組間互評開啟");   //狀態為開啟
                             $("#is_GReflect").addClass("btn btn-success");
+                        }
+                    }
+                }
+            });
+        });
+        $("#is_ejourney").click(function () {
+            var data = {};
+            data['mid'] = '@Model.MID';
+            data['cid'] = '@Model.CID';
+            data['type'] = "is_Journey";
+            data['sw'] = $("#is_ejourney").text().trim() == "學習表現(互評版)關閉" ? true : false;
+            //console.log(data);
+            $.ajax({
+                url: '@Url.Action("SwitchDrawing")',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (response_data) {
+                    // ... do something with the data...
+                    console.log(response_data);
+                    if (response_data['Status'] == 200) {
+                        $("#is_ejourney").removeClass();
+
+                        if (response_data['sw'] == false) {
+                            $("#is_ejourney").text("學習表現(互評版)關閉");
+                            $("#is_ejourney").addClass("btn btn-secondary");
+                        } else {
+                            $("#is_ejourney").text("學習表現(互評版)開啟");   //狀態為開啟
+                            $("#is_ejourney").addClass("btn btn-success");
+                        }
+                    }
+                }
+            });
+        });
+        $("#is_journey").click(function () {
+            var data = {};
+            data['mid'] = '@Model.MID';
+            data['cid'] = '@Model.CID';
+            data['type'] = "is_Journey";
+            data['sw'] = $("#is_journey").text().trim() == "學習表現關閉" ? true : false;
+            //console.log(data);
+            $.ajax({
+                url: '@Url.Action("SwitchDrawing")',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (response_data) {
+                    // ... do something with the data...
+                    console.log(response_data);
+                    if (response_data['Status'] == 200) {
+                        $("#is_journey").removeClass();
+
+                        if (response_data['sw'] == false) {
+                            $("#is_journey").text("學習表現關閉");
+                            $("#is_journey").addClass("btn btn-secondary");
+                        } else {
+                            $("#is_journey").text("學習表現開啟");   //狀態為開啟
+                            $("#is_journey").addClass("btn btn-success");
                         }
                     }
                 }
