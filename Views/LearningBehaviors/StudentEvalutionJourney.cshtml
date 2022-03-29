@@ -109,12 +109,24 @@
     peerCode = peerCode / peerCodeCount;
     peerContribute = peerContribute / peerContributeCount;
     //總攬
-    var SEvalution = ((Model.SelfDraw) + (Model.SelfCode) + (Model.SelfDiscuss) + (Model.SelfContribute)) * 5;//自我評價分數
-    var GSEvalution = (selfDiscuss + selfDraw + selfCode + selfContribute) * 5; //自我評價分數 小組平均
-    var CSEvalution = ((Model.classSelfDraw) + (Model.classSelfCode) + (Model.classSelfDiscuss) + (Model.classSelfContribute)) * 5;//自我評價分數 全班平均
-    var PEvalution = ((Model.PeerDraw) + (Model.PeerCode) + (Model.PeerDiscuss) + (Model.PeerContribute)) * 5;//同儕互評分數
-    var GPEvalution = (peerDiscuss + peerDraw + peerCode + peerContribute) * 5; ////同儕互評分數 小組平均
-    var CPEvalution = ((Model.classPeerDraw) + (Model.classPeerCode) + (Model.classPeerDiscuss) + (Model.classPeerContribute)) * 5;////同儕互評分數 全班平均
+    var SEvalution = ((Model.SelfDraw) + (Model.SelfCode) + (Model.SelfDiscuss) + (Model.SelfContribute)) /4;//自我評價分數
+    SEvalution = Math.Round((SEvalution), 1, MidpointRounding.ToEven);
+
+    double GSEvalution = (selfDiscuss + selfDraw + selfCode + selfContribute) / 4; //自我評價分數 小組平均
+    GSEvalution = Math.Round((GSEvalution), 1, MidpointRounding.ToEven);
+
+    var CSEvalution = ((Model.classSelfDraw) + (Model.classSelfCode) + (Model.classSelfDiscuss) + (Model.classSelfContribute)) / 4;//自我評價分數 全班平均
+    CSEvalution = Math.Round((CSEvalution), 1, MidpointRounding.ToEven);
+
+    var PEvalution = ((Model.PeerDraw) + (Model.PeerCode) + (Model.PeerDiscuss) + (Model.PeerContribute)) / 4;//同儕互評分數
+    PEvalution = Math.Round((PEvalution), 1, MidpointRounding.ToEven);
+
+    double GPEvalution = (peerDiscuss + peerDraw + peerCode + peerContribute) / 4; ////同儕互評分數 小組平均
+    GPEvalution = Math.Round((GPEvalution), 1, MidpointRounding.ToEven);
+
+    var CPEvalution = ((Model.classPeerDraw) + (Model.classPeerCode) + (Model.classPeerDiscuss) + (Model.classPeerContribute)) / 4;////同儕互評分數 全班平均
+    CPEvalution = Math.Round((CPEvalution), 1, MidpointRounding.ToEven);
+
     var gResults = Math.Round((((Model.TeacherScore) + (Model.GroupScore)) / 2),1, MidpointRounding.ToEven);// 小組成果分數
     var CgResults = Math.Round((((Model.classTeacherScore) + (Model.classGroupScore)) / 2),1, MidpointRounding.ToEven);// 小組成果分數全班平均
 }
@@ -557,7 +569,7 @@
                                 <strong>教師評語 :</strong><br />
                                 @foreach (var qo in Model.TeacherER)
                                 {
-                                    if (qo.GQID == 4 && qo.EvaluatorSID == "T004" && qo.MID == Model.MID)
+                                    if (qo.GQID == 4 && (qo.EvaluatorSID == "T004" || qo.EvaluatorSID == "T001") && qo.MID == Model.MID)
                                     {
                                         TAnser = qo.Answer;
                                     }
