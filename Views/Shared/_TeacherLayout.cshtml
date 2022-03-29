@@ -90,7 +90,10 @@
                             <a class="nav-link text-light active" aria-current="page" href="@Url.Action("StudentManagement", "Course", new { CID = Model.CID})">學生名單</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link text-light " href="@Url.Action("PersonalJourney","LearningBehaviors", new { CID = Model.CID})">學習表現</a>
+                            <a class="nav-link text-light " href="@Url.Action("TeacherJourney","LearningBehaviors", new { CID = Model.CID})">學習表現</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light " href="@Url.Action("TeacherEvalutionJourney","LearningBehaviors",new {CID = Model.CID})">學習表現(互評版)</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav px-3 text-light">

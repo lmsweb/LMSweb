@@ -1322,8 +1322,8 @@
     <Content Include="Views\TeacherAssessments\Edit.cshtml" />
     <Content Include="Views\TeacherAssessments\Index.cshtml" />
     <Content Include="Views\LearningBehaviors\ClassJourney.cshtml" />
-    <Content Include="Views\LearningBehaviors\GroupJourney.cshtml" />
-    <Content Include="Views\LearningBehaviors\PersonalJourney.cshtml" />
+    <Content Include="Views\LearningBehaviors\StudentEvalutionJourney.cshtml" />
+    <Content Include="Views\LearningBehaviors\StudentJourney.cshtml" />
     <Content Include="Views\Student\Chat.cshtml" />
     <Content Include="Views\Missions\Create.cshtml" />
     <Content Include="Scripts\bootstrap.min.js.map" />
@@ -1424,6 +1424,8 @@
     <Content Include="Views\Groups\StudentTeacherER.cshtml" />
     <Content Include="Views\Teacher\TeacherChat.cshtml" />
     <Content Include="Views\Teacher\StuChat.cshtml" />
+    <Content Include="Views\LearningBehaviors\TeacherJourney.cshtml" />
+    <Content Include="Views\LearningBehaviors\TeacherEvalutionJourney.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

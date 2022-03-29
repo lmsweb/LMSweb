@@ -1,0 +1,168 @@
+﻿@model LMSweb.ViewModel.LearnBViewModel
+@using System.Collections.Generic;
+@using System.IO;
+
+@{
+    ViewBag.Title = "學習表現";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    var Teachercourse = 0;
+    var Classcourse = 0;
+    string s = "";
+    string TAnser = "";
+    var CID = Model.CID;
+}
+<input type="hidden" id="CID" value="@CID"/>
+<input type="hidden" id="SelectorMID" />
+<input type="hidden" id="SelectMID" />
+@*<input type="hidden" id="selectedGID" />
+<input type="hidden" id="selectedSID" />*@
+
+<div class="article">
+    <form class="row row-cols-lg-auto g-8 align-items-center">
+        <div class="col-12">
+            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+            <p>
+                @Html.DropDownListFor(m => Model.missions, new SelectList(Model.missions, "MID", "MName"), "請選擇任務", new { id = "Missions" })
+            </p>
+        </div>
+        <div class="col-12">           
+            <p>
+                <button id='MIDbtn'>篩選</button>
+            </p>
+        </div>
+    </form>
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link" id="nav-groupbar-tab" data-bs-toggle="tab" data-bs-target="#nav-groupbar" type="button" role="tab" aria-controls="nav-groupbar" aria-selected="true">小組成果</button>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+
+        <!--小組成果-->
+        <div class="tab-pane fade show active" id="nav-groupbar" role="tabpanel" aria-labelledby="nav-groupbar-tab">
+            <p>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                小組成果
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <strong>組間評分 :</strong>
+
+                                @Model.TeacherScore 分
+                                <br />
+                                @if (Model.TeacherScore > Model.classTeacherScore)
+                                {
+                                    s = "高於全班平均";
+                                }
+                                @if (Model.TeacherScore < Model.classTeacherScore)
+                                {
+                                    s = "低於全班平均";
+                                }
+                                @if (Model.TeacherScore == Model.classTeacherScore)
+                                {
+                                    s = "等於全班平均";
+                                }
+                                &emsp;&emsp;@s @Model.classTeacherScore 分
+                                <br />
+                                <strong>組間評語 :</strong><br />
+                                @foreach (var qo in Model.TeacherER)
+                                {
+                                    if (qo.GQID == 1002 && qo.EvaluatorSID == "T001" && qo.MID == "M220310110331")
+                                    {
+                                        TAnser = qo.Answer;
+                                    }
+                                }
+                                &emsp;&emsp;@TAnser
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script src="../Scripts/Chart.min.js"></script>
+                <canvas id="groupbar"></canvas>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<!-- 小組成果 -->
+<script>
+    var ctx = document.getElementById("groupbar");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ['教師評分'],
+            datasets: [{
+                label: "小組分數",
+                fontSize: 24,
+                backgroundColor: [
+                    'rgb(255, 99, 132)'
+                ],
+                data: [@Model.TeacherScore]
+            },
+            {
+                label: "全班平均",
+                fontSize: 24,
+                backgroundColor: [
+                    'rgb(54, 162, 235)'
+                ],
+                data: [@Model.classTeacherScore]
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            },
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '小組成果'
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 24
+                    },
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontSize: 24
+                    },
+                }]
+            }
+        }
+    });
+</script>
+
+@section scripts
+{
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            selsctedCID = $('#CID').val();
+            console.log(selsctedCID);
+
+            $('#Missions').change(function () {
+                selectedMID = $('#Missions option:selected').val();
+                $('#SelectorMID').val(selectedMID)
+                console.log(selectedMID);
+                var SelectMID = document.getElementById("SelectorMID");
+                SelectMID.innerText = selectedMID;
+                console.log(SelectorMID);
+            });
+        });
+        document.getElementById('MIDbtn').onclick = function () {
+            //document.getElementById('CID').value = selectedCID;
+            //document.getElementById('Mid').value = selectedMID;
+            
+        }
+    </script>
+}

@@ -1,0 +1,190 @@
+﻿@model LMSweb.ViewModel.LearnBViewModel
+@using System.Collections.Generic;
+@using System.IO;
+
+@{
+    ViewBag.Title = "學習表現";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    var Teachercourse = 0;
+    var Classcourse = 0;
+    string s = "";
+    string TAnser = "";
+}
+
+<div class="article">
+    <form class="row row-cols-lg-auto g-8 align-items-center">
+        <div class="col-12">
+            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+            <p>
+                @Html.DropDownListFor(m => Model.missions, new SelectList(Model.missions, "MID", "MName"), "請選擇任務", new { id = "Missions" })
+            </p>
+        </div>
+        <div class="col-12">
+            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+            <p>
+                @Html.DropDownListFor(m => Model.Groups, new SelectList(Model.Groups, "GID", "GName"), "請選擇組別", new { id = "Groups" })
+            </p>
+
+        </div>
+    </form>
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link" id="nav-groupbar-tab" data-bs-toggle="tab" data-bs-target="#nav-groupbar" type="button" role="tab" aria-controls="nav-groupbar" aria-selected="true">小組成果</button>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <!--小組成果-->
+        <div class="tab-pane fade show active" id="nav-groupbar" role="tabpanel" aria-labelledby="nav-groupbar-tab">
+            <p>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                小組成果
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <strong>教師評分 :</strong>
+                                @foreach (var qo in Model.TeacherER)
+                                {
+                                    if (qo.GQID == 1 && qo.EvaluatorSID == "T001")
+                                    {
+                                        var answer = Convert.ToInt32(qo.Answer) * 8;
+                                        Teachercourse = Teachercourse + answer;
+                                    }
+                                    if (qo.GQID == 2 && qo.EvaluatorSID == "T001")
+                                    {
+                                        var answer = Convert.ToInt32(qo.Answer) * 8;
+                                        Teachercourse = Teachercourse + answer;
+                                    }
+                                    if (qo.GQID == 3 && qo.EvaluatorSID == "T001")
+                                    {
+                                        var answer = Convert.ToInt32(qo.Answer) * 4;
+                                        Teachercourse = Teachercourse + answer;
+                                    }
+                                }
+                                @foreach (var qo in Model.ClassER)
+                                {
+                                    if (qo.GQID == 1 && qo.EvaluatorSID == "T001")
+                                    {
+                                        var answer = Convert.ToInt32(qo.Answer) * 8;
+                                        Classcourse = Classcourse + answer;
+                                    }
+                                    if (qo.GQID == 2 && qo.EvaluatorSID == "T001")
+                                    {
+                                        var answer = Convert.ToInt32(qo.Answer) * 8;
+                                        Classcourse = Classcourse + answer;
+                                    }
+                                    if (qo.GQID == 3 && qo.EvaluatorSID == "T001")
+                                    {
+                                        var answer = Convert.ToInt32(qo.Answer) * 4;
+                                        Classcourse = Classcourse + answer;
+                                    }
+
+                                }
+                                @{
+                                    Classcourse = Classcourse / Model.Teachercourse;
+                                }
+                                @Teachercourse 分
+                                <br />
+                                @if (Teachercourse > Classcourse)
+                                {
+                                    s = "高於全班平均";
+                                }
+                                @if (Teachercourse < Classcourse)
+                                {
+                                    s = "低於全班平均";
+                                }
+                                @if (Teachercourse == Classcourse)
+                                {
+                                    s = "等於全班平均";
+                                }
+                                &emsp;&emsp;@s
+                                <br />
+                                <strong>教師評語 :</strong><br />
+                                @foreach (var qo in Model.TeacherER)
+                                {
+                                    if (qo.GQID == 1002 && qo.EvaluatorSID == "T001")
+                                    {
+                                        @qo.Answer;
+                                    }
+                                }
+                                @*&emsp;&emsp;@TAnser*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script src="../Scripts/Chart.min.js"></script>
+                <canvas id="groupbar"></canvas>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- 小組成果 -->
+<script>
+    var ctx = document.getElementById("groupbar");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ['教師評分'],
+            datasets: [{
+                label: "小組分數",
+                backgroundColor: [
+                    'rgb(255, 99, 132)'
+                ],
+                data: [@Teachercourse]
+            },
+            {
+                label: "全班平均",
+                backgroundColor: [
+                    'rgb(54, 162, 235)'
+                ],
+                data: [@Classcourse]
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            },
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '小組成果'
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 24
+                    },
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontSize: 24
+                    },
+                }]
+            }
+        }
+    });
+</script>
+@section scripts
+{
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $('#Missions').change(function () {
+                selectedMID = $('#Missions option:selected').val();
+                console.log(selectedMID)
+            });
+            $('#Groups').change(function () {
+                selectedGID = $('#Groups option:selected').val();
+                console.log(selectedGID)
+            });
+        });
+    </script>
+}
+

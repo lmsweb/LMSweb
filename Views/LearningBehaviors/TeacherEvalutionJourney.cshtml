@@ -3,38 +3,32 @@
 @using System.IO;
 
 @{
-    ViewBag.Title = "學生歷程";
+    ViewBag.Title = "學習表現";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
+<input type="hidden" id="selectedMID" />
+<input type="hidden" id="selectedGID" />
+<input type="hidden" id="selectedSID" />
 
 <div class="article">
     <form class="row row-cols-lg-auto g-8 align-items-center">
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-            <select class="form-select" id="inlineFormSelectPref">
-                <option selected>請選擇任務</option>
-                <option value="1">任務一</option>
-                <option value="2">任務二</option>
-                <option value="3">任務三</option>
-            </select>
+            <p>
+                @Html.DropDownListFor(m => Model.missions, new SelectList(Model.missions, "MID", "MName"), "請選擇任務", new { id = "Missions" })
+            </p>
         </div>
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-            <select class="form-select" id="inlineFormSelectPref">
-                <option selected>請選擇組別</option>
-                <option value="1">組別一</option>
-                <option value="2">組別二</option>
-                <option value="3">組別三</option>
-            </select>
+            <p>
+                @Html.DropDownList("Groups", (SelectList)(ViewBag.SelectList), "請選擇組別", new { id = "Groups" })
+            </p>
         </div>
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-            <select class="form-select" id="inlineFormSelectPref">
-                <option selected>請選擇學生</option>
-                <option value="1">Aaron</option>
-                <option value="2">Edam</option>
-                <option value="3">Ted</option>
-            </select>
+            <p>
+                <select id="Studsnts" name="students"><option>請先選擇組別</option></select>
+            </p>
         </div>
     </form>
     <nav>
@@ -189,14 +183,14 @@
     </div>
 </div>
 
-<!-- 合作學習 -->
+<!-- 自我評價 -->
 <script>
     //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
     var ctx = document.getElementById("Radar");
     var chart = new Chart(ctx, {
         type: "radar",
         data: {
-            labels: ['規劃', '撰寫', '討論'],
+            labels: ['規劃', '撰寫', '討論','貢獻'],
             //labels: jsName,
             datasets: [{
                 label: "S002",
@@ -209,7 +203,7 @@
                 //pointRadius: 5,
                 //pointHoverRadius: 10,
                 //data: jsPoint
-                data: [20, 25, 29]
+                data: [20, 25, 29,6]
             },
             {
                 label: "全組平均",
@@ -222,7 +216,7 @@
                 //pointRadius: 5,
                 //pointHoverRadius: 10,
                 //data: jsPoint
-                data: [25, 23, 20]
+                data: [25, 23, 20,10]
             },
             {
                 label: "全班平均",
@@ -235,7 +229,7 @@
                 //pointRadius: 5,
                 //pointHoverRadius: 10,
                 //data: jsPoint
-                data: [21, 23, 21]
+                data: [21, 23, 21,10]
             },]
         },
         options: {
@@ -256,7 +250,7 @@
                 beginAtZero: true,
                 min: 0,
                 pointLabels: {      //labels，軸的文字標籤(ex:攻擊)
-                    fontSize:24
+                    fontSize: 24
                 }
             }
         }
@@ -269,7 +263,7 @@
         type: "bar",
         data: {
             labels: ['合作學習', '個人貢獻', '小組成果'],
-            
+
             datasets: [{
                 label: "S002",
                 backgroundColor: [
@@ -313,7 +307,7 @@
             scales: {
                 xAxes: [{
                     ticks: {
-                        fontSize:24
+                        fontSize: 24
                     },
                 }],
                 yAxes: [{
@@ -437,3 +431,53 @@
     });
 </script>
 
+@section scripts
+{
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $('#Missions').change(function () {
+                selectedMID = $('#Missions option:selected').val();                
+                console.log(selectedMID)
+            });
+
+            $('#Groups').change(function () {
+                selectedGID = $('#Groups option:selected').val();
+                console.log(selectedGID)
+                ChangeStudent();
+            });
+
+            $('#Studsnts').change(function () {
+                selectedSID = $('#Studsnts option:selected').val();
+                console.log(selectedSID)               
+            });
+    });
+
+    function ChangeStudent() {
+        var selectedValue = $('#Groups option:selected').val();        
+        if ($.trim(selectedValue).length > 0) {
+            GetStudent(selectedValue);
+        }
+    }
+
+    function GetStudent(GID) {
+        $.ajax({
+            url: '@Url.Action("Studsnts", "LearningBehaviors")',
+            data: { GID: GID},
+            type: 'post',
+            cache: false,
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                if (data.length > 0) {
+                    $('#Studsnts').empty();
+                    $('#Studsnts').append($('<option></option>').val('').text('請選擇學生'));
+                    $.each(data, function (i, item) {
+                        $('#Studsnts').append($('<option></option>').val(item.Key).text(item.Value));
+                    });
+
+                }
+            }
+        });
+    }
+    </script>
+}

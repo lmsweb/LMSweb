@@ -277,6 +277,11 @@ namespace LMSweb.Models
                 mission.IsGReflect = sw;
             }
 
+            //else if (type == "is_Journey")
+            //{
+            //    mission.Is_Journey = sw;
+            //}
+
             db.SaveChanges();
             return Json(new { Status = HttpStatusCode.OK , type = type, sw = sw});
         }
