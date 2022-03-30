@@ -19,8 +19,8 @@ namespace LMSweb
 
         public void editCode(string gid, string content, int line, int ch)
         {
-            Clients.All.broadcastCode(content, line, ch);
-            //Clients.Group(gid).broadcastCode(content, line, ch);
+            //Clients.All.broadcastCode(content, line, ch);
+            Clients.Group(gid).broadcastCode(content, line, ch);
         }
 
         public void saveCode(StudentCodingViewModel viewModel)
@@ -59,13 +59,15 @@ namespace LMSweb
             textIO.SaveFile(FileName, viewModel.CodeContent);
         }
 
-        public void readCode(string cid, string mid, string gid)
+        public async Task readCode(string cid, string mid, string gid)
         {
             string discPath = WebConfigurationManager.AppSettings["CodePath"];
             string PathRoot = HttpContext.Current.Server.MapPath(discPath);
             string FileName = cid + " " + mid + " " + gid;
             string content = textIO.readCodeText(PathRoot + FileName + ".txt");
-            Clients.All.broadcastCode(content, 0, 0);
+            await joinGroup(gid);
+            //Clients.All.broadcastCode(content, 0, 0);
+            Clients.Group(gid).broadcastCode(content, 0, 0);
         }
         public Task joinGroup(string gid)
         {

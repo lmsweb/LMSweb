@@ -135,16 +135,42 @@ namespace LMSweb.Controllers
 
             return View(vm);
         }
-        public ActionResult TeacherJourney(string cid)
-        {
+        public ActionResult TeacherJourney(string cid,string mid,string sid)
+        {          
+            var stu = db.Students.Where(s => s.SID == sid);
+            var stuG = db.Students.Find(sid).group;
+            var sname = db.Students.Find(sid).SName;
             var gqid = 1002.ToString();
             vm.Groups = db.Groups.Where(g => g.CID == cid).ToList();
-            vm.TeacherER = db.GroupERs.ToList();
+            vm.SID = sid;
+            vm.GID = stuG.GID;
+            vm.MID = mid;
+            var gid = stuG.GID.ToString();
+            vm.SName = sname;
+            vm.TeacherER = db.GroupERs.Where(sg => sg.GID == stuG.GID && sg.MID == mid).ToList();
             vm.ClassER = db.GroupERs.ToList();
             vm.missions = db.Missions.Where(m => m.CID == cid).ToList();
-            vm.group = db.Groups.Where(g => g.CID == cid).ToList();
             vm.Teachercourse = db.Groups.Where(c => c.CID == cid).Count();
+            vm.CID = cid;
+            var TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            var TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            var TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
+            vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
+            var classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            var classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            var classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+            var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
+            vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
             return View(vm);
+            //var gqid = 1002.ToString();
+            //vm.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+            //vm.TeacherER = db.GroupERs.ToList();
+            //vm.ClassER = db.GroupERs.ToList();
+            //vm.missions = db.Missions.Where(m => m.CID == cid).ToList();
+            //vm.group = db.Groups.Where(g => g.CID == cid).ToList();
+            //vm.Teachercourse = db.Groups.Where(c => c.CID == cid).Count();
+            //return View(vm);
         }
         public ActionResult TeacherEvalutionJourney(string cid)
         {
