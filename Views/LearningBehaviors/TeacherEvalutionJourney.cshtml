@@ -5,37 +5,146 @@
 @{
     ViewBag.Title = "學習表現";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    //小組成果
+    var Teachercourse = 0;
+    var Classcourse = 0;
+    string s = "";
+    string gs = "";
+    string TAnser = "";
+
+    //合作學習
+    var peerCode = 0;
+    var peerDiscuss = 0;
+    var peerDraw = 0;
+    var peerContribute = 0;
+    var selfCode = 0;
+    var selfDraw = 0;
+    var selfDiscuss = 0;
+    var selfContribute = 0;
+    var selfDiscussCount = 0;
+    var selfDrawCount = 0;
+    var selfCodeCount = 0;
+    var selfContributeCount = 0;
+    var peerDiscussCount = 0;
+    var peerDrawCount = 0;
+    var peerCodeCount = 0;
+    var peerContributeCount = 0;
+
+
+    foreach (var item in Model.student)
+    {
+        foreach (var i in Model.GSelfER)//自我評價 小組平均
+        {
+            if (item.SID == i.SID)
+            {
+                if (i.DQID == 20)
+                {
+                    var answer = Convert.ToInt32(i.Answer);
+                    selfDiscuss = selfDiscuss + answer;
+                    selfDiscussCount++;
+                }
+                if (i.DQID == 21)
+                {
+                    var answer = Convert.ToInt32(i.Answer);
+                    selfDraw = selfDraw + answer;
+                    selfDrawCount++;
+                }
+                if (i.DQID == 22)
+                {
+                    var answer = Convert.ToInt32(i.Answer);
+                    selfCode = selfCode + answer;
+                    selfCodeCount++;
+                }
+                if (i.DQID == 23)
+                {
+                    var answer = Convert.ToInt32(i.Answer);
+                    selfContribute = selfContribute + answer;
+                    selfContributeCount++;
+                }
+
+            }
+
+        }
+        foreach (var i in Model.GPeerER)//同儕互評 小組平均
+        {
+            if (item.SID == i.SID)
+            {
+                if (i.DQID == 20)
+                {
+                    var answer = Convert.ToInt32(i.Answer);
+                    peerDiscuss = peerDiscuss + answer;
+                    peerDiscussCount++;
+                }
+                if (i.DQID == 21)
+                {
+                    var answer = Convert.ToInt32(i.Answer);
+                    peerDraw = peerDraw + answer;
+                    peerDrawCount++;
+                }
+                if (i.DQID == 22)
+                {
+                    var answer = Convert.ToInt32(i.Answer);
+                    peerCode = peerCode + answer;
+                    peerCodeCount++;
+                }
+                if (i.DQID == 23)
+                {
+                    var answer = Convert.ToInt32(i.Answer);
+                    peerContribute = peerContribute + answer;
+                    peerContributeCount++;
+                }
+
+            }
+
+        }
+    }
+    //計算自我評價小組平均
+    selfDiscuss = selfDiscuss / selfDiscussCount;
+    selfDraw = selfDraw / selfDrawCount;
+    selfCode = selfCode / selfCodeCount;
+    selfContribute = selfContribute / selfContributeCount;
+    //同儕互評小組均
+    peerDiscuss = peerDiscuss / peerDiscussCount;
+    peerDraw = peerDraw / peerDrawCount;
+    peerCode = peerCode / peerCodeCount;
+    peerContribute = peerContribute / peerContributeCount;
+    //總攬
+    var SEvalution = ((Model.SelfDraw) + (Model.SelfCode) + (Model.SelfDiscuss) + (Model.SelfContribute)) / 4;//自我評價分數
+    SEvalution = Math.Round((SEvalution), 1, MidpointRounding.ToEven);
+
+    double GSEvalution = (selfDiscuss + selfDraw + selfCode + selfContribute) / 4; //自我評價分數 小組平均
+    GSEvalution = Math.Round((GSEvalution), 1, MidpointRounding.ToEven);
+
+    var CSEvalution = ((Model.classSelfDraw) + (Model.classSelfCode) + (Model.classSelfDiscuss) + (Model.classSelfContribute)) / 4;//自我評價分數 全班平均
+    CSEvalution = Math.Round((CSEvalution), 1, MidpointRounding.ToEven);
+
+    var PEvalution = ((Model.PeerDraw) + (Model.PeerCode) + (Model.PeerDiscuss) + (Model.PeerContribute)) / 4;//同儕互評分數
+    PEvalution = Math.Round((PEvalution), 1, MidpointRounding.ToEven);
+
+    double GPEvalution = (peerDiscuss + peerDraw + peerCode + peerContribute) / 4; ////同儕互評分數 小組平均
+    GPEvalution = Math.Round((GPEvalution), 1, MidpointRounding.ToEven);
+
+    var CPEvalution = ((Model.classPeerDraw) + (Model.classPeerCode) + (Model.classPeerDiscuss) + (Model.classPeerContribute)) / 4;////同儕互評分數 全班平均
+    CPEvalution = Math.Round((CPEvalution), 1, MidpointRounding.ToEven);
+
+    var gResults = Math.Round((((Model.TeacherScore) + (Model.GroupScore)) / 2), 1, MidpointRounding.ToEven);// 小組成果分數
+    var CgResults = Math.Round((((Model.classTeacherScore) + (Model.classGroupScore)) / 2), 1, MidpointRounding.ToEven);// 小組成果分數全班平均
 }
-<input type="hidden" id="selectedMID" />
-<input type="hidden" id="selectedGID" />
-<input type="hidden" id="selectedSID" />
 
 <div class="article">
-    <form class="row row-cols-lg-auto g-8 align-items-center">
-        <div class="col-12">
-            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-            <p>
-                @Html.DropDownListFor(m => Model.missions, new SelectList(Model.missions, "MID", "MName"), "請選擇任務", new { id = "Missions" })
-            </p>
-        </div>
-        <div class="col-12">
-            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-            <p>
-                @Html.DropDownList("Groups", (SelectList)(ViewBag.SelectList), "請選擇組別", new { id = "Groups" })
-            </p>
-        </div>
-        <div class="col-12">
-            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-            <p>
-                <select id="Studsnts" name="students"><option>請先選擇組別</option></select>
-            </p>
-        </div>
-    </form>
+    @*<form class="row row-cols-lg-auto g-8 align-items-center">
+            <div class="col-12">
+                <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                <p>
+                    @Html.DropDownListFor(m => Model.missions, new SelectList(Model.missions, "MID", "MName"), "請選擇任務", new { id = "Missions" })
+                </p>
+            </div>
+        </form>*@
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-bar-tab" data-bs-toggle="tab" data-bs-target="#nav-bar" type="button" role="tab" aria-controls="nav-bar" aria-selected="true">總覽</button>
-            <button class="nav-link" id="nav-Radar-tab" data-bs-toggle="tab" data-bs-target="#nav-Radar" type="button" role="tab" aria-controls="nav-Radar" aria-selected="false">合作學習</button>
-            <button class="nav-link" id="nav-personalbar-tab" data-bs-toggle="tab" data-bs-target="#nav-personalbar" type="button" role="tab" aria-controls="nav-personalbar" aria-selected="false">個人表現</button>
+            <button class="nav-link" id="nav-Radar-tab" data-bs-toggle="tab" data-bs-target="#nav-Radar" type="button" role="tab" aria-controls="nav-Radar" aria-selected="false">自我評價</button>
+            <button class="nav-link" id="nav-personalbar-tab" data-bs-toggle="tab" data-bs-target="#nav-personalbar" type="button" role="tab" aria-controls="nav-personalbar" aria-selected="false">同儕互評</button>
             <button class="nav-link" id="nav-groupbar-tab" data-bs-toggle="tab" data-bs-target="#nav-groupbar" type="button" role="tab" aria-controls="nav-groupbar" aria-selected="false">小組成果</button>
         </div>
     </nav>
@@ -52,107 +161,381 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <strong>總分 : 95分</strong>(合作學習 : 90 分,個人表現 : 93 分, 小組成果 : 92 分)<br />
-                                <br />
-                                <strong>合作學習分數</strong><br />
-                                &emsp;&emsp;低於 小組平均，低於 全班平均<br />
-                                <strong>個人表現分數</strong><br />
-                                &emsp;&emsp;低於 小組平均，低於 全班平均<br />
-                                <strong>小組成果分數</strong><br />
-                                &emsp;&emsp;高於 全班平均<br />
+                                <strong>自我評價分數: @SEvalution 分</strong><br />
+                                @if (SEvalution > GSEvalution)
+                                {
+                                    gs = "高於全組平均";
+                                }
+                                @if (SEvalution < GSEvalution)
+                                {
+                                    gs = "低於全組平均";
+                                }
+                                @if (SEvalution == GSEvalution)
+                                {
+                                    gs = "等於全組平均";
+                                }
+                                &emsp;&emsp;@gs @GSEvalution 分
+                                @if (SEvalution > CSEvalution)
+                                {
+                                    s = "高於全班平均";
+                                }
+                                @if (SEvalution < CSEvalution)
+                                {
+                                    s = "低於全班平均";
+                                }
+                                @if (SEvalution == CSEvalution)
+                                {
+                                    s = "等於全班平均";
+                                }
+                                &emsp;&emsp;@s @CSEvalution 分<br />
+                                <strong>同儕互評分數: @PEvalution 分</strong><br />
+                                @if (PEvalution > GPEvalution)
+                                {
+                                    gs = "高於全組平均";
+                                }
+                                @if (PEvalution < GPEvalution)
+                                {
+                                    gs = "低於全組平均";
+                                }
+                                @if (PEvalution == GPEvalution)
+                                {
+                                    gs = "等於全組平均";
+                                }
+                                &emsp;&emsp;@gs @GPEvalution 分
+                                @if (PEvalution > CPEvalution)
+                                {
+                                    s = "高於全班平均";
+                                }
+                                @if (PEvalution < CPEvalution)
+                                {
+                                    s = "低於全班平均";
+                                }
+                                @if (PEvalution == CPEvalution)
+                                {
+                                    s = "等於全班平均";
+                                }
+                                &emsp;&emsp;@s @CPEvalution 分<br />
+                                <strong>小組成果分數: @gResults 分</strong><br />
+                                @if (gResults > CgResults)
+                                {
+                                    s = "高於全班平均";
+                                }
+                                @if (gResults < CgResults)
+                                {
+                                    s = "低於全班平均";
+                                }
+                                @if (gResults == CgResults)
+                                {
+                                    s = "等於全班平均";
+                                }
+                                &emsp;&emsp;@s @CgResults 分<br />
                             </div>
                         </div>
                     </div>
                 </div>
-                <script src="../Scripts/Chart.min.js"></script>
-                <canvas id="bar"></canvas>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-10">
+                            <script src="../Scripts/Chart.min.js"></script>
+                            <canvas id="bar"></canvas>
+                        </div>
+                    </div>
+                </div>
             </p>
         </div>
-        <!--合作學習-->
+        <!--自我評價-->
         <div class="tab-pane fade" id="nav-Radar" role="tabpanel" aria-labelledby="nav-Radar-tab">
             <p>
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                合作學習
+                                自我評價
                             </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <strong>參與討論 :</strong> 90 分<br />
-                                &emsp;&emsp;高於 小組平均<br />
-                                &emsp;&emsp;高於 全班平均<br />
+                                <strong>參與討論 :@Model.SelfDiscuss  分</strong><br />
+                                @if (Model.SelfDiscuss > selfDiscuss)
+                                {
+                                    gs = "高於全組平均";
+                                }
+                                @if (Model.SelfDiscuss < selfDiscuss)
+                                {
+                                    gs = "低於全組平均";
+                                }
+                                @if (Model.SelfDiscuss == selfDiscuss)
+                                {
+                                    gs = "等於全組平均";
+                                }
+                                &emsp;&emsp;@gs @selfDiscuss 分
+                                @if (Model.SelfDiscuss > Model.classSelfDiscuss)
+                                {
+                                    s = "高於全班平均";
+                                }
+                                @if (Model.SelfDiscuss < Model.classSelfDiscuss)
+                                {
+                                    s = "低於全班平均";
+                                }
+                                @if (Model.SelfDiscuss == Model.classSelfDiscuss)
+                                {
+                                    s = "等於全班平均";
+                                }
+                                &emsp;&emsp;@s @Model.classSelfDiscuss 分
                                 <br />
-                                <strong>參與規劃流程圖 :</strong> 95 分<br />
-                                &emsp;&emsp;低於 小組平均<br />
-                                &emsp;&emsp;低於 全班平均<br />
+                                <strong>參與規劃流程圖 :@Model.SelfDraw 分</strong><br />
+                                @if (Model.SelfDraw > selfDraw)
+                                {
+                                    gs = "高於全組平均";
+                                }
+                                @if (Model.SelfDraw < selfDraw)
+                                {
+                                    gs = "低於全組平均";
+                                }
+                                @if (Model.SelfDraw == selfDraw)
+                                {
+                                    gs = "等於全組平均";
+                                }
+                                &emsp;&emsp;@gs @selfDraw 分
+                                @if (Model.SelfDraw > Model.classSelfDraw)
+                                {
+                                    s = "高於全班平均";
+                                }
+                                @if (Model.SelfDraw < Model.classSelfDraw)
+                                {
+                                    s = "低於全班平均";
+                                }
+                                @if (Model.SelfDraw == Model.classSelfDraw)
+                                {
+                                    s = "等於全班平均";
+                                }
+                                &emsp;&emsp;@s @Model.classSelfDraw 分
                                 <br />
-                                <strong>參與撰寫程式碼:</strong> 89 分<br />
-                                &emsp;&emsp;高於 小組平均<br />
-                                &emsp;&emsp;高於 全班平均<br />
+                                <strong>參與撰寫程式碼:@Model.SelfCode 分</strong><br />
+                                @if (Model.SelfCode > selfCode)
+                                {
+                                    gs = "高於全組平均";
+                                }
+                                @if (Model.SelfCode < selfCode)
+                                {
+                                    gs = "低於全組平均";
+                                }
+                                @if (Model.SelfCode == selfCode)
+                                {
+                                    gs = "等於全組平均";
+                                }
+                                &emsp;&emsp;@gs @selfCode 分
+                                @if (Model.SelfCode > Model.classSelfCode)
+                                {
+                                    s = "高於全班平均";
+                                }
+                                @if (Model.SelfCode < Model.classSelfCode)
+                                {
+                                    s = "低於全班平均";
+                                }
+                                @if (Model.SelfCode == Model.classSelfCode)
+                                {
+                                    s = "等於全班平均";
+                                }
+                                &emsp;&emsp;@s @Model.classSelfCode 分
+                                <br />
+                                <strong>成果貢獻:@Model.SelfContribute  分</strong><br />
+                                @if (Model.SelfContribute > selfContribute)
+                                {
+                                    gs = "高於全組平均";
+                                }
+                                @if (Model.SelfContribute < selfContribute)
+                                {
+                                    gs = "低於全組平均";
+                                }
+                                @if (Model.SelfContribute == selfContribute)
+                                {
+                                    gs = "等於全組平均";
+                                }
+                                &emsp;&emsp;@gs @selfContribute 分
+                                @if (Model.SelfContribute > Model.classSelfContribute)
+                                {
+                                    s = "高於全班平均";
+                                }
+                                @if (Model.SelfContribute < Model.SelfContribute)
+                                {
+                                    s = "低於全班平均";
+                                }
+                                @if (Model.SelfContribute == Model.SelfContribute)
+                                {
+                                    s = "等於全班平均";
+                                }
+                                &emsp;&emsp;@s @Model.classSelfContribute 分
+                                <br />
+                                <strong>評語:</strong><br />
+                                @foreach (var qo in Model.SelfER)
+                                {
+                                    if (qo.DQID == 27)
+                                    {
+                                        @qo.Answer;<br />
+                                    }
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-                <script src="../Scripts/Chart.min.js"></script>
-                <canvas id="Radar"></canvas>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <script src="../Scripts/Chart.min.js"></script>
+                            <canvas id="Radar"></canvas>
+                        </div>
+                    </div>
+                </div>
             </p>
         </div>
-        <!--個人表現-->
+        <!--同儕互評-->
         <div class="tab-pane fade" id="nav-personalbar" role="tabpanel" aria-labelledby="nav-personalbar-tab">
             <p>
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
-                                自我評價
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <strong>分數 :</strong> 95 分<br />
-                                &emsp;&emsp;高於 小組平均<br />
-                                &emsp;&emsp;高於 全班平均<br />
-                                <br />
-                                <strong>評語:</strong><br />
-                                &emsp;&emsp;<strong>邏輯清晰度:</strong><br />
-                                &emsp;&emsp;&emsp;&emsp;邏輯清晰度:我覺得我進步很多<br />
-                                &emsp;&emsp;<strong>合作態度:</strong><br />
-                                &emsp;&emsp;&emsp;&emsp;我很認真參與合作<br />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 同儕互評
                             </button>
                         </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div data-bs-spy="scroll" data-bs-target="#nav-personalbar" data-bs-offset="0" tabindex="0">
                                 <div class="accordion-body">
-                                    <strong>分數 :</strong> 85 分<br />
-                                    &emsp;&emsp;低於 小組平均<br />
-                                    &emsp;&emsp;等於 全班平均<br />
+                                    <strong>參與討論 :@Model.PeerDiscuss 分</strong><br />
+                                    @if (Model.PeerDiscuss > peerDiscuss)
+                                    {
+                                        gs = "高於全組平均";
+                                    }
+                                    @if (Model.PeerDiscuss < peerDiscuss)
+                                    {
+                                        gs = "低於全組平均";
+                                    }
+                                    @if (Model.PeerDiscuss == peerDiscuss)
+                                    {
+                                        gs = "等於全組平均";
+                                    }
+                                    &emsp;&emsp;@gs @peerDiscuss 分
+                                    @if (Model.PeerDiscuss > Model.classPeerDiscuss)
+                                    {
+                                        s = "高於全班平均";
+                                    }
+                                    @if (Model.PeerDiscuss < Model.classPeerDiscuss)
+                                    {
+                                        s = "低於全班平均";
+                                    }
+                                    @if (Model.PeerDiscuss == Model.classPeerDiscuss)
+                                    {
+                                        s = "等於全班平均";
+                                    }
+                                    &emsp;&emsp;@s @Model.classPeerDiscuss 分
+                                    <br />
+                                    <strong>參與規劃流程圖 :@Model.PeerDraw 分</strong><br />
+                                    @if (Model.PeerDraw > peerDraw)
+                                    {
+                                        gs = "高於全組平均";
+                                    }
+                                    @if (Model.PeerDraw < peerDraw)
+                                    {
+                                        gs = "低於全組平均";
+                                    }
+                                    @if (Model.PeerDraw == peerDraw)
+                                    {
+                                        gs = "等於全組平均";
+                                    }
+                                    &emsp;&emsp;@gs @peerDraw 分
+                                    @if (Model.PeerDraw > Model.classPeerDraw)
+                                    {
+                                        s = "高於全班平均";
+                                    }
+                                    @if (Model.PeerDraw < Model.classPeerDraw)
+                                    {
+                                        s = "低於全班平均";
+                                    }
+                                    @if (Model.PeerDraw == Model.classPeerDraw)
+                                    {
+                                        s = "等於全班平均";
+                                    }
+                                    &emsp;&emsp;@s @Model.classPeerDraw 分
+                                    <br />
+                                    <strong>參與撰寫程式碼:@Model.PeerCode 分</strong><br />
+                                    @if (Model.PeerCode > peerCode)
+                                    {
+                                        gs = "高於全組平均";
+                                    }
+                                    @if (Model.PeerCode < peerCode)
+                                    {
+                                        gs = "低於全組平均";
+                                    }
+                                    @if (Model.PeerCode == peerCode)
+                                    {
+                                        gs = "等於全組平均";
+                                    }
+                                    &emsp;&emsp;@gs @peerCode 分
+                                    @if (Model.PeerCode > Model.classPeerCode)
+                                    {
+                                        s = "高於全班平均";
+                                    }
+                                    @if (Model.PeerCode < Model.classPeerCode)
+                                    {
+                                        s = "低於全班平均";
+                                    }
+                                    @if (Model.PeerCode == Model.classPeerCode)
+                                    {
+                                        s = "等於全班平均";
+                                    }
+                                    &emsp;&emsp;@s @Model.classPeerCode 分
+                                    <br />
+                                    <strong>參與撰寫程式碼:@Model.PeerContribute 分</strong><br />
+                                    @if (Model.PeerContribute > peerContribute)
+                                    {
+                                        gs = "高於全組平均";
+                                    }
+                                    @if (Model.PeerContribute < peerContribute)
+                                    {
+                                        gs = "低於全組平均";
+                                    }
+                                    @if (Model.PeerContribute == peerContribute)
+                                    {
+                                        gs = "等於全組平均";
+                                    }
+                                    &emsp;&emsp;@gs @peerContribute 分
+                                    @if (Model.PeerContribute > Model.classPeerContribute)
+                                    {
+                                        s = "高於全班平均";
+                                    }
+                                    @if (Model.PeerContribute < Model.classPeerContribute)
+                                    {
+                                        s = "低於全班平均";
+                                    }
+                                    @if (Model.PeerContribute == Model.classPeerContribute)
+                                    {
+                                        s = "等於全班平均";
+                                    }
+                                    &emsp;&emsp;@s @Model.classPeerContribute 分
                                     <br />
                                     <strong>評語:</strong><br />
-                                    &emsp;&emsp;<strong>邏輯清晰度:</strong><br />
-                                    &emsp;&emsp;&emsp;&emsp;1.我覺得你進步很多<br />
-                                    &emsp;&emsp;&emsp;&emsp;2.邏輯正確<br />
-                                    &emsp;&emsp;&emsp;&emsp;3.很棒<br />
-                                    <br />
-                                    &emsp;&emsp;<strong>合作態度:</strong><br />
-                                    &emsp;&emsp;&emsp;&emsp;1.會主動幫忙<br />
-                                    &emsp;&emsp;&emsp;&emsp;2.很會教人<br />
-                                    &emsp;&emsp;&emsp;&emsp;3.幫了我很多忙<br />
+                                    @foreach (var qo in Model.PeerER)
+                                    {
+                                        if (qo.DQID == 27)
+                                        {
+                                            @qo.Answer;<br />
+                                        }
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <script src="../Scripts/Chart.min.js"></script>
-                <canvas id="personalbar"></canvas>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <script src="../Scripts/Chart.min.js"></script>
+                            <canvas id="peerRadar"></canvas>
+                        </div>
+                    </div>
+                </div>
+
             </p>
         </div>
         <!--小組成果-->
@@ -162,22 +545,80 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                小組成果
+                                教師評價
                             </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <strong>教師評分 :</strong> 95分<br />
-                                &emsp;&emsp;高於 全班平均<br />
+                                <strong>教師評分 :@Model.TeacherScore 分</strong>
+                                <br />
+                                @if (Model.TeacherScore > Model.classTeacherScore)
+                                {
+                                    s = "高於全班平均";
+                                }
+                                @if (Model.TeacherScore < Model.classTeacherScore)
+                                {
+                                    s = "低於全班平均";
+                                }
+                                @if (Model.TeacherScore == Model.classTeacherScore)
+                                {
+                                    s = "等於全班平均";
+                                }
+                                &emsp;&emsp;@s @Model.classTeacherScore 分
                                 <br />
                                 <strong>教師評語 :</strong><br />
-                                &emsp;&emsp;邏輯思維非常清楚,非常有效率地維持任務<br />
+                                @foreach (var qo in Model.TeacherER)
+                                {
+                                    if (qo.GQID == 4 && (qo.EvaluatorSID == "T004" || qo.EvaluatorSID == "T001") && qo.MID == Model.MID)
+                                    {
+                                        TAnser = qo.Answer;
+                                    }
+                                }
+                                &emsp;&emsp;@TAnser
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                組間互評
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <strong>同儕評分 :@Model.GroupScore 分</strong>
+                                <br />
+                                @if (Model.GroupScore > Model.classGroupScore)
+                                {
+                                    s = "高於全班平均";
+                                }
+                                @if (Model.GroupScore < Model.classGroupScore)
+                                {
+                                    s = "低於全班平均";
+                                }
+                                @if (Model.GroupScore == Model.classGroupScore)
+                                {
+                                    s = "等於全班平均";
+                                }
+                                &emsp;&emsp;@s @Model.classGroupScore 分
+                                <br />
+                                <strong>同儕評語 :</strong><br />
+                                @foreach (var qo in Model.GroupComments)
+                                {
+                                    @qo.Answer;<br />
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
-                <script src="../Scripts/Chart.min.js"></script>
-                <canvas id="groupbar"></canvas>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-10">
+                            <script src="../Scripts/Chart.min.js"></script>
+                            <canvas id="groupbar"></canvas>
+                        </div>
+                    </div>
+                </div>
             </p>
         </div>
     </div>
@@ -190,36 +631,12 @@
     var chart = new Chart(ctx, {
         type: "radar",
         data: {
-            labels: ['規劃', '撰寫', '討論','貢獻'],
+            labels: ['規劃', '撰寫', '討論', '貢獻'],
             //labels: jsName,
-            datasets: [{
-                label: "S002",
-                //label: jsPoint[0].StudentName,
-                fill: true,
-                backgroundColor: 'rgb(255,165,0,0.3)',
-                borderColor: 'rgb(255,135,20)',
-                //pointStyle: "circle",
-                //pointBackgroundColor: 'rgb(0,222,0)',
-                //pointRadius: 5,
-                //pointHoverRadius: 10,
-                //data: jsPoint
-                data: [20, 25, 29,6]
-            },
-            {
-                label: "全組平均",
-                //label: jsPoint[0].StudentName,
-                fill: false,
-                //backgroundColor: 'rgba(255,165,255,0.3)',
-                borderColor: 'rgb(55,235,200)',
-                //pointStyle: "circle",
-                //pointBackgroundColor: 'rgb(0,222,0)',
-                //pointRadius: 5,
-                //pointHoverRadius: 10,
-                //data: jsPoint
-                data: [25, 23, 20,10]
-            },
+            datasets: [
             {
                 label: "全班平均",
+                fontSize: 24,
                 //label: jsPoint[0].StudentName,
                 fill: false,
                 //backgroundColor: 'rgba(255,165,255,0.3)',
@@ -229,15 +646,16 @@
                 //pointRadius: 5,
                 //pointHoverRadius: 10,
                 //data: jsPoint
-                data: [21, 23, 21,10]
+                data: [@Model.classSelfDraw, @Model.classSelfCode,@Model.classSelfDiscuss,@Model.classSelfContribute]
             },]
         },
         options: {
             responsive: true,
+
             title: {
                 display: true,
                 fontSize: 26,
-                text: '合作學習雷達圖'
+                text: '自我評價雷達圖'
             },
             tooltips: {
                 mode: 'point',
@@ -245,43 +663,28 @@
             },
         },
         scale: {
+            fontSize: 18,
             ticks: {
-                fontSize: 24,
+                fontSize:18,
                 beginAtZero: true,
-                min: 0,
+                min:0,
+                stepSize: 1,
                 pointLabels: {      //labels，軸的文字標籤(ex:攻擊)
-                    fontSize: 24
+                    fontSize: 18
                 }
             }
         }
     });
 </script>
-<!-- 學習表現 -->
+<!-- 總攬 -->
 <script>
     var ctx = document.getElementById("bar");
     var chart = new Chart(ctx, {
         type: "bar",
         data: {
-            labels: ['合作學習', '個人貢獻', '小組成果'],
-
-            datasets: [{
-                label: "S002",
-                backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 99, 132)'
-                ],
-                data: [24, 32, 0]
-            },
-            {
-                label: "全組平均",
-                backgroundColor: [
-                    'rgb(54, 162, 235)',
-                    'rgb(54, 162, 235)',
-                    'rgb(54, 162, 235)'
-                ],
-                data: [21, 33, 22]
-            },
+            labels: ['自我評價', '同儕互評', '小組成果'],
+            fontSize: 24,
+            datasets: [
             {
                 label: "全班平均",
                 backgroundColor: [
@@ -289,14 +692,16 @@
                     'rgb(255, 206, 86)',
                     'rgb(255, 206, 86)'
                 ],
-                data: [26, 32, 31]
+                data: [@CSEvalution, @CPEvalution, @CgResults]
             }],
         },
         options: {
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'top'
+                    position: 'top',
+                    fontSize: 20,
+                    display: true,
                 }
             },
             title: {
@@ -307,75 +712,64 @@
             scales: {
                 xAxes: [{
                     ticks: {
-                        fontSize: 24
+                        fontSize: 18
                     },
                 }],
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        fontSize: 24
+                        fontSize: 14
                     },
                 }]
             }
         }
     });
 </script>
-<!-- 個人貢獻 -->
+<!-- 同儕互評 -->
 <script>
-    var ctx = document.getElementById("personalbar");
+    //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
+    var ctx = document.getElementById("peerRadar");
     var chart = new Chart(ctx, {
-        type: "bar",
+        type: "radar",
         data: {
-            labels: ['自我評分', '組內互評'],
-            datasets: [{
-                label: "S002",
-                backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 99, 132)'
-                ],
-                data: [24, 32]
-            },
-            {
-                label: "全組平均",
-                backgroundColor: [
-                    'rgb(54, 162, 235)',
-                    'rgb(54, 162, 235)'
-                ],
-                data: [21, 33]
-            },
+            labels: ['規劃', '撰寫', '討論', '貢獻'],
+            //labels: jsName,
+            datasets: [
             {
                 label: "全班平均",
-                backgroundColor: [
-                    'rgb(255, 206, 86)',
-                    'rgb(255, 206, 86)'
-                ],
-                data: [26, 32]
-            }],
+                fontSize: 18,
+                //label: jsPoint[0].StudentName,
+                fill: false,
+                //backgroundColor: 'rgba(255,165,255,0.3)',
+                borderColor: 'rgb(255,35,100)',
+                //pointStyle: "circle",
+                //pointBackgroundColor: 'rgb(0,222,0)',
+                //pointRadius: 5,
+                //pointHoverRadius: 10,
+                //data: jsPoint
+                data: [@Model.classPeerDraw, @Model.classPeerCode, @Model.classPeerDiscuss,@Model.classPeerContribute]
+            },]
         },
         options: {
             responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top'
-                }
-            },
             title: {
                 display: true,
                 fontSize: 26,
-                text: '個人貢獻'
+                text: '同儕互評雷達圖'
             },
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        fontSize: 24
-                    },
-                }],
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        fontSize: 24
-                    },
-                }]
+            tooltips: {
+                mode: 'point',
+                intersect: true,
+            },
+        },
+        scale: {
+            ticks: {
+                fontSize: 18,
+                beginAtZero: true,
+                min: 0,
+                pointLabels: {      //labels，軸的文字標籤(ex:攻擊)
+                    fontSize: 18
+                }
             }
         }
     });
@@ -386,20 +780,16 @@
     var chart = new Chart(ctx, {
         type: "bar",
         data: {
-            labels: ['教師評分'],
-            datasets: [{
-                label: "小組分數",
-                backgroundColor: [
-                    'rgb(255, 99, 132)'
-                ],
-                data: [95]
-            },
+            labels: ['教師評分','同儕評分'],
+            datasets: [
             {
                 label: "全班平均",
+                fontSize: 18,
                 backgroundColor: [
+                    'rgb(54, 162, 235)',
                     'rgb(54, 162, 235)'
                 ],
-                data: [93]
+                data: [@Model.classTeacherScore ,@Model.classGroupScore]
             }],
         },
         options: {
@@ -417,13 +807,13 @@
             scales: {
                 xAxes: [{
                     ticks: {
-                        fontSize: 24
+                        fontSize: 14
                     },
                 }],
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        fontSize: 24
+                        fontSize: 14
                     },
                 }]
             }
@@ -433,51 +823,4 @@
 
 @section scripts
 {
-    <script type="text/javascript" language="javascript">
-        $(document).ready(function () {
-            $('#Missions').change(function () {
-                selectedMID = $('#Missions option:selected').val();                
-                console.log(selectedMID)
-            });
-
-            $('#Groups').change(function () {
-                selectedGID = $('#Groups option:selected').val();
-                console.log(selectedGID)
-                ChangeStudent();
-            });
-
-            $('#Studsnts').change(function () {
-                selectedSID = $('#Studsnts option:selected').val();
-                console.log(selectedSID)               
-            });
-    });
-
-    function ChangeStudent() {
-        var selectedValue = $('#Groups option:selected').val();        
-        if ($.trim(selectedValue).length > 0) {
-            GetStudent(selectedValue);
-        }
-    }
-
-    function GetStudent(GID) {
-        $.ajax({
-            url: '@Url.Action("Studsnts", "LearningBehaviors")',
-            data: { GID: GID},
-            type: 'post',
-            cache: false,
-            async: false,
-            dataType: 'json',
-            success: function (data) {
-                if (data.length > 0) {
-                    $('#Studsnts').empty();
-                    $('#Studsnts').append($('<option></option>').val('').text('請選擇學生'));
-                    $.each(data, function (i, item) {
-                        $('#Studsnts').append($('<option></option>').val(item.Key).text(item.Value));
-                    });
-
-                }
-            }
-        });
-    }
-    </script>
 }

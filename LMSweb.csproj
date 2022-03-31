@@ -1430,6 +1430,8 @@
     <Content Include="Views\Teacher\StuChat.cshtml" />
     <Content Include="Views\LearningBehaviors\TeacherJourney.cshtml" />
     <Content Include="Views\LearningBehaviors\TeacherEvalutionJourney.cshtml" />
+    <Content Include="Views\LearningBehaviors\TeacherJourneyR.cshtml" />
+    <Content Include="Views\LearningBehaviors\TeacherEvalutionJourneyR.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

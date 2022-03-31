@@ -6,8 +6,7 @@
     ViewBag.Title = "學習表現";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
     //小組成果
-    var Teachercourse = 0;
-    var Classcourse = 0;
+
     string s = "";
     string gs = "";
     string TAnser = "";
@@ -35,7 +34,7 @@
     {
         foreach (var i in Model.GSelfER)//自我評價 小組平均
         {
-            if(item.SID == i.SID)
+            if (item.SID == i.SID)
             {
                 if (i.DQID == 20)
                 {
@@ -99,23 +98,17 @@
         }
     }
     //計算自我評價小組平均
-    if(selfContributeCount != 0)
-    {
-        selfDiscuss = selfDiscuss / selfDiscussCount;
-        selfDraw = selfDraw / selfDrawCount;
-        selfCode = selfCode / selfCodeCount;
-        selfContribute = selfContribute / selfContributeCount;
-    }
-    if (peerDiscussCount != 0)
-    {
-        peerDiscuss = peerDiscuss / peerDiscussCount;
-        peerDraw = peerDraw / peerDrawCount;
-        peerCode = peerCode / peerCodeCount;
-        peerContribute = peerContribute / peerContributeCount;
-    }
+    selfDiscuss = selfDiscuss / selfDiscussCount;
+    selfDraw = selfDraw / selfDrawCount;
+    selfCode = selfCode / selfCodeCount;
+    selfContribute = selfContribute / selfContributeCount;
     //同儕互評小組均
+    peerDiscuss = peerDiscuss / peerDiscussCount;
+    peerDraw = peerDraw / peerDrawCount;
+    peerCode = peerCode / peerCodeCount;
+    peerContribute = peerContribute / peerContributeCount;
     //總攬
-    var SEvalution = ((Model.SelfDraw) + (Model.SelfCode) + (Model.SelfDiscuss) + (Model.SelfContribute)) /4;//自我評價分數
+    var SEvalution = ((Model.SelfDraw) + (Model.SelfCode) + (Model.SelfDiscuss) + (Model.SelfContribute)) / 4;//自我評價分數
     SEvalution = Math.Round((SEvalution), 1, MidpointRounding.ToEven);
 
     double GSEvalution = (selfDiscuss + selfDraw + selfCode + selfContribute) / 4; //自我評價分數 小組平均
@@ -133,19 +126,19 @@
     var CPEvalution = ((Model.classPeerDraw) + (Model.classPeerCode) + (Model.classPeerDiscuss) + (Model.classPeerContribute)) / 4;////同儕互評分數 全班平均
     CPEvalution = Math.Round((CPEvalution), 1, MidpointRounding.ToEven);
 
-    var gResults = Math.Round((((Model.TeacherScore) + (Model.GroupScore)) / 2),1, MidpointRounding.ToEven);// 小組成果分數
-    var CgResults = Math.Round((((Model.classTeacherScore) + (Model.classGroupScore)) / 2),1, MidpointRounding.ToEven);// 小組成果分數全班平均
+    var gResults = Math.Round((((Model.TeacherScore) + (Model.GroupScore)) / 2), 1, MidpointRounding.ToEven);// 小組成果分數
+    var CgResults = Math.Round((((Model.classTeacherScore) + (Model.classGroupScore)) / 2), 1, MidpointRounding.ToEven);// 小組成果分數全班平均
 }
 
 <div class="article">
     @*<form class="row row-cols-lg-auto g-8 align-items-center">
-        <div class="col-12">
-            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-            <p>
-                @Html.DropDownListFor(m => Model.missions, new SelectList(Model.missions, "MID", "MName"), "請選擇任務", new { id = "Missions" })
-            </p>
-        </div>
-    </form>*@
+            <div class="col-12">
+                <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                <p>
+                    @Html.DropDownListFor(m => Model.missions, new SelectList(Model.missions, "MID", "MName"), "請選擇任務", new { id = "Missions" })
+                </p>
+            </div>
+        </form>*@
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-bar-tab" data-bs-toggle="tab" data-bs-target="#nav-bar" type="button" role="tab" aria-controls="nav-bar" aria-selected="true">總覽</button>
@@ -238,7 +231,7 @@
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-10">
@@ -541,7 +534,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </p>
         </div>
         <!--小組成果-->
@@ -796,7 +789,7 @@
                 //pointRadius: 5,
                 //pointHoverRadius: 10,
                 //data: jsPoint
-                data: [@Model.PeerDraw, @Model.PeerCode,@Model.PeerDiscuss,@Model.PeerContribute]
+                data: [@peerDraw, @peerCode, @peerDiscuss,@peerContribute]
             },
             {
                 label: "全組平均",
@@ -810,7 +803,7 @@
                 //pointRadius: 5,
                 //pointHoverRadius: 10,
                 //data: jsPoint
-                data: [@peerDraw, @peerCode, @peerDiscuss,@peerContribute]
+                data: [3, 2,1,1]
             },
             {
                 label: "全班平均",
@@ -909,11 +902,11 @@
 @section scripts
 {
     @*<script type="text/javascript" language="javascript">
-        $(document).ready(function () {
-            $('#Missions').change(function () {
-                selectedMID = $('#Missions option:selected').val();
-                console.log(selectedMID)
+            $(document).ready(function () {
+                $('#Missions').change(function () {
+                    selectedMID = $('#Missions option:selected').val();
+                    console.log(selectedMID)
+                });
             });
-        });
-    </script>*@
+        </script>*@
 }
