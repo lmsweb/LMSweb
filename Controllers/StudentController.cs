@@ -302,7 +302,7 @@ namespace LMSweb.Controllers
                     Directory.CreateDirectory(filePath);
                 }
                 string newFileName = string.Concat(
-                    (model.GName + "-" + model.MID),
+                    (model.GName + "-" + model.MID + DateTime.Now.ToString("yyMMddHHmmss")),
                     Path.GetExtension(file.FileName).ToLower());
 
                 string fullFilePath = Path.Combine(Server.MapPath(imgfileSavedPath), newFileName);
