@@ -1089,6 +1089,5 @@ namespace LMSweb.Controllers
                 return query.ToList();
             }
         }
-        
     }
 }

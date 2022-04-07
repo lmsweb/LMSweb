@@ -256,29 +256,29 @@
                                     if (Model.SID == "")
                                     {
                                         <strong>自我評價分數: @GSEvalution 分</strong><br />
-                                        if (SEvalution > CSEvalution)
+                                        if (GSEvalution > CSEvalution)
                                         {
                                             s = "高於全班平均";
                                         }
-                                        if (SEvalution < CSEvalution)
+                                        if (GSEvalution < CSEvalution)
                                         {
                                             s = "低於全班平均";
                                         }
-                                        if (SEvalution == CSEvalution)
+                                        if (GSEvalution == CSEvalution)
                                         {
                                             s = "等於全班平均";
                                         }
                                         <h10>&emsp;&emsp;@s @CSEvalution 分</h10><br />
                                         <strong>同儕互評分數: @GPEvalution 分</strong><br />
-                                        if (PEvalution > CPEvalution)
+                                        if (GPEvalution > CPEvalution)
                                         {
                                             s = "高於全班平均";
                                         }
-                                        if (PEvalution < CPEvalution)
+                                        if (GPEvalution < CPEvalution)
                                         {
                                             s = "低於全班平均";
                                         }
-                                        if (PEvalution == CPEvalution)
+                                        if (GPEvalution == CPEvalution)
                                         {
                                             s = "等於全班平均";
                                         }
@@ -817,10 +817,21 @@
                                     <strong>教師評語 :</strong><br />
                                     foreach (var qo in Model.TeacherER)
                                     {
-                                        if (qo.GQID == 4 && (qo.EvaluatorSID == "T004" || qo.EvaluatorSID == "T001") && qo.MID == Model.MID)
+                                        if (Model.MID != "")
                                         {
-                                            @qo.Answer;
+                                            if (qo.GQID == 4 && (qo.EvaluatorSID == "T004" || qo.EvaluatorSID == "T001") && qo.MID == Model.MID)
+                                            {
+                                                @qo.Answer;
+                                            }
                                         }
+                                        if (Model.MID == "")
+                                        {
+                                            if (qo.GQID == 4 && (qo.EvaluatorSID == "T004" || qo.EvaluatorSID == "T001"))
+                                            {
+                                                @qo.Answer;
+                                            }
+                                        }
+
                                     }
                                 }
                                 @if (Model.GID == 0)
@@ -1189,7 +1200,7 @@
             });
         });
         function Send() {
-            location.href = "/LearningBehaviors/TeacherEvalutionJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID + "&sid=" + selectedSID;
+            location.href = "/LMSweb/LearningBehaviors/TeacherEvalutionJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID + "&sid=" + selectedSID;
         }
         function ChangeStudent() {
             var selectedValue = $('#Groups option:selected').val();
