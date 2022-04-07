@@ -4,7 +4,7 @@
 
 @{
     ViewBag.Title = "學習表現";
-    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
     var Classcourse = 0;
     var ClasscourseCount = 0;
 }
@@ -22,9 +22,13 @@
             <p>
                 @Html.DropDownListFor(m => Model.Groups, new SelectList(Model.Groups, "GID", "GName"), "請選擇組別", new { id = "Groups" })
             </p>
-
         </div>
     </form>
+    <div class="col-12">
+        <p>
+            <button onclick="Send()">篩選</button>
+        </p>
+    </div>
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link" id="nav-groupbar-tab" data-bs-toggle="tab" data-bs-target="#nav-groupbar" type="button" role="tab" aria-controls="nav-groupbar" aria-selected="true">小組成果</button>
@@ -43,43 +47,19 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-
-
-                                @foreach (var qo in Model.ClassER)
-                                {
-                                    if (qo.GQID == 1 && qo.EvaluatorSID == "T001")
-                                    {
-                                        var answer = Convert.ToInt32(qo.Answer) * 8;
-                                        Classcourse = Classcourse + answer;
-                                        ClasscourseCount++;
-                                    }
-                                    if (qo.GQID == 2 && qo.EvaluatorSID == "T001")
-                                    {
-                                        var answer = Convert.ToInt32(qo.Answer) * 8;
-                                        Classcourse = Classcourse + answer;
-                                        ClasscourseCount++;
-                                    }
-                                    if (qo.GQID == 3 && qo.EvaluatorSID == "T001")
-                                    {
-                                        var answer = Convert.ToInt32(qo.Answer) * 4;
-                                        Classcourse = Classcourse + answer;
-                                        ClasscourseCount++;
-                                    }
-
-                                }
-                                @{
-                                    Classcourse = Classcourse / ClasscourseCount;
-                                }
-                                <strong>教師評分 : @Classcourse 分</strong>
+                                <strong>教師評分 :</strong>
                                 <br />
-                                <strong>教師評語 :</strong><br />
-                                @foreach (var qo in Model.TeacherER)
-                                {
-                                    if (qo.GQID == 1002 && qo.EvaluatorSID == "T001")
+                                &emsp;&emsp;全班平均: @Model.classTeacherScore 分
+                                <br />
+                                @*<strong>教師評語 :</strong><br />
+                                    @foreach (var qo in Model.TeacherER)
                                     {
-                                        @qo.Answer;<br />
+                                        if (qo.GQID == 4 && qo.EvaluatorSID == "T004" && qo.MID == Model.MID)
+                                        {
+                                            TAnser = qo.Answer;
+                                        }
                                     }
-                                }
+                                    &emsp;&emsp;@TAnser*@
                             </div>
                         </div>
                     </div>
@@ -96,7 +76,6 @@
         </div>
     </div>
 </div>
-
 <!-- 小組成果 -->
 <script>
     var ctx = document.getElementById("groupbar");
@@ -109,7 +88,7 @@
                 backgroundColor: [
                     'rgb(54, 162, 235)'
                 ],
-                data: [@Classcourse]
+                data: [@Model.classTeacherScore]
             }],
         },
         options: {
@@ -143,31 +122,32 @@
 @section scripts
 {
     <script type="text/javascript" language="javascript">
+        var cid = '@Model.CID';
+        $('#Groups option:selected').val(0);
+        var selectedMID = $('#Missions option:selected').val();
+        var selectedGID = $('#Groups option:selected').val();
         $(document).ready(function () {
-            var selectedMID = $('#Missions option:selected').val();
-            var selectedGID = $('#Groups option:selected').val();
             $('#Missions').change(function () {
                 selectedMID = $('#Missions option:selected').val();
                 console.log(selectedMID)
             });
             $('#Groups').change(function () {
                 selectedGID = $('#Groups option:selected').val();
-                console.log(selectedGID)
-                $.ajax({
-                url: '@Url.Action("TeacherJourneyR","LearningBehaviors")',
-                method: "post",
-                contentType: 'application/json',
-                data: JSON.stringify({cid: "@Model.CID",mid: selectedMID, gid: selectedGID }),
-                success: function (response) {
-                    window.location.reload();
-                },
-                error: function (thrownError) {
-                    console.log(thrownError);
-                }
+                console.log(selectedGID);
             });
-            });
-
         });
+        function Send() {
+            location.href = "/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
+            //if (selectedMID == "") {
+            //    console.log("MidNull");
+            //};
+            //if (selectedGID == "") {
+            //    console.log("GidNull");
+            //};
+            //if (selectedMID != "" && selectedGID != "") {
+            //    location.href = "/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
+            //};
+        }
     </script>
 }
 

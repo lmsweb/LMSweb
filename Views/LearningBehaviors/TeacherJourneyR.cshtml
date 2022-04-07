@@ -24,15 +24,20 @@
             <p>
                 @Html.DropDownListFor(m => Model.Groups, new SelectList(Model.Groups, "GID", "GName"), "請選擇組別", new { id = "Groups" })
             </p>
-
         </div>
     </form>
+    <div class="col-12">
+        <p>
+            <button onclick="Send()">篩選</button>
+        </p>
+    </div>
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link" id="nav-groupbar-tab" data-bs-toggle="tab" data-bs-target="#nav-groupbar" type="button" role="tab" aria-controls="nav-groupbar" aria-selected="true">小組成果</button>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
+
         <!--小組成果-->
         <div class="tab-pane fade show active" id="nav-groupbar" role="tabpanel" aria-labelledby="nav-groupbar-tab">
             <p>
@@ -45,78 +50,61 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <strong>教師評分 :</strong>
-                                @foreach (var qo in Model.TeacherER)
+                                @if (Model.GID != 0)
                                 {
-                                    if (qo.GQID == 1 && qo.EvaluatorSID == "T001")
+                                    <strong>教師評分 :@Model.TeacherScore 分</strong>
+                                    <br />
+                                    if (Model.TeacherScore > Model.classTeacherScore)
                                     {
-                                        var answer = Convert.ToInt32(qo.Answer) * 8;
-                                        Teachercourse = Teachercourse + answer;
+                                        s = "高於全班平均";
                                     }
-                                    if (qo.GQID == 2 && qo.EvaluatorSID == "T001")
+                                    if (Model.TeacherScore < Model.classTeacherScore)
                                     {
-                                        var answer = Convert.ToInt32(qo.Answer) * 8;
-                                        Teachercourse = Teachercourse + answer;
+                                        s = "低於全班平均";
                                     }
-                                    if (qo.GQID == 3 && qo.EvaluatorSID == "T001")
+                                    if (Model.TeacherScore == Model.classTeacherScore)
                                     {
-                                        var answer = Convert.ToInt32(qo.Answer) * 4;
-                                        Teachercourse = Teachercourse + answer;
+                                        s = "等於全班平均";
                                     }
+                                    <h14>@s @Model.classTeacherScore 分</h14>
+                                    <br />
+                                    <strong>教師評語 :</strong><br />
+                                    foreach (var qo in Model.TeacherER)
+                                    {
+                                        if (Model.MID == "")
+                                        {
+                                            if (qo.GQID == 4 && qo.EvaluatorSID == "T004")
+                                            {
+                                                @qo.Answer;<br />
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (qo.GQID == 4 && qo.EvaluatorSID == "T004" && qo.MID == Model.MID)
+                                            {
+                                                TAnser = qo.Answer;
+                                            }
+                                        }
+                                    }
+                                    @TAnser
                                 }
-                                @foreach (var qo in Model.ClassER)
+                                @if (Model.GID == 0)
                                 {
-                                    if (qo.GQID == 1 && qo.EvaluatorSID == "T001")
-                                    {
-                                        var answer = Convert.ToInt32(qo.Answer) * 8;
-                                        Classcourse = Classcourse + answer;
-                                    }
-                                    if (qo.GQID == 2 && qo.EvaluatorSID == "T001")
-                                    {
-                                        var answer = Convert.ToInt32(qo.Answer) * 8;
-                                        Classcourse = Classcourse + answer;
-                                    }
-                                    if (qo.GQID == 3 && qo.EvaluatorSID == "T001")
-                                    {
-                                        var answer = Convert.ToInt32(qo.Answer) * 4;
-                                        Classcourse = Classcourse + answer;
-                                    }
-
+                                    <strong>教師評分 :@Model.classTeacherScore 分</strong>
+                                    <br />
                                 }
-                                @{
-                                    Classcourse = Classcourse / Model.Teachercourse;
-                                }
-                                @Teachercourse 分
-                                <br />
-                                @if (Teachercourse > Classcourse)
-                                {
-                                    s = "高於全班平均";
-                                }
-                                @if (Teachercourse < Classcourse)
-                                {
-                                    s = "低於全班平均";
-                                }
-                                @if (Teachercourse == Classcourse)
-                                {
-                                    s = "等於全班平均";
-                                }
-                                &emsp;&emsp;@s
-                                <br />
-                                <strong>教師評語 :</strong><br />
-                                @foreach (var qo in Model.TeacherER)
-                                {
-                                    if (qo.GQID == 1002 && qo.EvaluatorSID == "T001")
-                                    {
-                                        @qo.Answer;
-                                    }
-                                }
-                                @*&emsp;&emsp;@TAnser*@
                             </div>
                         </div>
                     </div>
                 </div>
-                <script src="../Scripts/Chart.min.js"></script>
-                <canvas id="groupbar"></canvas>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-10">
+                            <script src="../Scripts/Chart.min.js"></script>
+                            <canvas id="groupbar"></canvas>
+                        </div>
+                    </div>
+                </div>
             </p>
         </div>
     </div>
@@ -129,19 +117,22 @@
         type: "bar",
         data: {
             labels: ['教師評分'],
+
             datasets: [{
                 label: "小組分數",
+                fontSize: 24,
                 backgroundColor: [
                     'rgb(255, 99, 132)'
                 ],
-                data: [@Teachercourse]
+                data: [@Model.TeacherScore]
             },
             {
                 label: "全班平均",
+                fontSize: 24,
                 backgroundColor: [
                     'rgb(54, 162, 235)'
                 ],
-                data: [@Classcourse]
+                data: [@Model.classTeacherScore]
             }],
         },
         options: {
@@ -153,19 +144,19 @@
             },
             title: {
                 display: true,
-                fontSize: 26,
+                fontSize: 24,
                 text: '小組成果'
             },
             scales: {
                 xAxes: [{
                     ticks: {
-                        fontSize: 24
+                        fontSize: 18
                     },
                 }],
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        fontSize: 24
+                        fontSize: 14
                     },
                 }]
             }
@@ -175,31 +166,32 @@
 @section scripts
 {
     <script type="text/javascript" language="javascript">
+        var cid = '@Model.CID';
+        $('#Groups option:selected').val(0);
+        var selectedMID = $('#Missions option:selected').val();
+        var selectedGID = $('#Groups option:selected').val();
         $(document).ready(function () {
-            var selectedMID = $('#Missions option:selected').val();
-            var selectedGID = $('#Groups option:selected').val();
             $('#Missions').change(function () {
                 selectedMID = $('#Missions option:selected').val();
                 console.log(selectedMID)
             });
             $('#Groups').change(function () {
                 selectedGID = $('#Groups option:selected').val();
-                console.log(selectedGID)
-                $.ajax({
-                url: '@Url.Action("TeacherJourneyR")',
-                method: "post",
-                contentType: 'application/json',
-                data: JSON.stringify({cid: "@Model.CID",mid: selectedMID, gid: selectedGID }),
-                success: function (response) {
-                    window.location.reload();
-                },
-                error: function (thrownError) {
-                    console.log(thrownError);
-                }
+                console.log(selectedGID);
             });
-            });
-
         });
+        function Send() {
+            location.href = "/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
+            //if (selectedMID == "") {
+            //    console.log("MidNull");
+            //};
+            //if (selectedGID == "") {
+            //    console.log("GidNull");
+            //};
+            //if (selectedMID != "" && selectedGID != "") {
+            //    location.href = "/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
+            //};
+        }
     </script>
 }
 
