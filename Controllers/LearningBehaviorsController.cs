@@ -158,10 +158,10 @@ namespace LMSweb.Controllers
             i = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Count();
             if(i != 0)
             {
-                SelfDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 1 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                SelfDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 2 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                SelfCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 3 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                SelfContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 4 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                SelfDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                SelfDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                SelfCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                SelfContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             }
             vm.SelfDiscuss = Math.Round(SelfDiscuss, 1, MidpointRounding.ToEven);
             vm.SelfDraw = Math.Round(SelfDraw, 1, MidpointRounding.ToEven);
@@ -171,10 +171,10 @@ namespace LMSweb.Controllers
             i = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Count();
             if (i != 0)
             {
-                classSelfDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 1 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classSelfDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 2 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classSelfCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 3 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classSelfContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 4 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classSelfDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classSelfDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classSelfCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classSelfContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
 
             }
             vm.classSelfDiscuss = Math.Round(classSelfDiscuss, 1, MidpointRounding.ToEven);
@@ -194,10 +194,10 @@ namespace LMSweb.Controllers
             i = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Count();
             if (i != 0)
             {
-                PeerDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 1 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                PeerDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 2 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                PeerCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 3 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                PeerContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 4 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                PeerDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                PeerDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                PeerCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                PeerContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID != sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
 
             }
             vm.PeerDiscuss = Math.Round(PeerDiscuss, 1, MidpointRounding.ToEven);
@@ -207,10 +207,10 @@ namespace LMSweb.Controllers
             i = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Count();
             if(i != 0)
             {
-                classPeerDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 1 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classPeerDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 2 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classPeerCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 3 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classPeerContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 4 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classPeerDiscuss = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 20 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classPeerDraw = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 21 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classPeerCode = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 22 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classPeerContribute = db.EvalutionResponse.Where(p => p.CID == cid && p.DQID == 23 && p.SID != p.EvaluatorSID && p.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             }
             vm.classPeerDiscuss = Math.Round(classPeerDiscuss, 1, MidpointRounding.ToEven);
             vm.classPeerDraw = Math.Round(classPeerDraw, 1, MidpointRounding.ToEven);
