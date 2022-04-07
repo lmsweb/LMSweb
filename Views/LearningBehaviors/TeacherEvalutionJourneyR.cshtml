@@ -473,7 +473,7 @@
                                         {
                                             if (qo.DQID == 27)
                                             {
-                                                @qo.Answer;<br />
+                                                <h>&emsp; &emsp;@qo.Answer</h><br />
                                             }
                                         }
                                     }
@@ -719,7 +719,7 @@
                                             {
                                                 if (qo.DQID == 27)
                                                 {
-                                                    @qo.Answer;<br />
+                                                    <h>&emsp; &emsp;@qo.Answer</h><br />
                                                 }
                                             }
                                         }
@@ -871,21 +871,21 @@
                                         {
                                             if (qo.GQID == 4 && (qo.EvaluatorSID == "T004") && qo.MID == Model.MID)
                                             {
-                                                @qo.Answer;
+                                                <h>&emsp; &emsp;@qo.Answer</h>
                                             }
                                         }
                                         if (Model.MID == "")
                                         {
                                             if (qo.GQID == 4 && (qo.EvaluatorSID == "T004"))
                                             {
-                                                @qo.Answer;<br />
+                                                <h>&emsp; &emsp;@qo.Answer</h><br />
                                             }
                                         }
                                     }
                                 }
                                 @if (Model.GID == 0)
                                 {
-                                    <strong>教師評分 :@Model.classTeacherScore 分</strong>
+                                    <strong>教師評分: @Model.classTeacherScore 分</strong>
                                     <br />
                                 }
 
@@ -918,10 +918,10 @@
                                     }
                                     <h10>&emsp;&emsp;@s @Model.classGroupScore 分</h10>
                                     <br />
-                                    <strong>同儕評語 :</strong><br />
+                                    <strong>同儕評語:</strong><br />
                                     foreach (var qo in Model.GroupComments)
                                     {
-                                        <h>&emsp;&emsp;@qo.Answer;</h>
+                                        <h>&emsp;&emsp;@qo.Answer</h>
                                         <br />
                                     }
                                 }
