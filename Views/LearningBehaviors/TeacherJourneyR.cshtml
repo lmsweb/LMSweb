@@ -12,7 +12,7 @@
 }
 
 <div class="article">
-    <form class="row row-cols-lg-auto g-8 align-items-center">
+    <div class="row row-cols-lg-auto g-8 align-items-center">
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
             <p>
@@ -25,17 +25,13 @@
                 @Html.DropDownListFor(m => Model.Groups, new SelectList(Model.Groups, "GID", "GName"), "請選擇組別", new { id = "Groups" })
             </p>
         </div>
-    </form>
-    <div class="col-12">
-        <p>
-            <button onclick="Send()">篩選</button>
-        </p>
-    </div>
-    <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link" id="nav-groupbar-tab" data-bs-toggle="tab" data-bs-target="#nav-groupbar" type="button" role="tab" aria-controls="nav-groupbar" aria-selected="true">小組成果</button>
+        <div class="col-12">
+            <p>
+                <button onclick="Send()">篩選</button>
+            </p>
         </div>
-    </nav>
+    </div>
+    
     <div class="tab-content" id="nav-tabContent">
 
         <!--小組成果-->
@@ -100,8 +96,16 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-10">
-                            <script src="../Scripts/Chart.min.js"></script>
-                            <canvas id="groupbar"></canvas>
+                            @if (Model.GID != 0)
+                            {
+                                <script src="../Scripts/Chart.min.js"></script>
+                                <canvas id="groupbar"></canvas>
+                            }
+                            @if (Model.GID == 0)
+                            {
+                                <script src="../Scripts/Chart.min.js"></script>
+                                <canvas id="noGidgroupbar"></canvas>
+                            }
                         </div>
                     </div>
                 </div>
@@ -163,6 +167,54 @@
         }
     });
 </script>
+
+<!-- 小組成果 沒有組別-->
+<script>
+    var ctx = document.getElementById("noGidgroupbar");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ['教師評分'],
+
+            datasets: [
+            {
+                label: "全班平均",
+                fontSize: 24,
+                backgroundColor: [
+                    'rgb(54, 162, 235)'
+                ],
+                data: [@Model.classTeacherScore]
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            },
+            title: {
+                display: true,
+                fontSize: 24,
+                text: '小組成果'
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 18
+                    },
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontSize: 14
+                    },
+                }]
+            }
+        }
+    });
+</script>
+
 @section scripts
 {
     <script type="text/javascript" language="javascript">
@@ -181,7 +233,8 @@
             });
         });
         function Send() {
-            location.href = "/LMSweb/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
+            //location.href = "/LMSweb/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
+            location.href = "/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
             //if (selectedMID == "") {
             //    console.log("MidNull");
             //};

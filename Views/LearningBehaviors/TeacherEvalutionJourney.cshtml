@@ -132,7 +132,7 @@
 }
 
 <div class="article">
-    <form class="row row-cols-lg-auto g-8 align-items-center">
+    <div class="row row-cols-lg-auto g-8 align-items-center">
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
             <p>
@@ -151,12 +151,13 @@
                 <select id="Studsnts" name="students"><option>請先選擇組別</option></select>
             </p>
         </div>
-    </form>
-    <div class="col-12">
-        <p>
-            <button onclick="Send()">篩選</button>
-        </p>
+        <div class="col-12">
+            <p>
+                <button onclick="Send()">篩選</button>
+            </p>
+        </div>
     </div>
+    
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-bar-tab" data-bs-toggle="tab" data-bs-target="#nav-bar" type="button" role="tab" aria-controls="nav-bar" aria-selected="true">總覽</button>
@@ -361,7 +362,7 @@
                 //label: jsPoint[0].StudentName,
                 fill: false,
                 //backgroundColor: 'rgba(255,165,255,0.3)',
-                borderColor: 'rgb(255,35,100)',
+                borderColor: 'rgb(255, 206, 86)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -462,7 +463,7 @@
                 //label: jsPoint[0].StudentName,
                 fill: false,
                 //backgroundColor: 'rgba(255,165,255,0.3)',
-                borderColor: 'rgb(255,35,100)',
+                borderColor: 'rgb(255, 206, 86)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -507,8 +508,8 @@
                 label: "全班平均",
                 fontSize: 18,
                 backgroundColor: [
-                    'rgb(54, 162, 235)',
-                    'rgb(54, 162, 235)'
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)'
                 ],
                 data: [@Model.classTeacherScore ,@Model.classGroupScore]
             }],

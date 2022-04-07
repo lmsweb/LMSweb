@@ -10,7 +10,7 @@
 }
 
 <div class="article">
-    <form class="row row-cols-lg-auto g-8 align-items-center">
+    <div class="row row-cols-lg-auto g-8 align-items-center">
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
             <p>
@@ -23,17 +23,13 @@
                 @Html.DropDownListFor(m => Model.Groups, new SelectList(Model.Groups, "GID", "GName"), "請選擇組別", new { id = "Groups" })
             </p>
         </div>
-    </form>
-    <div class="col-12">
-        <p>
-            <button onclick="Send()">篩選</button>
-        </p>
-    </div>
-    <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link" id="nav-groupbar-tab" data-bs-toggle="tab" data-bs-target="#nav-groupbar" type="button" role="tab" aria-controls="nav-groupbar" aria-selected="true">小組成果</button>
+        <div class="col-12">
+            <p>
+                <button onclick="Send()">篩選</button>
+            </p>
         </div>
-    </nav>
+    </div>
+
     <div class="tab-content" id="nav-tabContent">
         <!--小組成果-->
         <div class="tab-pane fade show active" id="nav-groupbar" role="tabpanel" aria-labelledby="nav-groupbar-tab">
@@ -137,7 +133,9 @@
             });
         });
         function Send() {
-            location.href = "/LMSweb/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
+            //location.href = "/LMSweb/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
+            location.href = "/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
+
             //if (selectedMID == "") {
             //    console.log("MidNull");
             //};

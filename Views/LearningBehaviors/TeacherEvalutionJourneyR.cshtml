@@ -30,7 +30,7 @@
     var peerContributeCount = 0;
 
 
-    if(Model.GID != 0)
+    if (Model.GID != 0)
     {
         foreach (var item in Model.student)
         {
@@ -134,7 +134,7 @@
 }
 
 <div class="article">
-    <form class="row row-cols-lg-auto g-8 align-items-center">
+    <div class="row row-cols-lg-auto g-8 align-items-center">
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
             <p>
@@ -153,12 +153,13 @@
                 <select id="Studsnts" name="students"><option>請先選擇組別</option></select>
             </p>
         </div>
-    </form>
-    <div class="col-12">
-        <p>
-            <button onclick="Send()">篩選</button>
-        </p>
+        <div class="col-12">
+            <p>
+                <button onclick="Send()">篩選</button>
+            </p>
+        </div>
     </div>
+
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-bar-tab" data-bs-toggle="tab" data-bs-target="#nav-bar" type="button" role="tab" aria-controls="nav-bar" aria-selected="true">總覽</button>
@@ -315,8 +316,25 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-10">
-                            <script src="../Scripts/Chart.min.js"></script>
-                            <canvas id="bar"></canvas>
+                            @if (Model.GID != 0)
+                            {
+                                if (Model.SID != "")
+                                {
+                                    <script src="../Scripts/Chart.min.js"></script>
+                                    <canvas id="bar"></canvas>
+                                }
+                                if (Model.SID == "")
+                                {
+                                    <script src="../Scripts/Chart.min.js"></script>
+                                    <canvas id="gidbar"></canvas>
+                                }
+                            }
+                            @if (Model.GID == 0)
+                            {
+                                <script src="../Scripts/Chart.min.js"></script>
+                                <canvas id="midbar"></canvas>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -526,7 +544,6 @@
                                         <h10>&emsp;&emsp;@s @Model.classSelfContribute 分</h10>
                                     }
                                 }
-                                }
                                 @if (Model.GID == 0)
                                 {
                                     <strong>參與討論 :@Model.classSelfDiscuss 分</strong><br />
@@ -537,7 +554,6 @@
 
                                     <strong>成果貢獻:@Model.classSelfContribute  分</strong><br />
                                 }
-
                             </div>
                         </div>
                     </div>
@@ -545,8 +561,25 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-12">
-                            <script src="../Scripts/Chart.min.js"></script>
-                            <canvas id="Radar"></canvas>
+                            @if (Model.GID != 0)
+                            {
+                                if (Model.SID != "")
+                                {
+                                    <script src="../Scripts/Chart.min.js"></script>
+                                    <canvas id="Radar"></canvas>
+                                }
+                                if (Model.SID == "")
+                                {
+                                    <script src="../Scripts/Chart.min.js"></script>
+                                    <canvas id="gidRadar"></canvas>
+                                }
+                            }
+                            @if (Model.GID == 0)
+                            {
+                                <script src="../Scripts/Chart.min.js"></script>
+                                <canvas id="midRadar"></canvas>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -776,8 +809,25 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-12">
-                            <script src="../Scripts/Chart.min.js"></script>
-                            <canvas id="peerRadar"></canvas>
+                            @if (Model.GID != 0)
+                            {
+                                if (Model.SID != "")
+                                {
+                                    <script src="../Scripts/Chart.min.js"></script>
+                                    <canvas id="peerRadar"></canvas>
+                                }
+                                if (Model.SID == "")
+                                {
+                                    <script src="../Scripts/Chart.min.js"></script>
+                                    <canvas id="gidpeerRadar"></canvas>
+                                }
+                            }
+                            @if (Model.GID == 0)
+                            {
+                                <script src="../Scripts/Chart.min.js"></script>
+                                <canvas id="midpeerRadar"></canvas>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -819,19 +869,18 @@
                                     {
                                         if (Model.MID != "")
                                         {
-                                            if (qo.GQID == 4 && (qo.EvaluatorSID == "T004" || qo.EvaluatorSID == "T001") && qo.MID == Model.MID)
+                                            if (qo.GQID == 4 && (qo.EvaluatorSID == "T004") && qo.MID == Model.MID)
                                             {
                                                 @qo.Answer;
                                             }
                                         }
                                         if (Model.MID == "")
                                         {
-                                            if (qo.GQID == 4 && (qo.EvaluatorSID == "T004" || qo.EvaluatorSID == "T001"))
+                                            if (qo.GQID == 4 && (qo.EvaluatorSID == "T004"))
                                             {
-                                                @qo.Answer;
+                                                @qo.Answer;<br />
                                             }
                                         }
-
                                     }
                                 }
                                 @if (Model.GID == 0)
@@ -887,8 +936,25 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-10">
-                            <script src="../Scripts/Chart.min.js"></script>
-                            <canvas id="groupbar"></canvas>
+                            @if (Model.GID != 0)
+                            {
+                                if (Model.SID != "")
+                                {
+                                    <script src="../Scripts/Chart.min.js"></script>
+                                    <canvas id="groupbar"></canvas>
+                                }
+                                if (Model.SID == "")
+                                {
+                                    <script src="../Scripts/Chart.min.js"></script>
+                                    <canvas id="gidgroupbar"></canvas>
+                                }
+                            }
+                            @if (Model.GID == 0)
+                            {
+                                <script src="../Scripts/Chart.min.js"></script>
+                                <canvas id="midgroupbar"></canvas>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -897,6 +963,461 @@
     </div>
 </div>
 
+<!-- mid -->
+<!-- 自我評價 -->
+<script>
+    //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
+    var ctx = document.getElementById("midRadar");
+    var chart = new Chart(ctx, {
+        type: "radar",
+        data: {
+            labels: ['規劃', '撰寫', '討論', '貢獻'],
+            //labels: jsName,
+            datasets: [
+            {
+                label: "全班平均",
+                fontSize: 24,
+                //label: jsPoint[0].StudentName,
+                fill: false,
+                //backgroundColor: 'rgba(255,165,255,0.3)',
+                borderColor: 'rgb(255, 206, 86)',
+                //pointStyle: "circle",
+                //pointBackgroundColor: 'rgb(0,222,0)',
+                //pointRadius: 5,
+                //pointHoverRadius: 10,
+                //data: jsPoint
+                data: [@Model.classSelfDraw, @Model.classSelfCode,@Model.classSelfDiscuss,@Model.classSelfContribute]
+            },]
+        },
+        options: {
+            responsive: true,
+
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '自我評價雷達圖'
+            },
+            tooltips: {
+                mode: 'point',
+                intersect: true,
+            },
+        },
+        scale: {
+            fontSize: 18,
+            ticks: {
+                fontSize:18,
+                beginAtZero: true,
+                min:0,
+                stepSize: 1,
+                pointLabels: {      //labels，軸的文字標籤(ex:攻擊)
+                    fontSize: 18
+                }
+            }
+        }
+    });
+</script>
+<!-- 總攬 -->
+<script>
+    var ctx = document.getElementById("midbar");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ['自我評價', '同儕互評', '小組成果'],
+            fontSize: 24,
+            datasets: [
+            {
+                label: "全班平均",
+                backgroundColor: [
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)'
+                ],
+                data: [@CSEvalution, @CPEvalution, @CgResults]
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    fontSize: 20,
+                    display: true,
+                }
+            },
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '學習表現'
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 18
+                    },
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontSize: 14
+                    },
+                }]
+            }
+        }
+    });
+</script>
+<!-- 同儕互評 -->
+<script>
+    //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
+    var ctx = document.getElementById("midpeerRadar");
+    var chart = new Chart(ctx, {
+        type: "radar",
+        data: {
+            labels: ['規劃', '撰寫', '討論', '貢獻'],
+            //labels: jsName,
+            datasets: [
+            {
+                label: "全班平均",
+                fontSize: 18,
+                //label: jsPoint[0].StudentName,
+                fill: false,
+                //backgroundColor: 'rgba(255,165,255,0.3)',
+                borderColor: 'rgb(255, 206, 86)',
+                //pointStyle: "circle",
+                //pointBackgroundColor: 'rgb(0,222,0)',
+                //pointRadius: 5,
+                //pointHoverRadius: 10,
+                //data: jsPoint
+                data: [@Model.classPeerDraw, @Model.classPeerCode, @Model.classPeerDiscuss,@Model.classPeerContribute]
+            },]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '同儕互評雷達圖'
+            },
+            tooltips: {
+                mode: 'point',
+                intersect: true,
+            },
+        },
+        scale: {
+            ticks: {
+                fontSize: 18,
+                beginAtZero: true,
+                min: 0,
+                pointLabels: {      //labels，軸的文字標籤(ex:攻擊)
+                    fontSize: 18
+                }
+            }
+        }
+    });
+</script>
+<!-- 小組成果 -->
+<script>
+    var ctx = document.getElementById("midgroupbar");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ['教師評分','同儕評分'],
+            datasets: [
+            {
+                label: "全班平均",
+                fontSize: 18,
+                backgroundColor: [
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)'
+                ],
+                data: [@Model.classTeacherScore ,@Model.classGroupScore]
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            },
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '小組成果'
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 14
+                    },
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontSize: 14
+                    },
+                }]
+            }
+        }
+    });
+</script>
+
+<!-- gid -->
+<!-- 自我評價 -->
+<script>
+    //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
+    var ctx = document.getElementById("gidRadar");
+    var chart = new Chart(ctx, {
+        type: "radar",
+        data: {
+            labels: ['規劃', '撰寫', '討論', '貢獻'],
+            //labels: jsName,
+            datasets: [
+            {
+                label: "全組平均",
+                fontSize: 24,
+                //label: jsPoint[0].StudentName,
+                fill: false,
+                //backgroundColor: 'rgba(255,165,255,0.3)',
+                borderColor: 'rgb(54, 162, 235)',
+                //pointStyle: "circle",
+                //pointBackgroundColor: 'rgb(0,222,0)',
+                //pointRadius: 5,
+                //pointHoverRadius: 10,
+                //data: jsPoint
+                data: [@selfDraw, @selfCode,@selfDiscuss,@selfContribute]
+            },
+            {
+                label: "全班平均",
+                fontSize: 24,
+                //label: jsPoint[0].StudentName,
+                fill: false,
+                //backgroundColor: 'rgba(255,165,255,0.3)',
+                borderColor: 'rgb(255, 206, 86)',
+                //pointStyle: "circle",
+                //pointBackgroundColor: 'rgb(0,222,0)',
+                //pointRadius: 5,
+                //pointHoverRadius: 10,
+                //data: jsPoint
+                data: [@Model.classSelfDraw, @Model.classSelfCode,@Model.classSelfDiscuss,@Model.classSelfContribute]
+            },]
+        },
+        options: {
+            responsive: true,
+
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '自我評價雷達圖'
+            },
+            tooltips: {
+                mode: 'point',
+                intersect: true,
+            },
+        },
+        scale: {
+            fontSize: 18,
+            ticks: {
+                fontSize:18,
+                beginAtZero: true,
+                min:0,
+                stepSize: 1,
+                pointLabels: {      //labels，軸的文字標籤(ex:攻擊)
+                    fontSize: 18
+                }
+            }
+        }
+    });
+</script>
+<!-- 總攬 -->
+<script>
+    var ctx = document.getElementById("gidbar");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ['自我評價', '同儕互評', '小組成果'],
+            fontSize: 24,
+            datasets: [
+            {
+                label: "全組平均",
+                backgroundColor: [
+                    'rgb(54, 162, 235)',
+                    'rgb(54, 162, 235)',
+                    'rgb(54, 162, 235)'
+                ],
+                data: [@GSEvalution, @GPEvalution, @gResults]
+            },
+            {
+                label: "全班平均",
+                backgroundColor: [
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)'
+                ],
+                data: [@CSEvalution, @CPEvalution, @CgResults]
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    fontSize: 20,
+                    display: true,
+                }
+            },
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '學習表現'
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 18
+                    },
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontSize: 14
+                    },
+                }]
+            }
+        }
+    });
+</script>
+<!-- 同儕互評 -->
+<script>
+    //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
+    var ctx = document.getElementById("gidpeerRadar");
+    var chart = new Chart(ctx, {
+        type: "radar",
+        data: {
+            labels: ['規劃', '撰寫', '討論', '貢獻'],
+            //labels: jsName,
+            datasets: [{
+                label: "@Model.SName",
+                fontSize: 18,
+                //label: jsPoint[0].StudentName,
+                fill: true,
+                backgroundColor: 'rgb(255,165,0,0.3)',
+                borderColor: 'rgb(255, 99, 132)',
+                //pointStyle: "circle",
+                //pointBackgroundColor: 'rgb(0,222,0)',
+                //pointRadius: 5,
+                //pointHoverRadius: 10,
+                //data: jsPoint
+                data: [@Model.PeerDraw, @Model.PeerCode, @Model.PeerDiscuss,@Model.PeerContribute]
+            },
+            {
+                label: "全組平均",
+                fontSize: 18,
+                //label: jsPoint[0].StudentName,
+                fill: false,
+                //backgroundColor: 'rgba(255,165,255,0.3)',
+                borderColor: 'rgb(54, 162, 235)',
+                //pointStyle: "circle",
+                //pointBackgroundColor: 'rgb(0,222,0)',
+                //pointRadius: 5,
+                //pointHoverRadius: 10,
+                //data: jsPoint
+                data: [@peerDraw, @peerCode, @peerDiscuss,@peerContribute]
+            },
+            {
+                label: "全班平均",
+                fontSize: 18,
+                //label: jsPoint[0].StudentName,
+                fill: false,
+                //backgroundColor: 'rgba(255,165,255,0.3)',
+                borderColor: 'rgb(255, 206, 86)',
+                //pointStyle: "circle",
+                //pointBackgroundColor: 'rgb(0,222,0)',
+                //pointRadius: 5,
+                //pointHoverRadius: 10,
+                //data: jsPoint
+                data: [@Model.classPeerDraw, @Model.classPeerCode, @Model.classPeerDiscuss,@Model.classPeerContribute]
+            },]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '同儕互評雷達圖'
+            },
+            tooltips: {
+                mode: 'point',
+                intersect: true,
+            },
+        },
+        scale: {
+            ticks: {
+                fontSize: 18,
+                beginAtZero: true,
+                min: 0,
+                pointLabels: {      //labels，軸的文字標籤(ex:攻擊)
+                    fontSize: 18
+                }
+            }
+        }
+    });
+</script>
+<!-- 小組成果 -->
+<script>
+    var ctx = document.getElementById("gidgroupbar");
+    var chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ['教師評分','同儕評分'],
+            datasets: [{
+                label: "小組分數",
+                fontSize: 18,
+                backgroundColor: [
+                    'rgb(54, 162, 235)',
+                    'rgb(54, 162, 235)'
+                ],
+                data: [@Model.TeacherScore ,@Model.GroupScore]
+            },
+            {
+                label: "全班平均",
+                fontSize: 18,
+                backgroundColor: [
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)'
+                ],
+                data: [@Model.classTeacherScore ,@Model.classGroupScore]
+            }],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            },
+            title: {
+                display: true,
+                fontSize: 26,
+                text: '小組成果'
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontSize: 14
+                    },
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontSize: 14
+                    },
+                }]
+            }
+        }
+    });
+</script>
+
+<!-- midgidsid -->
 <!-- 自我評價 -->
 <script>
     //var jsMonth = @@Html.Raw(ViewBag.JsonMonth);
@@ -912,7 +1433,7 @@
                 //label: jsPoint[0].StudentName,
                 fill: true,
                 backgroundColor: 'rgb(255,165,0,0.3)',
-                borderColor: 'rgb(255,135,20)',
+                borderColor: 'rgb(255, 99, 132)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -926,7 +1447,7 @@
                 //label: jsPoint[0].StudentName,
                 fill: false,
                 //backgroundColor: 'rgba(255,165,255,0.3)',
-                borderColor: 'rgb(55,235,200)',
+                borderColor: 'rgb(54, 162, 235)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -940,7 +1461,7 @@
                 //label: jsPoint[0].StudentName,
                 fill: false,
                 //backgroundColor: 'rgba(255,165,255,0.3)',
-                borderColor: 'rgb(255,35,100)',
+                borderColor: 'rgb(255, 206, 86)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -1057,7 +1578,7 @@
                 //label: jsPoint[0].StudentName,
                 fill: true,
                 backgroundColor: 'rgb(255,165,0,0.3)',
-                borderColor: 'rgb(255,135,20)',
+                borderColor: 'rgb(255, 99, 132)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -1071,7 +1592,7 @@
                 //label: jsPoint[0].StudentName,
                 fill: false,
                 //backgroundColor: 'rgba(255,165,255,0.3)',
-                borderColor: 'rgb(55,235,200)',
+                borderColor: 'rgb(54, 162, 235)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -1085,7 +1606,7 @@
                 //label: jsPoint[0].StudentName,
                 fill: false,
                 //backgroundColor: 'rgba(255,165,255,0.3)',
-                borderColor: 'rgb(255,35,100)',
+                borderColor: 'rgb(255, 206, 86)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -1129,8 +1650,8 @@
                 label: "小組分數",
                 fontSize: 18,
                 backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 99, 132)'
+                    'rgb(54, 162, 235)',
+                    'rgb(54, 162, 235)'
                 ],
                 data: [@Model.TeacherScore ,@Model.GroupScore]
             },
@@ -1138,8 +1659,8 @@
                 label: "全班平均",
                 fontSize: 18,
                 backgroundColor: [
-                    'rgb(54, 162, 235)',
-                    'rgb(54, 162, 235)'
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)'
                 ],
                 data: [@Model.classTeacherScore ,@Model.classGroupScore]
             }],

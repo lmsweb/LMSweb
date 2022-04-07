@@ -358,6 +358,7 @@ namespace LMSweb.Controllers
             }
             return View(vm);
         }
+
         public ActionResult TeacherEvalutionJourney(string cid)
         {
             var gqid = 1002.ToString();
@@ -621,6 +622,7 @@ namespace LMSweb.Controllers
                     else if(sid != "")//NYY
                     {
                         vm.SID = sid;
+                        vm.SName = db.Students.Find(sid).SName;
                         vm.PeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID != sid).ToList();
                         vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID).ToList();
                         vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid ).ToList();
@@ -839,6 +841,7 @@ namespace LMSweb.Controllers
                     else if (sid != "")//YYY
                     {
                         vm.SID = sid;
+                        vm.SName = db.Students.Find(sid).SName;
                         vm.PeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID != sid && p.MID == mid).ToList();
                         vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID && p.MID == mid).ToList();
                         vm.SelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList();
