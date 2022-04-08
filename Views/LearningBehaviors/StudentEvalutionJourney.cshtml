@@ -378,7 +378,7 @@
                                 {
                                     if (qo.DQID == 27)
                                     {
-                                        @qo.Answer;<br />
+                                        <h>&emsp;&emsp;@qo.Answer</h><br />
                                     }
                                 }
                             </div>
@@ -525,7 +525,7 @@
                                     {
                                         if (qo.DQID == 27)
                                         {
-                                            @qo.Answer;<br />
+                                            <h>&emsp;&emsp;@qo.Answer</h><br />
                                         }
                                     }
                                 </div>
@@ -611,7 +611,7 @@
                                 <strong>同儕評語 :</strong><br />
                                 @foreach (var qo in Model.GroupComments)
                                 {
-                                    @qo.Answer;<br />
+                                    <h>&emsp;&emsp;@qo.Answer</h><br />
                                 }
                             </div>
                         </div>
@@ -644,8 +644,8 @@
                 fontSize: 24,
                 //label: jsPoint[0].StudentName,
                 fill: true,
-                backgroundColor: 'rgb(255,165,0,0.3)',
-                borderColor: 'rgb(255,135,20)',
+                backgroundColor: 'rgb(255, 99, 132,0.3)',
+                borderColor: 'rgb(255, 99, 132)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -659,7 +659,7 @@
                 //label: jsPoint[0].StudentName,
                 fill: false,
                 //backgroundColor: 'rgba(255,165,255,0.3)',
-                borderColor: 'rgb(55,235,200)',
+                borderColor: 'rgb(54, 162, 235)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -673,7 +673,7 @@
                 //label: jsPoint[0].StudentName,
                 fill: false,
                 //backgroundColor: 'rgba(255,165,255,0.3)',
-                borderColor: 'rgb(255,35,100)',
+                borderColor: 'rgb(255, 206, 86)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -789,8 +789,8 @@
                 fontSize: 18,
                 //label: jsPoint[0].StudentName,
                 fill: true,
-                backgroundColor: 'rgb(255,165,0,0.3)',
-                borderColor: 'rgb(255,135,20)',
+                backgroundColor: 'rgb(255, 99, 132,0.3)',
+                borderColor: 'rgb(255, 99, 132)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -804,7 +804,7 @@
                 //label: jsPoint[0].StudentName,
                 fill: false,
                 //backgroundColor: 'rgba(255,165,255,0.3)',
-                borderColor: 'rgb(55,235,200)',
+                borderColor: 'rgb(255, 206, 86)',
                 //pointStyle: "circle",
                 //pointBackgroundColor: 'rgb(0,222,0)',
                 //pointRadius: 5,
@@ -862,8 +862,8 @@
                 label: "小組分數",
                 fontSize: 18,
                 backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(255, 99, 132)'
+                    'rgb(54, 162, 235)',
+                    'rgb(54, 162, 235)'
                 ],
                 data: [@Model.TeacherScore ,@Model.GroupScore]
             },
@@ -871,8 +871,8 @@
                 label: "全班平均",
                 fontSize: 18,
                 backgroundColor: [
-                    'rgb(54, 162, 235)',
-                    'rgb(54, 162, 235)'
+                    'rgb(255, 206, 86)',
+                    'rgb(255, 206, 86)'
                 ],
                 data: [@Model.classTeacherScore ,@Model.classGroupScore]
             }],
