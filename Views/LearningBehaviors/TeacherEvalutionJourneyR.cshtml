@@ -167,23 +167,23 @@
     <div class="cardArticle">
         @if (Model.MID == "")
         {
-            <h1>全任務</h1>
+            <strong>全任務</strong>
         }
         @if (Model.MID != "")
         {
-            <h1>@Model.MName</h1>
+            <strong>@Model.MName</strong>
         }
         @if (Model.GID != 0)
         {
-            <h1>@Model.GName</h1>
+            <strong>@Model.GName</strong>
         }
         @if (Model.GID == 0)
         {
-            <h1>全組別</h1>
+            <strong>全組別</strong>
         }
         @if (Model.SID != "")
         {
-            <h1>@Model.SName</h1>
+            <strong>@Model.SName</strong>
         }
     </div>
     <nav>
