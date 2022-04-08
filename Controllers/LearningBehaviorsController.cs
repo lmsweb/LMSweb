@@ -293,7 +293,8 @@ namespace LMSweb.Controllers
 
             else if (mid == "")
             {
-                vm.GID = gid;
+                vm.GName = db.Groups.Find(gid).GName;
+
                 var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid).ToList().Count();
                 if (i != 0)
                 {
@@ -317,6 +318,8 @@ namespace LMSweb.Controllers
 
             else if(gid == 0)
             {
+                vm.MName = db.Missions.Find(mid).MName;
+
                 var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")&& c.MID == mid).ToList().Count();
                 
                 var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
@@ -335,7 +338,9 @@ namespace LMSweb.Controllers
 
             else if(mid != "" && gid != 0)
             {
-                vm.GID = gid;
+                vm.MName = db.Missions.Find(mid).MName;
+                vm.GName = db.Groups.Find(gid).GName;
+
                 var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid && c.MID == mid).ToList().Count();
                 if (i != 0)
                 {
@@ -516,7 +521,7 @@ namespace LMSweb.Controllers
             {
                 if(gid != 0)
                 {
-                    vm.GID = gid;
+                    vm.GName = db.Groups.Find(gid).GName;
                     if(sid == "")//NYN
                     {
                         vm.PeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID).ToList();
@@ -621,7 +626,6 @@ namespace LMSweb.Controllers
                     }
                     else if(sid != "")//NYY
                     {
-                        vm.SID = sid;
                         vm.SName = db.Students.Find(sid).SName;
                         vm.PeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID != sid).ToList();
                         vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID).ToList();
@@ -731,10 +735,11 @@ namespace LMSweb.Controllers
             }
             else if(mid != "")
             {
-                vm.MID = mid;
+                vm.MName = db.Missions.Find(mid).MName;
+
                 if (gid != 0)
                 {
-                    vm.GID = gid;
+                    vm.GName = db.Groups.Find(gid).GName;
                     if (sid == "")//YYN
                     {
                         
@@ -840,7 +845,6 @@ namespace LMSweb.Controllers
                     }
                     else if (sid != "")//YYY
                     {
-                        vm.SID = sid;
                         vm.SName = db.Students.Find(sid).SName;
                         vm.PeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID != sid && p.MID == mid).ToList();
                         vm.GPeerER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID != p.EvaluatorSID && p.MID == mid).ToList();

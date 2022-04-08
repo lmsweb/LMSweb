@@ -164,7 +164,28 @@
             </p>
         </div>
     </div>
-
+    <div class="cardArticle">
+        @if (Model.MID == "")
+        {
+            <h1>全任務</h1>
+        }
+        @if (Model.MID != "")
+        {
+            <h1>@Model.MName</h1>
+        }
+        @if (Model.GID != 0)
+        {
+            <h1>@Model.GName</h1>
+        }
+        @if (Model.GID == 0)
+        {
+            <h1>全組別</h1>
+        }
+        @if (Model.SID != "")
+        {
+            <h1>@Model.SName</h1>
+        }
+    </div>
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-bar-tab" data-bs-toggle="tab" data-bs-target="#nav-bar" type="button" role="tab" aria-controls="nav-bar" aria-selected="true">總覽</button>
