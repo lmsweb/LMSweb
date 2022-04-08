@@ -100,15 +100,20 @@
             }
         }
         //計算自我評價小組平均
-        selfDiscuss = selfDiscuss / selfDiscussCount;
-        selfDraw = selfDraw / selfDrawCount;
-        selfCode = selfCode / selfCodeCount;
-        selfContribute = selfContribute / selfContributeCount;
-        //同儕互評小組均
-        peerDiscuss = peerDiscuss / peerDiscussCount;
-        peerDraw = peerDraw / peerDrawCount;
-        peerCode = peerCode / peerCodeCount;
-        peerContribute = peerContribute / peerContributeCount;
+        if (selfContributeCount != 0)
+        {
+            selfDiscuss = selfDiscuss / selfDiscussCount;
+            selfDraw = selfDraw / selfDrawCount;
+            selfCode = selfCode / selfCodeCount;
+            selfContribute = selfContribute / selfContributeCount;
+        }
+        if (peerDiscussCount != 0)
+        {
+            peerDiscuss = peerDiscuss / peerDiscussCount;
+            peerDraw = peerDraw / peerDrawCount;
+            peerCode = peerCode / peerCodeCount;
+            peerContribute = peerContribute / peerContributeCount;
+        }
     }
     //總攬
     var SEvalution = ((Model.SelfDraw) + (Model.SelfCode) + (Model.SelfDiscuss) + (Model.SelfContribute)) / 4;//自我評價分數
