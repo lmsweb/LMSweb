@@ -87,14 +87,14 @@
                                     {
                                         if (Model.MID == "")
                                         {
-                                            if (qo.GQID == 4 && (qo.EvaluatorSID == "T004"))
+                                            if (qo.GQID == 4 && (qo.EvaluatorSID == "T004") && qo.GID == Model.GID)
                                             {
                                                 <h>&emsp;&emsp;@qo.Answer</h><br />
                                             }
                                         }
                                         if (Model.MID != "")
                                         {
-                                            if (qo.GQID == 4 && (qo.EvaluatorSID == "T004") && qo.MID == Model.MID)
+                                            if (qo.GQID == 4 && (qo.EvaluatorSID == "T004") && qo.MID == Model.MID && qo.GID == Model.GID)
                                             {
                                                 <h>&emsp;&emsp;@qo.Answer</h><br />
                                             }
