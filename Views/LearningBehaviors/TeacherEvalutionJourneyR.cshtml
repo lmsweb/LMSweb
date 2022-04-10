@@ -167,23 +167,23 @@
     <div class="cardArticle">
         @if (Model.MID == "")
         {
-            <strong>全任務</strong>
+            <strong>任務: 全任務</strong><br />
         }
         @if (Model.MID != "")
         {
-            <strong>@Model.MName</strong>
+            <strong>任務: @Model.MName</strong><br />
         }
         @if (Model.GID != 0)
         {
-            <strong>@Model.GName</strong>
+            <strong>組別: @Model.GName</strong><br />
         }
         @if (Model.GID == 0)
         {
-            <strong>全組別</strong>
+            <strong>組別: 全組別</strong><br />
         }
         @if (Model.SID != "")
         {
-            <strong>@Model.SName</strong>
+            <strong>學生: @Model.SName</strong><br />
         }
     </div>
     <nav>

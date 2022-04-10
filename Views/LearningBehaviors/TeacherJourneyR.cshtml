@@ -34,19 +34,19 @@
     <div class="cardArticle">
         @if (Model.MID == "")
         {
-            <strong>任務: 全任務</strong>
+            <strong>任務: 全任務</strong><br />
         }
         @if (Model.MID != "")
         {
-            <strong>任務: @Model.MName</strong>
+            <strong>任務: @Model.MName</strong><br />
         }
         @if (Model.GID != 0)
         {
-            <strong>組別: @Model.GName</strong>
+            <strong>組別: @Model.GName</strong><br />
         }
         @if (Model.GID == 0)
         {
-            <strong>組別: 全組別</strong>
+            <strong>組別: 全組別</strong><br />
         }
         
     </div>
