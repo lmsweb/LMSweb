@@ -365,6 +365,14 @@ namespace LMSweb.Controllers
             var cid = group.CID;
             group.Students.Clear();
             db.Groups.Remove(group);
+            var learnb = db.LearnB.Where(l => l.group.GID == groupId);
+            db.LearnB.RemoveRange(learnb);
+            var studentCode = db.StudentCodes.Where(sc => sc.group.GID == groupId);
+            db.StudentCodes.RemoveRange(studentCode);
+            var studentDraw = db.StudentDraws.Where(sd => sd.Group.GID == groupId);
+            db.StudentDraws.RemoveRange(studentDraw);
+
+
 
             db.SaveChanges();
 
