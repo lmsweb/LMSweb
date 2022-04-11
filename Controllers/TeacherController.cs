@@ -302,11 +302,6 @@ namespace LMSweb.Controllers
             }
             base.Dispose(disposing);
         }
-        // GET: 忘記密碼頁面
-        public ActionResult ForgetPwd()
-        {
-            return View();
-        }
 
         public ActionResult TeacherChat(string mid, string cid)
         {
@@ -318,7 +313,9 @@ namespace LMSweb.Controllers
             var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的SID
             var tid = claimData[0].Value;            
             var mname = db.Missions.Find(mid).MName;
+            var cname = db.Courses.Find(cid).CName;
             gmodel.CID = cid;
+            gmodel.CName = cname;
             gmodel.Groups = db.Groups.Where(g => g.CID == cid).ToList(); 
             gmodel.MName = mname;
             return View(gmodel);

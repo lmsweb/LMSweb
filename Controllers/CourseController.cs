@@ -328,7 +328,7 @@ namespace LMSweb.Controllers
             for(int i = 1; i <= n; i++)
             {
                 var g = new Group();
-                g.GName = "第" + i.ToString() + "組"+"_"+ g.GID;
+                g.GName = "第" + i.ToString() + "組";
                 g.Students = new List<Student>();
                 g.CID = cid;
                 groups.Add(g);
@@ -425,6 +425,47 @@ namespace LMSweb.Controllers
             return View(vmodel);                                                                                                                                                                                                         
 
         }
+        public ActionResult StudentSurvey (string cid, string mid)
+        {
+            var svmodel = new StudentSurveyViewModel();
+            svmodel.CID = cid;
+            svmodel.CName = db.Courses.Find(cid).CName;
+            svmodel.MID = mid;
+            svmodel.MName = db.Missions.Find(mid).MName;
 
+            var gsquestion = db.DefaultQuestions.Where(q => q.Class == "目標設置").Select(q => q.DQID).ToList();
+            var gsrespon = db.Responses.Where(r => gsquestion.Contains(r.DQID)).ToList();
+            var requestion = db.DefaultQuestions.Where(q => q.Class == "自我反思").Select(q => q.DQID).ToList();
+            var rerespon = db.Responses.Where(r => requestion.Contains(r.DQID)).ToList();
+            var equestion = db.DefaultQuestions.Where(q => q.Class == "自評互評").Select(q => q.DQID).ToList();
+            var erespon = db.EvalutionResponse.Where(r => equestion.Contains(r.DQID)).ToList();
+            var gquestion = db.GroupQuestions.Select(g => g.GQID).ToList();
+            var grespon = db.GroupERs.Where(g => gquestion.Contains(g.GQID)).ToList();
+
+            svmodel.gsResponses = gsrespon;
+            svmodel.reResponses = rerespon;
+            svmodel.eResponses = erespon;
+            svmodel.gResponses = grespon;
+
+            if (gsrespon.Any())
+            {
+                svmodel.IsGoalSetting = true;
+            }
+            if (rerespon.Any())
+            {
+                svmodel.IsReflection = true;
+            }
+            if (erespon.Any())
+            {
+                svmodel.IsSPEvalution = true;
+            }
+            if (grespon.Any())
+            {
+                svmodel.IsGroupEvalution = true;
+            }
+            svmodel.Students = db.Students.Where(s => s.CID == cid).ToList();
+
+            return View(svmodel);
+        }
     }
 }
