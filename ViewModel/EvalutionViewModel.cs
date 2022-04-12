@@ -43,6 +43,7 @@ namespace LMSweb.ViewModel
         public LMSweb.Models.Student Student { get; set; }
         public List<LMSweb.Models.Student> Students { get; set; }
         public List<LMSweb.Models.PeerAssessment> PeerAssessments { get; set; }
+        public List<LMSweb.Models.GroupER> Aswer { get; set; }
 
     }
     public class Evalution_Response

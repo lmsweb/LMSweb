@@ -1,0 +1,338 @@
+﻿@model LMSweb.ViewModel.EvalutionViewModel
+
+
+@{
+    ViewBag.Title = "TeacherEdit";
+    Layout = "~/Views/Shared/_TeacherLayout.cshtml";
+    var i = 0;
+}
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Missions", new { CID = Model.CID})">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Details", "Missions", new { mid = Model.MID})">任務內容</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "Groups", new { mid = Model.MID, cid = Model.CID})">作業評分</a></li>
+            <li class="breadcrumb-item" active" aria-current="page">@Model.GName</li>
+        </ol>
+    </nav>
+</div>
+<div class="article">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.CID)
+            @Html.HiddenFor(model => model.GID)
+            @Html.HiddenFor(model => model.MID)
+
+
+            小組成果
+            <div class="accordion mb-3">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            流程圖
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            @if (Model.DrawingImgPath == null)
+                            {
+                                <p>學生尚未上傳流程圖</p>
+                            }
+                            else
+                            {
+                                <img src="~/UploadImages/@Model.DrawingImgPath" width="1060" />
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                            程式碼
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
+                            @if (Model.CodeText == null)
+                            {
+                                <p>學生尚未上傳程式碼</p>
+                            }
+                            else
+                            {
+                                <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--評量尺規-->
+            <h5>評量尺規</h5>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>評價維度</th>
+                        <th>配分</th>
+                        <th>評價標準描述</th>
+                        <th>非常好</th>
+                        <th>好</th>
+                        <th>一般</th>
+                        <th>較差</th>
+                        <th>非常差</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color : white">
+                    <tr>
+                        <td>
+                            正確性
+                        </td>
+                        <td>
+                            40
+                        </td>
+                        <td>
+                            運行流暢，結果正確，沒有語法錯誤。能準確的繪出解決問題的步驟。
+                        </td>
+                        <td>
+                            5
+                        </td>
+                        <td>
+                            4
+                        </td>
+                        <td>
+                            3
+                        </td>
+                        <td>
+                            2
+                        </td>
+                        <td>
+                            1
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            邏輯性
+                        </td>
+                        <td>
+                            40
+                        </td>
+                        <td>
+                            結構清晰，邏輯正確，可有條理地呈現出解決問題的過程。
+                        </td>
+                        <td>
+                            5
+                        </td>
+                        <td>
+                            4
+                        </td>
+                        <td>
+                            3
+                        </td>
+                        <td>
+                            2
+                        </td>
+                        <td>
+                            1
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            可讀性
+                        </td>
+                        <td>
+                            20
+                        </td>
+                        <td>
+                            命名及符號符合規範，容易理解。
+                        </td>
+                        <td>
+                            5
+                        </td>
+                        <td>
+                            4
+                        </td>
+                        <td>
+                            3
+                        </td>
+                        <td>
+                            2
+                        </td>
+                        <td>
+                            1
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <table id="table_id" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.GroupQuestion.First().Description)
+                        </th>
+                        <th>
+                            分數
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="number">
+
+                    @foreach (var Q in Model.GroupQuestion)
+                    {
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Q.Description)
+                            </td>
+                            <td>
+                                @if (Q.Type == "單選")
+                                {
+                                    foreach (var qo in Q.GroupOptions)
+                                    {
+
+                                        foreach (var a in Model.Aswer)
+                                        {
+                                            if (Q.GQID == a.GQID)
+                                            {
+                                                if (qo.OptionNum == a.Answer)
+                                                {
+                                                    @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input", @required = "required", @checked = true })
+                                                    @Html.Label(qo.OptionNum, new { @class = "form-check-label", @for = Q.GQID })
+
+                                                }
+                                                if (qo.OptionNum != a.Answer)
+                                                {
+                                                    @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input", @required = "required" })
+                                                    @Html.Label(qo.OptionNum, new { @class = "form-check-label", @for = Q.GQID })
+                                                }
+                                                break;
+                                            }
+
+                                        }
+
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (var a in Model.Aswer)
+                                    {
+                                        if (Q.GQID == a.GQID)
+                                        {
+                                            @Html.TextArea(Q.GQID.ToString(), a.Answer, new { @class = "form-control", @rows = "3", @required = "required"})
+                                        }
+                                }
+
+                            }
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="mb-3">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">送出確認</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            送出後無法做修改，確定要送出嗎?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">再想想</button>
+                            <input type="submit" value="送出" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+@section scripts
+{
+    <script>
+        var Tevalution_qid = @Html.Raw(@Json.Encode(Model.GroupQuestion.Select(q => q.GQID).ToList()));
+        //console.log(evalution_qid);
+        window.onload = function () {
+            var tableLine = document.getElementById("number");
+            for (var i = 0; i < tableLine.rows.length; i++) {
+                tableLine.rows[i].cells[0].innerHTML = (i + 1);
+            }
+        }
+        $("form").submit(function () {
+            var sumbit_data = {};
+            sumbit_data["CID"] = "@Model.CID";
+            sumbit_data["MID"] = "@Model.MID";
+            sumbit_data["GID"] = "@Model.GID";
+            sumbit_data["TID"] = "@Model.TID"
+            sumbit_data["TRs"] = [];
+            for (var i = 0; i < Tevalution_qid.length; i++) {
+                var Teacher_Response = {};
+                var type = $('input[name="' + Tevalution_qid[i] + '"]').attr('type');
+                //console.log(evalution_qid[i]);
+                response = "";
+                if (type == "radio") {
+                    response = $('input[name="' + Tevalution_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                    selector = $('textarea[name="' + Tevalution_qid[i] + '"]');
+                    comments = selector.val();
+                } else if (type == "checkbox") {
+                    response = $('input[name="' + Tevalution_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                } else {
+                    selector = $('textarea[name="' + Tevalution_qid[i] + '"]');
+                    response = selector.val();
+                }
+                //console.log(response);
+                Teacher_Response["qid"] = Tevalution_qid[i];
+                Teacher_Response["response"] = response;
+                Teacher_Response["tid"] = "@Model.TID";
+                sumbit_data["TRs"].push(Teacher_Response);
+            }
+            console.log(sumbit_data);
+            $.ajax({
+                url: '@Url.Action("TeacherEdit")',
+                type: 'post',
+                dataType: 'json',
+                data: sumbit_data,
+                success: function (response) {
+                    // ... do something with the data...
+                    if (response == "suc") {
+                        window.location.href = "@Url.Action("StudentTeacherER","Groups")" + "?cid=@Model.CID&mid=@Model.MID&gid=@Model.GID";
+                        //window.location.href = "@Url.Action("StudentTeacherER","Groups",new {cid = Model.CID, mid = Model.MID, gid = Model.GID})";
+                    }
+                }
+                        });
+            return false;
+        });
+        function CodingWindow() {
+            const myWindow = window.open('@Url.Action("CheckCoding", "Groups", new { gid = Model.GID, cid = Model.CID, mid = Model.MID })',"",  "width=800,height=800");
+        }
+        function DrawingWindow() {
+            const myWindow = window.open('@Url.Action("CheckDrawing", "Groups", new { gid = Model.GID, cid = Model.CID, mid = Model.MID })', "", "width=800,height=800");
+        }
+    </script>
+
+}
+
+

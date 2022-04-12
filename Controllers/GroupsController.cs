@@ -298,8 +298,9 @@ namespace LMSweb.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult StudentTeacherER(EvalutionViewModel evalution, string cid, string mid, int gid)  ///學生已填過組間評價
+        public ActionResult StudentTeacherER(string cid, string mid, int gid)  ///學生已填過組間評價
         {
+            EvalutionViewModel evalution = new EvalutionViewModel();
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
             var cname = db.Courses.Find(cid).CName;
@@ -339,6 +340,91 @@ namespace LMSweb.Controllers
             evalution.TID = TID;
 
             return View(evalution);
+        }
+        public ActionResult TeacherEdit( string cid, int gid, string mid)
+        {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
+            var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID && r.MID == mid);
+            var qids = evalution.Select(r => r.GQID).ToList();
+            var rids = evalution.Select(r => r.RID).ToList();
+            var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
+
+            EvalutionViewModel model = new EvalutionViewModel();
+            
+            model.MID = mid;
+            model.GID = gid;
+            model.CID = cid;
+
+            var group = db.Groups.Single(g => g.GID == gid);
+            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+            var code = db.StudentCodes.Find(cid, mid, gid);
+            var cname = db.Courses.Find(cid).CName;
+            var gname = db.Groups.Find(gid).GName;
+            var mname = db.Missions.Find(mid).MName;
+            //var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID);
+            //var qids = evalution.Select(r => r.GQID).ToList();
+            //var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
+            var readcode = new TextIO();
+            model.GroupQuestion = db.GroupQuestions.Include(q => q.GroupOptions);
+            model.MID = mid;
+            model.GID = gid;
+            model.CID = cid;
+            model.TID = TID;
+            model.CName = cname;
+            model.MName = mname;
+            model.GName = gname;
+            model.Aswer = evalution.ToList();
+            if (code != null)
+            {
+                string virtualBaseFilePath = Url.Content(codefileSavedPath);
+                string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                string readcodepath = $"{filePath}{code.CodePath}.txt";
+                model.CodeText = readcode.readCodeText(readcodepath);
+            }
+            if (pt != null)
+            {
+                model.DrawingImgPath = pt;
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        
+        public ActionResult TeacherEdit([System.Web.Http.FromBody] EvalutionViewModel groupVM, string cid, int gid, string mid)
+        {
+            
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var TID = claims.Claims.Where(x => x.Type == "TID").SingleOrDefault().Value;
+            //var teacherAssessment = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID && r.MID == mid).ToList();
+            int GID = gid;
+            var MID = mid;
+            var CID = cid;
+            foreach (var qr in groupVM.TRs)
+            {
+                var teacherAssessment = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID && r.MID == mid && r.GQID == qr.qid).ToList()[0];
+                teacherAssessment.GQID = qr.qid;
+                teacherAssessment.Answer = qr.response;
+                teacherAssessment.Comments = qr.comments;
+                teacherAssessment.GID = GID;
+                teacherAssessment.EvaluatorSID = TID;
+                teacherAssessment.CID = CID;
+                teacherAssessment.MID = MID;
+                db.Entry(teacherAssessment).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (ModelState.IsValid)
+            {
+                groupVM.CID = cid;
+                groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+
+                return Json("suc");
+            }
+            return View(groupVM);
         }
     }
 }
