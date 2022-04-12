@@ -1,0 +1,194 @@
+﻿@model LMSweb.ViewModel.EvalutionViewModel
+@{
+    ViewBag.Title = "StudentPeerEdit";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<div class="cardArticle">
+    <h4>@Model.CName</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMission","Student",new { CID = Model.CID})">任務列表</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("StudentMissionDetail", "Student", new { cid = Model.CID,mid = Model.MID})">@Model.MName</a></li>
+            <li class="breadcrumb-item"><a href="@Url.Action("Index", "PeerAssessments", new { cid = Model.CID,mid = Model.MID})">自評與互評</a></li>
+            <li class="breadcrumb-item active" aria-current="page">同儕互評</li>
+        </ol>
+    </nav>
+</div>
+<div class="article">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h5>同儕互評</h5>
+            <h4>@Model.SName</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.CID)
+            @Html.HiddenFor(model => model.MID)
+            @if (Model.DefaultQuestion.Any() == false)
+            {
+                <p>目前還沒有設定題目哦~</p>
+            }
+            else
+            {
+                <table id="table_id" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DefaultQuestion.First().Description)
+                            </th>
+                            <th>
+                                分數
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="number">
+
+                        @foreach (var Q in Model.DefaultQuestion)
+                        {
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Q.Description)
+                                </td>
+                                <td>
+                                    @if (Q.Type == "單選")
+                                    {
+                                        foreach (var qo in Q.DefaultOptions)
+                                        {
+
+                                            foreach (var a in Model.SelfPeerAswer)
+                                            {
+                                                if (Q.DQID == a.DQID)
+                                                {
+                                                    if (qo.DOptions == a.Answer)
+                                                    {
+                                                        @Html.RadioButton(Q.DQID.ToString(), qo.DOptions, new { @class = "form-check-input", @required = "required", @checked = true })
+                                                        @Html.Label(qo.DOptions, new { @class = "form-check-label", @for = Q.DQID })
+
+                                                    }
+                                                    if (qo.DOptions != a.Answer)
+                                                    {
+                                                        @Html.RadioButton(Q.DQID.ToString(), qo.DOptions, new { @class = "form-check-input", @required = "required" })
+                                                        @Html.Label(qo.DOptions, new { @class = "form-check-label", @for = Q.DQID })
+                                                    }
+                                                    break;
+                                                }
+
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (var a in Model.SelfPeerAswer)
+                                        {
+                                            if (Q.DQID == a.DQID)
+                                            {
+                                                @Html.TextArea(Q.DQID.ToString(), a.Answer, new { @class = "form-control", @rows = "3", @required = "required" })
+                                            }
+                                        }
+                                    }
+                                </td>
+                            </tr>  
+                         }
+
+                    </tbody>
+                </table>
+                <div class="mb-3">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">送出確認</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                送出後無法做修改，確定要送出嗎?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">再想想</button>
+                                <input type="submit" value="送出" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+
+</div>
+@section scripts
+{
+    <script>
+        var evalution_qid = @Html.Raw(@Json.Encode(Model.DefaultQuestion.Select(q => q.DQID).ToList()));
+        //console.log(evalution_qid);
+        window.onload = function () {
+            var tableLine = document.getElementById("number");
+            for (var i = 0; i < tableLine.rows.length; i++) {
+                tableLine.rows[i].cells[0].innerHTML = (i + 1);
+            }
+        }
+        $("form").submit(function () {
+            var sumbit_data = {};
+            sumbit_data["CID"] = "@Model.CID";
+            sumbit_data["MID"] = "@Model.MID";
+            sumbit_data["SID"] = "@Model.SID";
+            sumbit_data["ERs"] = [];
+            for (var i = 0; i < evalution_qid.length; i++) {
+                var Evalution_Response = {};
+                var type = $('input[name="' + evalution_qid[i] + '"]').attr('type');
+                //console.log(evalution_qid[i]);
+                response = "";
+                if (type == "radio") {
+                    response = $('input[name="' + evalution_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                    selector = $('textarea[name="' + evalution_qid[i] + '"]');
+                    comments = selector.val();
+                } else if (type == "checkbox") {
+                    response = $('input[name="' + evalution_qid[i] + '"]:checked').map(function () {
+                        return $(this).val();
+                    }).get().join();
+                } else {
+                    selector = $('textarea[name="' + evalution_qid[i] + '"]');
+                    response = selector.val();
+                }
+                //console.log(response);
+                Evalution_Response["qid"] = evalution_qid[i];
+                Evalution_Response["response"] = response;
+                Evalution_Response["sid"] = "@Model.SID";
+                Evalution_Response["mid"] = "@Model.MID";
+                sumbit_data["ERs"].push(Evalution_Response);
+            }
+            console.log(sumbit_data);
+            $.ajax({
+                url: '@Url.Action("StudentPeerEdit")',
+                type: 'post',
+                dataType: 'json',
+                data: sumbit_data,
+                success: function (response) {
+                    if (response == "suc") {
+                        window.location.href = "@Url.Action("StudentPeerER", "Student")" + "?sid=@Model.SID&cid=@Model.CID&mid=@Model.MID&evasid=@Model.EvaluatorSID";
+                        //window.location.href = "@Url.Action("StudentTeacherER","Groups",new {cid = Model.CID, mid = Model.MID, gid = Model.GID})";
+                    }
+                }
+            });
+            return false;
+        });
+    </script>
+}
+

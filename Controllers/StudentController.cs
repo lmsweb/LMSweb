@@ -595,6 +595,66 @@ namespace LMSweb.Controllers
             evalution.SName = sname;
             return View(evalution);
         }
+
+        public ActionResult StudentSelfEdit(string cid, string mid, string sid)
+        {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var sname = db.Students.Find(sid).SName;
+            var evalution = db.EvalutionResponse.Where(r => r.SID == SID && r.EvaluatorSID == SID && r.MID == mid);
+            var qids = evalution.Select(r => r.DQID).ToList();
+            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "自評互評").ToList();
+            var cname = db.Courses.Find(cid).CName;
+            var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            
+            
+            EvalutionViewModel SelfEVM = new EvalutionViewModel();
+            SelfEVM.DefaultQuestion = db.DefaultQuestions.Where(q => q.Class == "自評互評").Include(q => q.DefaultOptions);
+            SelfEVM.MID = mid;
+            SelfEVM.CID = cid;
+            SelfEVM.SID = SID;
+            SelfEVM.EvaluatorSID = SID;
+            SelfEVM.CName = cname;
+            SelfEVM.MName = mname;
+            SelfEVM.SName = sname;
+            SelfEVM.IsDiscuss = misChat;
+            SelfEVM.SelfPeerAswer = evalution.ToList();
+
+            return View(SelfEVM);
+        }
+        [HttpPost]
+        public ActionResult StudentSelfEdit([System.Web.Http.FromBody] EvalutionViewModel groupVM, string cid, string mid, string sid)
+        {
+
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            //var teacherAssessment = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID && r.MID == mid).ToList();
+           
+            
+            var MID = mid;
+            var CID = cid;
+            foreach (var qr in groupVM.ERs)
+            {
+                var response = db.EvalutionResponse.Where(r => r.SID == SID && r.EvaluatorSID == SID && r.MID == mid && r.DQID == qr.qid).ToList()[0];
+                response.DQID = qr.qid;
+                response.Answer = qr.response;
+                response.SID = SID;
+                response.CID = cid;
+                response.MID = mid;
+                response.EvaluatorSID = SID;
+                db.Entry(response).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (ModelState.IsValid)
+            {
+                groupVM.CID = cid;
+                groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+
+                return Json("suc");
+            }
+            return View(groupVM);
+        }
         [HttpGet]
         [Authorize(Roles = "Student")]
         public ActionResult StudentPeerEvalution(string sid, string mid, string cid, string gid)
@@ -669,7 +729,62 @@ namespace LMSweb.Controllers
             evalution.SName = sname;
             return View(evalution);
         }
-        
+
+        public ActionResult StudentPeerEdit(string cid, string mid, string sid, string evasid)
+        {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var sname = db.Students.Find(sid).SName;
+            var evalution = db.EvalutionResponse.Where(r => r.SID == sid && r.EvaluatorSID == SID && r.MID == mid);
+            var qids = evalution.Select(r => r.DQID).ToList();
+            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "自評互評").ToList();
+            var cname = db.Courses.Find(cid).CName;
+            var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            EvalutionViewModel PeerEVM = new EvalutionViewModel();
+            PeerEVM.DefaultQuestion = db.DefaultQuestions.Where(q => q.Class == "自評互評").Include(q => q.DefaultOptions);
+            PeerEVM.MID = mid;
+            PeerEVM.CID = cid;
+            PeerEVM.SID = sid;
+            PeerEVM.EvaluatorSID = SID;
+            PeerEVM.CName = cname;
+            PeerEVM.MName = mname;
+            PeerEVM.SName = sname;
+            PeerEVM.IsDiscuss = misChat;
+            PeerEVM.SelfPeerAswer = evalution.ToList();
+            return View(PeerEVM);
+        }
+        [HttpPost]
+        public ActionResult StudentPeerEdit([System.Web.Http.FromBody] EvalutionViewModel groupVM, string cid, string mid, string evasid)
+        {
+
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var evaSID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var sid = groupVM.SID;
+            var MID = mid;
+            var CID = cid;
+            foreach (var qr in groupVM.ERs)
+            {
+                var response = db.EvalutionResponse.Where(r => r.SID == sid && r.EvaluatorSID == evaSID && r.MID == mid && r.DQID == qr.qid).ToList()[0];
+                response.DQID = qr.qid;
+                response.Answer = qr.response;
+                response.SID = sid;
+                response.EvaluatorSID = evaSID;
+                response.MID = mid;
+                response.CID = cid;
+                db.Entry(response).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (ModelState.IsValid)
+            {
+                groupVM.CID = cid;
+                groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+
+                return Json("suc");
+            }
+            return View(groupVM);
+        }
+
         [HttpGet]
         [Authorize(Roles = "Student")]
         public ActionResult StudentGroupEvalution(string mid, string cid, int gid)
@@ -782,6 +897,81 @@ namespace LMSweb.Controllers
             evalution.MName = mname;
             evalution.GName = gname;
             return View(evalution);
+        }
+
+        public ActionResult StudentGroupEdit(string cid, int gid, string mid)
+        {
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var evalution = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == SID && r.MID == mid);
+            var qids = evalution.Select(r => r.GQID).ToList();
+            var questions = db.GroupOptions.Where(q => qids.Contains(q.GQID)).ToList();
+            var cname = db.Courses.Find(cid).CName;
+            var mname = db.Missions.Find(mid).MName;
+            var gname = db.Groups.Find(gid).GName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            var pt = db.StudentDraws.Where(p => p.GID == gid && p.MID == mid).Select(p => p.DrawingImgPath).SingleOrDefault();
+            var code = db.StudentCodes.Find(cid, mid, gid);
+            var readcode = new TextIO();
+            EvalutionViewModel GroupEVM = new EvalutionViewModel();
+            if (code != null)
+            {
+                string virtualBaseFilePath = Url.Content(codefileSavedPath);
+                string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                string readcodepath = $"{filePath}{code.CodePath}.txt";
+                GroupEVM.CodeText = readcode.readCodeText(readcodepath);
+            }
+            if (pt != null)
+            {
+                GroupEVM.DrawingImgPath = pt;
+            }
+            GroupEVM.GroupQuestion = db.GroupQuestions.Include(q => q.GroupOptions);
+            GroupEVM.MID = mid;
+            GroupEVM.GID = gid;
+            GroupEVM.CID = cid;
+            GroupEVM.CName = cname;
+            GroupEVM.MName = mname;
+            GroupEVM.GName = gname;
+            GroupEVM.IsDiscuss = misChat;
+            GroupEVM.Aswer = evalution.ToList();
+            return View(GroupEVM);
+        }
+        [HttpPost]
+        public ActionResult StudentGroupEdit([System.Web.Http.FromBody] EvalutionViewModel groupVM, string cid, int gid, string mid)
+        {
+
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            //var teacherAssessment = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == TID && r.MID == mid).ToList();
+            int GID = gid;
+            var MID = mid;
+            var CID = cid;
+            foreach (var qr in groupVM.GRs)
+            {
+                var response = db.GroupERs.Where(r => r.GID == gid && r.EvaluatorSID == SID && r.MID == mid && r.GQID == qr.qid).ToList()[0];
+                response.GQID = qr.qid;
+                response.Answer = qr.response;
+                response.GID = gid;
+                response.EvaluatorSID = SID;
+                response.CID = cid;
+                response.MID = mid;
+                db.GroupERs.Add(response);
+                db.Entry(response).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (ModelState.IsValid)
+            {
+                groupVM.CID = cid;
+                groupVM.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+
+                return Json("suc");
+            }
+            return View(groupVM);
         }
     }
 }

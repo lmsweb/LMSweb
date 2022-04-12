@@ -392,9 +392,7 @@ namespace LMSweb.Controllers
             }
             return View(model);
         }
-
         [HttpPost]
-        
         public ActionResult TeacherEdit([System.Web.Http.FromBody] EvalutionViewModel groupVM, string cid, int gid, string mid)
         {
             
