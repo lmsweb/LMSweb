@@ -552,6 +552,9 @@
         var cid = '@Model.CID';
         $('#Groups option:selected').val("0");
         $('#Studsnts option:selected').val("");
+        if (@Model.GID == 0) {
+            $('#Studsnts').append($('<option></option>').val('').text('請先選擇組別'));
+        }
         var selectedMID = $('#Missions option:selected').val();
         var selectedGID = $('#Groups option:selected').val();
         var selectedSID = $('#Studsnts option:selected').val();
