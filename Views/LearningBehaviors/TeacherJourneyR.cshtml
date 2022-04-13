@@ -16,7 +16,7 @@
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
             <p>
-                @Html.DropDownListFor(m => Model.missions, new SelectList(Model.missions, "MID", "MName"), "請選擇任務", new { id = "Missions" })
+                @Html.DropDownListFor(m => Model.missions, new SelectList(Model.missions, "MID", "MName", Model.MID), "請選擇任務", new { id = "Missions"})
             </p>
         </div>
         <div class="col-12">
@@ -238,6 +238,13 @@
     <script type="text/javascript" language="javascript">
         var cid = '@Model.CID';
         $('#Groups option:selected').val(0);
+
+        if ('@Model.MID' != "") {
+            $('#Missions option[value=@Model.MID]').attr('selected', true);
+        }
+        if (@Model.GID != 0) {
+            $('#Groups option[value=@Model.GID]').attr('selected', true);
+        }
         var selectedMID = $('#Missions option:selected').val();
         var selectedGID = $('#Groups option:selected').val();
         $(document).ready(function () {
@@ -251,17 +258,9 @@
             });
         });
         function Send() {
+            location.href = "/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
             //location.href = "/LMSweb/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
-            location.href = "/LMSweb/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
-            //if (selectedMID == "") {
-            //    console.log("MidNull");
-            //};
-            //if (selectedGID == "") {
-            //    console.log("GidNull");
-            //};
-            //if (selectedMID != "" && selectedGID != "") {
-            //    location.href = "/LearningBehaviors/TeacherJourneyR?cid=" + cid + "&mid=" + selectedMID + "&gid=" + selectedGID;
-            //};
+
         }
     </script>
 }
