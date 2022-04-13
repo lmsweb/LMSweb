@@ -595,6 +595,7 @@
                 dataType: 'json',
                 success: function (data) {
                     if (@Model.GID == 0) {
+                        $('#Studsnts').empty();
                         $('#Studsnts').append($('<option></option>').val('').text('請先選擇組別'));
                     }
                     if (data.length > 0) {
