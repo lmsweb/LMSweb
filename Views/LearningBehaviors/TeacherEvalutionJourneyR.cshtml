@@ -1714,15 +1714,22 @@
         var cid = '@Model.CID';
         $('#Groups option:selected').val("0");
         $('#Studsnts option:selected').val("");
+
         if ('@Model.MID' != "") {
             $('#Missions option[value=@Model.MID]').attr('selected', true);
         }
         if (@Model.GID != 0) {
             $('#Groups option[value=@Model.GID]').attr('selected', true);
+            $('#Groups option:selected').val(@Model.GID);
+            ChangeStudent();
+        }
+        if (@Model.GID == 0) {
+            $('#Studsnts').append($('<option></option>').val('').text('請先選擇組別'));
         }
         if ('@Model.SID' != "") {
             $('#Studsnts option[value=@Model.SID]').attr('selected', true);
         }
+
         var selectedMID = $('#Missions option:selected').val();
         var selectedGID = $('#Groups option:selected').val();
         var selectedSID = $('#Studsnts option:selected').val();
@@ -1764,9 +1771,7 @@
                 async: false,
                 dataType: 'json',
                 success: function (data) {
-                    if (@Model.GID == 0) {
-                        $('#Studsnts').append($('<option></option>').val('').text('請先選擇組別'));
-                    }
+
                     if (data.length > 0) {
                         $('#Studsnts').empty();
                         $('#Studsnts').append($('<option></option>').val('').text('請選擇學生'));
