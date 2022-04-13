@@ -502,7 +502,7 @@ namespace LMSweb.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Student")]
-        public ActionResult StudentReflectionResult(GoalSettingViewModel goalSetting, string cid, string mid, string SID)
+        public ActionResult StudentReflectionResult(GoalSettingViewModel goalSetting, string cid, string mid, string SID) //自我反思結果
         {
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
@@ -515,6 +515,58 @@ namespace LMSweb.Controllers
             goalSetting.CName = cname;
             goalSetting.MName = mname;
             return View(goalSetting);
+        }
+        public ActionResult StudentReflectionEdit(string cid, string mid)  //自我反思修改
+        {
+
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var response = db.Responses.Where(r => r.SID == SID && r.MID == mid);
+            var qids = response.Select(r => r.DQID).ToList();
+            var questions = db.DefaultQuestions.Where(q => qids.Contains(q.DQID) && q.Class == "自我反思").ToList();
+            var cname = db.Courses.Find(cid).CName;
+            var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+
+            StudentReflectionEditViewModel reflectionEditViewModel = new StudentReflectionEditViewModel();
+            reflectionEditViewModel.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "自我反思").Include(q => q.DefaultOptions);
+            reflectionEditViewModel.MID = mid;
+            reflectionEditViewModel.CID = cid;
+            reflectionEditViewModel.SID = SID;
+            reflectionEditViewModel.CName = cname;
+            reflectionEditViewModel.MName = mname;
+            reflectionEditViewModel.IsDiscuss = misChat;
+            reflectionEditViewModel.ReflectionAswer = response.ToList();
+
+            return View(reflectionEditViewModel);
+        }
+        [HttpPost]
+        public ActionResult StudentReflectionEdit([System.Web.Http.FromBody] StudentReflectionEditViewModel reflectionEditViewModel, string cid, string mid)
+        {
+
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var SID = claims.Claims.Where(x => x.Type == "SID").SingleOrDefault().Value;
+            var MID = mid;
+            var CID = cid;
+            foreach (var qr in reflectionEditViewModel.QRs)
+            {
+                var response = db.Responses.Where(r => r.SID == SID && r.MID == mid && r.DQID == qr.qid).ToList()[0];
+                response.DQID = qr.qid;
+                response.Answer = qr.response;
+                response.SID = SID;
+                response.CID = cid;
+                response.MID = mid;
+                db.Entry(response).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            if (ModelState.IsValid)
+            {
+                reflectionEditViewModel.CID = cid;
+               // reflectionEditViewModel.Groups = db.Groups.Where(g => g.CID == cid).ToList();
+
+                return Json("suc");
+            }
+            return View(reflectionEditViewModel);
         }
 
         //以下自評互評

@@ -472,6 +472,7 @@
     <Compile Include="ViewModel\ReflectionViewModel.cs" />
     <Compile Include="ViewModel\StudentCodingViewModel.cs" />
     <Compile Include="ViewModel\StudentHomePageViewModel.cs" />
+    <Compile Include="ViewModel\StudentReflectionEditViewModel.cs" />
     <Compile Include="ViewModel\StudentSurveyViewModel.cs" />
     <Compile Include="ViewModel\StudentViewModel.cs" />
     <Compile Include="ViewModel\SurveyViewModel.cs" />
@@ -1438,6 +1439,7 @@
     <Content Include="Views\Student\StudentSelfEdit.cshtml" />
     <Content Include="Views\Student\StudentPeerEdit.cshtml" />
     <Content Include="Views\Student\StudentGroupEdit.cshtml" />
+    <Content Include="Views\Student\StudentReflectionEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

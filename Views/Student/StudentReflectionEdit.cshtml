@@ -1,4 +1,4 @@
-﻿@model LMSweb.ViewModel.GoalSettingViewModel
+﻿@model LMSweb.ViewModel.StudentReflectionEditViewModel
 @{
     ViewBag.Title = "StudentReflection";
     Layout = "~/Views/Shared/_StudentLayout.cshtml";
@@ -34,12 +34,7 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.CID)
             @Html.HiddenFor(model => model.MID)
-            @if (Model.DefaultQuestions.Any() == false)
-            {
-                <p>目前還沒有設定題目哦~</p>
-            }
-            else
-            {
+
                 <table id="table_id" class="table table-striped">
                     <thead>
                         <tr>
@@ -55,14 +50,16 @@
                         </tr>
                     </thead>
                     <tbody id="number">
-
+                        
                         @foreach (var Q in Model.DefaultQuestions)
                         {
                             <tr>
                                 <td>
                                 </td>
                                 <td>
+                                    
                                     @Html.DisplayFor(modelItem => Q.Description)
+                                    
                                 </td>
                                 <td>
                                     @if (Q.Type == "單選")
@@ -70,26 +67,48 @@
                                         foreach (var qo in Q.DefaultOptions)
                                         {
 
+                                            foreach (var a in Model.ReflectionAswer)
+                                            {
+                                                if (Q.DQID == a.DQID)
+                                                {
+                                                    if (qo.DOptions == a.Answer)
+                                                    {
+                                                        @Html.RadioButton(Q.DQID.ToString(), qo.DOptions, new { @class = "form-check-input", @required = "required", @checked = true, @disabled = "disabled" })
+                                                        @Html.Label(qo.DOptions, new { @class = "form-check-label", @for = Q.DQID })
 
-                                            @Html.RadioButton(Q.DQID.ToString(), qo.DOptions, new { @class = "form-check-input", @required = "required" })
-                                            @Html.Label(qo.DOptions, new { @class = "form-check-label", @for = Q.DQID })
+                                                    }
+                                                    if (qo.DOptions != a.Answer)
+                                                    {
+                                                        @Html.RadioButton(Q.DQID.ToString(), qo.DOptions, new { @class = "form-check-input", @required = "required", @disabled = "disabled" })
+                                                        @Html.Label(qo.DOptions, new { @class = "form-check-label", @for = Q.DQID })
+                                                    }
+                                                    break;
+                                                }
+
+                                            }
 
                                         }
                                     }
                                     else if (Q.Type == "多選")
                                     {
-                                        foreach (var qo in Q.DefaultOptions)
+                                        foreach (var a in Model.ReflectionAswer)
                                         {
-
-
-                                            @Html.CheckBox(Q.DQID.ToString(), new { @class = "form-check-input", @value = qo.DOptions })
-                                            @Html.Label(qo.DOptions, new { @class = "form-check-label" })
-
+                                            if (Q.DQID == a.DQID)
+                                            {
+                                                @Html.TextArea(Q.DQID.ToString(), a.Answer, new { @class = "form-control", @rows = "1", @required = "required", @disabled = "disabled" })
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        @Html.TextArea(Q.DQID.ToString(), new { @class = "form-control", @rows = "3", @required = "required" })
+                                        foreach (var a in Model.ReflectionAswer)
+                                        {
+                                            if (Q.DQID == a.DQID)
+                                            {
+                                                @Html.TextArea(Q.DQID.ToString(), a.Answer, new { @class = "form-control", @rows = "3", @required = "required" })
+                                            }
+                                        }
+                                        @*@Html.TextArea(Q.DQID.ToString(), new { @class = "form-control", @rows = "3", @required = "required" })*@
                                     }
                                 </td>
                             </tr>
@@ -111,7 +130,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                送出後選擇題將無法再修改，只能修改問答題，確定要送出嗎?
+                                送出後無法做修改，確定要送出嗎?
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">再想想</button>
@@ -120,7 +139,7 @@
                         </div>
                     </div>
                 </div>
-            }
+            
 
         </div>
     }
@@ -175,7 +194,7 @@
             sumbit_data["MID"] = "@Model.MID";
             sumbit_data["QRs"] = [];
             for (var i = 0; i < questions_qid.length; i++) {
-                var Question_Response = {};
+                var Question_ResponseEdit = {};
                 var type = $('input[name="' + questions_qid[i] + '"]').attr('type');
                 //console.log(questions_qid[i]);
                 response = "";
@@ -192,21 +211,22 @@
                     response = selector.val();
                 }
                 //console.log(response);
-                Question_Response["qid"] = questions_qid[i];
-                Question_Response["response"] = response;
-                Question_Response["mid"] = "@Model.MID";
-                sumbit_data["QRs"].push(Question_Response);
+                Question_ResponseEdit["qid"] = questions_qid[i];
+                Question_ResponseEdit["response"] = response;
+                Question_ResponseEdit["mid"] = "@Model.MID";
+                sumbit_data["QRs"].push(Question_ResponseEdit);
             }
             console.log(sumbit_data);
             $.ajax({
-                url: '@Url.Action("StudentGoalSetting")',
+                url: '@Url.Action("StudentReflectionEdit")',
                 type: 'post',
                 dataType: 'json',
                 data: sumbit_data,
                 success: function (response) {
-                    // ... do something with the data...
-                    window.location.href = response.redirectToUrl;
+                    if (response == "suc") {
+                        window.location.href = "@Url.Action("StudentReflectionResult", "Student")" + "?cid=@Model.CID&mid=@Model.MID&SID=@Model.SID";
 
+                    }
                 }
             });
             return false;
