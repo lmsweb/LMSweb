@@ -1776,6 +1776,7 @@
                         $('#Studsnts').append($('<option></option>').val('').text('請選擇學生'));
                         $('#Studsnts option:first').attr('selected', true);
                         $('#Studsnts').append($('<option></option>').val('').text('請先選擇組別'));
+                        selectedSID = $('#Studsnts option:selected').val();
                     }
 
                     if (data.length > 0) {
