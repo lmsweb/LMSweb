@@ -390,6 +390,8 @@ namespace LMSweb.Controllers
             vm.GSelfER = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID).ToList();
             //小組成果 教師
             vm.CID = cid;
+            vm.GID = 0;
+
             double classTeacherCor = 0;
             double classTeacherLogi = 0;
             double classTeacherRead = 0;

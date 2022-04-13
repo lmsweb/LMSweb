@@ -149,7 +149,7 @@
         <div class="col-12">
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
             <p>
-                <select id="Studsnts" name="students"><option>請先選擇組別</option></select>
+                <select id="Studsnts" name="students"><option>請選擇學生</option></select>
             </p>
         </div>
         <div class="col-12">
@@ -552,6 +552,9 @@
         var cid = '@Model.CID';
         $('#Groups option:selected').val("0");
         $('#Studsnts option:selected').val("");
+        if (@Model.GID == 0) {
+            $('#Studsnts').append($('<option></option>').val('').text('請先選擇組別'));
+        }
         var selectedMID = $('#Missions option:selected').val();
         var selectedGID = $('#Groups option:selected').val();
         var selectedSID = $('#Studsnts option:selected').val();
@@ -591,6 +594,12 @@
                 async: false,
                 dataType: 'json',
                 success: function (data) {
+                    if (GID == 0) {
+                        $('#Studsnts').empty();
+                        $('#Studsnts').append($('<option></option>').val('').text('請選擇學生'));
+                        $('#Studsnts').append($('<option></option>').val('').text('請先選擇組別'));
+                        
+                    }
                     if (data.length > 0) {
                         $('#Studsnts').empty();
                         $('#Studsnts').append($('<option></option>').val('').text('請選擇學生'));
