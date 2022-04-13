@@ -1774,7 +1774,7 @@
                     if (GID == 0) {
                         $('#Studsnts').empty();
                         $('#Studsnts').append($('<option></option>').val('').text('請選擇學生'));
-                        $('#Studsnts option[text=請選擇學生]').attr('selected', true);
+                        $('#Studsnts option:first').attr('selected', true);
                         $('#Studsnts').append($('<option></option>').val('').text('請先選擇組別'));
                     }
 
