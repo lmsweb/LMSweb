@@ -25,7 +25,7 @@
 <div class="article">
     @if (DateTime.Compare(DateTime.Parse(Model.End), DateTime.Now) <= 0)
     {
-        if (Model.CodeText == null)
+        if (Model.CodePath == null)
         {
             <p class="text-danger">任務已到期，如需補交作業請通知指導老師!</p>
         }
@@ -36,25 +36,28 @@
             <div class="mb-3">
                 <input type="button" value="查看任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
             </div>
-            <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
+            <img src="~/UploadCode/@Model.CodePath" width="1060" />
         }
     }
     else
     {
-        <h5>@Model.MName</h5>
-        <hr />
         <div class="mb-3">
-            <input type="button" value="查看任務內容" onclick="myFunction()" class="btn btn-outline-dark" />
+            <form action="@Url.Action("StudentCoding", "Student", new { cid = Model.CID, mid = Model.MID, gid = Model.GID})" method="post" enctype="multipart/form-data">
+                <input type="file" accept=".png, .jpg, .jpeg" name="File" id="file" />
+                <input type="submit" id="File" value="上傳" class="btn btn-primary" />
+                <p>上傳檔預覽 :<img id="demo" width="1060" /></p>
+            </form>
         </div>
-        <div class="mb-3">
-            <textarea id="code"></textarea>
-        </div>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <input type="button" value="上傳成果" id="saveCode" class="btn btn-primary" onClick="window.alert('上傳成功!');" />
-        </div>
-        <input id="gid" type="hidden" value="@Model.GID" />
-        <input id="cid" type="hidden" value="@Model.CID" />
-        <input id="mid" type="hidden" value="@Model.MID" />
+
+        if (Model.CodePath == null)
+        {
+            <p>尚未上傳程式碼</p>
+        }
+        else
+        {
+            <img class="mb-3" src="~/UploadCode/@Model.CodePath" width="1060" />
+        }
+        <br />
     }
 
 </div>
@@ -95,11 +98,19 @@
 {
     <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
     <script src="~/signalr/hubs"></script>
-    <script src="~/Scripts/Coding/coding_editor.js"></script>
+    @*<script src="~/Scripts/Coding/coding_editor.js"></script>*@
     <script>
         function myFunction() {
             const myWindow = window.open('@Url.Action( "StudentMDetailWindow", "Student", new { MID = Model.MID, CID = Model.CID})', "", "width=800,height=800");
         }
+        $('#file').change(function () {
+            var file = $('#file')[0].files[0];
+            var reader = new FileReader;
+            reader.onload = function (e) {
+                $('#demo').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        });
     </script>
 
 }

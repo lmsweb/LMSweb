@@ -73,15 +73,25 @@
                     </h2>
                     <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                         <div class="accordion-body">
-                            @if (Model.CodeText == null)
+                            @if (Model.CodePath == null)
                             {
-                            <p>學生尚未上傳程式碼</p>
+                                <p>學生尚未上傳程式碼</p>
                             }
                             else
                             {
-                            <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
+                                <img src="~/UploadCode/@Model.CodePath" width="1060" />
                             }
                         </div>
+                        @*<div class="accordion-body">
+            @if (Model.CodeText == null)
+            {
+            <p>學生尚未上傳程式碼</p>
+            }
+            else
+            {
+            <textarea class="form-control" rows="10" readonly>@Model.CodeText</textarea>
+            }
+        </div>*@
                     </div>
                 </div>
             </div>
