@@ -15,6 +15,7 @@ namespace LMSweb.ViewModel
         public string MID { get; set; }
         public string MName { get; set; }
         public string SID { get; set; }
+        public string SName { get; set; }
         public bool IsDiscuss { get; set; }
         
         public List<Question_Response> QRs { get; set; }

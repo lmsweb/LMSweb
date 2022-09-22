@@ -467,5 +467,39 @@ namespace LMSweb.Controllers
 
             return View(svmodel);
         }
+        public ActionResult StudentGoalSettingDetail(GoalSettingViewModel goalSetting, string cid, string mid, string SID)
+        {
+            var cname = db.Courses.Find(cid).CName;
+            var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            var response = db.Responses.Where(r => r.MID == mid);
+            goalSetting.IsDiscuss = misChat;
+            goalSetting.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "目標設置").Include(q => q.Responses);
+            goalSetting.MID = mid;
+            goalSetting.CID = cid;
+            goalSetting.SID = SID;
+            goalSetting.SName = db.Students.Find(SID).SName;
+            goalSetting.CName = cname;
+            goalSetting.MName = mname;
+
+            return View(goalSetting);
+        }
+
+        public ActionResult StudentReflectionDetail(GoalSettingViewModel goalSetting, string cid, string mid, string SID)
+        {
+            var cname = db.Courses.Find(cid).CName;
+            var mname = db.Missions.Find(mid).MName;
+            var misChat = db.Missions.Find(mid).IsDiscuss;
+            goalSetting.IsDiscuss = misChat;
+            goalSetting.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "自我反思").Include(q => q.Responses);
+            goalSetting.MID = mid;
+            goalSetting.CID = cid;
+            goalSetting.SID = SID;
+            goalSetting.SName = db.Students.Find(SID).SName;
+            goalSetting.CName = cname;
+            goalSetting.MName = mname;
+
+            return View(goalSetting);
+        }
     }
 }

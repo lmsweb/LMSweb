@@ -1440,6 +1440,8 @@
     <Content Include="Views\Student\StudentPeerEdit.cshtml" />
     <Content Include="Views\Student\StudentGroupEdit.cshtml" />
     <Content Include="Views\Student\StudentReflectionEdit.cshtml" />
+    <Content Include="Views\Course\StudentGoalSettingDetail.cshtml" />
+    <Content Include="Views\Course\StudentReflectionDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
