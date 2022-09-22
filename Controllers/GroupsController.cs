@@ -114,6 +114,7 @@ namespace LMSweb.Controllers
                         Directory.CreateDirectory(filePath);
                     }
                     string readcodepath = $"{filePath}{code.CodePath}.txt";
+                    model.CodePath = code.CodePath;
                     model.CodeText = readcode.readCodeText(readcodepath);
                 }
                 if (pt != null)

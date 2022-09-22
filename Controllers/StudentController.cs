@@ -227,8 +227,73 @@ namespace LMSweb.Controllers
             model.GID = gid;
             model.IsDiscuss = misChat;
             model.End = db.Missions.Find(mid).End;
+
+            var pt = db.StudentCodes.Where(p => p.GID == gid && p.MID == mid).FirstOrDefault();
+            if (pt != null)
+            {
+                model.CodePath = pt.CodePath;
+            }
+            else
+            {
+                model.CodePath = null;
+            }
+
             return View(model);
         }
+        [HttpPost]
+        public ActionResult StudentCoding(HttpPostedFileBase file, string cid, string mid)
+        {
+            StudentCodingViewModel model = new StudentCodingViewModel();
+            ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
+            var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var sid = claimData[0].Value;
+            var stu = db.Students.Where(s => s.SID == sid);
+            var stuG = db.Students.Find(sid).group;
+            var gid = stuG.GID;
+            var gname = stuG.GName;
+            var cname = db.Courses.Find(cid).CName;
+            var mname = db.Missions.Find(mid).MName;
+
+            model.GID = gid;
+            model.GName = gname;
+            model.CID = cid;
+            model.MID = mid;
+            model.MName = mname;
+            model.CName = cname;
+            var sd = db.StudentCodes.Where(s => s.GID == gid && s.MID == mid).SingleOrDefault();
+            if (sd != null)
+            {
+                db.StudentCodes.Remove(sd);
+            }
+
+            if (file != null && file.ContentLength > 0)
+            {
+                StudentCode studentCode = new StudentCode();
+                string virtualBaseFilePath = Url.Content(codefileSavedPath);
+                string filePath = HttpContext.Server.MapPath(virtualBaseFilePath);
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                string newFileName = string.Concat(
+                    (model.GName + "-" + model.MID + DateTime.Now.ToString("yyMMddHHmmss")),
+                    Path.GetExtension(file.FileName).ToLower());
+
+                string fullFilePath = Path.Combine(Server.MapPath(codefileSavedPath), newFileName);
+                file.SaveAs(fullFilePath);
+                //+"?c=" + DateTime.Now.Ticks.ToString()
+                studentCode.CodePath = newFileName;
+                studentCode.CID = cid;
+                studentCode.MID = mid;
+                studentCode.GID = gid;
+
+                db.StudentCodes.Add(studentCode);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("StudentCoding", "Student", new { mid, cid });
+        }
+
         private string imgfileSavedPath = WebConfigurationManager.AppSettings["ImagesPath"];
         [HttpGet]
         [Authorize(Roles = "Student")]
