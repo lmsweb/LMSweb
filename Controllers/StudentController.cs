@@ -930,6 +930,8 @@ namespace LMSweb.Controllers
                 }
                 string readcodepath = $"{filePath}{code.CodePath}.txt";
                 GroupEVM.CodeText = readcode.readCodeText(readcodepath);
+
+                GroupEVM.CodePath = $"{code.CodePath}";
             }
             if (pt != null)
             {
