@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using DocumentFormat.OpenXml.EMMA;
 using LMSweb.Models;
 using LMSweb.Service;
 using LMSweb.ViewModel;
@@ -321,6 +322,7 @@ namespace LMSweb.Controllers
                     Directory.CreateDirectory(filePath);
                 }
                 string readcodepath = $"{filePath}{code.CodePath}.txt";
+                evalution.CodePath = code.CodePath;
                 evalution.CodeText = readcode.readCodeText(readcodepath);
             }
             if (pt != null)
@@ -385,6 +387,7 @@ namespace LMSweb.Controllers
                     Directory.CreateDirectory(filePath);
                 }
                 string readcodepath = $"{filePath}{code.CodePath}.txt";
+                model.CodePath = code.CodePath;
                 model.CodeText = readcode.readCodeText(readcodepath);
             }
             if (pt != null)
