@@ -23,23 +23,22 @@ namespace LMSweb.Controllers
     {
         private LMSmodel db = new LMSmodel();
 
-        // GET: Student/Create
+        // GET: StudentCreate
         public ActionResult StudentCreate(string cid)
         {
             var vmodel = new StudentViewModel();
-            
-            vmodel.CID = cid;
             var course = db.Courses.Where(c => c.CID == cid).Single();
 
+            vmodel.CID = cid;
             vmodel.CName = course.CName;
             
             return View(vmodel);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult StudentCreate(StudentViewModel vmodel)
         {
-            
             if (ModelState.IsValid)
             {
                 db.Students.Add(vmodel.student);
@@ -47,15 +46,16 @@ namespace LMSweb.Controllers
                 return RedirectToAction("StudentManagement",new { cid = vmodel.student.CID } );
             }
 
-            vmodel.CID = vmodel.student.CID;
             var course = db.Courses.Where(c => c.CID == vmodel.student.CID).Single();
+
+            vmodel.CID = vmodel.student.CID;
             vmodel.CName = course.CName;                                     
 
             return View(vmodel);
         }
+        // GET: StudentEdit
         public ActionResult StudentEdit(string sid, string cid)
         {
-
             if (sid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -65,7 +65,6 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
-           
 
             return View(student);
         }
@@ -80,10 +79,11 @@ namespace LMSweb.Controllers
                 db.SaveChanges();
                 return RedirectToAction("StudentManagement", "Course", new { student.CID});
             }
+
             return View(student);
         }
 
-        // GET: Student/Delete/5
+        // GET: StudentDelete
         public ActionResult StudentDelete(string sid)
         {
             if (sid == null)
@@ -95,9 +95,10 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
-            return View(student);
 
+            return View(student);
         }
+
         [HttpPost, ActionName("StudentDelete")]
         [ValidateAntiForgeryToken]
         public ActionResult StudentDeleteConfirmed(string sid, string cid)
@@ -105,11 +106,11 @@ namespace LMSweb.Controllers
             Student student = db.Students.Find(sid);
             db.Students.Remove(student);
             db.SaveChanges();
-            
 
             return RedirectToAction("StudentManagement", "Course", new { cid });
         }
 
+        /*上傳EXCEL檔*/
         private string fileSavedPath = WebConfigurationManager.AppSettings["UploadPath"];
 
         [HttpPost]
@@ -137,9 +138,7 @@ namespace LMSweb.Controllers
 
             string fileExtName = Path.GetExtension(file.FileName).ToLower();
 
-            if (!fileExtName.Equals(".xls", StringComparison.OrdinalIgnoreCase)
-                &&
-                !fileExtName.Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
+            if (!fileExtName.Equals(".xls", StringComparison.OrdinalIgnoreCase) && !fileExtName.Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
                 jo.Add("Result", false);
                 jo.Add("Msg", "請上傳 .xls 或 .xlsx 格式的檔案");
@@ -147,15 +146,10 @@ namespace LMSweb.Controllers
                 result = JsonConvert.SerializeObject(jo);
                 return Content(result, "application/json");
             }
-
             try
             {
                 var uploadResult = this.FileUploadHandler(file);
-                //jo.Add("Result", !string.IsNullOrWhiteSpace(uploadResult));
-                //jo.Add("Msg", !string.IsNullOrWhiteSpace(uploadResult) ? uploadResult : "");
                 result = this.Import(uploadResult, cid);
-
-                //result = JsonConvert.SerializeObject(jo);
             }
             catch (Exception ex)
             {
@@ -164,6 +158,7 @@ namespace LMSweb.Controllers
                 jo.Add("error", ex.Message);
                 result = JsonConvert.SerializeObject(jo);
             }
+
             return Content(result, "application/json");
         }
 
@@ -179,7 +174,6 @@ namespace LMSweb.Controllers
             {
                 throw new InvalidOperationException("上傳失敗：檔案沒有內容！");
             }
-
             try
             {
                 string virtualBaseFilePath = Url.Content(fileSavedPath);
@@ -190,13 +184,9 @@ namespace LMSweb.Controllers
                     Directory.CreateDirectory(filePath);
                 }
 
-                string newFileName = string.Concat(
-                    DateTime.Now.ToString("yyyyMMddHHmmssfff"),
-                    Path.GetExtension(file.FileName).ToLower());
-
+                string newFileName = string.Concat(DateTime.Now.ToString("yyyyMMddHHmmssfff"), Path.GetExtension(file.FileName).ToLower());
                 string fullFilePath = Path.Combine(Server.MapPath(fileSavedPath), newFileName);
                 file.SaveAs(fullFilePath);
-
                 result = newFileName;
             }
             catch (Exception ex)
@@ -213,9 +203,7 @@ namespace LMSweb.Controllers
             try
             {
                 var fileName = string.Concat(Server.MapPath(fileSavedPath), "/", savedFileName);
-
                 var importStudents = new List<Student>();
-
                 var helper = new ImportDataHelper();
                 var checkResult = helper.CheckImportData(fileName, importStudents);
                 jo.Add("Result", checkResult.Success);
@@ -223,8 +211,7 @@ namespace LMSweb.Controllers
 
                 if (checkResult.Success)
                 {
-                    //儲存匯入的資料
-                    helper.SaveImportData(importStudents, cid);
+                    helper.SaveImportData(importStudents, cid);//儲存匯入的資料
                 }
                 result = JsonConvert.SerializeObject(jo);
             }
@@ -235,7 +222,7 @@ namespace LMSweb.Controllers
 
             return result;
         }
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing) 
         {
             if (disposing)
             {
@@ -248,7 +235,7 @@ namespace LMSweb.Controllers
             return new MultiSelectList(db.Students.Where(x => x.@group == null && x.CID == cid), "SID", "SName", SelectStudentList).ToList();
         }
 
-        [HttpGet]
+        // GET: StudentGroup
         public ActionResult StudentGroup(string cid)
         {            
             var vmodel = new GroupCreateViewModel();
@@ -274,7 +261,9 @@ namespace LMSweb.Controllers
                 group.CID = cid;
                 group.Students = (ICollection <Student>)db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
                 db.Groups.Add(group);
+
                 db.SaveChanges();
+
                 return new HttpStatusCodeResult(200);
             }
             var vmodel = new GroupCreateViewModel();
@@ -292,28 +281,29 @@ namespace LMSweb.Controllers
                 Group group = db.Groups.Find(gid);
                 group.GName = gName;
                 db.Entry(group).State = EntityState.Modified;
+
                 db.SaveChanges();
+
                 return RedirectToAction("StudentGroup", "Course", new { group.CID });
             }
 
             return View();
         }
 
-
         public ActionResult StudentManagement(string cid)
         {
-
             if (cid == null)
             {
                 return new HttpStatusCodeResult(404);
             }
+
             CourseViewModel model = new CourseViewModel();
             var course = db.Courses.Single(c => c.CID == cid);
+
             model.CID = course.CID;
             model.CName = course.CName;
             model.students = course.Students;
             ViewBag.CID = cid;
-            
 
             return View(model);
         }
@@ -321,11 +311,12 @@ namespace LMSweb.Controllers
         [HttpPost]
         public ActionResult GroupN(int n, string cid)
         {
-            
-            var stus = GetRandomElements(db.Students.Where(x => x.@group == null && cid == x.CID).ToList());
             List<Group> groups = new List<Group>();
+            var stus = GetRandomElements(db.Students.Where(x => x.@group == null && cid == x.CID).ToList());
             var left_s = stus.Count % n;
-            for(int i = 1; i <= n; i++)
+            int g_idx = 0;
+
+            for (int i = 1; i <= n; i++)
             {
                 var g = new Group();
                 g.GName = "第" + i.ToString() + "組";
@@ -333,20 +324,22 @@ namespace LMSweb.Controllers
                 g.CID = cid;
                 groups.Add(g);
             }
-            int g_idx = 0;
+
             for(int i = 0; i < stus.Count; i++)
             {
                 groups[g_idx].Students.Add(stus[i]);
                 g_idx++;
                 g_idx = g_idx % n;
             }
+
             for (int i = 0; i < n; i++)
             {
                 db.Groups.Add(groups[i]);
             }
-            db.SaveChanges();
-            return RedirectToAction("StudentGroup", new { cid });
 
+            db.SaveChanges();
+
+            return RedirectToAction("StudentGroup", new { cid });
         }
 
         public static List<t> GetRandomElements<t>(IEnumerable<t> list)
@@ -356,23 +349,22 @@ namespace LMSweb.Controllers
 
         public ActionResult GroupDelete(int groupId)
         {
-
             Group group = db.Groups.Find(groupId);
+            var cid = group.CID;
+            var learnb = db.LearnB.Where(l => l.group.GID == groupId);
+            var studentCode = db.StudentCodes.Where(sc => sc.group.GID == groupId);
+            var studentDraw = db.StudentDraws.Where(sd => sd.Group.GID == groupId);
+
             if (group == null)
             {
                 return HttpNotFound();
             }
-            var cid = group.CID;
+
             group.Students.Clear();
             db.Groups.Remove(group);
-            var learnb = db.LearnB.Where(l => l.group.GID == groupId);
             db.LearnB.RemoveRange(learnb);
-            var studentCode = db.StudentCodes.Where(sc => sc.group.GID == groupId);
             db.StudentCodes.RemoveRange(studentCode);
-            var studentDraw = db.StudentDraws.Where(sd => sd.Group.GID == groupId);
             db.StudentDraws.RemoveRange(studentDraw);
-
-
 
             db.SaveChanges();
 
@@ -387,52 +379,43 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
             Group group = student.group;
             group.Students.Remove(student);
             student.group = null;
-
 
             db.SaveChanges();
 
             return new HttpStatusCodeResult(200);
         }
+
         public ActionResult AddStuToOtherGroup(int gid, List<string> StudentList, string CID)
         {
+            var vmodel = new GroupCreateViewModel();
+
             if (ModelState.IsValid)
             {
-                //Group group = db.Groups.Find(gid);
                 foreach(var sid in StudentList)
                 {
                     Student student = db.Students.Find(sid);
-                    
                     Group group = db.Groups.Find(gid);
-                    //student.group = group;
                     group.Students.Add(student);
  
                 }
                 
-
-                //group.Students = (ICollection<Student>)db.Students.Where(x => StudentList.Contains(x.SID)).ToList();
-                //db.Groups.Add(group);
-
-                
                 db.SaveChanges();
+
                 return new HttpStatusCodeResult(200);
             }
-            var vmodel = new GroupCreateViewModel();
+
             vmodel.StudentList = GetStudent(vmodel.CID);
 
             return View(vmodel);                                                                                                                                                                                                         
-
         }
+
         public ActionResult StudentSurvey (string cid, string mid)
         {
             var svmodel = new StudentSurveyViewModel();
-            svmodel.CID = cid;
-            svmodel.CName = db.Courses.Find(cid).CName;
-            svmodel.MID = mid;
-            svmodel.MName = db.Missions.Find(mid).MName;
-
             var gsquestion = db.DefaultQuestions.Where(q => q.Class == "目標設置").Select(q => q.DQID).ToList();
             var gsrespon = db.Responses.Where(r => gsquestion.Contains(r.DQID)).ToList();
             var requestion = db.DefaultQuestions.Where(q => q.Class == "自我反思").Select(q => q.DQID).ToList();
@@ -442,6 +425,10 @@ namespace LMSweb.Controllers
             var gquestion = db.GroupQuestions.Select(g => g.GQID).ToList();
             var grespon = db.GroupERs.Where(g => gquestion.Contains(g.GQID)).ToList();
 
+            svmodel.CID = cid;
+            svmodel.CName = db.Courses.Find(cid).CName;
+            svmodel.MID = mid;
+            svmodel.MName = db.Missions.Find(mid).MName;
             svmodel.gsResponses = gsrespon;
             svmodel.reResponses = rerespon;
             svmodel.eResponses = erespon;
@@ -467,12 +454,14 @@ namespace LMSweb.Controllers
 
             return View(svmodel);
         }
+
         public ActionResult StudentGoalSettingDetail(GoalSettingViewModel goalSetting, string cid, string mid, string SID)
         {
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
             var response = db.Responses.Where(r => r.MID == mid);
+
             goalSetting.IsDiscuss = misChat;
             goalSetting.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "目標設置").Include(q => q.Responses);
             goalSetting.MID = mid;
@@ -490,6 +479,7 @@ namespace LMSweb.Controllers
             var cname = db.Courses.Find(cid).CName;
             var mname = db.Missions.Find(mid).MName;
             var misChat = db.Missions.Find(mid).IsDiscuss;
+
             goalSetting.IsDiscuss = misChat;
             goalSetting.DefaultQuestions = db.DefaultQuestions.Where(q => q.Class == "自我反思").Include(q => q.Responses);
             goalSetting.MID = mid;

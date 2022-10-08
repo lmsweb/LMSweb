@@ -1,5 +1,4 @@
 ﻿@model LMSweb.Models.Student
-
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
@@ -14,11 +13,9 @@
     </nav>
 </div>
 <div class="article">
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
         <div class="form-horizontal">
             <h4><b>編輯學生</b></h4>
             <hr />
@@ -46,8 +43,7 @@
                         {
                             <option value="男">男</option>
                             <option value="女" selected>女</option>
-                        }
-                        
+                        }                       
                     </select>
                     @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
                 </div>
@@ -58,5 +54,4 @@
             </div>
         </div>
     }
-
 </div>

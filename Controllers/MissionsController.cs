@@ -19,17 +19,19 @@ namespace LMSweb.Models
         public ActionResult Index(string cid)
         {
             MissionViewModel model = new MissionViewModel();
+            var course = db.Courses.Single(c => c.CID == cid);
+            model.missions = db.Missions.Where(m => m.CID == cid);
+            model.CID = course.CID;
+            model.CName = course.CName;
             if (cid == null)
             {
                 model.missions = db.Missions.Where(m => m.CID == cid);
                 return View(model);
             }
-            var course = db.Courses.Single(c => c.CID == cid);
-            model.missions = db.Missions.Where(m => m.CID == cid);
-            model.CID = course.CID;
-            model.CName = course.CName;
+
             return View(model);
         }
+
         public ActionResult Details(string mid,string cid)
         {
             if (mid == null)
@@ -41,21 +43,24 @@ namespace LMSweb.Models
             {
                 return HttpNotFound();
             }
+
             var model = new MissionViewModel();
             var mname = db.Missions.Find(mid).MName;
             var course = db.Courses.Find(cid);
             var kps = mission.relatedKP.Split(',');
             model.KContents = new List<string>();
-            for(int i = 0; i < kps.Length - 1; i++)
-            {
-                model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
-            }
             model.CID = cid;
             model.mis = mission;
             model.MID = mid;
             model.course = course;
             model.CName = course.CName;
             model.MName = mname;
+
+            for(int i = 0; i < kps.Length - 1; i++)
+            {
+                model.KContents.Add(db.KnowledgePoints.Find(int.Parse(kps[i])).KContent);
+            }
+           
             return View(model);
         }
 
@@ -68,6 +73,7 @@ namespace LMSweb.Models
         {
             return new MultiSelectList(db.KnowledgePoints.Where(kp => kp.CID == cid), "KID", "KContent", SelectKnowledgeList);
         }
+
         [HttpGet]
         public ActionResult Create(string cid)
         {
@@ -79,10 +85,17 @@ namespace LMSweb.Models
 
             return View(model);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MissionCreateViewModel model)
         {
+            var vmodel = new MissionCreateViewModel();
+            var cname = db.Courses.Find(model.CID).CName;
+            vmodel.KnowledgeList = GetKnowledge(model.CID);
+            vmodel.CID = model.CID;
+            model.CName = cname;
+
             if (ModelState.IsValid)
             {
                 var kps = db.KnowledgePoints.Where(x => model.SelectKnowledgeList.ToList().Contains(x.KID)).ToList();
@@ -91,23 +104,18 @@ namespace LMSweb.Models
                 {
                     kp_str += kp.KID.ToString() + ",";
                 }
-
                 model.mission.relatedKP = kp_str;
                 model.mission.CID = model.CID;
+
                 db.Missions.Add(model.mission);
                 db.SaveChanges();
                 
                 return RedirectToAction("Index", new { cid = model.CID });
-                
             }
-            var vmodel = new MissionCreateViewModel();
-            var cname = db.Courses.Find(model.CID).CName;
-            vmodel.KnowledgeList = GetKnowledge(model.CID);
-            vmodel.CID = model.CID;
-            model.CName = cname;
 
             return View(vmodel);
         }
+
         [HttpGet]
         public ActionResult Edit(string mid, string cid)
         {
@@ -134,7 +142,8 @@ namespace LMSweb.Models
         public ActionResult Edit(MissionCreateViewModel model)
         {
             var mission = model.mission;
-            
+            model.CID = mission.CID;
+
             if (ModelState.IsValid)
             {
                 db.Entry(mission).State = EntityState.Modified;
@@ -154,13 +163,14 @@ namespace LMSweb.Models
                 return RedirectToAction("Index", new { cid = model.CID});
             }
 
-            model.CID = mission.CID;
-
             return View(model);
         }
         [HttpGet]
         public ActionResult Delete(string mid, string cid)
         {
+            var model = new MissionViewModel();
+            var cname = db.Courses.Find(cid).CName;
+
             if (mid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -170,14 +180,13 @@ namespace LMSweb.Models
             {
                 return HttpNotFound();
             }
-            var model = new MissionViewModel();
-            var cname = db.Courses.Find(cid).CName;
             model.CID = cid;
             model.CName = cname;
             model.mis = mission;
 
             return View(model);
         }
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string mid)
@@ -206,9 +215,7 @@ namespace LMSweb.Models
             db.StudentCodes.RemoveRange(stuCode);
             db.GroupERs.RemoveRange(ger);
             db.EvalutionResponse.RemoveRange(eresponse);
-
             db.Missions.Remove(mission);
-
             db.SaveChanges();
             return RedirectToAction("Index", new { cid });
         }
@@ -248,6 +255,7 @@ namespace LMSweb.Models
            
             return View(model);
         }
+
         [HttpPost]
         public ActionResult SwitchDrawing(string mid, string cid, string type, bool sw)
         {
@@ -277,21 +285,17 @@ namespace LMSweb.Models
             {
                 mission.IsReflect = sw;
             }
-            //else if (type == "is_AddMeta")
-            //{
-            //    mission.AddMetacognition = sw;
-            //}
             else if (type == "is_GReflect")
             {
                 mission.IsGReflect = sw;
             }
-
             else if (type == "is_Journey")
             {
                 mission.Is_Journey = sw;
             }
 
             db.SaveChanges();
+
             return Json(new { Status = HttpStatusCode.OK , type = type, sw = sw});
         }
 

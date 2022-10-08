@@ -32,7 +32,6 @@ namespace LMSweb.Controllers
             var pa = db.PeerA.SingleOrDefault(p => p.AssessedSID == sid && p.MID == mid);
             var gmodel = new GroupViewModel();
             var misChat = db.Missions.Find(mid).IsDiscuss;
-            
 
             gmodel.Groups = db.Groups.Where(g => g.GID == stuG.GID).ToList();
             gmodel.PeerAssessment = pa;
@@ -48,7 +47,6 @@ namespace LMSweb.Controllers
             return View(gmodel);
         }
 
-        // GET: PeerAssessments/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -60,10 +58,10 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(peerAssessment);
         }
 
-        // GET: PeerAssessments/Create
         public ActionResult Create(string sid, string mid, int gid, string cid)
         {
             GroupViewModel model = new GroupViewModel();
@@ -71,33 +69,30 @@ namespace LMSweb.Controllers
             model.GID = gid;
             model.SID = sid;
             model.CID = cid;
+
             return View(model);
         }
 
-        // POST: PeerAssessments/Create
-        // 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PEID,PeerA,CooperationScore,AssessedSID,MID")] PeerAssessment peerAssessment, string mid, int gid, string cid)
         {
             if (ModelState.IsValid)
             {
-                //peerAssessment.StudentMissions.MID = mid;
-                
                 db.PeerA.Add(peerAssessment);
                 db.SaveChanges();
+
                 var gmodel = new GroupViewModel();
                 gmodel.MID = mid;
                 gmodel.GID = gid;
                 gmodel.CID = cid;
+
                 return RedirectToAction("Index", gmodel);
             }
 
             return View(peerAssessment);
         }
 
-        // GET: PeerAssessments/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -109,12 +104,10 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(peerAssessment);
         }
 
-        // POST: PeerAssessments/Edit/5
-        // 若要免於大量指派 (overposting) 攻擊，請啟用您要繫結的特定屬性，
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PEID,PeerA,CooperationScore,AssessedSID")] PeerAssessment peerAssessment)
@@ -123,12 +116,12 @@ namespace LMSweb.Controllers
             {
                 db.Entry(peerAssessment).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
+
             return View(peerAssessment);
         }
-
-        // GET: PeerAssessments/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -140,17 +133,20 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(peerAssessment);
         }
 
-        // POST: PeerAssessments/Delete/5
+ 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             PeerAssessment peerAssessment = db.PeerA.Find(id);
+
             db.PeerA.Remove(peerAssessment);
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -166,32 +162,31 @@ namespace LMSweb.Controllers
         [Authorize(Roles = "Student")]
         public ActionResult GroupEvalution(int gid, string mid, string cid)
         {
-            var gmodel = new GroupViewModel();
-            gmodel.MID = mid;
-            var mis = db.Missions.Find(mid);
-
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();   //抓出當初記載Claims陣列中的SID
+            var gmodel = new GroupViewModel();
             var sid = claimData[0].Value;
+            var mis = db.Missions.Find(mid);
+            var pa = db.PeerA.SingleOrDefault(p => p.AssessedSID == sid && p.MID == mid);
+            var course = db.Courses.Single(c => c.CID == cid);
+            var mname = db.Missions.Find(mid).MName; 
             var stu = db.Students.Where(s => s.SID == sid);
-
             var stuC = db.Students.Find(sid).course;
             var stuG = db.Students.Find(sid).group;
-            var misChat = db.Missions.Find(mid).IsDiscuss;
+            var misChat = db.Missions.Find(mid).IsDiscuss; 
+
+            gmodel.MID = mid;
             gmodel.Courses = db.Courses.Where(c => c.CID == stuC.CID).ToList();
             gmodel.Groups = db.Groups.Where(g => g.GID != stuG.GID && g.CID == cid).ToList();
-            var pa = db.PeerA.SingleOrDefault(p => p.AssessedSID == sid && p.MID == mid);
             gmodel.PeerAssessment = pa;
-            var course = db.Courses.Single(c => c.CID == cid);
-            var mname = db.Missions.Find(mid).MName;
             gmodel.CID = cid;
             gmodel.CName = course.CName;
             gmodel.IsDiscuss = misChat;
             gmodel.MName = mname;
             gmodel.GroupER = db.GroupERs.Where(sg => sg.MID == mid && sg.EvaluatorSID == sid).ToList();
+
             return View(gmodel);
         }
-
 
         public ActionResult PeerEvaluation()
         {

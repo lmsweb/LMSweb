@@ -12,7 +12,7 @@
     {
         @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+     <div class="form-horizontal">
 
         <h5>編輯題目</h5>
         <hr />
@@ -23,24 +23,6 @@
             @Html.LabelFor(model => model.Question.Type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-5">
                 <select class="form-select" id="Question_Type" name="Question.Type" value="單選">
-                    @*@if (Model.Question.Type == "問答")
-                    {
-                        <option value="問答" selected>問答</option>
-                        <option value="單選">單選</option>
-                        <option value="多選">多選</option>
-                    }
-                    else if (Model.Question.Type == "單選")
-                    {
-                        <option value="問答">問答</option>
-                        <option value="單選" selected>單選</option>
-                        <option value="多選">多選</option>
-                    }
-                    else
-                    {
-                        <option value="問答">問答</option>
-                        <option value="單選">單選</option>
-                        <option value="多選" selected>多選</option>
-                    }*@
                     <option value="單選" selected>單選</option>
                 </select>
                 @Html.ValidationMessageFor(model => model.Question.Type, "", new { @class = "text-danger" })
@@ -57,33 +39,13 @@
         </div>
         <div class="mb-3">
             <div class="col-2">
-                @*@if (Model.Question.Type != "問答")
-                {
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="edit_btn">編輯選項</button>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="edit_btn" hidden>編輯選項</button>
-                }*@
+                
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" id="edit_btn" hidden>編輯選項</button>
             </div>
         </div>
-        @*<div class="mb-3">
-            <div class="col-5">
-                @for (int i = 1; i <= opt_list.Count; i++)
-                {
-                    <div class="mb-3">
-                        <p name="String_Options[]">選項 @i : @opt_list[i - 1].OptionName</p>
-                    </div>
-                }
-            </div>
-        </div>*@
 
         @Html.HiddenFor(model => model.Question.Class, new { htmlAttributes = new { @class = "form-control" } })
         @Html.HiddenFor(model => model.Question.MID, new { htmlAttributes = new { @class = "form-control" } })
-
-
-
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -122,8 +84,8 @@
             </div>
         </div>
 
-    </div>
-    }
+     </div>
+     }
 
 </div>
 

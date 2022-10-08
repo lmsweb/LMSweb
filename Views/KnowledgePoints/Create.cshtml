@@ -6,12 +6,11 @@
 }
 <body>
     <div class="article">
-        @*<p>@Model.CID</p>*@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
+         <div class="form-horizontal">
             <h4><b>新增知識點</b></h4>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -22,22 +21,18 @@
                     @Html.ValidationMessageFor(model => model.KContent, "", new { @class = "text-danger" })
                 </div>
             </div>
-            @*<div class="form-group">
-                @Html.LabelFor(model => model.CID, "CID", htmlAttributes: new { @class = "control-label col-md-2" })*@
                 <div class="col-md-10">
                     @Html.HiddenFor(model => model.CID, new { htmlAttributes = new { @disabled = "true", @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.CID, "", new { @class = "text-danger" })
                 </div>
-
-
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="新增" class="btn btn-primary" />
                     <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "KnowledgePoints", new { cid = Model.CID })'" />
                 </div>
             </div>
-        </div>
-        }
+         </div>
+         }
 
 
     </div>

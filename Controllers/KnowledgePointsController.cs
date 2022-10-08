@@ -27,6 +27,7 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
             CourseViewModel model = new CourseViewModel();
             model.CID = course.CID;
             model.CName = course.CName;
@@ -82,12 +83,14 @@ namespace LMSweb.Controllers
             {
                 db.Entry(knowledgePoint).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index", "KnowledgePoints", new { cid = knowledgePoint.CID });
             }
+
             return View(knowledgePoint);
         }
 
-        // GET: KnowledgePoints/Delete/5
+        // GET: Delete
         public ActionResult Delete(int? kid)
         {
             if (kid == null)
@@ -99,18 +102,20 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(knowledgePoint);
         }
 
-        // POST: KnowledgePoints/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int? kid)
         {
             KnowledgePoint knowledgePoint = db.KnowledgePoints.Find(kid);
             var cid = knowledgePoint.CID;
+
             db.KnowledgePoints.Remove(knowledgePoint);
             db.SaveChanges();
+
             return RedirectToAction("Index", "KnowledgePoints", new { cid = cid });
         }
 

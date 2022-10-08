@@ -16,8 +16,6 @@ namespace LMSweb.Controllers
     public class TeacherController : Controller
     {
         private LMSmodel db = new LMSmodel();
-
-
         [AllowAnonymous]
         public ActionResult Login()
         {
@@ -33,13 +31,11 @@ namespace LMSweb.Controllers
             if (result != null) //資料庫有資料(這個人)
             {
                 //授權
-
                 // 建立使用者的登入資訊
                 ClaimsIdentity identity = new ClaimsIdentity(new[] {
                     //加入使用者的相關資訊
                     new Claim(ClaimTypes.Role, "Teacher"),
                     new Claim(ClaimTypes.Name, result.TName),
-
                     new Claim("TID",result.TID)
                 }, "Teacher");
 
@@ -50,7 +46,7 @@ namespace LMSweb.Controllers
             else
             {
                 ModelState.AddModelError("", "輸入的帳密可能有誤或是沒有註冊");
-                //return RedirectToAction("Index", "Home");
+               
                 return View("Login");
             }
 
@@ -61,7 +57,6 @@ namespace LMSweb.Controllers
             Request.GetOwinContext().Authentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
-
 
         [Authorize(Roles = "Teacher")]
         public ActionResult TeacherHomePage()
@@ -78,9 +73,9 @@ namespace LMSweb.Controllers
         public ActionResult CourseCreate()
         {
             Course course = new Course();
+
             return View(course);
         }
-
 
         [HttpPost]
         [Authorize(Roles = "Teacher")]
@@ -98,8 +93,10 @@ namespace LMSweb.Controllers
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
+
                 return RedirectToAction("TeacherHomePage", "Teacher");
             }
+
             return View(course);
         }
 
@@ -114,6 +111,7 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(course);
         }
 
@@ -125,6 +123,7 @@ namespace LMSweb.Controllers
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("TeacherHomePage", "Teacher", null);
             }
             return View(course);
@@ -141,6 +140,7 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(course);
         }
 
@@ -150,7 +150,6 @@ namespace LMSweb.Controllers
         {
             Course course = db.Courses.Find(cid);
             db.Courses.Remove(course);
-
             var mission = db.Missions.Where(m => m.CID == cid);
             var learningBehavior = db.LearnB.Where(l => l.CID == cid);
             var teacherA = db.TeacherA.Where(ta => ta.CID == cid);
@@ -180,10 +179,8 @@ namespace LMSweb.Controllers
             db.StudentCodes.RemoveRange(stuCode);
             db.GroupERs.RemoveRange(ger);
             db.EvalutionResponse.RemoveRange(eresponse);
-
-
-
             db.SaveChanges();
+
             return RedirectToAction("TeacherHomePage", "Teacher", null);
         }
 
@@ -202,20 +199,17 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(teacher);
         }
 
-        // GET: Teacher/Create
         public ActionResult Create()
         {
             ViewBag.TID = new SelectList(db.Teachers, "TID", "TName");
+
             return View();
-            // return View();
         }
 
-        // POST: Teacher/Create
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CID,TID,CName")] Course course)
@@ -224,20 +218,18 @@ namespace LMSweb.Controllers
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
+
                 return RedirectToAction("TeacherHomePage");
             }
+
              return View(course);
         }
        
-        
-        // GET: Teacher/Edit/5
         public ActionResult SettingPage()
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
             var tid = claimData[0].Value; //取值(因為只有一筆)
-
-
             if (tid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -251,9 +243,6 @@ namespace LMSweb.Controllers
             return View(teacher);
         }
 
-        // POST: Teacher/Edit/5
-        // 若要避免過量張貼攻擊，請啟用您要繫結的特定屬性。
-        // 如需詳細資料，請參閱 https://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SettingPage([Bind(Include = "TID, TPassword, TName, Email")] Teacher teacher)
@@ -262,13 +251,13 @@ namespace LMSweb.Controllers
             {
                 db.Entry(teacher).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("SettingPage");
             }
             
             return View(teacher);
         }
 
-        // GET: Teacher/Delete/5
         public ActionResult Delete(string cid)
         {
             if (cid == null)
@@ -280,10 +269,10 @@ namespace LMSweb.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(course);
         }
 
-        // POST: Teacher/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string cid)
@@ -291,6 +280,7 @@ namespace LMSweb.Controllers
             Course course = db.Courses.Find(cid);
             db.Courses.Remove(course);
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -305,26 +295,25 @@ namespace LMSweb.Controllers
 
         public ActionResult TeacherChat(string mid, string cid)
         {
-            var gmodel = new GroupViewModel();
-            gmodel.MID = mid;
-            var mis = db.Missions.Find(mid);
-
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity; //取得Identity
             var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的SID
+            var gmodel = new GroupViewModel();          
+            var mis = db.Missions.Find(mid);
             var tid = claimData[0].Value;            
             var mname = db.Missions.Find(mid).MName;
             var cname = db.Courses.Find(cid).CName;
+            gmodel.MID = mid;
             gmodel.CID = cid;
             gmodel.CName = cname;
             gmodel.Groups = db.Groups.Where(g => g.CID == cid).ToList(); 
             gmodel.MName = mname;
+
             return View(gmodel);
         }
 
         public ActionResult StuChat(int gid ,string cid, string mid)
         {
             MissionViewModel model = new MissionViewModel();
-
             var mission = db.Missions.Find(mid);
             var mname = db.Missions.Find(mid).MName;
             var gname = db.Groups.Find(gid).GName;
@@ -333,6 +322,7 @@ namespace LMSweb.Controllers
             model.GID = gid;
             model.GName = gname;
             model.MName = mname;
+
             return View(model);
         }
     }

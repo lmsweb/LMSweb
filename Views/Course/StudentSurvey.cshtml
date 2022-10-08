@@ -49,7 +49,6 @@
                         @item.SName
                     </td>
                     <td>
-
                         @if (Model.IsGoalSetting)
                         {
                             if (Model.gsResponses.Where(r => r.SID == item.SID && r.MID == Model.MID).Count() != 0)
@@ -86,7 +85,6 @@
                         }
                     </td>
                     <td>
-
                         @if (Model.IsReflection)
                         {
                             if (Model.reResponses.Where(r => r.SID == item.SID && r.MID == Model.MID).Count() != 0)
@@ -100,10 +98,8 @@
                             }
                         }
                     </td>
-
                 </tr>
-
-            }
+             }
         </tbody>
     </table>
 </div>

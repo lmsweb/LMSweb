@@ -1457,7 +1457,6 @@
     <Folder Include="packages\" />
     <Folder Include="UploadCode\" />
     <Folder Include="UploadImages\" />
-    <Folder Include="Views\Responses\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

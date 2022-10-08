@@ -21,14 +21,6 @@
 
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @*<div class="mb-3">
-                    @Html.LabelFor(model => model.Question.QID, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Question.QID, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Question.QID, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
             <div class="mb-3">
                 @Html.LabelFor(model => model.Question.Type, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-5">
@@ -93,7 +85,6 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" aria-hidden="true" data-bs-dismiss="modal" id="addfinish">完成</button>
-                            @*<button type="button" class="btn btn-primary" id="alert">創建</button>*@
                         </div>
                     </div>
                 </div>

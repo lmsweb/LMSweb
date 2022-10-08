@@ -32,7 +32,7 @@
             <tbody>
                 @foreach (var item in Model.Groups)
                 {
-                <tr>
+                 <tr>
                     <td class="col-1">
                         @item.GName
                     </td>
@@ -51,13 +51,13 @@
                         }
 
                     </td>
-                </tr>
+                 </tr>
                     @*if (item.GID != Model.GID)
                         {
                             @Html.ActionLink(item.GName, "StudentPeerEvalution", "Student", new { sid = Model.SID, mid = Model.MID, gid = Model.GID, cid = Model.CID }, new { @class = "" })
                             <br />
                         }*@
-                }
+                 }
             </tbody>
         </table>
 

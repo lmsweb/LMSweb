@@ -17,6 +17,6 @@ namespace LMSweb.ViewModel
         public LMSweb.Models.DefaultQuestion DefaultQuestion { get; set; }
         public IEnumerable<LMSweb.Models.DefaultQuestion> DefaultQuestions { get; set; }
         public LMSweb.Models.DefaultOption DefaultOption { get; set; }
-        //public IEnumerable<LMSweb.Models.DefaultOption> DefaultOptions { get; set; }
+
     }
 }

@@ -109,7 +109,6 @@
          function KPmanagement() {
             console.log('@Url.Action("Index", "KnowledgePoints", new { CID = Model.CID})');
             const myWindow = window.open('@Url.Action("Index", "KnowledgePoints", new { CID = Model.CID})', "", "width=600,height=600");
-            //myWindow.opener.document.getElementById("demo").innerHTML = "HELLO!";
         }
 
         $('#kpModal').on('show.bs.modal', function (event) {

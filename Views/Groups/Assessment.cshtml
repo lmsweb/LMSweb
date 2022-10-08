@@ -22,28 +22,9 @@
         <hr />
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @*<div class="mb-3">
-            @Html.LabelFor(model => model.TeacherAssessment.GroupAchievementScore, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-5">
-                @Html.EditorFor(model => model.TeacherAssessment.GroupAchievementScore, new { htmlAttributes = new { @class = "form-control", @placeholder = "0分 ~ 100分" } })
-                @Html.ValidationMessageFor(model => model.TeacherAssessment.GroupAchievementScore, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="mb-3">
-            @Html.LabelFor(model => model.TeacherAssessment.TeacherA, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-5">
-                <div class="form-floating">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="TeacherAssessment_TeacherA" name="TeacherAssessment.TeacherA" style="height: 100px"></textarea>
-                    <label for="floatingTextarea">請寫下對小組成果的評價...</label>
-                </div>
-            </div>
-        </div>*@
             @Html.HiddenFor(model => model.CID)
             @Html.HiddenFor(model => model.GID)
             @Html.HiddenFor(model => model.MID)
-
-
             小組成果
             <div class="accordion mb-3">
                 <div class="accordion-item">
@@ -191,9 +172,7 @@
                     </tr>
                 </tbody>
             </table>
-
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
             <table id="table_id" class="table table-striped">
                 <thead>
                     <tr>
@@ -212,7 +191,7 @@
 
                     @foreach (var Q in Model.GroupQuestion)
                     {
-                    <tr>
+                     <tr>
                         <td>
                         </td>
                         <td>
@@ -220,31 +199,22 @@
                         </td>
                         <td>
                             @if (Q.Type == "單選")
+                            {
+                                foreach (var qo in Q.GroupOptions)
                                 {
-                                    foreach (var qo in Q.GroupOptions)
-                                    {
-                            @*<input class="form-check-input" type="radio" value="" id="flexCheckDefault">@qo.OptionName*@
-                            @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input" , @required = "required"})
-                            @Html.Label(qo.OptionNum, new { @class = "form-check-label", @for = Q.GQID })
-                                    }
+                                    @Html.RadioButton(Q.GQID.ToString(), qo.OptionNum, new { @class = "form-check-input" , @required = "required"})
+                                    @Html.Label(qo.OptionNum, new { @class = "form-check-label", @for = Q.GQID })
                                 }
+                            }
                             else
-                                {
-                            @*<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>*@
-                            @Html.TextArea(Q.GQID.ToString(), new { @class = "form-control", @rows = "3", @required = "required" })
-                                }
+                            {
+                                @Html.TextArea(Q.GQID.ToString(), new { @class = "form-control", @rows = "3", @required = "required" })
+                            }
                         </td>
-                    </tr>
-                    }
-
+                     </tr>
+                     }
                 </tbody>
             </table>
-            @*<div class="mb-3">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="確定送出" class="btn btn-primary" />
-                <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Groups" , new {mid = Model.MID, cid = Model.CID })'" />
-            </div>
-        </div>*@
             <div class="mb-3">
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">送出</button>

@@ -22,7 +22,6 @@ namespace LMSweb.ViewModel
         public string SEvalution { get; set; }
         public int Teachercourse { get; set; }
         public int Classcourse { get; set; }
-        //public List<Chat_Achievement> CAs { get; set; }
         public List<Student> student { get; set; }
         public List<Mission> missions { get; set; }
         public List<StudentMission> studentmissions { get; set; }

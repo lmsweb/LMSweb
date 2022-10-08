@@ -1,9 +1,7 @@
 ﻿@model LMSweb.Models.Student
-
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_TeacherLayout.cshtml";
-
 }
 <div class="cardArticle">
     <h4>@Model.course.CName</h4>
@@ -16,46 +14,35 @@
 </div>
 <div class="article">
     <h4><b>刪除學生</b></h4>
-
     <div>
-
         <hr />
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.SName)
             </dt>
-
             <dd>
                 @Html.DisplayFor(model => model.SName)
             </dd>
-
             <dt>
                 @Html.DisplayNameFor(model => model.SID)
             </dt>
-
             <dd>
                 @Html.DisplayFor(model => model.SID)
             </dd>
-
             <dt>
                 @Html.DisplayNameFor(model => model.Sex)
             </dt>
-
             <dd>
                 @Html.DisplayFor(model => model.Sex)
             </dd>
-
         </dl>
-
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-
             <div class="mb-3">
                 <input type="submit" value="刪除" class="btn btn-primary" />
                 <input type="button" value="取消" class="btn btn-secondary" onclick="location.href='@Url.Action("StudentManagement", "Course", new { cid = Model.CID})'" />
             </div>
         }
     </div>
-
 </div>

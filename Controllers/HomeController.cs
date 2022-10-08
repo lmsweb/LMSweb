@@ -18,7 +18,8 @@ namespace LMSweb.Controllers
                 var claimData = claims.Claims.Where(x => x.Type == "TID").ToList();   //抓出當初記載Claims陣列中的TID
                 var tid = claimData[0].Value; //取值(因為只有一筆)
                 if (tid != null)
-                    return RedirectToAction("TeacherHomePage", "Teacher");
+
+                return RedirectToAction("TeacherHomePage", "Teacher");
             }
             catch
             {
@@ -38,6 +39,7 @@ namespace LMSweb.Controllers
             {
 
             }
+
             return View();
         }
     }

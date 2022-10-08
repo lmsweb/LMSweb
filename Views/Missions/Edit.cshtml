@@ -14,11 +14,9 @@
     </nav>
 </div>
 <div class="article">
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
      <div class="form-horizontal">
          <h4><b>編輯任務</b></h4>
          <hr />
@@ -44,9 +42,6 @@
              <div class="col-5">
                  @Html.EditorFor(model => model.mission.Start, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
                  @Html.ValidationMessageFor(model => model.mission.Start, "", new { @class = "text-danger" })
-                 @*<div class="input-group-append" data-target="#datetimepicker_start" data-toggle="datetimepicker">
-                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                 </div>*@
              </div>
         </div>
 
@@ -55,9 +50,7 @@
              <div class="col-5">
                  @Html.EditorFor(model => model.mission.End, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
                  @Html.ValidationMessageFor(model => model.mission.End, "", new { @class = "text-danger" })
-                 @*<div class="input-group-append" data-target="#datetimepicker_end" data-toggle="datetimepicker">
-                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                 </div>*@
+                 
              </div>
          </div>
 
