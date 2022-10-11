@@ -31,103 +31,12 @@
     var peerContributeCount = 0;
 
 
-    //foreach (var item in Model.student)
-    //{
-    //    foreach (var i in Model.GSelfER)//自我評價 小組平均
-    //    {
-    //        if (item.SID == i.SID)
-    //        {
-    //            if (i.DQID == 20)
-    //            {
-    //                var answer = Convert.ToInt32(i.Answer);
-    //                selfDiscuss = selfDiscuss + answer;
-    //                selfDiscussCount++;
-    //            }
-    //            if (i.DQID == 21)
-    //            {
-    //                var answer = Convert.ToInt32(i.Answer);
-    //                selfDraw = selfDraw + answer;
-    //                selfDrawCount++;
-    //            }
-    //            if (i.DQID == 22)
-    //            {
-    //                var answer = Convert.ToInt32(i.Answer);
-    //                selfCode = selfCode + answer;
-    //                selfCodeCount++;
-    //            }
-    //            if (i.DQID == 23)
-    //            {
-    //                var answer = Convert.ToInt32(i.Answer);
-    //                selfContribute = selfContribute + answer;
-    //                selfContributeCount++;
-    //            }
-
-    //        }
-
-    //    }
-    //    foreach (var i in Model.GPeerER)//同儕互評 小組平均
-    //    {
-    //        if (item.SID == i.SID)
-    //        {
-    //            if (i.DQID == 20)
-    //            {
-    //                var answer = Convert.ToInt32(i.Answer);
-    //                peerDiscuss = peerDiscuss + answer;
-    //                peerDiscussCount++;
-    //            }
-    //            if (i.DQID == 21)
-    //            {
-    //                var answer = Convert.ToInt32(i.Answer);
-    //                peerDraw = peerDraw + answer;
-    //                peerDrawCount++;
-    //            }
-    //            if (i.DQID == 22)
-    //            {
-    //                var answer = Convert.ToInt32(i.Answer);
-    //                peerCode = peerCode + answer;
-    //                peerCodeCount++;
-    //            }
-    //            if (i.DQID == 23)
-    //            {
-    //                var answer = Convert.ToInt32(i.Answer);
-    //                peerContribute = peerContribute + answer;
-    //                peerContributeCount++;
-    //            }
-
-    //        }
-
-    //    }
-    //}
-    ////計算自我評價小組平均
-    //selfDiscuss = selfDiscuss / selfDiscussCount;
-    //selfDraw = selfDraw / selfDrawCount;
-    //selfCode = selfCode / selfCodeCount;
-    //selfContribute = selfContribute / selfContributeCount;
-    ////同儕互評小組均
-    //peerDiscuss = peerDiscuss / peerDiscussCount;
-    //peerDraw = peerDraw / peerDrawCount;
-    //peerCode = peerCode / peerCodeCount;
-    //peerContribute = peerContribute / peerContributeCount;
-    //總攬
-    //var SEvalution = ((Model.SelfDraw) + (Model.SelfCode) + (Model.SelfDiscuss) + (Model.SelfContribute)) / 4;//自我評價分數
-    //SEvalution = Math.Round((SEvalution), 1, MidpointRounding.ToEven);
-
-    //double GSEvalution = (selfDiscuss + selfDraw + selfCode + selfContribute) / 4; //自我評價分數 小組平均
-    //GSEvalution = Math.Round((GSEvalution), 1, MidpointRounding.ToEven);
-
     var CSEvalution = ((Model.classSelfDraw) + (Model.classSelfCode) + (Model.classSelfDiscuss) + (Model.classSelfContribute)) / 4;//自我評價分數 全班平均
-    CSEvalution = Math.Round((CSEvalution), 1, MidpointRounding.ToEven);
-
-    //var PEvalution = ((Model.PeerDraw) + (Model.PeerCode) + (Model.PeerDiscuss) + (Model.PeerContribute)) / 4;//同儕互評分數
-    //PEvalution = Math.Round((PEvalution), 1, MidpointRounding.ToEven);
-
-    //double GPEvalution = (peerDiscuss + peerDraw + peerCode + peerContribute) / 4; ////同儕互評分數 小組平均
-    //GPEvalution = Math.Round((GPEvalution), 1, MidpointRounding.ToEven);
+    CSEvalution = Math.Round((CSEvalution), 1, MidpointRounding.ToEven);    
 
     var CPEvalution = ((Model.classPeerDraw) + (Model.classPeerCode) + (Model.classPeerDiscuss) + (Model.classPeerContribute)) / 4;////同儕互評分數 全班平均
     CPEvalution = Math.Round((CPEvalution), 1, MidpointRounding.ToEven);
 
-    //var gResults = Math.Round((((Model.TeacherScore) + (Model.GroupScore)) / 2), 1, MidpointRounding.ToEven);// 小組成果分數
     var CgResults = Math.Round((((Model.classTeacherScore) + (Model.classGroupScore)) / 2), 1, MidpointRounding.ToEven);// 小組成果分數全班平均
 }
 
@@ -264,7 +173,7 @@
 
                                     <strong>參與撰寫程式碼: @Model.classPeerCode 分</strong><br />
 
-                                    <strong>參與撰寫程式碼: @Model.classPeerContribute 分</strong><br />
+                                    <strong>成果貢獻: @Model.classPeerContribute 分</strong><br />
 
                                     @*<strong>評語:</strong><br />
                                         @foreach (var qo in Model.PeerER)

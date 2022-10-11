@@ -18,7 +18,7 @@ namespace LMSweb.Controllers
     {
         private LMSmodel db = new LMSmodel();
         LearnBViewModel vm = new LearnBViewModel();
-        public ActionResult StudentJourney(string cid, string mid)
+        public ActionResult StudentJourney(string cid, string mid)//學生普通版學習表現
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity;
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
@@ -69,7 +69,7 @@ namespace LMSweb.Controllers
 
             return View(vm);
         }
-        public ActionResult StudentEvalutionJourney(string cid, string mid)
+        public ActionResult StudentEvalutionJourney(string cid, string mid)//學生互評版學習表現
         {
             ClaimsIdentity claims = (ClaimsIdentity)User.Identity;
             var claimData = claims.Claims.Where(x => x.Type == "SID").ToList();
@@ -222,7 +222,7 @@ namespace LMSweb.Controllers
 
             return View(vm);
         }
-        public ActionResult TeacherJourney(string cid)
+        public ActionResult TeacherJourney(string cid)//教師學習表現普通版起始頁面
         {
             var gqid = 1002.ToString();
             vm.Groups = db.Groups.Where(g => g.CID == cid).ToList();
@@ -270,7 +270,7 @@ namespace LMSweb.Controllers
             vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
             return View(vm);
         }
-        public ActionResult TeacherJourneyR(string cid, string mid, int gid)
+        public ActionResult TeacherJourneyR(string cid, string mid, int gid)//教師學習表現普通版輸入條件頁面
         {
             var gqid = 1002.ToString();
             vm.Groups = db.Groups.Where(g => g.CID == cid).ToList();
@@ -367,7 +367,7 @@ namespace LMSweb.Controllers
             return View(vm);
         }
 
-        public ActionResult TeacherEvalutionJourney(string cid)
+        public ActionResult TeacherEvalutionJourney(string cid)////教師學習表現互評版起始頁面
         {
             var gqid = 1002.ToString();
             vm.Groups = db.Groups.Where(g => g.CID == cid).ToList();
@@ -463,7 +463,7 @@ namespace LMSweb.Controllers
             vm.classPeerContribute = Math.Round(classPeerContribute, 1, MidpointRounding.ToEven);
             return View(vm);
         }
-        public ActionResult TeacherEvalutionJourneyR(string cid, string mid, int gid, string sid)
+        public ActionResult TeacherEvalutionJourneyR(string cid, string mid, int gid, string sid)//教師學習表現互評版輸入條件頁面
         {
             var gqid = 1002.ToString();
             vm.Groups = db.Groups.Where(g => g.CID == cid).ToList();
