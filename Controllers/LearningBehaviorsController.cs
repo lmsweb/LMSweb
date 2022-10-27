@@ -28,7 +28,7 @@ namespace LMSweb.Controllers
             var sname = db.Students.Find(sid).SName;
             var gqid = 1002.ToString();
             var gid = stuG.GID.ToString();
-            var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Count();
+            var i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Count();
 
             double TeacherCor = 0;
             double TeacherLogi = 0;
@@ -50,19 +50,19 @@ namespace LMSweb.Controllers
             
             if(i != 0)
             {
-                TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             }
 
             var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
             vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
-            i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Count();
+            i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.MID == mid).ToList().Count();
             if (i != 0)
             {
-                classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             }
             var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
             vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
@@ -103,21 +103,21 @@ namespace LMSweb.Controllers
             double classTeacherLogi = 0;
             double classTeacherRead = 0;
 
-            var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Count();
+            var i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Count();
             if(i != 0)
             {
-                TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             }
             var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
             vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
-            i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Count();
+            i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.MID == mid).ToList().Count();
             if(i != 0)
             {
-                classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             }
             var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
             vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
@@ -129,25 +129,25 @@ namespace LMSweb.Controllers
             double classGroupLogi = 0;
             double classGroupRead = 0;
 
-            i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Count();
+            i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Count();
             if(i != 0)
             {
-                GroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                GroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                GroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                GroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                GroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                GroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.GID == stuG.GID && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             }
             var GroupScore = ((GroupCor * 0.4) + (GroupLogi * 0.4) + (GroupRead * 0.2));
             vm.GroupScore = Math.Round(GroupScore, 1, MidpointRounding.ToEven);
-            i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Count();
+            i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.MID == mid).ToList().Count();
             if(i != 0)
             {
-                classGroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classGroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classGroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classGroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classGroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classGroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
             }
             var classGroupScore = ((classGroupCor * 0.4) + (classGroupLogi * 0.4) + (classGroupRead * 0.2));
             vm.classGroupScore = Math.Round(classGroupScore, 1, MidpointRounding.ToEven);
-            vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.GID == stuG.GID && sg.MID == mid && sg.EvaluatorSID != "T004" && sg.EvaluatorSID != "T001").ToList();
+            vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.GID == stuG.GID && sg.MID == mid && sg.EvaluatorSID != "T004").ToList();
             //自我評價
             double SelfDiscuss = 0;
             double SelfDraw = 0;
@@ -246,24 +246,24 @@ namespace LMSweb.Controllers
             vm.missions = db.Missions.Where(m => m.CID == cid).ToList();
             vm.Teachercourse = db.Groups.Where(c => c.CID == cid).Count();
             vm.CID = cid;
-            var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Count();
+            var i = db.GroupERs.Where(c => c.CID == cid && c.EvaluatorSID == "T004").ToList().Count();
             if (i != 0)
             {
-                TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
-                TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") ).ToList().Average(t => Convert.ToInt32(t.Answer));
-                TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") ).ToList().Average(t => Convert.ToInt32(t.Answer));
+                TeacherCor = db.GroupERs.Where(c => c.CID == cid && c.GQID == 1 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                TeacherLogi = db.GroupERs.Where(c => c.CID == cid && c.GQID == 2 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                TeacherRead = db.GroupERs.Where(c => c.CID == cid && c.GQID == 3 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
             }
 
 
             var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
             vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
 
-            i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Count();
+            i = db.GroupERs.Where(c => c.CID == cid && c.EvaluatorSID == "T004").ToList().Count();
             if (i != 0)
             {
-                classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherCor = db.GroupERs.Where(c => c.CID == cid && c.GQID == 1 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherLogi = db.GroupERs.Where(c => c.CID == cid && c.GQID == 2 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherRead = db.GroupERs.Where(c => c.CID == cid && c.GQID == 3 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
             }
 
             var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
@@ -298,22 +298,22 @@ namespace LMSweb.Controllers
             {
                 vm.GName = db.Groups.Find(gid).GName;
 
-                var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid).ToList().Count();
+                var i = db.GroupERs.Where(c => c.CID == cid && c.EvaluatorSID == "T004" && c.GID == gid).ToList().Count();
                 if (i != 0)
                 {
-                    TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                    TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                    TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 }
                 var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
                 vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
 
-                i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Count();
+                i = db.GroupERs.Where(c => c.CID == cid && c.EvaluatorSID == "T004").ToList().Count();
                 if (i != 0)
                 {
-                    classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
-                    classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
-                    classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    classTeacherCor = db.GroupERs.Where(c => c.CID == cid && c.CID == cid && c.GQID == 1 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                    classTeacherLogi = db.GroupERs.Where(c => c.CID == cid && c.CID == cid && c.GQID == 2 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                    classTeacherRead = db.GroupERs.Where(c => c.CID == cid && c.CID == cid && c.GQID == 3 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
                 }
                 var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
                 vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
@@ -323,17 +323,17 @@ namespace LMSweb.Controllers
             {
                 vm.MName = db.Missions.Find(mid).MName;
 
-                var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")&& c.MID == mid).ToList().Count();
+                var i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.MID == mid).ToList().Count();
                 
                 var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
                 vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
 
-                i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Count();
+                i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.MID == mid).ToList().Count();
                 if (i != 0)
                 {
-                    classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                    classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                    classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 }
                 var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
                 vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
@@ -344,22 +344,22 @@ namespace LMSweb.Controllers
                 vm.MName = db.Missions.Find(mid).MName;
                 vm.GName = db.Groups.Find(gid).GName;
 
-                var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid && c.MID == mid).ToList().Count();
+                var i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.GID == gid && c.MID == mid).ToList().Count();
                 if (i != 0)
                 {
-                    TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                    TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                    TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 }
                 var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
                 vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
 
-                i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Count();
+                i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.MID == mid).ToList().Count();
                 if (i != 0)
                 {
-                    classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                    classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                    classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                    classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                 }
                 var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
                 vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
@@ -399,13 +399,13 @@ namespace LMSweb.Controllers
             double classTeacherLogi = 0;
             double classTeacherRead = 0;
 
-            var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Count();
-            i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Count();
+            var i = db.GroupERs.Where(c => c.CID == cid && c.EvaluatorSID == "T004").ToList().Count();
+           
             if (i != 0)
             {
-                classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
-                classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherCor = db.GroupERs.Where(c => c.CID == cid && c.GQID == 1 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherLogi = db.GroupERs.Where(c => c.CID == cid && c.GQID == 2 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                classTeacherRead = db.GroupERs.Where(c => c.CID == cid && c.GQID == 3 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
             }
             var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
             vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
@@ -414,16 +414,16 @@ namespace LMSweb.Controllers
             double classGroupLogi = 0;
             double classGroupRead = 0;
 
-            i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Count();
+            i = db.GroupERs.Where(c => c.CID == cid && c.EvaluatorSID != "T004").ToList().Count();
             if (i != 0)
             {
-                classGroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Average(t => Convert.ToInt32(t.Answer));
-                classGroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Average(t => Convert.ToInt32(t.Answer));
-                classGroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Average(t => Convert.ToInt32(t.Answer));
+                classGroupCor = db.GroupERs.Where(c => c.CID == cid && c.GQID == 1 && c.EvaluatorSID != "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                classGroupLogi = db.GroupERs.Where(c => c.CID == cid && c.GQID == 2 && c.EvaluatorSID != "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                classGroupRead = db.GroupERs.Where(c => c.CID == cid && c.GQID == 3 && c.EvaluatorSID != "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
             }
             var classGroupScore = ((classGroupCor * 0.4) + (classGroupLogi * 0.4) + (classGroupRead * 0.2));
             vm.classGroupScore = Math.Round(classGroupScore, 1, MidpointRounding.ToEven);
-            vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.EvaluatorSID != "T004" && sg.EvaluatorSID != "T001").ToList();
+            vm.GroupComments = db.GroupERs.Where(sg => sg.CID == cid && sg.GQID == 4 && sg.EvaluatorSID != "T004").ToList();
             //自我評價
             double classSelfDiscuss = 0;
             double classSelfDraw = 0;
@@ -539,42 +539,42 @@ namespace LMSweb.Controllers
                         var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid).ToList().Count();
                         if (i != 0)
                         {
-                            TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
                         }
                         var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
                         vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
                         i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Count();
                         if (i != 0)
                         {
-                            classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classTeacherCor = db.GroupERs.Where(c => c.CID == cid && c.GQID == 1 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classTeacherLogi = db.GroupERs.Where(c => c.CID == cid && c.GQID == 2 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classTeacherRead = db.GroupERs.Where(c => c.CID == cid && c.GQID == 3 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
                         }
                         var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
                         vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
                         //小組成果 組間
 
-                        i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid).ToList().Count();
+                        i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.GID == gid).ToList().Count();
                         if (i != 0)
                         {
-                            GroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            GroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            GroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            GroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            GroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            GroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
                         }
                         var GroupScore = ((GroupCor * 0.4) + (GroupLogi * 0.4) + (GroupRead * 0.2));
                         vm.GroupScore = Math.Round(GroupScore, 1, MidpointRounding.ToEven);
-                        i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Count();
+                        i = db.GroupERs.Where(c => c.CID == cid && c.EvaluatorSID != "T004").ToList().Count();
                         if (i != 0)
                         {
-                            classGroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classGroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classGroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classGroupCor = db.GroupERs.Where(c => c.CID == cid && c.GQID == 1 && c.EvaluatorSID != "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classGroupLogi = db.GroupERs.Where(c => c.CID == cid && c.GQID == 2 && c.EvaluatorSID != "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classGroupRead = db.GroupERs.Where(c => c.CID == cid && c.GQID == 3 && c.EvaluatorSID != "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
                         }
                         var classGroupScore = ((classGroupCor * 0.4) + (classGroupLogi * 0.4) + (classGroupRead * 0.2));
                         vm.classGroupScore = Math.Round(classGroupScore, 1, MidpointRounding.ToEven);
-                        vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.GID == gid && sg.EvaluatorSID != "T004" && sg.EvaluatorSID != "T001").ToList();
+                        vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.GID == gid && sg.EvaluatorSID != "T004").ToList();
                         //自我評價
 
                         i = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID).ToList().Count();
@@ -648,36 +648,36 @@ namespace LMSweb.Controllers
                         }
                         var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
                         vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
-                        i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Count();
+                        i = db.GroupERs.Where(c => c.CID == cid && c.EvaluatorSID == "T004").ToList().Count();
                         if (i != 0)
                         {
-                            classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001")).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classTeacherCor = db.GroupERs.Where(c => c.CID == cid && c.GQID == 1 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classTeacherLogi = db.GroupERs.Where(c => c.CID == cid && c.GQID == 2 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classTeacherRead = db.GroupERs.Where(c => c.CID == cid && c.GQID == 3 && c.EvaluatorSID == "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
                         }
                         var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
                         vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
                         //小組成果 組間
 
-                        i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid).ToList().Count();
+                        i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.GID == gid).ToList().Count();
                         if (i != 0)
                         {
-                            GroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            GroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            GroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            GroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            GroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            GroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.GID == gid).ToList().Average(t => Convert.ToInt32(t.Answer));
                         }
                         var GroupScore = ((GroupCor * 0.4) + (GroupLogi * 0.4) + (GroupRead * 0.2));
                         vm.GroupScore = Math.Round(GroupScore, 1, MidpointRounding.ToEven);
-                        i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Count();
+                        i = db.GroupERs.Where(c => c.CID == cid && c.EvaluatorSID != "T004").ToList().Count();
                         if (i != 0)
                         {
-                            classGroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classGroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classGroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001").ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classGroupCor = db.GroupERs.Where(c => c.CID == cid && c.GQID == 1 && c.EvaluatorSID != "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classGroupLogi = db.GroupERs.Where(c => c.CID == cid && c.GQID == 2 && c.EvaluatorSID != "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classGroupRead = db.GroupERs.Where(c => c.CID == cid && c.GQID == 3 && c.EvaluatorSID != "T004").ToList().Average(t => Convert.ToInt32(t.Answer));
                         }
                         var classGroupScore = ((classGroupCor * 0.4) + (classGroupLogi * 0.4) + (classGroupRead * 0.2));
                         vm.classGroupScore = Math.Round(classGroupScore, 1, MidpointRounding.ToEven);
-                        vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.GID == gid && sg.EvaluatorSID != "T004" && sg.EvaluatorSID != "T001").ToList();
+                        vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.GID == gid && sg.EvaluatorSID != "T004").ToList();
                         //自我評價
 
                         i = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid).ToList().Count();
@@ -858,45 +858,45 @@ namespace LMSweb.Controllers
                         vm.student = db.Students.Where(g => g.group.GID == gid).ToList();
 
                         //小組成果 教師
-                        var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid && c.MID == mid).ToList().Count();
+                        var i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.GID == gid && c.MID == mid).ToList().Count();
                         if (i != 0)
                         {
-                            TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            TeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            TeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            TeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                         }
                         var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
                         vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
-                        i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Count();
+                        i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.MID == mid).ToList().Count();
                         if (i != 0)
                         {
-                            classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                         }
                         var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
                         vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
                         //小組成果 組間
 
-                        i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid && c.MID == mid).ToList().Count();
+                        i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.GID == gid && c.MID == mid).ToList().Count();
                         if (i != 0)
                         {
-                            GroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            GroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            GroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            GroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            GroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            GroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.GID == gid && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                         }
                         var GroupScore = ((GroupCor * 0.4) + (GroupLogi * 0.4) + (GroupRead * 0.2));
                         vm.GroupScore = Math.Round(GroupScore, 1, MidpointRounding.ToEven);
                         i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Count();
                         if (i != 0)
                         {
-                            classGroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classGroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                            classGroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classGroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classGroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                            classGroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                         }
                         var classGroupScore = ((classGroupCor * 0.4) + (classGroupLogi * 0.4) + (classGroupRead * 0.2));
                         vm.classGroupScore = Math.Round(classGroupScore, 1, MidpointRounding.ToEven);
-                        vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.GID == gid && sg.MID == mid && sg.EvaluatorSID != "T004" && sg.EvaluatorSID != "T001").ToList();
+                        vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.GID == gid && sg.MID == mid && sg.EvaluatorSID != "T004").ToList();
                         //自我評價
 
                         i = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == sid && p.EvaluatorSID == sid && p.MID == mid).ToList().Count();
@@ -961,7 +961,7 @@ namespace LMSweb.Controllers
                     //vm.student = db.Students.Where(g => g.group.GID == gid).ToList();
 
                     //小組成果 教師
-                    var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Count();
+                    var i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004") && c.MID == mid).ToList().Count();
                     if (i != 0)
                     {
                         TeacherCor = 0;//db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
@@ -970,18 +970,18 @@ namespace LMSweb.Controllers
                     }
                     var TeacherScore = ((TeacherCor * 0.4) + (TeacherLogi * 0.4) + (TeacherRead * 0.2));
                     vm.TeacherScore = Math.Round(TeacherScore, 1, MidpointRounding.ToEven);
-                    i = db.GroupERs.Where(c => (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Count();
+                    i = db.GroupERs.Where(c => c.EvaluatorSID == "T004" && c.MID == mid).ToList().Count();
                     if (i != 0)
                     {
-                        classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                        classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                        classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && (c.EvaluatorSID == "T004" || c.EvaluatorSID == "T001") && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                        classTeacherCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                        classTeacherLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                        classTeacherRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID == "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                     }
                     var classTeacherScore = ((classTeacherCor * 0.4) + (classTeacherLogi * 0.4) + (classTeacherRead * 0.2));
                     vm.classTeacherScore = Math.Round(classTeacherScore, 1, MidpointRounding.ToEven);
                     //小組成果 組間
 
-                    i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Count();
+                    i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.MID == mid).ToList().Count();
                     if (i != 0)
                     {
                         GroupCor = 0;//db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
@@ -990,16 +990,16 @@ namespace LMSweb.Controllers
                     }
                     var GroupScore = ((GroupCor * 0.4) + (GroupLogi * 0.4) + (GroupRead * 0.2));
                     vm.GroupScore = Math.Round(GroupScore, 1, MidpointRounding.ToEven);
-                    i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Count();
+                    i = db.GroupERs.Where(c => c.EvaluatorSID != "T004" && c.MID == mid).ToList().Count();
                     if (i != 0)
                     {
-                        classGroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                        classGroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
-                        classGroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.EvaluatorSID != "T001" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                        classGroupCor = db.GroupERs.Where(c => c.GQID == 1 && c.EvaluatorSID != "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                        classGroupLogi = db.GroupERs.Where(c => c.GQID == 2 && c.EvaluatorSID != "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
+                        classGroupRead = db.GroupERs.Where(c => c.GQID == 3 && c.EvaluatorSID != "T004" && c.MID == mid).ToList().Average(t => Convert.ToInt32(t.Answer));
                     }
                     var classGroupScore = ((classGroupCor * 0.4) + (classGroupLogi * 0.4) + (classGroupRead * 0.2));
                     vm.classGroupScore = Math.Round(classGroupScore, 1, MidpointRounding.ToEven);
-                    vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.MID == mid && sg.EvaluatorSID != "T004" && sg.EvaluatorSID != "T001").ToList();
+                    vm.GroupComments = db.GroupERs.Where(sg => sg.GQID == 4 && sg.MID == mid && sg.EvaluatorSID != "T004").ToList();
                     //自我評價
 
                     i = db.EvalutionResponse.Where(p => p.CID == cid && p.SID == p.EvaluatorSID && p.MID == mid).ToList().Count();
